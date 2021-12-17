@@ -94,13 +94,31 @@ library(rorcid)
 orcid_search(given_name = 'erin',
              family_name = 'buchanan')
 
+orcid_person("0000-0002-9689-4189")
+
 ```
+
+May need to manually edit some stuff
+Figure out how to get information 
+
+Ideas from meeting:
+- Career length: from first pub, from first degree
+- Over time: are things becoming more varied
+- Maybe we can use scholar if they don't have orcid
+- Which journals are publishing this information
+- Types of big team research (social, cognitive)
+- Employment levels
+- Education levels
+- # Of works: separate to total, other/preprint, journal/book/traditional
+- Limitations of this system 
 
 
 # Methods
 We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
 
 ## Participants
+
+But type here stuff and things 
 
 ## Material
 
