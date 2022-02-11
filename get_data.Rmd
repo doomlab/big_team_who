@@ -1,0 +1,89 @@
+---
+title: "Get Data"
+author: "Erin M. Buchanan"
+date: "Last Knitted: `r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{r}
+library(dplyr)
+library(purrr)
+```
+
+
+## Crossref
+
+Things we need to do to update: 
+
+  - We need to put together a list of dois to pull from crossref. 
+
+Things you need to do once:
+
+  - Install crossref from github because it has an error that hasn't been pushed to cran.
+  - Add your creds to the environment file so it knows who you are. 
+  
+
+```{r}
+library(rcrossref)
+# remotes::install_github("ropensci/rcrossref") as of 12/2021 because of error in crul
+# be nice to crossref
+# file.edit("~/.Renviron")
+# add crossref_email= "email@gmail.com"
+
+# example, here we would loop over the dois 
+# psa001 <- cr_cn("10.1038/s41562-020-01007-2") bug in crossref geez
+
+osc <- cr_cn("10.1126/science.aac4716")
+
+manylabs1 <- cr_cn("10.1027/1864-9335/a000178")
+
+bibs <- bib2df("papers.bib")
+```
+
+## ORCID
+
+Things you need to do one time:
+
+- Use `orcid_auth()` to set you up
+- Copy the bearer number and put it in your environment file 
+
+```{r}
+library(rorcid)
+# orcid_auth() run the first time to set up
+# copy the bearer number 
+# file.edit("~/.Renviron")
+# ORCID_TOKEN="numberhere"
+
+orcid_search(given_name = 'erin',
+             family_name = 'buchanan')
+
+erin_example <- orcid_person("0000-0002-9689-4189")
+
+erin_df <- rorcid::works("0000-0002-9689-4189") %>%
+  as_tibble() %>%
+  janitor::clean_names() %>%
+  dplyr::mutate(created_date_value = anytime::anydate(created_date_value/1000))
+
+
+```
+
+May need to manually edit some stuff
+Figure out how to get information 
+
+Ideas from meeting:
+- Career length: from first pub, from first degree
+- Over time: are things becoming more varied
+- Maybe we can use scholar if they don't have orcid
+- Which journals are publishing this information
+- Types of big team research (social, cognitive)
+- Employment levels
+- Education levels
+- # Of works: separate to total, other/preprint, journal/book/traditional
+- Limitations of this system 
+
