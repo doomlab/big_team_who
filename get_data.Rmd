@@ -14,20 +14,15 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(dplyr)
 library(purrr)
+library(bib2df)
 ```
 
-
 ## Crossref
-
-Things we need to do to update: 
-
-  - We need to put together a list of dois to pull from crossref. 
 
 Things you need to do once:
 
   - Install crossref from github because it has an error that hasn't been pushed to cran.
   - Add your creds to the environment file so it knows who you are. 
-  
 
 ```{r}
 library(rcrossref)
@@ -60,30 +55,63 @@ library(rorcid)
 # file.edit("~/.Renviron")
 # ORCID_TOKEN="numberhere"
 
-orcid_search(given_name = 'erin',
-             family_name = 'buchanan')
+# find the names
+erins_ids <- orcid_search(given_name = 'erin',
+                          family_name = 'buchanan')
+# if more than one pull ids 
+nrow(erins_ids)
+for (i in erins_ids$orcid){
+  temp <- works(i)
+  # check if the works includes a specific paper 
+  # return only ones with that paper 
+}
 
-erin_example <- orcid_person("0000-0002-9689-4189")
+# erin_example <- orcid_person("0000-0002-9689-4189")
 
 erin_df <- rorcid::works("0000-0002-9689-4189") %>%
   as_tibble() %>%
   janitor::clean_names() %>%
   dplyr::mutate(created_date_value = anytime::anydate(created_date_value/1000))
 
+table(erin_df$type)
+
+erin_df$title_title_value <- tolower(erin_df$title_title_value)
+erin_df$title_title_value <- gsub("[[:punct:]]", "", erin_df$title_title_value)
+nrow(erin_df)
+
+# remove real duplicates
+temp <- erin_df[!duplicated(erin_df[ , c("type", "title_title_value") ]), ]
+nrow(temp)
+
+# combine types
+erin_df$our_type <- erin_df$type
+erin_df$our_type <- gsub("other|data-set|preprint", "open_science_pubs", erin_df$our_type)
+
+table(erin_df$our_type)
+
+erin_ed <- orcid_educations("0000-0002-9689-4189") %>% 
+  as_tibble() %>%
+  janitor::clean_names() 
+
+orcid_employments("0000-0002-9689-4189")
 
 ```
 
 May need to manually edit some stuff
 Figure out how to get information 
 
-Ideas from meeting:
+Person statistics: 
 - Career length: from first pub, from first degree
-- Over time: are things becoming more varied
-- Maybe we can use scholar if they don't have orcid
-- Which journals are publishing this information
-- Types of big team research (social, cognitive)
+  `publication_date_year_value` anything 
 - Employment levels
 - Education levels
-- # Of works: separate to total, other/preprint, journal/book/traditional
+- # Of works: separate to total, other/preprint/data-set, journal/book/traditional
 - Limitations of this system 
 
+Journal statistics: 
+- Which journals are publishing this information
+  - make sure preprints we are using also have real journal merged in 
+- Types of big team research (social, cognitive)
+  - keywords 
+- Over time: are things becoming more varied
+  - are the publications more varied over time 
