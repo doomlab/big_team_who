@@ -16,6 +16,7 @@ library(dplyr)
 library(purrr)
 library(bib2df)
 library(tidyverse)
+library(httr)
 
 library(rorcid)
 # orcid_auth() run the first time to set up
@@ -102,6 +103,9 @@ for (i in 1:10){ #temporary do a small number
   possibles <- orcid_search(family_name = get_id$last[i], 
                             given_name = get_id$first[i])
   
+  cat(i)
+  cat("\n")
+  
   # if nrow = 0 then move on 
   
   # if nrow == 1 then figure out if there's a match
@@ -134,7 +138,7 @@ for (i in 1:10){ #temporary do a small number
     temp_DF <- temp_DF %>% 
       filter(temp_DF$works$title.title.value == get_id$TITLE[i])
     
-    id <- unique(na.omit(temp_DF$`source.assertion-origin-orcid.path`))
+    id <- unique(na.omit(temp_DF$works$`source.assertion-origin-orcid.path`))
     
     if(length(id) == 1) { get_id$ORCID[i] <- id }
     if(length(id) > 1) { get_id$ORCID[i] <- list(id) }
@@ -152,13 +156,67 @@ write.csv(get_id, "possible_orc_ids.csv", row.names = F)
 
 ## Google Scholar
 
+- First, fix the scholar package issue that it doesn't correctly pull ids that have punctuation in them.
+- 
+
+```{r}
+get_scholar <- function (last_name = "", first_name = "", affiliation = NA) 
+{
+    if (!any(nzchar(c(first_name, last_name)))) 
+        stop("At least one of first and last name must be specified!")
+    site <- getOption("scholar_site")
+    url <- paste0(site, "/citations?view_op=search_authors&mauthors=", 
+        first_name, "+", last_name, "&hl=en&oi=ao")
+    page <- get_scholar_resp(url)
+    if (is.null(page)) 
+        return(NA)
+    aa <- content(page, as = "text")
+    ids <- stringr::str_extract_all(string = aa, pattern = ';user=.{12}')
+    
+    if (length(unlist(ids)) == 0) {
+        message("No Scholar ID found.")
+        return(NA)
+    }
+    ids <- ids %>% unlist %>% gsub(";user=", "", 
+        .) %>% unique
+    
+    return(ids)
+  }
+```
+
+- Then determine if you can find scholars matching that information. 
+
 ```{r}
 # thanks SO for this id for the bad coding on scholar 
-p_get_scholar_id <- possibly(get_scholar_id, otherwise = NA_character_)
+p_get_scholar_id <- possibly(get_scholar, otherwise = NA_character_)
 scholars <- character(nrow(get_id))
 for(i in 1:10) {
-  scholars[i] <- p_get_scholar_id(last_name = get_id$last[i], 
-                         first_name = get_id$first[i])
+  id <- NA
+  possibles <- p_get_scholar_id(last_name = get_id$last[i], 
+                                first_name = get_id$first[i])
+  
+  for (q in 1:length(possibles)){
+    
+    articles <- get_publications(possibles[q])
+    articles$title <- gsub("[[:punct:]]", "", articles$title) 
+    articles$title <- tolower(articles$title) 
+    temp_DF <- articles %>% 
+      filter(title == get_id$TITLE[i])
+    
+    if (nrow(temp_DF) > 0){
+      
+      if (!is.na(id)){ 
+        id <- c(id, possibles[q]) 
+        } else { id <- possibles[q] }
+    }
+  
+    
+  }
+  cat(i)
+  cat("\n")
+  
+  if (length(id) == 1) { scholars[i] <- id }
+  if (length(id) > 1) { scholars[i] <- list(id) }
   
   # be nice to api take a break 
   Sys.sleep(runif(1, 3, 5))
@@ -168,6 +226,9 @@ get_id$scholar <- scholars
 
 write.csv(get_id, "possible_both_ids.csv", row.names = F)
 ```
+
+
+
 
 ## Get Person Statistics 
 
@@ -210,7 +271,9 @@ Person statistics:
 - Employment levels
 - Education levels
 - # Of works: separate to total, other/preprint/data-set, journal/book/traditional
-- Limitations of this system 
+- Limitations of this system
+
+...average citation rates/h index/i10 index 
 
 Journal statistics: 
 - Which journals are publishing this information
