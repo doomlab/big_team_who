@@ -96,8 +96,8 @@ get_id$TITLE <- tolower(get_id$TITLE)
 
 get_id$ORCID <- NA
 
-#for (i in 1:nrow(get_id)){
-for (i in 1:10){ #temporary do a small number 
+for (i in 1:nrow(get_id)){
+#for (i in 1:10){ #temporary do a small number 
   
   # find possible candidates 
   possibles <- orcid_search(family_name = get_id$last[i], 
@@ -190,7 +190,7 @@ get_scholar <- function (last_name = "", first_name = "", affiliation = NA)
 # thanks SO for this id for the bad coding on scholar 
 p_get_scholar_id <- possibly(get_scholar, otherwise = NA_character_)
 scholars <- character(nrow(get_id))
-for(i in 1:10) {
+for(i in 39:length(scholars)) {
   id <- NA
   possibles <- p_get_scholar_id(last_name = get_id$last[i], 
                                 first_name = get_id$first[i])
