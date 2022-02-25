@@ -83,7 +83,7 @@ To make the finalized data:
   - Export the bibtex data (done above).
   - A bit of fun manual merging. 
 
-```{r}
+```{r eval = F}
 # there are going to be a lot of duplicates
 # really only need to check them once if exact match
 # not perfect exclusion because of symbol differences and middles but ok 
@@ -157,9 +157,8 @@ write.csv(get_id, "possible_orc_ids.csv", row.names = F)
 ## Google Scholar
 
 - First, fix the scholar package issue that it doesn't correctly pull ids that have punctuation in them.
-- 
 
-```{r}
+```{r eval = F}
 get_scholar <- function (last_name = "", first_name = "", affiliation = NA) 
 {
     if (!any(nzchar(c(first_name, last_name)))) 
@@ -186,11 +185,13 @@ get_scholar <- function (last_name = "", first_name = "", affiliation = NA)
 
 - Then determine if you can find scholars matching that information. 
 
-```{r}
+```{r eval = F}
 # thanks SO for this id for the bad coding on scholar 
 p_get_scholar_id <- possibly(get_scholar, otherwise = NA_character_)
 scholars <- character(nrow(get_id))
-for(i in 39:length(scholars)) {
+
+for(i in 1:length(scholars)) {
+  
   id <- NA
   possibles <- p_get_scholar_id(last_name = get_id$last[i], 
                                 first_name = get_id$first[i])
@@ -209,7 +210,6 @@ for(i in 39:length(scholars)) {
         id <- c(id, possibles[q]) 
         } else { id <- possibles[q] }
     }
-  
     
   }
   cat(i)
@@ -226,9 +226,6 @@ get_id$scholar <- scholars
 
 write.csv(get_id, "possible_both_ids.csv", row.names = F)
 ```
-
-
-
 
 ## Get Person Statistics 
 
