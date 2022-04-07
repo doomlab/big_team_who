@@ -14,25 +14,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(dplyr)
 library(rio)
-library(bib2df)
+library(tidyr)
+library(rorcid)
+library(purrr)
+library(anytime)
+library(janitor)
 ```
 
-
-## Import the BibTeX File
-
-In this section, we are importing the bibtex file that includes all the papers we are going to use. 
-
-Notes:
-
-  - We used the preprint manuscript for some papers because they had the entire author list, we will update their references manually for the final dataset. 
-  - We will have to manually add the names for several papers that used consortium authors. 
-  - The pre-reg of this document only examines a few authors/papers to ensure code can be run and develop workflow. 
-
-```{r}
-bibs <- bib2df("papers.bib")
-```
-
-## Match to IDs
+## Import Unique People
 
 In trying to run our `01.get_person_ids.Rmd` file, we figured out that a lot of the data did not bring up matches. Therefore, we coded most scholar and orcids by hand.
 
@@ -40,55 +29,129 @@ In trying to run our `01.get_person_ids.Rmd` file, we figured out that a lot of 
 id_list <- import("test_utf8.xlsx")
 ```
 
-
-
 ## Get Person Statistics 
 
+### ORCID
+
 ```{r}
-erin_df <- rorcid::works("0000-0002-9689-4189") %>%
+id_list$ORCID <- gsub("^NA$", NA, id_list$ORCID)
+
+orc_list <- na.omit(unique(id_list$ORCID))
+author_works <- list()
+author_ed <- list()
+author_job <- list()
+
+for (ORCID in orc_list) {
+  
+  # get works
+  works_df <- works(ORCID) %>%
   as_tibble() %>%
   janitor::clean_names() %>%
   dplyr::mutate(created_date_value = anytime::anydate(created_date_value/1000))
 
-table(erin_df$type)
+  # make all works normalized
+  works_df$title_title_value <- tolower(works_df$title_title_value)
+  works_df$title_title_value <- gsub("[[:punct:]]", " ", works_df$title_title_value)
+  
+  # combine types
+  works_df$our_type <- works_df$type
+  works_df$our_type <- gsub("other|data-set|preprint", "open_science_pubs", works_df$our_type)
 
-erin_df$title_title_value <- tolower(erin_df$title_title_value)
-erin_df$title_title_value <- gsub("[[:punct:]]", "", erin_df$title_title_value)
-nrow(erin_df)
-
-# remove real duplicates
-temp <- erin_df[!duplicated(erin_df[ , c("type", "title_title_value") ]), ]
-nrow(temp)
-
-# combine types
-erin_df$our_type <- erin_df$type
-erin_df$our_type <- gsub("other|data-set|preprint", "open_science_pubs", erin_df$our_type)
-
-table(erin_df$our_type)
-
-erin_ed <- orcid_educations("0000-0002-9689-4189") %>% 
-  as_tibble() %>%
+  # remove real duplicates
+  author_works[[ORCID]] <- works_df[!duplicated(works_df[ , c("our_type", "title_title_value") ]), ]
+  
+  Sys.sleep(runif(1, 1, 2))
+  
+  # education 
+  author_ed[[ORCID]] <- orcid_educations(ORCID) %>% 
+    purrr::map(., purrr::pluck, "affiliation-group", "summaries") %>% 
+    purrr::flatten_dfr() %>% 
+    janitor::clean_names() 
+    
+  Sys.sleep(runif(1, 1, 2))
+  
+  # employments
+  author_job[[ORCID]] <- orcid_employments(ORCID) %>%
+  purrr::map(., purrr::pluck, "affiliation-group", "summaries") %>% 
+  purrr::flatten_dfr() %>%
   janitor::clean_names() 
+  Sys.sleep(runif(1, 1, 2))
+  
+}
 
-orcid_employments("0000-0002-9689-4189")
+works_df <- do.call(bind_rows, author_works) %>% select(-external_ids_external_id)
+works_df$ORCID <- rep(names(author_works), lapply(author_works, nrow))
+write.csv(works_df, "ORCID_works.csv", row.names = F)
 
+ed_df <- do.call(bind_rows, author_ed)
+ed_df$ORCID <- rep(names(author_ed), lapply(author_ed, nrow))
+ed_df <- ed_df %>% 
+    dplyr::mutate(education_summary_created_date_value =
+                  anytime::anydate(education_summary_created_date_value/1000),
+                education_summary_last_modified_date_value =
+                  anytime::anydate(education_summary_last_modified_date_value/1000))
+
+write.csv(ed_df, "ORCID_ed.csv", row.names = F)
+
+job_df <- do.call(bind_rows, author_job)
+job_df$ORCID <- rep(names(author_job), lapply(author_job, nrow))
+job_df <- job_df %>%
+  dplyr::mutate(employment_summary_end_date =
+                  anytime::anydate(employment_summary_end_date/1000),
+                employment_summary_created_date_value =
+                  anytime::anydate(employment_summary_created_date_value/1000),
+                employment_summary_last_modified_date_value =
+                  anytime::anydate(employment_summary_last_modified_date_value/1000))
+write.csv(job_df, "ORCID_job.csv", row.names = F)
 ```
 
+### Scholar 
 
-Person statistics: 
-- Career length: from first pub, from first degree
-  `publication_date_year_value` anything 
-- Employment levels
-- Education levels
-- # Of works: separate to total, other/preprint/data-set, journal/book/traditional
-- Limitations of this system
+```{r}
+id_list$scholar <- gsub("^NA$", NA, id_list$scholar)
 
-...average citation rates/h index/i10 index 
+scholar_list <- na.omit(unique(id_list$scholar))
+s_author_works <- list()
+s_author_info <- list()
 
-Journal statistics: 
-- Which journals are publishing this information
-  - make sure preprints we are using also have real journal merged in 
-- Types of big team research (social, cognitive)
-  - keywords 
-- Over time: are things becoming more varied
-  - are the publications more varied over time 
+for (scholar in scholar_list) {
+  
+  # works 
+  works_df <- get_publications(scholar)
+  works_df$title <- tolower(works_df$title)
+  works_df$title <- gsub("[[:punct:]]", " ", works_df$title)
+  
+  Sys.sleep(runif(1, 1, 2))
+  
+  # remove duplicates
+  s_author_works[[scholar]] <- works_df %>% 
+    arrange(desc(cites)) %>% 
+    filter(!duplicated(works_df %>% select(title)))
+  
+  # information
+  s_author_info[[scholar]] <- get_profile(scholar)
+  
+  Sys.sleep(runif(1, 1, 2))
+  
+}
+
+works_df <- do.call(bind_rows, s_author_works) 
+works_df$scholar <- rep(names(s_author_works), lapply(s_author_works, nrow))
+write.csv(works_df, "scholar_works.csv", row.names = F)
+
+# paste together information 
+for (scholar in scholar_list){ 
+  
+  s_author_info[[scholar]]$interests <- paste(s_author_info[[scholar]]$interests, collapse = ";;")
+  s_author_info[[scholar]]$coauthors <- paste(s_author_info[[scholar]]$coauthors, collapse = ";;")
+  
+  if (length(s_author_info[[scholar]]$homepage) < 1){
+    s_author_info[[scholar]]$homepage <- NA
+  }
+  
+  }
+
+info_df <- do.call(bind_rows, s_author_info) 
+info_df$scholar <- info_df$id
+write.csv(info_df, "scholar_info.csv", row.names = F)
+```
