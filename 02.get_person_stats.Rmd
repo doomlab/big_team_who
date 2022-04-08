@@ -52,10 +52,6 @@ for (ORCID in orc_list) {
   # make all works normalized
   works_df$title_title_value <- tolower(works_df$title_title_value)
   works_df$title_title_value <- gsub("[[:punct:]]", " ", works_df$title_title_value)
-  
-  # combine types
-  works_df$our_type <- works_df$type
-  works_df$our_type <- gsub("other|data-set|preprint", "open_science_pubs", works_df$our_type)
 
   # remove real duplicates
   author_works[[ORCID]] <- works_df[!duplicated(works_df[ , c("our_type", "title_title_value") ]), ]
@@ -81,6 +77,11 @@ for (ORCID in orc_list) {
 
 works_df <- do.call(bind_rows, author_works) %>% select(-external_ids_external_id)
 works_df$ORCID <- rep(names(author_works), lapply(author_works, nrow))
+works_df <- works_df %>% 
+      dplyr::mutate(last_modified_date_value = 
+                      anytime::anydate(last_modified_date_value/1000))
+
+  
 write.csv(works_df, "ORCID_works.csv", row.names = F)
 
 ed_df <- do.call(bind_rows, author_ed)

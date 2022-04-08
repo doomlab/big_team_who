@@ -15,6 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(bib2df)
 library(rio)
+library(tidyr)
+
+#### fix sau chins paper ####
 ```
 
 ## Import Bib Data
@@ -63,20 +66,85 @@ In this section, we will add the information for authors when they used a consor
 ## Import Author Data
 
 ```{r}
+id_list <- import("test_utf8.xlsx")
+
 o_works <- import("ORCID_works.csv")
 o_ed <- import("ORCID_ed.csv")
 o_job <- import("ORCID_job.csv")
 
-s_works <- import("") 
-s_info <- import("")
+s_works <- import("scholar_works.csv") 
+s_info <- import("scholar_info.csv")
 ```
 
 ## Summary Statistics 
 
 ```{r}
+o_works$publication_date_year_value[o_works$publication_date_year_value < 1920] <- NA
+
+table(o_works$type)
+
+# combine types ####see issues here #### 
+# works_df$our_type <- works_df$type
+# works_df$our_type <- gsub("other|data-set|preprint", "open_science_pubs", works_df$our_type)
+
+o_works_summary <- o_works %>% 
+  group_by(ORCID) %>% 
+  summarize(o_career_1_pub = 2022 - min(publication_date_year_value, na.rm = T),
+            o_total_pub = n())
+
+s_works_summary <- s_works %>% 
+  group_by(scholar) %>% 
+  summarize(s_career_1_pub = 2022 - min(year, na.rm = T),
+            s_total_pub = n())
+####citations??####
+
+####see issues here####
+o_ed_summary <- o_ed %>% 
+  group_by(ORCID) %>% 
+  summarize(o_career_1_degree = 2022 - min(education_summary_end_date_year_value, na.rm = T)) 
+
+# create a table that's ORCID, job, education, year for each year within bib 2013 to 2022
+
+  
+```
+
+## Merge Information Back 
+
+```{r}
+merged_df <- long_bib %>% 
+  left_join(
+    (id_list %>% select(first, last, ORCID, scholar)), 
+    by = c("first" = "first", "last" = "last")
+  ) %>% 
+  left_join(
+    o_works_summary, 
+    by = c("ORCID" = "ORCID")
+  ) %>% 
+  left_join(
+    s_works_summary,
+    by = c("scholar" = "scholar")
+  ) %>% 
+  left_join(
+    o_ed_summary,
+    by = c("ORCID" = "ORCID")
+  ) %>% 
+  left_join(
+    (s_info %>% select(scholar, h_index, i10_index)),
+    by = c("scholar" = "scholar")
+  )
 
 ```
 
+## Journal Information 
+
+```{r}
+table(bibs$JOURNAL)
+table(bibs$KEYWORDS)
+
+
+```
+
+## Over Time 
 
 
 Person statistics: 
