@@ -82,10 +82,15 @@ s_info <- import("scholar_info.csv")
 o_works$publication_date_year_value[o_works$publication_date_year_value < 1920] <- NA
 
 table(o_works$type)
+o_works$our_type <- o_works$type
+o_works$our_type <- gsub("edited-book|book.+", "book", o_works$our_type)
+o_works$our_type <- gsub("conference.+", "conference", o_works$our_type)
+o_works$our_type <- gsub("dissertation-thesis|supervised-student.+", "thesis", o_works$our_type)
+o_works$our_type <- gsub("magazine.+|report|dictionary-entry", "other-pub", o_works$our_type)
+o_works$our_type <- gsub("working-paper", "preprint", o_works$our_type)
+o_works$our_type <- gsub("website", "other", o_works$our_type)
 
-# combine types ####see issues here #### 
-# works_df$our_type <- works_df$type
-# works_df$our_type <- gsub("other|data-set|preprint", "open_science_pubs", works_df$our_type)
+table(o_works$our_type)
 
 o_works_summary <- o_works %>% 
   group_by(ORCID) %>% 
@@ -96,9 +101,8 @@ s_works_summary <- s_works %>%
   group_by(scholar) %>% 
   summarize(s_career_1_pub = 2022 - min(year, na.rm = T),
             s_total_pub = n())
-####citations??####
 
-####see issues here####
+# remember to ignore inf 
 o_ed_summary <- o_ed %>% 
   group_by(ORCID) %>% 
   summarize(o_career_1_degree = 2022 - min(education_summary_end_date_year_value, na.rm = T)) 
@@ -139,13 +143,24 @@ merged_df <- long_bib %>%
 
 ```{r}
 table(bibs$JOURNAL)
-table(bibs$KEYWORDS)
+table(bibs$KEYWORDS) # hand code 
 
-
+#### impact factor grab them now #### 
 ```
 
 ## Over Time 
 
+- credit contributions ? are we using de-weirding by using those people for translation and data collection only 
+  - grab major roles and see what the diversity is 
+  - look at the first 10 people and the last author 
+  - maybe compare to the other 10 groups (1/3rd, middle, last 1/3rd)
+  - employment_summary_organization_address_country (for the weird part)
+  - average career length / publication counts 
+- across time 
+  - more varied across time
+  - more people 
+  - more different types of people - education levels, jobs levels, country
+  - more citation style things - are people publishing more who are on these teams and what indices do they have 
 
 Person statistics: 
 - Career length: from first pub, from first degree
