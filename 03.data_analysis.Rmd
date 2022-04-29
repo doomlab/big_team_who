@@ -9,6 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+https://www.science.org/content/page/science-information-authors
+
 ## Libraries
 
 ```{r}
@@ -16,8 +18,9 @@ library(dplyr)
 library(bib2df)
 library(rio)
 library(tidyr)
-
-#### fix sau chins paper ####
+library(ggplot2)
+library(nlme)
+#### fix sau chins paper #### https://osf.io/gq92w/ 
 ```
 
 ## Import Bib Data
@@ -76,11 +79,10 @@ s_works <- import("scholar_works.csv")
 s_info <- import("scholar_info.csv")
 ```
 
-## Summary Statistics 
+## Hand Coded Variables
 
 ```{r}
-o_works$publication_date_year_value[o_works$publication_date_year_value < 1920] <- NA
-
+# will summarize types of research 
 table(o_works$type)
 o_works$our_type <- o_works$type
 o_works$our_type <- gsub("edited-book|book.+", "book", o_works$our_type)
@@ -89,27 +91,146 @@ o_works$our_type <- gsub("dissertation-thesis|supervised-student.+", "thesis", o
 o_works$our_type <- gsub("magazine.+|report|dictionary-entry", "other-pub", o_works$our_type)
 o_works$our_type <- gsub("working-paper", "preprint", o_works$our_type)
 o_works$our_type <- gsub("website", "other", o_works$our_type)
-
 table(o_works$our_type)
 
+# will code job data 
+table(o_job$employment_summary_role_title)
+o_job$our_job <- tolower(o_job$employment_summary_role_title)
+o_job$our_job <- trimws(o_job$our_job)
+o_job$our_job <- gsub("visit\\s*|visiting\\s*", "", o_job$our_job)
+o_job$our_job <- gsub("ass\\. prof\\.|.*assistant professor.*", "assistant professor", o_job$our_job)
+o_job$our_job <- gsub(".*associate professor.*", "associate professor", o_job$our_job)
+o_job$our_job <- gsub(".*lecturer.*", "lecturer", o_job$our_job)
+o_job$our_job <- gsub("assegnisti|.+post.+|juan de la cierva researcher|post-doc.*|postdoc.*", "post doc", o_job$our_job)
+o_job$our_job <- gsub("borsisti|.*fellow.*", "fellow", o_job$our_job)
+o_job$our_job <- gsub("academic|collaboratori|guest researcher|evaluation specialist|junior specialist|lab manager|personale esterno ed autonomi|research analyst|research associate|research scientist|researcher.*|scholar|senior statistician|special volunteer", "researcher", o_job$our_job)
+o_job$our_job <- gsub(".*intern.*|research asistant", "research assistant", o_job$our_job)
+o_job$our_job <- gsub("dottorandi|.*phd.*", "grad student", o_job$our_job)
+o_job$our_job <- gsub(".*educator.*|teaching assistant", "lecturer", o_job$our_job)
+o_job$our_job <- gsub(".*full.*professor.*", "full professor", o_job$our_job)
+o_job$our_job <- gsub(".*head.*", "head", o_job$our_job)
+o_job$our_job <- gsub("centennial professor|prof\\.|professor of cognitive analytics|proffessor.*|^temporal proffesor.*", "full professor", o_job$our_job)
+table(o_job$our_job)
+
+table(o_ed$education_summary_role_title)
+o_ed$our_ed <- tolower(o_ed$education_summary_role_title)
+o_ed$our_ed <- trimws(o_ed$our_ed)
+o_ed$our_ed <- gsub("[[:punct:]]", "", o_ed$our_ed)
+o_ed$our_ed <- gsub(".*phd.*|.*doctor.*|.*dr.*|^md|^jd", "doctor", o_ed$our_ed)
+o_ed$our_ed <- gsub(".*bachelor.*|.*bsc.*|psicologia|physics enginnering|filosofia|free studies|electronics enginnering|free studies|^ba$|^bs$|^ba in.*|^bs .*|bsocsci.*|biology", "bachelor", o_ed$our_ed)
+o_ed$our_ed <- gsub(".*master.*|.*msc.*|^ma$|masters.*|mse|mres.*|^magrersocoec", "masters", o_ed$our_ed)
+o_ed$our_ed <- gsub("masters of business and economics", "masters", o_ed$our_ed)
+o_ed$our_ed <- gsub("visiting researcher|venia docendi in business administration|graduate student", NA, o_ed$our_ed)
+table(o_ed$our_ed)
+
+bibs$our_keyword <- tolower(bibs$KEYWORDS)
+bibs$our_keyword <- gsub(".*social.*|.*facial feedback hypothesis.*|.*attitude.*|.*interpersonal.*|.*viral infection.*|.*moral judgment.*|.*economics.*|.*relationships.*|.*morality.*|.*ultimatum.*|.*offense.*|psychology, human behaviour", "social", bibs$our_keyword)
+bibs$our_keyword <- gsub("intelligence|.*recognition memory.*|.*cognitive.*|.*working memory.*|.*evolution.*|.*priming.*|.*multivariate.*|.*magical thinking.*|.*legal psychology.*", "cognitive", bibs$our_keyword)
+bibs$our_keyword <- gsub(".*scientific community.*|.*life course.*|.*metascience.*", "metascience", bibs$our_keyword)
+
+bibs$title2 <- tolower(gsub("[[:punct:]]", "", bibs$TITLE))
+
+bibs$our_keyword[grepl("message framing|egodepletion|facial feedback|turri|emotion|motivation|mortality salience|stereotype threat|moral judgments|trafimow|experimental philosophy", 
+                       bibs$title2)] <- "social"
+bibs$our_keyword[grepl("semantic mismatch|priming|actionsentence|memory|eeg|object orientation|cognitive|natural language", 
+                       bibs$title2)] <- "cognitive"
+bibs$our_keyword[grepl("toddlers|infancy research", 
+                       bibs$title2)] <- "developmental"
+bibs$our_keyword[grepl("researchers choices|diffusion decision|many analysts|pool quality|variation in replicability|hidden universe|psychological science", 
+                       bibs$title2)] <- "metascience"
+bibs$our_keyword[grepl("subjective wellbeing|mental illness|online alcohol survey", 
+                       bibs$title2)] <- "clinical"
+bibs$our_keyword[grepl("immediate feedback",
+                       bibs$title2)] <- "education"
+
+table(bibs$title2[is.na(bibs$our_keyword)])
+
+
+table(bibs$our_keyword, useNA = "ifany")
+```
+
+## Journal Information
+
+```{r}
+### figure out impact factors 
+```
+
+## Create Summary Statistics 
+
+```{r}
+# will filter out bad data, here's an example
+summary(o_works$publication_date_year_value)
+o_works$publication_date_year_value[o_works$publication_date_year_value < 1920] <- NA
+
+# create summary variables 
+
+# total pubs and career since first pub
 o_works_summary <- o_works %>% 
   group_by(ORCID) %>% 
-  summarize(o_career_1_pub = 2022 - min(publication_date_year_value, na.rm = T),
+  summarize(o_career_1_pub = min(publication_date_year_value, na.rm = T),
             o_total_pub = n())
 
 s_works_summary <- s_works %>% 
   group_by(scholar) %>% 
-  summarize(s_career_1_pub = 2022 - min(year, na.rm = T),
+  summarize(s_career_1_pub = min(year, na.rm = T),
             s_total_pub = n())
 
-# remember to ignore inf 
+# career since first degree
 o_ed_summary <- o_ed %>% 
   group_by(ORCID) %>% 
-  summarize(o_career_1_degree = 2022 - min(education_summary_end_date_year_value, na.rm = T)) 
+  summarize(o_career_1_degree = min(education_summary_end_date_year_value, na.rm = T)) 
+# remember to ignore inf 
+o_ed_summary$o_career_1_degree[o_ed_summary$o_career_1_degree < 0] <- NA
 
 # create a table that's ORCID, job, education, year for each year within bib 2013 to 2022
+roles_years <- data.frame(
+  ORCID = rep(unique(o_ed$ORCID), each = (2022 - 2012)),
+  year = rep(2013:2022, length(unique(o_ed$ORCID))),
+  education = rep(NA, length(rep(unique(o_ed$ORCID), each = (2022 - 2012)))),
+  job = rep(NA, length(rep(unique(o_ed$ORCID), each = (2022 - 2012))))
+)
 
+o_ed_explode <- data.frame()
+o_job_explode <- data.frame()
+
+# for jobs fill in "current" or end date
+# Find users with blanks
+# For each one find the number of rows 
+# If 1 then make 2022
+# If more than 1 
+# Use the lead or other end function 
+o_job %>% filter(is.na(employment_summary_end_date_year_value)) %>% 
+  select(ORCID, employment_summary_start_date_year_value, employment_summary_role_title)
+
+for (year in 2013:2022){
+ 
+  temp <- o_ed %>% 
+    filter(education_summary_end_date_year_value <= year) %>% 
+    arrange(desc(education_summary_end_date_year_value)) %>% 
+    filter(!duplicated(ORCID)) %>% 
+    select(ORCID, education_summary_role_title, 
+           education_summary_organization_address_country) %>% 
+    mutate(year_merge = year)
   
+  o_ed_explode <- bind_rows(o_ed_explode, temp)
+  
+  temp2 <- o_job %>% 
+    filter(employment_summary_end_date_year_value >= year) %>% 
+    arrange(desc(employment_summary_end_date_year_value)) %>% 
+    filter(!duplicated(ORCID)) %>% 
+    select(ORCID, employment_summary_role_title, 
+           employment_summary_organization_address_country) %>% 
+    mutate(year_merge = year)
+   
+  o_job_explode <- bind_rows(o_job_explode, temp2) 
+
+}
+
+ roles_years <- roles_years %>% 
+   left_join(o_ed_explode, 
+             by = c("ORCID" = "ORCID", "year" = "year_merge")) %>% 
+   left_join(o_job_explode, 
+             by = c("ORCID" = "ORCID", "year" = "year_merge"))
 ```
 
 ## Merge Information Back 
@@ -117,8 +238,10 @@ o_ed_summary <- o_ed %>%
 ```{r}
 merged_df <- long_bib %>% 
   left_join(
+    # note this isn't perfect ... will have to make sure all versions 
+    # get matched 
     (id_list %>% select(first, last, ORCID, scholar)), 
-    by = c("first" = "first", "last" = "last")
+    by = c("first" = "first", "last" = "last") 
   ) %>% 
   left_join(
     o_works_summary, 
@@ -135,47 +258,265 @@ merged_df <- long_bib %>%
   left_join(
     (s_info %>% select(scholar, h_index, i10_index)),
     by = c("scholar" = "scholar")
+  ) %>% 
+  left_join(
+    roles_years,
+    by = c("ORCID" = "ORCID", "YEAR" = "year")
   )
 
 ```
 
-## Journal Information 
+
+## Person Analysis 
 
 ```{r}
-table(bibs$JOURNAL)
-table(bibs$KEYWORDS) # hand code 
-
-#### impact factor grab them now #### 
+merged_df$graph_year <- factor(merged_df$YEAR)
 ```
 
-## Over Time 
+### Career Length
+
+```{r}
+# since first pub ORCID
+merged_df$o_career_pub_year <- merged_df$YEAR - merged_df$o_career_1_pub
+
+ggplot(merged_df, aes(graph_year, o_career_pub_year)) + 
+  geom_violin() + 
+  geom_jitter(height = 0, width = 0.2, aes(color = TITLE)) + 
+  theme_classic() + 
+  ylab("Career Length (ORCID First Pub)") + 
+  xlab("Year of Publication") +
+  theme(legend.position="none")
+
+### will ask KD about this one ###
+o_career_model <- lme(o_career_1_pub ~ YEAR,
+                      data = merged_df,
+                      na.action = "na.omit",
+                      random = ~1|ORCID)
+
+summary(o_career_model)
+
+variance_df <- merged_df %>% 
+  group_by(TITLE) %>% 
+  summarize(year = mean(YEAR), 
+            var_o_career_1_pub = sd(o_career_1_pub, na.rm = T))
+
+# since first pub scholar
+merged_df$s_career_pub_year <- merged_df$YEAR - merged_df$s_career_1_pub
+
+ggplot(merged_df, aes(graph_year, s_career_pub_year)) + 
+  geom_violin() + 
+  geom_jitter(height = 0, width = 0.1) + 
+  theme_classic() + 
+  ylab("Career Length (Scholar First Pub)") + 
+  xlab("Year of Publication") 
+
+### will ask KD about this one ###
+s_career_model <- lme(s_career_pub_year ~ YEAR,
+                      data = merged_df,
+                      na.action = "na.omit",
+                      random = ~1|JOURNAL)
+
+summary(s_career_model)
+
+# since first degree ORCID
+merged_df$o_career_degree_year <- merged_df$YEAR - merged_df$o_career_1_degree
+merged_df$o_career_degree_year[merged_df$o_career_degree_year < 0] <- NA
+
+ggplot(merged_df, aes(graph_year, o_career_degree_year)) + 
+  geom_violin() + 
+  geom_jitter(height = 0, width = 0.1) + 
+  theme_classic() + 
+  ylab("Career Length (ORCID First Degree)") + 
+  xlab("Year of Publication") 
+
+### will ask KD about this one ###
+o_career2_model <- lme(o_career_degree_year ~ YEAR,
+                      data = merged_df,
+                      na.action = "na.omit",
+                      random = ~1|JOURNAL)
+
+summary(o_career2_model)
+```
+
+### Employment Levels
+
+```{r}
+# hand code these into categories that make sense
+table(o_job$employment_summary_role_title)
+table(merged_df$employment_summary_role_title)
+
+# table by year 
+# graph by year 
+```
+
+### Education Levels
+
+```{r}
+# hand code these into categories that make sense
+table(merged_df$education_summary_role_title)
+
+# consider coding as 1, 2, 3, 4, etc. 
+# table by year 
+# graph by year 
+```
+
+### Author Bean Counting 
+
+```{r}
+# what do these people publish overall
+table(o_works$our_type)
+
+# publication rates ORCID
+ggplot(merged_df, aes(graph_year, o_total_pub)) + 
+  geom_violin() + 
+  geom_jitter(height = 0, width = 0.1) + 
+  theme_classic() + 
+  ylab("Total Publications (ORCID)") + 
+  xlab("Year of Publication") 
+
+### will ask KD about this one ###
+o_total_model <- lme(o_total_pub ~ YEAR,
+                      data = merged_df,
+                      na.action = "na.omit",
+                      random = ~1|JOURNAL)
+
+summary(o_total_model)
+
+# publication rates scholar
+ggplot(merged_df, aes(graph_year, s_total_pub)) + 
+  geom_violin() + 
+  geom_jitter(height = 0, width = 0.1) + 
+  theme_classic() + 
+  ylab("Total Publications (Scholar)") + 
+  xlab("Year of Publication") 
+
+### will ask KD about this one ###
+s_total_model <- lme(s_total_pub ~ YEAR,
+                      data = merged_df,
+                      na.action = "na.omit",
+                      random = ~1|JOURNAL)
+
+summary(s_total_model)
+
+# h index rates scholar
+ggplot(merged_df, aes(graph_year, h_index)) + 
+  geom_violin() + 
+  geom_jitter(height = 0, width = 0.1) + 
+  theme_classic() + 
+  ylab("H Index") + 
+  xlab("Year of Publication") 
+
+### will ask KD about this one ###
+h_index_model <- lme(h_index ~ YEAR,
+                      data = merged_df,
+                      na.action = "na.omit",
+                      random = ~1|JOURNAL)
+
+summary(h_index_model)
+
+# i 10 rates scholar
+ggplot(merged_df, aes(graph_year, i10_index)) + 
+  geom_violin() + 
+  geom_jitter(height = 0, width = 0.1) + 
+  theme_classic() + 
+  ylab("H Index") + 
+  xlab("Year of Publication") 
+
+### will ask KD about this one ###
+i_index_model <- lme(i10_index ~ YEAR,
+                      data = merged_df,
+                      na.action = "na.omit",
+                      random = ~1|JOURNAL)
+
+summary(i_index_model)
+```
+
+### More Authors Over Time?
+
+```{r}
+author_count <- 
+  merged_df %>% 
+  group_by(TITLE) %>% 
+  summarize(author_count = n(),
+            year = mean(YEAR))
+
+cor(author_count$author_count, author_count$year)
+
+ggplot(author_count, aes(factor(year), author_count)) +
+  theme_classic() + 
+  geom_point() + 
+  xlab("Year of Publication") + 
+  ylab("Number of Authors")
+```
+
+### Where are Authors?
+
+```{r}
+# where did they get their degree
+merged_df %>% 
+  filter(!duplicated(ORCID)) %>% 
+  count(education_summary_organization_address_country)
+
+table(merged_df$education_summary_organization_address_country,
+      merged_df$YEAR)
+
+# how many different countries does each year have and is that getting bigger 
+
+# where do they work
+merged_df %>% 
+  filter(!duplicated(ORCID)) %>% 
+  count(employment_summary_organization_address_country)
+
+table(merged_df$employment_summary_organization_address_country,
+      merged_df$YEAR)
+```
+
+### CRediT and WEIRD
+
+```{r}
+# grab first X authors and last author
+# and the last one for 10 - 49
+num_grab <- 3 
+
+# 50 to 99 use 5
+
+# over 100 do top 10
+
+# group into UN regions 
+```
 
 - credit contributions ? are we using de-weirding by using those people for translation and data collection only 
   - grab major roles and see what the diversity is 
   - look at the first 10 people and the last author 
   - maybe compare to the other 10 groups (1/3rd, middle, last 1/3rd)
-  - employment_summary_organization_address_country (for the weird part)
-  - average career length / publication counts 
-- across time 
-  - more varied across time
-  - more people 
-  - more different types of people - education levels, jobs levels, country
-  - more citation style things - are people publishing more who are on these teams and what indices do they have 
 
-Person statistics: 
-- Career length: from first pub, from first degree
-  `publication_date_year_value` anything 
-- Employment levels
-- Education levels
-- # Of works: separate to total, other/preprint/data-set, journal/book/traditional
-- Limitations of this system
-...average citation rates/h index/i10 index 
+## Journal Analysis
 
-Journal statistics: 
-- Which journals are publishing this information
-  - make sure preprints we are using also have real journal merged in 
-- Types of big team research (social, cognitive)
-  - keywords 
+### Which Journals
+
+- make sure preprints we are using also have real journal merged in 
+
+```{r}
+journal_count <- bibs %>% group_by(JOURNAL) %>% 
+  summarize(freq = n()) 
+
+journal_count$JOURNAL[is.na(journal_count$JOURNAL)] <- "Pre-Print"
+```
+
+### Article Topics Global Type
+
+- hand coded information on what the articles are about 
+- Types of big team research (social, cognitive) using keywords
+
+```{r}
+# table of hand coded type
+```
+
+### Article Types Over Time
+
 - Over time: are things becoming more varied
-  - are the publications more varied over time 
+- are the publications more varied over time
 
+```{r}
+# table of hand coded type by year 
+```
