@@ -57,7 +57,7 @@ abstract: |
 keywords          : "big team, science, authorship, credit"
 wordcount         : "X"
 
-bibliography      : ["big_team_refs.bib"]
+#bibliography      : ["big_team_refs.bib"]
 
 floatsintext      : no
 figurelist        : no
@@ -82,7 +82,7 @@ set.seed(538943)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
-```{r, child = '03.data_analysis.Rmd', include = FALSE, results = FALSE}
+```{r, child = '03.data_analysis.Rmd', include = FALSE, results = FALSE, echo = FALSE}
 ```
 
 The introduction will go here. Here's an outline:
@@ -94,27 +94,27 @@ The introduction will go here. Here's an outline:
 - WEIRD 
 - ... more tbd, brain isn't braining 
 
+Research Question 1: What journals publish big team science papers?
+
+Research Question 2: What are the types of articles that are being published in big team science?
+
+Research Question 3: Who is involved in big team science? 
+
 # Method
 
 ## Studies 
 
-We defined *big team science publications* as publications with at least 10 authors that were published in peer-reviewed journals or had posted a full paper pre-print for publication review. We specifically focused on social science research, primarily *psychology* for this manuscript. First, we added all known publications from collaborative teams, such as the PSA, Many Labs, and Many Babies. We examined journals that frequently publish registered replication reports (i.e., *Advances in Methods and Practices in Psychological Science*) for additional publications with at least 10 authors. From these manuscripts, we identified common authors who frequently participate in these studies, and examined their Google Scholar or Open Researcher and Contributor IDentifier (ORCID) page for other publications. We reached out to social networks on Twitter to identify other publications. Last, we used Google Scholar and EBSCO to search for large projects using XXX KEY TERMS XXX. 
-
-```{r articles-overall, echo = FALSE, include = FALSE}
-nrow(bibs)
-min(bibs$YEAR)
-max(bibs$YEAR)
-journal_count$JOURNAL[1]
-journal_count$freq[1]
-```
-
-Using these criteria, we identified `r nrow(bibs)` articles for inclusion on this manuscript. The publication dates on these articles ranged from `r min(bibs$YEAR)` to `r max(bibs$YEAR)`, and we used the pre-print last updated date as the publication date for those articles. Articles were most commonly published in `r journal_count$JOURNAL[1]` (*n* = `r journal_count$freq[1]`), `r journal_count$JOURNAL[2]` (*n* = `r journal_count$freq[2]`), `r journal_count$JOURNAL[3]` (*n* = `r journal_count$freq[3]`), `r journal_count$JOURNAL[4]` (*n* = `r journal_count$freq[4]`), and `r journal_count$JOURNAL[5]` (*n* = `r journal_count$freq[5]`). A complete list of journals can be found on our Open Science Framework page XXX. 
+We defined **big team science publications** as publications with at least 10 authors that were published in peer-reviewed journals or had posted a full paper pre-print for publication review. We specifically focused on social science research, primarily *psychology* for this manuscript. First, we added all known publications from collaborative teams, such as the PSA, Many Labs, and Many Babies. We examined journals that frequently publish registered replication reports (i.e., *Advances in Methods and Practices in Psychological Science*) for additional publications with at least 10 authors. From these manuscripts, we identified common authors who frequently participate in these studies, and examined their Google Scholar or Open Researcher and Contributor IDentifier (ORCID) page for other publications. We reached out to social networks on Twitter to identify other publications. Last, we used Google Scholar and EBSCO to search for large projects using the following search terms: collaboration, multicultural, large scale, and big team science. 
 
 ## Data Curation
 
+### Journal Information 
+
+Using these criteria, we identified `r nrow(bibs)` articles for inclusion on this manuscript. The publication dates on these articles ranged from `r min(bibs$YEAR)` to `r max(bibs$YEAR)`, and we used the pre-print last updated date as the publication date for those articles. The current impact factor (i.e., 2022) for each journal was found on the journal page and included for journal statistics.
+
 ### Article Information 
 
-For each publication, we coded the list of keywords into broad labels for areas of social science (i.e., Social Psychology, Cognitive Psychology). The current impact factor (i.e., 2022) for each journal was found on the journal page and included for journal statistics.
+For each publication, we coded the list of keywords into broad labels for areas of social science (i.e., Social Psychology, Cognitive Psychology). WRITE MORE ABOUT NOT DOUBLE CODING ... DEFINE HOW EACH LABEL WAS DONE ... WHAT IS METASCIENCE GIVE OSC EXAMPLE 
 
 ### Author Information   
 
@@ -145,6 +145,10 @@ Next, we matched each author to their Google Scholar and ORCID profile pages, if
 what are we gonna do to answer the research questions 
 
 # Results
+
+## RQ1: Journal Information
+
+Articles were most commonly published in `r journal_count$JOURNAL[1]` (*n* = `r journal_count$freq[1]`), `r journal_count$JOURNAL[2]` (*n* = `r journal_count$freq[2]`), `r journal_count$JOURNAL[3]` (*n* = `r journal_count$freq[3]`), `r journal_count$JOURNAL[4]` (*n* = `r journal_count$freq[4]`), and `r journal_count$JOURNAL[5]` (*n* = `r journal_count$freq[5]`). A complete list of journals can be found on our Open Science Framework page XXX. 
 
 put stuff in here about the format/structure to answering the research questions 
 

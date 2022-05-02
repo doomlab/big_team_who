@@ -1,0 +1,402 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  english,
+  man]{apa6}
+\title{Who does big team science?}
+\author{Erin M. Buchanan\textsuperscript{1} \& Savannah C. Lewis\textsuperscript{2}}
+\date{}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Who does big team science?},
+  pdfauthor={Erin M. Buchanan1 \& Savannah C. Lewis2},
+  pdflang={en-EN},
+  pdfkeywords={big team, science, authorship, credit},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+% Manuscript styling
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+% Table formatting
+\usepackage{longtable}
+\usepackage{lscape}
+% \usepackage[counterclockwise]{rotating}   % Landscape page setup for large tables
+\usepackage{multirow}		% Table styling
+\usepackage{tabularx}		% Control Column width
+\usepackage[flushleft]{threeparttable}	% Allows for three part tables with a specified notes section
+\usepackage{threeparttablex}            % Lets threeparttable work with longtable
+
+% Create new environments so endfloat can handle them
+% \newenvironment{ltable}
+%   {\begin{landscape}\centering\begin{threeparttable}}
+%   {\end{threeparttable}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
+
+% Enables adjusting longtable caption width to table width
+% Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+% \setlength{\parindent}{0.5in}
+% \setlength{\parskip}{0pt plus 0pt minus 0pt}
+
+% \usepackage{etoolbox}
+\makeatletter
+\patchcmd{\HyOrg@maketitle}
+  {\section{\normalfont\normalsize\abstractname}}
+  {\section*{\normalfont\normalsize\abstractname}}
+  {}{\typeout{Failed to patch abstract.}}
+\patchcmd{\HyOrg@maketitle}
+  {\section{\protect\normalfont{\@title}}}
+  {\section*{\protect\normalfont{\@title}}}
+  {}{\typeout{Failed to patch title.}}
+\makeatother
+\shorttitle{Big Team Science}
+\keywords{big team, science, authorship, credit\newline\indent Word count: X}
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+\DeclareDelayedFloatFlavor{lltable}{table}
+\DeclareDelayedFloatFlavor*{longtable}{table}
+\makeatletter
+\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
+\makeatother
+\usepackage{lineno}
+
+\linenumbers
+\usepackage{csquotes}
+\ifXeTeX
+  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\else
+  \usepackage[main=english]{babel}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\fi
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+
+\authornote{
+
+Erin M. Buchanan is a Professor of Cognitive Analytics at Harrisburg University of Science and Technology. Savannah C. Lewis is a graduate student at the University of Alabama.
+
+Thank you to Dwayne Lieck for providing an extensive list of large scale projects for this manuscript.
+
+The authors made the following contributions. Erin M. Buchanan: Conceptualization, Data curation, Formal Analysis, Methodology, Project administration, Visualization, Writing -- original draft, Writing -- review \& editing; Savannah C. Lewis: Conceptualization, Data curation, Methodology, Project administration, Writing -- original draft, Writing -- review \& editing.
+
+Correspondence concerning this article should be addressed to Erin M. Buchanan, 326 Market St., Harrisburg, PA 17101. E-mail: \href{mailto:ebuchanan@harrisburgu.edu}{\nolinkurl{ebuchanan@harrisburgu.edu}}
+
+}
+
+\affiliation{\vspace{0.5cm}\textsuperscript{1} Harrisburg University of Science and Technology\\\textsuperscript{2} University of Alabama}
+
+\abstract{
+One or two sentences providing a \textbf{basic introduction} to the field, comprehensible to a scientist in any discipline.
+
+Two to three sentences of \textbf{more detailed background}, comprehensible to scientists in related disciplines.
+
+One sentence clearly stating the \textbf{general problem} being addressed by this particular study.
+
+One sentence summarizing the main result (with the words ``\textbf{here we show}'' or their equivalent).
+
+Two or three sentences explaining what the \textbf{main result} reveals in direct comparison to what was thought to be the case previously, or how the main result adds to previous knowledge.
+
+One or two sentences to put the results into a more \textbf{general context}.
+
+Two or three sentences to provide a \textbf{broader perspective}, readily comprehensible to a scientist in any discipline.
+}
+
+
+
+\begin{document}
+\maketitle
+
+\url{https://www.science.org/content/page/science-information-authors}
+
+\hypertarget{libraries}{%
+\subsection{Libraries}\label{libraries}}
+
+\hypertarget{import-bib-data}{%
+\subsection{Import Bib Data}\label{import-bib-data}}
+
+In this section, we are importing the bibtex file that includes all the papers we are going to use.
+
+Notes:
+
+\begin{itemize}
+\tightlist
+\item
+  We used the preprint manuscript for some papers because they had the entire author list, we will update their references manually for the final dataset.
+\item
+  We will have to manually add the names for several papers that used consortium authors.
+\item
+  The pre-reg of this document only examines a few authors/papers to ensure code can be run and develop workflow.
+\end{itemize}
+
+In this section, we will add the information for authors when they used a consortium authorship.
+
+\hypertarget{import-author-data}{%
+\subsection{Import Author Data}\label{import-author-data}}
+
+\hypertarget{hand-coded-variables}{%
+\subsection{Hand Coded Variables}\label{hand-coded-variables}}
+
+\hypertarget{journal-information}{%
+\subsection{Journal Information}\label{journal-information}}
+
+\hypertarget{create-summary-statistics}{%
+\subsection{Create Summary Statistics}\label{create-summary-statistics}}
+
+\hypertarget{merge-information-back}{%
+\subsection{Merge Information Back}\label{merge-information-back}}
+
+\hypertarget{person-analysis}{%
+\subsection{Person Analysis}\label{person-analysis}}
+
+\hypertarget{career-length}{%
+\subsubsection{Career Length}\label{career-length}}
+
+\hypertarget{employment-levels}{%
+\subsubsection{Employment Levels}\label{employment-levels}}
+
+\hypertarget{education-levels}{%
+\subsubsection{Education Levels}\label{education-levels}}
+
+\hypertarget{author-bean-counting}{%
+\subsubsection{Author Bean Counting}\label{author-bean-counting}}
+
+\hypertarget{more-authors-over-time}{%
+\subsubsection{More Authors Over Time?}\label{more-authors-over-time}}
+
+\hypertarget{where-are-authors}{%
+\subsubsection{Where are Authors?}\label{where-are-authors}}
+
+\hypertarget{credit-and-weird}{%
+\subsubsection{CRediT and WEIRD}\label{credit-and-weird}}
+
+\begin{itemize}
+\tightlist
+\item
+  credit contributions ? are we using de-weirding by using those people for translation and data collection only
+
+  \begin{itemize}
+  \tightlist
+  \item
+    grab major roles and see what the diversity is
+  \item
+    look at the first 10 people and the last author
+  \item
+    maybe compare to the other 10 groups (1/3rd, middle, last 1/3rd)
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{journal-analysis}{%
+\subsection{Journal Analysis}\label{journal-analysis}}
+
+\hypertarget{which-journals}{%
+\subsubsection{Which Journals}\label{which-journals}}
+
+\begin{itemize}
+\tightlist
+\item
+  make sure preprints we are using also have real journal merged in
+\end{itemize}
+
+\hypertarget{article-topics-global-type}{%
+\subsubsection{Article Topics Global Type}\label{article-topics-global-type}}
+
+\begin{itemize}
+\tightlist
+\item
+  hand coded information on what the articles are about
+\item
+  Types of big team research (social, cognitive) using keywords
+\end{itemize}
+
+\hypertarget{article-types-over-time}{%
+\subsubsection{Article Types Over Time}\label{article-types-over-time}}
+
+\begin{itemize}
+\tightlist
+\item
+  Over time: are things becoming more varied
+\item
+  are the publications more varied over time
+\end{itemize}
+
+The introduction will go here. Here's an outline:
+
+\begin{itemize}
+\tightlist
+\item
+  Big Team Science
+
+  \begin{itemize}
+  \tightlist
+  \item
+    one off papers
+  \item
+    collaborative teams
+  \end{itemize}
+\item
+  Credibility revolution
+\item
+  WEIRD
+\item
+  \ldots{} more tbd, brain isn't braining
+\end{itemize}
+
+\hypertarget{method}{%
+\section{Method}\label{method}}
+
+\hypertarget{studies}{%
+\subsection{Studies}\label{studies}}
+
+We defined \textbf{big team science publications} as publications with at least 10 authors that were published in peer-reviewed journals or had posted a full paper pre-print for publication review. We specifically focused on social science research, primarily \emph{psychology} for this manuscript. First, we added all known publications from collaborative teams, such as the PSA, Many Labs, and Many Babies. We examined journals that frequently publish registered replication reports (i.e., \emph{Advances in Methods and Practices in Psychological Science}) for additional publications with at least 10 authors. From these manuscripts, we identified common authors who frequently participate in these studies, and examined their Google Scholar or Open Researcher and Contributor IDentifier (ORCID) page for other publications. We reached out to social networks on Twitter to identify other publications. Last, we used Google Scholar and EBSCO to search for large projects using the following search terms: collaboration, multicultural, large scale, and big team science.
+
+Using these criteria, we identified 70 articles for inclusion on this manuscript. The publication dates on these articles ranged from 2013 to 2022, and we used the pre-print last updated date as the publication date for those articles. Articles were most commonly published in Advances in Methods and Practices in Psychological Science (\emph{n} = 20), Behavior Research Methods (\emph{n} = 1), Collabra: Psychology (\emph{n} = 1), Computers in Human Behavior (\emph{n} = 1), and International Journal of Methods in Psychiatric Research (\emph{n} = 1). A complete list of journals can be found on our Open Science Framework page XXX.
+
+\hypertarget{data-curation}{%
+\subsection{Data Curation}\label{data-curation}}
+
+\hypertarget{article-information}{%
+\subsubsection{Article Information}\label{article-information}}
+
+For each publication, we coded the list of keywords into broad labels for areas of social science (i.e., Social Psychology, Cognitive Psychology). The current impact factor (i.e., 2022) for each journal was found on the journal page and included for journal statistics.
+
+\hypertarget{author-information}{%
+\subsubsection{Author Information}\label{author-information}}
+
+The author list was then extracted from each publication. In the case of consortium authorship, we extracted the complete authorship from the meta-data or pre-print publication. The total number of unique authors was 3336. The number of authors on each publication ranged from 1 to 482 with an average of 68.63 authors (\emph{SD} = 89.89).
+
+Next, we matched each author to their Google Scholar and ORCID profile pages, if available. We originally used the \emph{R} packages, \emph{rorcid} {[}CITE{]} and \emph{scholar} {[}CITE{]} to try to match published author names to profile pages. This process did not result in a large number of matches, and we therefore curated the list of profile pages manually, checking each author against the publication list. We used these two packages and profile pages to collect authorship statistics described below.
+
+\textbf{Career Length}. Career length for each author was defined using multiple variables to see if results from the two data sources would converge on similar answers. Both ORCID and Google Scholar provide a list of publications for authors, and we first calculated career length as the year of first publication listed for each author. In ORCID, a researcher can enter their educational background with completion years for each degree. We defined career length for this variable as years since first degree listed. Publication years are often curated directly from meta-data provided by Crossref (ORCID) or online sources used by Google Scholar. Authors may also directly add publications and their information into both systems. The limitation to using education as a metric for career length is that the researcher must directly enter this information into ORCID.
+
+\textbf{Employment}. Employment information was collected from self-entered ORCID data. These values are open text, and therefore, we coded them into coherent categories for traditional educational (graduate student, post doctoral, lecturer), tenure track (assistant, associate, full professor), and other roles (fellow, research assistant, researcher, head). Employment geopolitical region was also selected when available.
+
+\textbf{Education}. As with employment information, we also collected education information from self-entered ORCID data. These values were coded into general categories of bachelor, master, and doctoral degrees. The geopolitical region of the listed education was included when available. For analyses, both employment and education levels were grouped into United Nation regions.
+
+\textbf{Types of Publications}. ORCID includes information about the type of publication pulled from either researcher entered data or Crossref. We coded these publications into general categories including book, conference presentations, data-sets, journal articles, preprints, software, thesis, and other publications.
+
+\textbf{Publication Metrics}. We calculated total number of publications of any type from both Google Scholar and ORCID. We additionally pulled both the h-index and i-10 index from Google Scholar. The h-index represents the highest \emph{h} number of publications that have at least \emph{h} citations, while the i-10 index represents the number of publications with at least 10 citations.
+
+\hypertarget{data-analysis}{%
+\subsection{Data analysis}\label{data-analysis}}
+
+what are we gonna do to answer the research questions
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+put stuff in here about the format/structure to answering the research questions
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{0}{0}
+\end{CSLReferences}
+
+\endgroup
+
+
+\end{document}

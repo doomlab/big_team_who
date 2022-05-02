@@ -5,7 +5,7 @@ date: "Last Knitted: `r Sys.Date()`"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup_analysis, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -300,6 +300,11 @@ variance_df <- merged_df %>%
   summarize(year = mean(YEAR), 
             var_o_career_1_pub = sd(o_career_1_pub, na.rm = T))
 
+var_o_career_model <- lm(var_o_career_1_pub ~ year, 
+                          data = variance_df,
+                          na.action = "na.omit")
+summary(var_o_career_model)
+
 # since first pub scholar
 merged_df$s_career_pub_year <- merged_df$YEAR - merged_df$s_career_1_pub
 
@@ -498,7 +503,8 @@ num_grab <- 3
 
 ```{r}
 journal_count <- bibs %>% group_by(JOURNAL) %>% 
-  summarize(freq = n()) 
+  summarize(freq = n()) %>% 
+  arrange(desc(freq))
 
 journal_count$JOURNAL[is.na(journal_count$JOURNAL)] <- "Pre-Print"
 ```
