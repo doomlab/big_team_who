@@ -127,6 +127,20 @@
 % \setlength{\parindent}{0.5in}
 % \setlength{\parskip}{0pt plus 0pt minus 0pt}
 
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
 % \usepackage{etoolbox}
 \makeatletter
 \patchcmd{\HyOrg@maketitle}
@@ -138,7 +152,15 @@
   {\section*{\protect\normalfont{\@title}}}
   {}{\typeout{Failed to patch title.}}
 \makeatother
-\shorttitle{Big Team Science}
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
 \keywords{big team, science, authorship, credit\newline\indent Word count: X}
 \DeclareDelayedFloatFlavor{ThreePartTable}{table}
 \DeclareDelayedFloatFlavor{lltable}{table}
@@ -165,6 +187,8 @@
 \fi
 
 
+\shorttitle{Big Team Science}
+
 \authornote{
 
 Erin M. Buchanan is a Professor of Cognitive Analytics at Harrisburg University of Science and Technology. Savannah C. Lewis is a graduate student at the University of Alabama.
@@ -179,7 +203,7 @@ Correspondence concerning this article should be addressed to Erin M. Buchanan, 
 
 \affiliation{\vspace{0.5cm}\textsuperscript{1} Harrisburg University of Science and Technology\\\textsuperscript{2} University of Alabama}
 
-\abstract{
+\abstract{%
 One or two sentences providing a \textbf{basic introduction} to the field, comprehensible to a scientist in any discipline.
 
 Two to three sentences of \textbf{more detailed background}, comprehensible to scientists in related disciplines.
@@ -329,11 +353,11 @@ Next, we will talk about the results from three variables:
 \begin{itemize}
 \tightlist
 \item
-  The slope for year of first publication was \emph{b} = 0.00, \emph{SE} = 0.00, \emph{t}(53) = 1.71, \emph{p} = .092.
+  The slope for year of first publication was \emph{b} = 0.00, \emph{SE} = 0.00, \emph{t}(53) = 0.93, \emph{p} = .358.
 \item
-  The variance parameter was \(SD\) = 7.99.
+  The variance parameter was \(SD\) = 8.02.
 \item
-  The slope for variance across years was \emph{b} = 0.01, \emph{SE} = 0.48, \emph{t}(23) = 0.02, \emph{p} = .983.
+  The slope for variance across years was \emph{b} = 0.01, \emph{SE} = 0.47, \emph{t}(23) = 0.02, \emph{p} = .984.
 \end{itemize}
 
 \begin{enumerate}
@@ -347,7 +371,7 @@ Next, we will talk about the results from three variables:
 \begin{itemize}
 \tightlist
 \item
-  The slope for year of first publication was \emph{b} = 0.00, \emph{SE} = 0.00, \emph{t}(15) = 1.59, \emph{p} = .132.
+  The slope for year of first publication was \emph{b} = 0.00, \emph{SE} = 0.00, \emph{t}(15) = 1.04, \emph{p} = .315.
 \item
   The variance parameter was \(SD\) = 8.88.
 \item
@@ -365,11 +389,11 @@ Next, we will talk about the results from three variables:
 \begin{itemize}
 \tightlist
 \item
-  The slope for year of first degree was \emph{b} = 0.00, \emph{SE} = 0.00, \emph{t}(35) = 5.14, \emph{p} = \textless{} .001.
+  The slope for year of first degree was \emph{b} = 0.00, \emph{SE} = 0.00, \emph{t}(35) = 2.93, \emph{p} = .006.
 \item
-  The variance parameter was \(SD\) = 7.77.
+  The variance parameter was \(SD\) = 7.86.
 \item
-  The slope for variance across years was \emph{b} = 0.03, \emph{SE} = 0.82, \emph{t}(14) = 0.04, \emph{p} = .971.
+  The slope for variance across years was \emph{b} = 0.02, \emph{SE} = 0.82, \emph{t}(14) = 0.02, \emph{p} = .982.
 \end{itemize}
 
 Then we will discuss how these results are represented in our graph (below). We will discuss any discrepancies in the results across the three different statistics.
