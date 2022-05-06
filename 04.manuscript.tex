@@ -200,123 +200,9 @@ Two or three sentences to provide a \textbf{broader perspective}, readily compre
 \begin{document}
 \maketitle
 
-\url{https://www.science.org/content/page/science-information-authors}
-
-\hypertarget{libraries}{%
-\subsection{Libraries}\label{libraries}}
-
-\hypertarget{import-bib-data}{%
-\subsection{Import Bib Data}\label{import-bib-data}}
-
-In this section, we are importing the bibtex file that includes all the papers we are going to use.
-
-Notes:
-
-\begin{itemize}
-\tightlist
-\item
-  We used the preprint manuscript for some papers because they had the entire author list, we will update their references manually for the final dataset.
-\item
-  We will have to manually add the names for several papers that used consortium authors.
-\item
-  The pre-reg of this document only examines a few authors/papers to ensure code can be run and develop workflow.
-\end{itemize}
-
-In this section, we will add the information for authors when they used a consortium authorship.
-
-\hypertarget{import-author-data}{%
-\subsection{Import Author Data}\label{import-author-data}}
-
-\hypertarget{hand-coded-variables}{%
-\subsection{Hand Coded Variables}\label{hand-coded-variables}}
-
-\hypertarget{journal-information}{%
-\subsection{Journal Information}\label{journal-information}}
-
-\hypertarget{create-summary-statistics}{%
-\subsection{Create Summary Statistics}\label{create-summary-statistics}}
-
-\hypertarget{merge-information-back}{%
-\subsection{Merge Information Back}\label{merge-information-back}}
-
-\hypertarget{person-analysis}{%
-\subsection{Person Analysis}\label{person-analysis}}
-
-\hypertarget{career-length}{%
-\subsubsection{Career Length}\label{career-length}}
-
-\hypertarget{employment-levels}{%
-\subsubsection{Employment Levels}\label{employment-levels}}
-
-\hypertarget{education-levels}{%
-\subsubsection{Education Levels}\label{education-levels}}
-
-\hypertarget{author-bean-counting}{%
-\subsubsection{Author Bean Counting}\label{author-bean-counting}}
-
-\hypertarget{more-authors-over-time}{%
-\subsubsection{More Authors Over Time?}\label{more-authors-over-time}}
-
-\hypertarget{where-are-authors}{%
-\subsubsection{Where are Authors?}\label{where-are-authors}}
-
-\hypertarget{credit-and-weird}{%
-\subsubsection{CRediT and WEIRD}\label{credit-and-weird}}
-
-\begin{itemize}
-\tightlist
-\item
-  credit contributions ? are we using de-weirding by using those people for translation and data collection only
-
-  \begin{itemize}
-  \tightlist
-  \item
-    grab major roles and see what the diversity is
-  \item
-    look at the first 10 people and the last author
-  \item
-    maybe compare to the other 10 groups (1/3rd, middle, last 1/3rd)
-  \end{itemize}
-\end{itemize}
-
-\hypertarget{journal-analysis}{%
-\subsection{Journal Analysis}\label{journal-analysis}}
-
-\hypertarget{which-journals}{%
-\subsubsection{Which Journals}\label{which-journals}}
-
-\begin{itemize}
-\tightlist
-\item
-  make sure preprints we are using also have real journal merged in
-\end{itemize}
-
-\hypertarget{article-topics-global-type}{%
-\subsubsection{Article Topics Global Type}\label{article-topics-global-type}}
-
-\begin{itemize}
-\tightlist
-\item
-  hand coded information on what the articles are about
-\item
-  Types of big team research (social, cognitive) using keywords
-\end{itemize}
-
-\hypertarget{article-types-over-time}{%
-\subsubsection{Article Types Over Time}\label{article-types-over-time}}
-
-\begin{itemize}
-\tightlist
-\item
-  Over time: are things becoming more varied
-\item
-  are the publications more varied over time
-\end{itemize}
-
 The introduction will go here. Here's an outline:
 
 \begin{itemize}
-\tightlist
 \item
   Big Team Science
 
@@ -333,7 +219,15 @@ The introduction will go here. Here's an outline:
   WEIRD
 \item
   \ldots{} more tbd, brain isn't braining
+\item
+  Research Question 1: What journals publish big team science papers?
+\item
+  Research Question 2: What are the types of articles that are being published in big team science?
+\item
+  Research Question 3: Who is involved in big team science?
 \end{itemize}
+
+For each of these research questions, we will examine the overall results of all big team research projects, and examine for change in result trends across years of publication.
 
 \hypertarget{method}{%
 \section{Method}\label{method}}
@@ -343,39 +237,43 @@ The introduction will go here. Here's an outline:
 
 We defined \textbf{big team science publications} as publications with at least 10 authors that were published in peer-reviewed journals or had posted a full paper pre-print for publication review. We specifically focused on social science research, primarily \emph{psychology} for this manuscript. First, we added all known publications from collaborative teams, such as the PSA, Many Labs, and Many Babies. We examined journals that frequently publish registered replication reports (i.e., \emph{Advances in Methods and Practices in Psychological Science}) for additional publications with at least 10 authors. From these manuscripts, we identified common authors who frequently participate in these studies, and examined their Google Scholar or Open Researcher and Contributor IDentifier (ORCID) page for other publications. We reached out to social networks on Twitter to identify other publications. Last, we used Google Scholar and EBSCO to search for large projects using the following search terms: collaboration, multicultural, large scale, and big team science.
 
-Using these criteria, we identified 70 articles for inclusion on this manuscript. The publication dates on these articles ranged from 2013 to 2022, and we used the pre-print last updated date as the publication date for those articles. Articles were most commonly published in Advances in Methods and Practices in Psychological Science (\emph{n} = 20), Behavior Research Methods (\emph{n} = 1), Collabra: Psychology (\emph{n} = 1), Computers in Human Behavior (\emph{n} = 1), and International Journal of Methods in Psychiatric Research (\emph{n} = 1). A complete list of journals can be found on our Open Science Framework page XXX.
-
 \hypertarget{data-curation}{%
 \subsection{Data Curation}\label{data-curation}}
 
-\hypertarget{article-information}{%
-\subsubsection{Article Information}\label{article-information}}
+\hypertarget{rq1-journal-information}{%
+\subsubsection{RQ1: Journal Information}\label{rq1-journal-information}}
 
-For each publication, we coded the list of keywords into broad labels for areas of social science (i.e., Social Psychology, Cognitive Psychology). The current impact factor (i.e., 2022) for each journal was found on the journal page and included for journal statistics.
+Using these criteria, we identified 70 articles for inclusion on this manuscript. The publication dates on these articles ranged from 2013 to 2022, and we used the pre-print last updated date as the publication date for those articles. The current impact factor (i.e., 2022) for each journal was found on the journal page and included for journal statistics.
 
-\hypertarget{author-information}{%
-\subsubsection{Author Information}\label{author-information}}
+\hypertarget{rq2-article-information}{%
+\subsubsection{RQ2: Article Information}\label{rq2-article-information}}
+
+For each publication, we coded the list of keywords into broad labels for areas of social science (i.e., Social Psychology, Cognitive Psychology). In this section, we elected to code each article with only one main research area. Research is often cross-disciplinary, however, for simplicity, we applied one global label to each article that represented the perceived main area of study (based on what course this material might be taught in, the publication journal focus). The list of broad areas includes clinical, cognitive, developmental, educational, and social psychology. Last, we included a metascience category that covered articles that were detailing the science of science. The Open Science Collaboration {[}CITE{]} was included in this category because the aim of the paper was a focus on replication across multiple field types. Other metascience categories included papers that focused on research degrees of freedom, analysis choices, and types of samples.
+
+\hypertarget{rq3-author-information}{%
+\subsubsection{RQ3: Author Information}\label{rq3-author-information}}
 
 The author list was then extracted from each publication. In the case of consortium authorship, we extracted the complete authorship from the meta-data or pre-print publication. The total number of unique authors was 3336. The number of authors on each publication ranged from 1 to 482 with an average of 68.63 authors (\emph{SD} = 89.89).
 
 Next, we matched each author to their Google Scholar and ORCID profile pages, if available. We originally used the \emph{R} packages, \emph{rorcid} {[}CITE{]} and \emph{scholar} {[}CITE{]} to try to match published author names to profile pages. This process did not result in a large number of matches, and we therefore curated the list of profile pages manually, checking each author against the publication list. We used these two packages and profile pages to collect authorship statistics described below.
 
-\textbf{Career Length}. Career length for each author was defined using multiple variables to see if results from the two data sources would converge on similar answers. Both ORCID and Google Scholar provide a list of publications for authors, and we first calculated career length as the year of first publication listed for each author. In ORCID, a researcher can enter their educational background with completion years for each degree. We defined career length for this variable as years since first degree listed. Publication years are often curated directly from meta-data provided by Crossref (ORCID) or online sources used by Google Scholar. Authors may also directly add publications and their information into both systems. The limitation to using education as a metric for career length is that the researcher must directly enter this information into ORCID.
+\textbf{\emph{Career Length}}. Career length for each author was defined using multiple variables to see if results from the two data sources would converge on similar answers. Both ORCID and Google Scholar provide a list of publications for authors, and we first calculated career length as the year of first publication listed for each author. In ORCID, a researcher can enter their educational background with completion years for each degree. We defined career length for this variable as years since first degree listed. Publication years are often curated directly from meta-data provided by Crossref (ORCID) or online sources used by Google Scholar. Authors may also directly add publications and their information into both systems. The limitation to using education as a metric for career length is that the researcher must directly enter this information into ORCID.
 
-\textbf{Employment}. Employment information was collected from self-entered ORCID data. These values are open text, and therefore, we coded them into coherent categories for traditional educational (graduate student, post doctoral, lecturer), tenure track (assistant, associate, full professor), and other roles (fellow, research assistant, researcher, head). Employment geopolitical region was also selected when available.
+\textbf{\emph{Employment}}. Employment information was collected from self-entered ORCID data. These values are open text, and therefore, we coded them into coherent categories for traditional educational (graduate student, post doctoral, lecturer), tenure track (assistant, associate, full professor), and other roles (fellow, research assistant, researcher, head). Employment geopolitical region was also selected when available.
 
-\textbf{Education}. As with employment information, we also collected education information from self-entered ORCID data. These values were coded into general categories of bachelor, master, and doctoral degrees. The geopolitical region of the listed education was included when available. For analyses, both employment and education levels were grouped into United Nation regions.
+\textbf{\emph{Education}}. As with employment information, we also collected education information from self-entered ORCID data. These values were coded into general categories of bachelor, master, and doctoral degrees. The geopolitical region of the listed education was included when available. For analyses, both employment and education levels were grouped into United Nation regions.
 
-\textbf{Types of Publications}. ORCID includes information about the type of publication pulled from either researcher entered data or Crossref. We coded these publications into general categories including book, conference presentations, data-sets, journal articles, preprints, software, thesis, and other publications.
+\textbf{\emph{Types of Publications}}. ORCID includes information about the type of publication pulled from either researcher entered data or Crossref. We coded these publications into general categories including book, conference presentations, data-sets, journal articles, preprints, software, thesis, and other publications.
 
-\textbf{Publication Metrics}. We calculated total number of publications of any type from both Google Scholar and ORCID. We additionally pulled both the h-index and i-10 index from Google Scholar. The h-index represents the highest \emph{h} number of publications that have at least \emph{h} citations, while the i-10 index represents the number of publications with at least 10 citations.
+\textbf{\emph{Publication Metrics}}. We calculated total number of publications of any type from both Google Scholar and ORCID. We additionally pulled both the h-index and i-10 index from Google Scholar. The h-index represents the highest \emph{h} number of publications that have at least \emph{h} citations, while the i-10 index represents the number of publications with at least 10 citations.
 
-###IMPACT FACTOR 
+\hypertarget{data-analysis}{%
+\subsection{Data analysis}\label{data-analysis}}
 
-NATURE- 
-2 year- 13.663
-5- 15.294
+\hypertarget{rq1-journals}{%
+\subsubsection{RQ1: Journals}\label{rq1-journals}}
 
+<<<<<<< Updated upstream
 Behavior research method 2020
 2 year 6.242
 5 year 6.277
@@ -387,78 +285,115 @@ Collabra: psychology
 Computers in human behavior
 2 6.829
 5 8.582
+=======
+Results for types of journals will include a summary of the journals that publish big-team science papers and an average of the 2-year and 5-year impact factors for the journals.
 
-International journal of methods in psychiatric research
-2 4.035
-5 3.61 
+\hypertarget{rq2-articles}{%
+\subsubsection{RQ2: Articles}\label{rq2-articles}}
 
-Perspective on psychological science 
-2 9.837
-5 10.055 
+Results for types of articles will include a summary of the coded areas for each article, presented overall and across the years of publication.
+>>>>>>> Stashed changes
 
-Journal of experimental psychology: learning memory and cognition 
-2 3.051
-5 2.604 
+\hypertarget{rq3-authors.}{%
+\subsubsection{\texorpdfstring{RQ3: Authors.\\
+}{RQ3: Authors. }}\label{rq3-authors.}}
 
-Psychonomic  bulletin and review 
-2 5.536
-5 4.96
+We will use \(\alpha\) \textless{} .05 for all analyses that involve hypothesis testing. We make no directional predictions.
 
-Plos one 
-2 3.24
-5 3.272
+\textbf{\emph{Career Length}}. For each of the three variables in career length (ORCID year of first pub, Scholar year of first pub, ORCID year of first degree), we will create a visualization of the trend and variance of researcher career length across publication years. To analyze trends over time, we will use the slope from a multilevel model (MLM) using the individual as a random intercept, career length as the dependent variable, and year of publication as the predictor variable. MLMs are regression models that control for the correlated error due to the repeated and nested nature of the data {[}CITE{]}. In this model, each individual's starting career length is arbitrary, which we allow to vary with the random intercept by participant. A positive slope for year of publication would indicate increasing years of first publication (i.e., more younger scholars over time), while a negative slope would indicate older years of first publication (i.e., more older scholars over time). In order to show variance between individuals, we will report the variance component of the random intercept for individuals. Finally, to examine variance over time, we will calculate the standard deviation of the individual within each publication (i.e., one standard deviation for each article), and use a linear model with year predicting these standard deviations. This model is a traditional simultaneous regression, as averaging the variance by title eliminates the repeated measures variable (individuals). A positive slope would indicate increasing variance over time (i.e., more diversity in the career lengths of scholars), while a negative slope would indicate less variance and diversity in scholars over time.
 
-Journal of mathematical psychology 
-2 2.223 
-5 2.824
+\textbf{\emph{Employment}}. Employment information was collected from self-entered ORCID data. These values are open text, and therefore, we coded them into coherent categories for traditional educational (graduate student, post doctoral, lecturer), tenure track (assistant, associate, full professor), and other roles (fellow, research assistant, researcher, head). Employment geopolitical region was also selected when available.
 
-Review of philosophy and psychology 
-2 1.337 
-5 1.414
+\textbf{\emph{Education}}. As with employment information, we also collected education information from self-entered ORCID data. These values were coded into general categories of bachelor, master, and doctoral degrees. The geopolitical region of the listed education was included when available. For analyses, both employment and education levels were grouped into United Nation regions.
 
-Science- 
-2 47.728
-5 13.41 
+\textbf{\emph{Types of Publications}}. ORCID includes information about the type of publication pulled from either researcher entered data or Crossref. We coded these publications into general categories including book, conference presentations, data-sets, journal articles, preprints, software, thesis, and other publications.
 
-Psychological science 
-2 7.029 
-5 5.822
-
-Journal of social psychology 
-2 2.712
-5 2.191
-
-AMPPs 
-Nothing 
-
-Journal of psychosomatic research 
-2 3.006
-5 2.822
-
-PNAS 
-2 11.205
-5 9.838
-
-Nature communications
-2 14.919
-5 14.123 
-
-Computational linguistics 
-2 2.271
-5 5.014 
-
-\hypertarget{data-analysis}{%
-\subsection{Data analysis}\label{data-analysis}}
-
-what are we gonna do to answer the research questions
+\textbf{\emph{Publication Metrics}}. We calculated total number of publications of any type from both Google Scholar and ORCID. We additionally pulled both the h-index and i-10 index from Google Scholar. The h-index represents the highest \emph{h} number of publications that have at least \emph{h} citations, while the i-10 index represents the number of publications with at least 10 citations.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-put stuff in here about the format/structure to answering the research questions
+\hypertarget{rq1-journals-1}{%
+\subsubsection{RQ1: Journals}\label{rq1-journals-1}}
+
+Articles were most commonly published in Advances in Methods and Practices in Psychological Science (\emph{n} = 20), Pre-Print (\emph{n} = 17), Perspectives on Psychological Science (\emph{n} = 7), PLOS ONE (\emph{n} = 4), and Nature Human Behaviour (\emph{n} = 3). A complete list of journals can be found on our Open Science Framework page XXX. The average 2-year impact factor for official journal publications was 8.22 (\emph{SD} = 10.67) and the average 5-year impact factor was 6.41 (\emph{SD} = 4.42).
+
+\hypertarget{rq2-articles-1}{%
+\subsubsection{RQ2: Articles}\label{rq2-articles-1}}
+
+Articles were primarily Social (41.4\%) and Cognitive (31.4\%), followed by smaller categories for Metascience (17.1\%), Clinical (4.3\%), Developmental (4.3\%), and Educational (1.4\%). Here, we will talk about the figure below and how the trends occur across time.
+
+\includegraphics{04.manuscript_files/figure-latex/figure1-1.pdf}
+
+\hypertarget{rq3-authors.-1}{%
+\subsubsection{\texorpdfstring{RQ3: Authors.\\
+}{RQ3: Authors. }}\label{rq3-authors.-1}}
+
+\textbf{\emph{Career Length}}. The average career length was 11.97 (\emph{SD} = 7.95) for ORCID first publication year (i.e., current year minus year of first publication), \emph{M} = 13.12 (\emph{SD} = 8.74) for Scholar year of first publication, and \emph{M} = 13.54 (\emph{SD} = 7.77) for ORCID year of first degree. In each of the analyses, we use the actual year of first publication/education, as subtracting publication and using it as a predictor would create a perfect solution for each model.
+
+Next, we will talk about the results from three variables:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  ORCID year first publication:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  The slope for year of first publication was \emph{b} = 0.00, \emph{SE} = 0.00, \emph{t}(53) = 1.71, \emph{p} = .092.
+\item
+  The variance parameter was \(SD\) = 7.99.
+\item
+  The slope for variance across years was \emph{b} = 0.01, \emph{SE} = 0.48, \emph{t}(23) = 0.02, \emph{p} = .983.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Scholar year first publication:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  The slope for year of first publication was \emph{b} = 0.00, \emph{SE} = 0.00, \emph{t}(15) = 1.59, \emph{p} = .132.
+\item
+  The variance parameter was \(SD\) = 8.88.
+\item
+  The slope for variance across years was \emph{b} = 0.16, \emph{SE} = 0.61, \emph{t}(2) = 0.26, \emph{p} = .821.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  ORCID year first degree:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  The slope for year of first degree was \emph{b} = 0.00, \emph{SE} = 0.00, \emph{t}(35) = 5.14, \emph{p} = \textless{} .001.
+\item
+  The variance parameter was \(SD\) = 7.77.
+\item
+  The slope for variance across years was \emph{b} = 0.03, \emph{SE} = 0.82, \emph{t}(14) = 0.04, \emph{p} = .971.
+\end{itemize}
+
+Then we will discuss how these results are represented in our graph (below). We will discuss any discrepancies in the results across the three different statistics. We shall also make this graph more readable!
+
+\includegraphics{04.manuscript_files/figure-latex/figure2-1.pdf}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
+
+To be included after we have completed analyses.
 
 \newpage
 

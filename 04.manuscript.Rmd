@@ -74,6 +74,10 @@ output            : papaja::apa6_pdf
 
 ```{r setup, include = FALSE}
 library(papaja)
+library(knitr)
+library(cowplot)
+library(broom.mixed)
+current_year <- 2022
 ```
 
 ```{r analysis-preferences}
@@ -82,7 +86,8 @@ set.seed(538943)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
-```{r, child = '03.data_analysis.Rmd', include = FALSE, results = FALSE, echo = FALSE}
+```{r bringinanalysis, include = FALSE, echo = FALSE}
+output <- knit_child("03.data_analysis.Rmd")
 ```
 
 The introduction will go here. Here's an outline:
@@ -94,11 +99,11 @@ The introduction will go here. Here's an outline:
 - WEIRD 
 - ... more tbd, brain isn't braining 
 
-Research Question 1: What journals publish big team science papers?
+- Research Question 1: What journals publish big team science papers?
+- Research Question 2: What are the types of articles that are being published in big team science?
+- Research Question 3: Who is involved in big team science? 
 
-Research Question 2: What are the types of articles that are being published in big team science?
-
-Research Question 3: Who is involved in big team science? 
+For each of these research questions, we will examine the overall results of all big team research projects, and examine for change in result trends across years of publication. 
 
 # Method
 
@@ -108,15 +113,15 @@ We defined **big team science publications** as publications with at least 10 au
 
 ## Data Curation
 
-### Journal Information 
+### RQ1: Journal Information 
 
 Using these criteria, we identified `r nrow(bibs)` articles for inclusion on this manuscript. The publication dates on these articles ranged from `r min(bibs$YEAR)` to `r max(bibs$YEAR)`, and we used the pre-print last updated date as the publication date for those articles. The current impact factor (i.e., 2022) for each journal was found on the journal page and included for journal statistics.
 
-### Article Information 
+### RQ2: Article Information 
 
-For each publication, we coded the list of keywords into broad labels for areas of social science (i.e., Social Psychology, Cognitive Psychology). WRITE MORE ABOUT NOT DOUBLE CODING ... DEFINE HOW EACH LABEL WAS DONE ... WHAT IS METASCIENCE GIVE OSC EXAMPLE 
+For each publication, we coded the list of keywords into broad labels for areas of social science (i.e., Social Psychology, Cognitive Psychology). In this section, we elected to code each article with only one main research area. Research is often cross-disciplinary, however, for simplicity, we applied one global label to each article that represented the perceived main area of study (based on what course this material might be taught in, the publication journal focus). The list of broad areas includes clinical, cognitive, developmental, educational, and social psychology. Last, we included a metascience category that covered articles that were detailing the science of science. The Open Science Collaboration [CITE] was included in this category because the aim of the paper was a focus on replication across multiple field types. Other metascience categories included papers that focused on research degrees of freedom, analysis choices, and types of samples. 
 
-### Author Information   
+### RQ3: Author Information   
 
 ```{r authors, include = FALSE, echo = FALSE}
 min(author_count$author_count)
@@ -130,29 +135,103 @@ The author list was then extracted from each publication. In the case of consort
 
 Next, we matched each author to their Google Scholar and ORCID profile pages, if available. We originally used the *R* packages, *rorcid* [CITE] and *scholar* [CITE] to try to match published author names to profile pages. This process did not result in a large number of matches, and we therefore curated the list of profile pages manually, checking each author against the publication list. We used these two packages and profile pages to collect authorship statistics described below.
 
-**Career Length**. Career length for each author was defined using multiple variables to see if results from the two data sources would converge on similar answers. Both ORCID and Google Scholar provide a list of publications for authors, and we first calculated career length as the year of first publication listed for each author. In ORCID, a researcher can enter their educational background with completion years for each degree. We defined career length for this variable as years since first degree listed. Publication years are often curated directly from meta-data provided by Crossref (ORCID) or online sources used by Google Scholar. Authors may also directly add publications and their information into both systems. The limitation to using education as a metric for career length is that the researcher must directly enter this information into ORCID.
+**_Career Length_**. Career length for each author was defined using multiple variables to see if results from the two data sources would converge on similar answers. Both ORCID and Google Scholar provide a list of publications for authors, and we first calculated career length as the year of first publication listed for each author. In ORCID, a researcher can enter their educational background with completion years for each degree. We defined career length for this variable as years since first degree listed. Publication years are often curated directly from meta-data provided by Crossref (ORCID) or online sources used by Google Scholar. Authors may also directly add publications and their information into both systems. The limitation to using education as a metric for career length is that the researcher must directly enter this information into ORCID.
 
-**Employment**. Employment information was collected from self-entered ORCID data. These values are open text, and therefore, we coded them into coherent categories for traditional educational (graduate student, post doctoral, lecturer),  tenure track (assistant, associate, full professor), and other roles (fellow, research assistant, researcher, head). Employment geopolitical region was also selected when available.   
+**_Employment_**. Employment information was collected from self-entered ORCID data. These values are open text, and therefore, we coded them into coherent categories for traditional educational (graduate student, post doctoral, lecturer),  tenure track (assistant, associate, full professor), and other roles (fellow, research assistant, researcher, head). Employment geopolitical region was also selected when available.   
 
-**Education**. As with employment information, we also collected education information from self-entered ORCID data. These values were coded into general categories of bachelor, master, and doctoral degrees. The geopolitical region of the listed education was included when available. For analyses, both employment and education levels were grouped into United Nation regions.   
+**_Education_**. As with employment information, we also collected education information from self-entered ORCID data. These values were coded into general categories of bachelor, master, and doctoral degrees. The geopolitical region of the listed education was included when available. For analyses, both employment and education levels were grouped into United Nation regions.   
 
-**Types of Publications**. ORCID includes information about the type of publication pulled from either researcher entered data or Crossref. We coded these publications into general categories including book, conference presentations, data-sets, journal articles, preprints, software, thesis, and other publications. 
+**_Types of Publications_**. ORCID includes information about the type of publication pulled from either researcher entered data or Crossref. We coded these publications into general categories including book, conference presentations, data-sets, journal articles, preprints, software, thesis, and other publications. 
 
-**Publication Metrics**. We calculated total number of publications of any type from both Google Scholar and ORCID. We additionally pulled both the h-index and i-10 index from Google Scholar. The h-index represents the highest *h* number of publications that have at least *h* citations, while the i-10 index represents the number of publications with at least 10 citations. 
+**_Publication Metrics_**. We calculated total number of publications of any type from both Google Scholar and ORCID. We additionally pulled both the h-index and i-10 index from Google Scholar. The h-index represents the highest *h* number of publications that have at least *h* citations, while the i-10 index represents the number of publications with at least 10 citations. 
 
 ## Data analysis
 
-what are we gonna do to answer the research questions 
+### RQ1: Journals
+
+Results for types of journals will include a summary of the journals that publish big-team science papers and an average of the 2-year and 5-year impact factors for the journals. 
+
+### RQ2: Articles
+
+Results for types of articles will include a summary of the coded areas for each article, presented overall and across the years of publication. 
+
+### RQ3: Authors. \
+
+We will use $\alpha$ < .05 for all analyses that involve hypothesis testing. We make no directional predictions. 
+
+**_Career Length_**. For each of the three variables in career length (ORCID year of first pub, Scholar year of first pub, ORCID year of first degree), we will create a visualization of the trend and variance of researcher career length across publication years. To analyze trends over time, we will use the slope from a multilevel model (MLM) using the individual as a random intercept, career length as the dependent variable, and year of publication as the predictor variable. MLMs are regression models that control for the correlated error due to the repeated and nested nature of the data [CITE]. In this model, each individual's starting career length is arbitrary, which we allow to vary with the random intercept by participant. A positive slope for year of publication would indicate increasing years of first publication (i.e., more younger scholars over time), while a negative slope would indicate older years of first publication (i.e., more older scholars over time). In order to show variance between individuals, we will report the variance component of the random intercept for individuals. Finally, to examine variance over time, we will calculate the standard deviation of the individual within each publication (i.e., one standard deviation for each article), and use a linear model with year predicting these standard deviations. This model is a traditional simultaneous regression, as averaging the variance by title eliminates the repeated measures variable (individuals). A positive slope would indicate increasing variance over time (i.e., more diversity in the career lengths of scholars), while a negative slope would indicate less variance and diversity in scholars over time.
+
+**_Employment_**. Employment information was collected from self-entered ORCID data. These values are open text, and therefore, we coded them into coherent categories for traditional educational (graduate student, post doctoral, lecturer),  tenure track (assistant, associate, full professor), and other roles (fellow, research assistant, researcher, head). Employment geopolitical region was also selected when available.   
+
+**_Education_**. As with employment information, we also collected education information from self-entered ORCID data. These values were coded into general categories of bachelor, master, and doctoral degrees. The geopolitical region of the listed education was included when available. For analyses, both employment and education levels were grouped into United Nation regions.   
+
+**_Types of Publications_**. ORCID includes information about the type of publication pulled from either researcher entered data or Crossref. We coded these publications into general categories including book, conference presentations, data-sets, journal articles, preprints, software, thesis, and other publications. 
+
+**_Publication Metrics_**. We calculated total number of publications of any type from both Google Scholar and ORCID. We additionally pulled both the h-index and i-10 index from Google Scholar. The h-index represents the highest *h* number of publications that have at least *h* citations, while the i-10 index represents the number of publications with at least 10 citations.
 
 # Results
 
-## RQ1: Journal Information
+### RQ1: Journals
 
-Articles were most commonly published in `r journal_count$JOURNAL[1]` (*n* = `r journal_count$freq[1]`), `r journal_count$JOURNAL[2]` (*n* = `r journal_count$freq[2]`), `r journal_count$JOURNAL[3]` (*n* = `r journal_count$freq[3]`), `r journal_count$JOURNAL[4]` (*n* = `r journal_count$freq[4]`), and `r journal_count$JOURNAL[5]` (*n* = `r journal_count$freq[5]`). A complete list of journals can be found on our Open Science Framework page XXX. 
+Articles were most commonly published in `r journal_count$JOURNAL[1]` (*n* = `r journal_count$freq[1]`), `r journal_count$JOURNAL[2]` (*n* = `r journal_count$freq[2]`), `r journal_count$JOURNAL[3]` (*n* = `r journal_count$freq[3]`), `r journal_count$JOURNAL[4]` (*n* = `r journal_count$freq[4]`), and `r journal_count$JOURNAL[5]` (*n* = `r journal_count$freq[5]`). A complete list of journals can be found on our Open Science Framework page XXX. The average 2-year impact factor for official journal publications was `r format(mean(JIF$JIF2, na.rm = T), nsmall = 2, digits = 2)` (*SD* = `r format(sd(JIF$JIF2, na.rm = T), nsmall = 2, digits = 2)`) and the average 5-year impact factor was `r format(mean(JIF$JIF5, na.rm = T), nsmall = 2, digits = 2)` (*SD* = `r format(sd(JIF$JIF5, na.rm = T), nsmall = 2, digits = 2)`).
 
-put stuff in here about the format/structure to answering the research questions 
+### RQ2: Articles
+
+Articles were primarily `r article_overall$Var1[1]` (`r format(article_overall$Percent[1], nsmall = 1, digits = 1)`%) and `r article_overall$Var1[2]` (`r format(article_overall$Percent[2], nsmall = 1, digits = 1)`%), followed by smaller categories for `r article_overall$Var1[3]` (`r format(article_overall$Percent[3], nsmall = 1, digits = 1)`%), `r article_overall$Var1[4]` (`r format(article_overall$Percent[4], nsmall = 1, digits = 1)`%), `r article_overall$Var1[5]` (`r format(article_overall$Percent[5], nsmall = 1, digits = 1)`%), and `r article_overall$Var1[6]` (`r format(article_overall$Percent[6], nsmall = 1, digits = 1)`%). Here, we will talk about the figure below and how the trends occur across time.  
+
+```{r figure1, echo = FALSE}
+article_time_plot
+```
+
+### RQ3: Authors. \
+
+```{r echo = FALSE}
+o_career_output <- tidy(o_career_model)
+var_o_career_output <- tidy(var_o_career_model)
+
+s_career_output <- tidy(s_career_model)
+var_s_career_output <- tidy(var_s_career_model)
+
+o_career_ed_output <- tidy(o_career_ed_model)
+var_o_career_ed_output <- tidy(var_o_career_ed_model)
+```
+
+**_Career Length_**. The average career length was `r format(round(current_year - mean(o_works_summary$o_career_1_pub, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(current_year - o_works_summary$o_career_1_pub, na.rm = T), digits = 2), nsmall = 2)`) for ORCID first publication year (i.e., current year minus year of first publication), *M* = `r format(round(current_year - mean(s_works_summary$s_career_1_pub, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(current_year - s_works_summary$s_career_1_pub, na.rm = T), digits = 2), nsmall = 2)`) for Scholar year of first publication, and *M* = `r format(round(current_year - mean(o_ed_summary$o_career_1_degree, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(current_year - o_ed_summary$o_career_1_degree, na.rm = T), digits = 2), nsmall = 2)`) for ORCID year of first degree. In each of the analyses, we use the actual year of first publication/education, as subtracting publication and using it as a predictor would create a perfect solution for each model. 
+
+Next, we will talk about the results from three variables:
+
+1) ORCID year first publication: 
+
+  - The slope for year of first publication was *b* = `r format(round(o_career_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(o_career_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r o_career_output$df[2]`) = `r format(round(o_career_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(o_career_output$p.value[2])`. 
+  - The variance parameter was $SD$ = `r format(round(o_career_output$estimate[3], digits = 2), nsmall = 2)`. 
+  - The slope for variance across years was *b* = `r format(round(var_o_career_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(var_o_career_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r var_o_career_model$df.residual`) = `r format(round(var_o_career_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(var_o_career_output$p.value[2])`.
+  
+2) Scholar year first publication: 
+
+  - The slope for year of first publication was *b* = `r format(round(s_career_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(s_career_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r s_career_output$df[2]`) = `r format(round(s_career_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(s_career_output$p.value[2])`. 
+  - The variance parameter was $SD$ = `r format(round(s_career_output$estimate[3], digits = 2), nsmall = 2)`. 
+  - The slope for variance across years was *b* = `r format(round(var_s_career_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(var_s_career_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r var_s_career_model$df.residual`) = `r format(round(var_s_career_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(var_s_career_output$p.value[2])`.
+  
+3) ORCID year first degree: 
+
+  - The slope for year of first degree was *b* = `r format(round(o_career_ed_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(o_career_ed_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r o_career_ed_output$df[2]`) = `r format(round(o_career_ed_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(o_career_ed_output$p.value[2])`. 
+  - The variance parameter was $SD$ = `r format(round(o_career_ed_output$estimate[3], digits = 2), nsmall = 2)`. 
+  - The slope for variance across years was *b* = `r format(round(var_o_career_ed_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(var_o_career_ed_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r var_o_career_ed_model$df.residual`) = `r format(round(var_o_career_ed_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(var_o_career_ed_output$p.value[2])`.
+  
+Then we will discuss how these results are represented in our graph (below). We will discuss any discrepancies in the results across the three different statistics. 
+
+```{r figure2, echo = FALSE, warning = FALSE}
+plot_grid(o_career_graph + theme(text = element_text(size = 8), 
+                                 axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 0.5)), 
+          s_career_graph + theme(text = element_text(size = 8), 
+                                 axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 0.5)), 
+          o_career_graph_ed + theme(text = element_text(size = 8), 
+                                 axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 0.5)))
+```
 
 # Discussion
+
+To be included after we have completed analyses. 
 
 \newpage
 

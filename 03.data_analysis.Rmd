@@ -20,6 +20,7 @@ library(rio)
 library(tidyr)
 library(ggplot2)
 library(nlme)
+library(RColorBrewer)
 #### fix sau chins paper #### https://osf.io/gq92w/ 
 ```
 
@@ -82,7 +83,7 @@ s_info <- import("scholar_info.csv")
 ## Hand Coded Variables
 
 ```{r}
-# will summarize types of research 
+# will summarize types of research ----
 table(o_works$type)
 o_works$our_type <- o_works$type
 o_works$our_type <- gsub("edited-book|book.+", "book", o_works$our_type)
@@ -93,7 +94,7 @@ o_works$our_type <- gsub("working-paper", "preprint", o_works$our_type)
 o_works$our_type <- gsub("website", "other", o_works$our_type)
 table(o_works$our_type)
 
-# will code job data 
+# will code job data ----
 table(o_job$employment_summary_role_title)
 o_job$our_job <- tolower(o_job$employment_summary_role_title)
 o_job$our_job <- trimws(o_job$our_job)
@@ -112,6 +113,7 @@ o_job$our_job <- gsub(".*head.*", "head", o_job$our_job)
 o_job$our_job <- gsub("centennial professor|prof\\.|professor of cognitive analytics|proffessor.*|^temporal proffesor.*", "full professor", o_job$our_job)
 table(o_job$our_job)
 
+# hand code education ----
 table(o_ed$education_summary_role_title)
 o_ed$our_ed <- tolower(o_ed$education_summary_role_title)
 o_ed$our_ed <- trimws(o_ed$our_ed)
@@ -123,39 +125,58 @@ o_ed$our_ed <- gsub("masters of business and economics", "masters", o_ed$our_ed)
 o_ed$our_ed <- gsub("visiting researcher|venia docendi in business administration|graduate student", NA, o_ed$our_ed)
 table(o_ed$our_ed)
 
+# keywords of articles ----
 bibs$our_keyword <- tolower(bibs$KEYWORDS)
-bibs$our_keyword <- gsub(".*social.*|.*facial feedback hypothesis.*|.*attitude.*|.*interpersonal.*|.*viral infection.*|.*moral judgment.*|.*economics.*|.*relationships.*|.*morality.*|.*ultimatum.*|.*offense.*|psychology, human behaviour", "social", bibs$our_keyword)
-bibs$our_keyword <- gsub("intelligence|.*recognition memory.*|.*cognitive.*|.*working memory.*|.*evolution.*|.*priming.*|.*multivariate.*|.*magical thinking.*|.*legal psychology.*", "cognitive", bibs$our_keyword)
-bibs$our_keyword <- gsub(".*scientific community.*|.*life course.*|.*metascience.*", "metascience", bibs$our_keyword)
+bibs$our_keyword <- gsub(".*social.*|.*facial feedback hypothesis.*|.*attitude.*|.*interpersonal.*|.*viral infection.*|.*moral judgment.*|.*economics.*|.*relationships.*|.*morality.*|.*ultimatum.*|.*offense.*|psychology, human behaviour", "Social", bibs$our_keyword)
+bibs$our_keyword <- gsub("intelligence|.*recognition memory.*|.*cognitive.*|.*working memory.*|.*evolution.*|.*priming.*|.*multivariate.*|.*magical thinking.*|.*legal psychology.*", "Cognitive", bibs$our_keyword)
+bibs$our_keyword <- gsub(".*scientific community.*|.*life course.*|.*metascience.*", "Metascience", bibs$our_keyword)
 
 bibs$title2 <- tolower(gsub("[[:punct:]]", "", bibs$TITLE))
 
 bibs$our_keyword[grepl("message framing|egodepletion|facial feedback|turri|emotion|motivation|mortality salience|stereotype threat|moral judgments|trafimow|experimental philosophy", 
-                       bibs$title2)] <- "social"
+                       bibs$title2)] <- "Social"
 bibs$our_keyword[grepl("semantic mismatch|priming|actionsentence|memory|eeg|object orientation|cognitive|natural language", 
-                       bibs$title2)] <- "cognitive"
+                       bibs$title2)] <- "Cognitive"
 bibs$our_keyword[grepl("toddlers|infancy research", 
-                       bibs$title2)] <- "developmental"
+                       bibs$title2)] <- "Developmental"
 bibs$our_keyword[grepl("researchers choices|diffusion decision|many analysts|pool quality|variation in replicability|hidden universe|psychological science", 
-                       bibs$title2)] <- "metascience"
+                       bibs$title2)] <- "Metascience"
 bibs$our_keyword[grepl("subjective wellbeing|mental illness|online alcohol survey", 
-                       bibs$title2)] <- "clinical"
+                       bibs$title2)] <- "Clinical"
 bibs$our_keyword[grepl("immediate feedback",
-                       bibs$title2)] <- "education"
+                       bibs$title2)] <- "Educational"
 
 table(bibs$title2[is.na(bibs$our_keyword)])
-
-
 table(bibs$our_keyword, useNA = "ifany")
 ```
 
 ## Journal Information
 
 ```{r}
-### figure out impact factors 
+JIF <- import("jif.xlsx")
 ```
 
-## Create Summary Statistics 
+## Article Information 
+
+```{r}
+article_overall <- as.data.frame(table(bibs$our_keyword)) %>% 
+  arrange(desc(Freq)) %>% 
+  mutate(Percent = Freq / sum(Freq) * 100)
+article_time <- as.data.frame(table(bibs$our_keyword, bibs$YEAR))
+
+article_time_plot <- ggplot(article_time, aes(Var2, Freq, fill = Var1)) +
+  geom_bar(position="stack", stat="identity") + 
+  theme_classic() + 
+  xlab("Publication Year") + 
+  ylab("Number of Papers") + 
+  scale_fill_brewer(palette = "RdBu", name = "Research Area")
+
+```
+
+
+## Person Analysis 
+
+### Create Summary Statistics 
 
 ```{r}
 # will filter out bad data, here's an example
@@ -181,6 +202,7 @@ o_ed_summary <- o_ed %>%
   summarize(o_career_1_degree = min(education_summary_end_date_year_value, na.rm = T)) 
 # remember to ignore inf 
 o_ed_summary$o_career_1_degree[o_ed_summary$o_career_1_degree < 0] <- NA
+o_ed_summary$o_career_1_degree[o_ed_summary$o_career_1_degree == Inf] <- NA
 
 # create a table that's ORCID, job, education, year for each year within bib 2013 to 2022
 roles_years <- data.frame(
@@ -193,6 +215,7 @@ roles_years <- data.frame(
 o_ed_explode <- data.frame()
 o_job_explode <- data.frame()
 
+####ERIN YOU STILL HAVE TO DO THIS####
 # for jobs fill in "current" or end date
 # Find users with blanks
 # For each one find the number of rows 
@@ -233,7 +256,7 @@ for (year in 2013:2022){
              by = c("ORCID" = "ORCID", "year" = "year_merge"))
 ```
 
-## Merge Information Back 
+### Merge Information Back 
 
 ```{r}
 merged_df <- long_bib %>% 
@@ -266,8 +289,7 @@ merged_df <- long_bib %>%
 
 ```
 
-
-## Person Analysis 
+### Graph Year Fix
 
 ```{r}
 merged_df$graph_year <- factor(merged_df$YEAR)
@@ -276,71 +298,81 @@ merged_df$graph_year <- factor(merged_df$YEAR)
 ### Career Length
 
 ```{r}
-# since first pub ORCID
-merged_df$o_career_pub_year <- merged_df$YEAR - merged_df$o_career_1_pub
+# since first pub ORCID ----
+merged_df$TITLE_color <- as.numeric(factor(merged_df$TITLE))
 
-ggplot(merged_df, aes(graph_year, o_career_pub_year)) + 
+# graph
+o_career_graph <- ggplot(merged_df, aes(graph_year, o_career_1_pub)) + 
   geom_violin() + 
-  geom_jitter(height = 0, width = 0.2, aes(color = TITLE)) + 
+  geom_jitter(height = 0, width = 0.2, aes(color = TITLE_color)) + 
   theme_classic() + 
   ylab("Career Length (ORCID First Pub)") + 
   xlab("Year of Publication") +
-  theme(legend.position="none")
+  theme(legend.position="none") 
 
-### will ask KD about this one ###
+# year model slope 
 o_career_model <- lme(o_career_1_pub ~ YEAR,
                       data = merged_df,
                       na.action = "na.omit",
                       random = ~1|ORCID)
 
-summary(o_career_model)
-
+# variance model 
 variance_df <- merged_df %>% 
   group_by(TITLE) %>% 
   summarize(year = mean(YEAR), 
-            var_o_career_1_pub = sd(o_career_1_pub, na.rm = T))
+            var_o_career_1_pub = sd(o_career_1_pub, na.rm = T),
+            var_s_career_1_pub = sd(s_career_1_pub, na.rm = T), 
+            var_o_career_1_degree = sd(o_career_1_degree, na.rm = T))
 
 var_o_career_model <- lm(var_o_career_1_pub ~ year, 
                           data = variance_df,
                           na.action = "na.omit")
-summary(var_o_career_model)
+```
 
-# since first pub scholar
-merged_df$s_career_pub_year <- merged_df$YEAR - merged_df$s_career_1_pub
+```{r}
+# since first pub scholar ----
 
-ggplot(merged_df, aes(graph_year, s_career_pub_year)) + 
+# graph 
+s_career_graph <- ggplot(merged_df, aes(graph_year, s_career_1_pub)) + 
   geom_violin() + 
-  geom_jitter(height = 0, width = 0.1) + 
+  geom_jitter(height = 0, width = 0.2, aes(color = TITLE_color)) + 
   theme_classic() + 
   ylab("Career Length (Scholar First Pub)") + 
-  xlab("Year of Publication") 
+  xlab("Year of Publication") +
+  theme(legend.position="none")  
 
-### will ask KD about this one ###
-s_career_model <- lme(s_career_pub_year ~ YEAR,
+# year model slope 
+s_career_model <- lme(s_career_1_pub ~ YEAR,
                       data = merged_df,
                       na.action = "na.omit",
-                      random = ~1|JOURNAL)
+                      random = ~1|scholar)
 
-summary(s_career_model)
+# variance  model 
+var_s_career_model <- lm(var_s_career_1_pub ~ year, 
+                          data = variance_df,
+                          na.action = "na.omit")
+```
 
-# since first degree ORCID
-merged_df$o_career_degree_year <- merged_df$YEAR - merged_df$o_career_1_degree
-merged_df$o_career_degree_year[merged_df$o_career_degree_year < 0] <- NA
-
-ggplot(merged_df, aes(graph_year, o_career_degree_year)) + 
+```{r}
+# since first degree ORCID ----
+o_career_graph_ed <- ggplot(merged_df, aes(graph_year, o_career_1_degree)) +
   geom_violin() + 
-  geom_jitter(height = 0, width = 0.1) + 
+  geom_jitter(height = 0, width = 0.2, aes(color = TITLE_color)) + 
   theme_classic() + 
   ylab("Career Length (ORCID First Degree)") + 
-  xlab("Year of Publication") 
+  xlab("Year of Publication")  +
+  theme(legend.position="none")  
 
-### will ask KD about this one ###
-o_career2_model <- lme(o_career_degree_year ~ YEAR,
+# year model slope
+o_career_ed_model <- lme(o_career_1_degree ~ YEAR,
                       data = merged_df,
                       na.action = "na.omit",
-                      random = ~1|JOURNAL)
+                      random = ~1|ORCID)
 
-summary(o_career2_model)
+# variance model 
+var_o_career_ed_model <- lm(var_o_career_1_degree ~ year, 
+                          data = variance_df,
+                          na.action = "na.omit")
 ```
 
 ### Employment Levels
