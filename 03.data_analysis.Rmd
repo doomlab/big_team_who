@@ -511,6 +511,7 @@ table(merged_df$employment_summary_organization_address_country,
 ### CRediT and WEIRD
 
 ```{r}
+# un regions grouping do this above 
 # grab first X authors and last author
 # and the last one for 10 - 49
 num_grab <- 3 
