@@ -21,6 +21,7 @@ library(tidyr)
 library(ggplot2)
 library(nlme)
 library(RColorBrewer)
+current_year <- 2022
 #### fix sau chins paper #### https://osf.io/gq92w/ 
 ```
 
@@ -108,9 +109,9 @@ o_job$our_job <- gsub("academic|collaboratori|guest researcher|evaluation specia
 o_job$our_job <- gsub(".*intern.*|research asistant", "research assistant", o_job$our_job)
 o_job$our_job <- gsub("dottorandi|.*phd.*", "grad student", o_job$our_job)
 o_job$our_job <- gsub(".*educator.*|teaching assistant", "lecturer", o_job$our_job)
-o_job$our_job <- gsub(".*full.*professor.*", "full professor", o_job$our_job)
+o_job$our_job <- gsub(".*full.*professor.*", "professor", o_job$our_job)
 o_job$our_job <- gsub(".*head.*", "head", o_job$our_job)
-o_job$our_job <- gsub("centennial professor|prof\\.|professor of cognitive analytics|proffessor.*|^temporal proffesor.*", "full professor", o_job$our_job)
+o_job$our_job <- gsub("centennial professor|prof\\.|professor of cognitive analytics|proffessor.*|^temporal proffesor.*", "professor", o_job$our_job)
 table(o_job$our_job)
 
 # hand code education ----
@@ -173,7 +174,6 @@ article_time_plot <- ggplot(article_time, aes(Var2, Freq, fill = Var1)) +
 
 ```
 
-
 ## Person Analysis 
 
 ### Create Summary Statistics 
@@ -212,18 +212,69 @@ roles_years <- data.frame(
   job = rep(NA, length(rep(unique(o_ed$ORCID), each = (2022 - 2012))))
 )
 
-o_ed_explode <- data.frame()
-o_job_explode <- data.frame()
-
-####ERIN YOU STILL HAVE TO DO THIS####
 # for jobs fill in "current" or end date
 # Find users with blanks
-# For each one find the number of rows 
-# If 1 then make 2022
-# If more than 1 
-# Use the lead or other end function 
-o_job %>% filter(is.na(employment_summary_end_date_year_value)) %>% 
-  select(ORCID, employment_summary_start_date_year_value, employment_summary_role_title)
+employ_fix <- o_job %>% 
+  filter(is.na(employment_summary_end_date_year_value)) %>% 
+  select(ORCID, employment_summary_start_date_year_value, employment_summary_role_title) %>% 
+  filter(!is.na(employment_summary_role_title)) %>% 
+  pull(ORCID)
+
+for (i in 1:length(employ_fix)){
+  # For each one find the number of rows 
+  temp_fix <- o_job %>% 
+  #filter(is.na(employment_summary_end_date_year_value)) %>% 
+  select(ORCID, employment_summary_start_date_year_value,
+         employment_summary_end_date_year_value,
+         employment_summary_role_title) %>% 
+    filter(ORCID == employ_fix[i]) %>% 
+    filter(!is.na(employment_summary_role_title))
+  
+  # if only one row, make it now
+  if (nrow(temp_fix) == 1){
+    o_job$employment_summary_end_date_year_value[
+      o_job$ORCID == employ_fix[i] &
+      !is.na(o_job$employment_summary_role_title)
+      ] <- current_year
+  }
+  
+  if (nrow(temp_fix) > 1){
+    
+    lead_values <- c(current_year,
+                     o_job$employment_summary_start_date_year_value[
+      o_job$ORCID == employ_fix[i] &
+      !is.na(o_job$employment_summary_role_title)
+    ])
+    lead_values <- lead_values[-length(lead_values)]
+    
+    # Use the lead or other end function 
+    for (q in 1:length(lead_values)){
+      
+      if (is.na(o_job$employment_summary_end_date_year_value[
+        o_job$ORCID == employ_fix[i] &
+        !is.na(o_job$employment_summary_role_title)
+      ][q])) {
+        
+      o_job$employment_summary_end_date_year_value[
+        o_job$ORCID == employ_fix[i] &
+        !is.na(o_job$employment_summary_role_title)
+      ][q] <- lead_values[q]
+        
+      } # close lead if only na
+      
+    } # close lead values loop
+    
+  } # close if more than one row
+  
+} # close for all users
+
+# check when values don't make sense
+o_job %>% 
+  filter(employment_summary_end_date_year_value < employment_summary_start_date_year_value)
+
+# make employment by year 
+o_ed_explode <- data.frame()
+o_job_explode <- data.frame()
 
 for (year in 2013:2022){
  
@@ -231,7 +282,7 @@ for (year in 2013:2022){
     filter(education_summary_end_date_year_value <= year) %>% 
     arrange(desc(education_summary_end_date_year_value)) %>% 
     filter(!duplicated(ORCID)) %>% 
-    select(ORCID, education_summary_role_title, 
+    select(ORCID, education_summary_role_title, our_ed,
            education_summary_organization_address_country) %>% 
     mutate(year_merge = year)
   
@@ -241,7 +292,7 @@ for (year in 2013:2022){
     filter(employment_summary_end_date_year_value >= year) %>% 
     arrange(desc(employment_summary_end_date_year_value)) %>% 
     filter(!duplicated(ORCID)) %>% 
-    select(ORCID, employment_summary_role_title, 
+    select(ORCID, employment_summary_role_title, our_job,
            employment_summary_organization_address_country) %>% 
     mutate(year_merge = year)
    
@@ -378,26 +429,67 @@ var_o_career_ed_model <- lm(var_o_career_1_degree ~ year,
 ### Employment Levels
 
 ```{r}
-# hand code these into categories that make sense
-table(o_job$employment_summary_role_title)
-table(merged_df$employment_summary_role_title)
+merged_df$our_job <- factor(merged_df$our_job, 
+                            levels = c("research assistant", 
+                                       "post doc", 
+                                       "researcher", 
+                                       "lecturer", 
+                                       "fellow",
+                                       "assistant professor",
+                                       "associate professor", 
+                                       "professor", "head"),
+                            labels = tools::toTitleCase(c("research assistant", 
+                                       "post doc", 
+                                       "researcher", 
+                                       "lecturer", 
+                                       "fellow",
+                                       "assistant professor",
+                                       "associate professor", 
+                                       "professor", "head")))
 
-# table by year 
-# graph by year 
+employment_overall <- as.data.frame(table(merged_df$our_job)) %>% 
+  arrange(desc(Freq)) %>% 
+  mutate(Percent = Freq / sum(Freq) * 100)
+employment_time <- as.data.frame(table(merged_df$our_job, merged_df$graph_year))
+
+employment_time_plot <- ggplot(employment_time, aes(Var2, Freq, fill = Var1)) +
+  geom_bar(position="stack", stat="identity") + 
+  theme_classic() + 
+  xlab("Publication Year") + 
+  ylab("Number of Researchers") + 
+  scale_fill_brewer(palette = "RdBu", name = "Employment Category")
 ```
 
 ### Education Levels
 
 ```{r}
-# hand code these into categories that make sense
-table(merged_df$education_summary_role_title)
+merged_df$our_ed <- factor(merged_df$our_ed, 
+                            levels = c("bachelor", 
+                                       "masters", 
+                                       "doctor"),
+                            labels = tools::toTitleCase(c("bachelor", 
+                                       "masters", 
+                                       "doctor")))
 
-# consider coding as 1, 2, 3, 4, etc. 
-# table by year 
-# graph by year 
+education_overall <- as.data.frame(table(merged_df$our_ed)) %>% 
+  arrange(desc(Freq)) %>% 
+  mutate(Percent = Freq / sum(Freq) * 100)
+education_time <- as.data.frame(table(merged_df$our_ed, merged_df$graph_year))
+
+edu_colors <- brewer.pal(6, "RdBu")[c(1,3,6)]
+
+education_time_plot <- ggplot(education_time, aes(Var2, Freq, fill = Var1)) +
+  geom_bar(position="stack", stat="identity") + 
+  theme_classic() + 
+  xlab("Publication Year") + 
+  ylab("Number of Researchers") + 
+  scale_fill_manual(values = edu_colors, 
+                    name = "Education Category")
 ```
 
-### Author Bean Counting 
+### Types of Publications
+
+
 
 ```{r}
 # what do these people publish overall

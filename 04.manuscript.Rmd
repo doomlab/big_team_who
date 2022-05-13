@@ -161,19 +161,11 @@ We will use $\alpha$ < .05 for all analyses that involve hypothesis testing. We 
 
 **_Career Length_**. For each of the three variables in career length (ORCID year of first pub, Scholar year of first pub, ORCID year of first degree), we will create a visualization of the trend and variance of researcher career length across publication years. To analyze trends over time, we will use the slope from a multilevel model (MLM) using the individual as a random intercept, career length as the dependent variable, and year of publication as the predictor variable. MLMs are regression models that control for the correlated error due to the repeated and nested nature of the data [CITE]. In this model, each individual's starting career length is arbitrary, which we allow to vary with the random intercept by participant. A positive slope for year of publication would indicate increasing years of first publication (i.e., more younger scholars over time), while a negative slope would indicate older years of first publication (i.e., more older scholars over time). In order to show variance between individuals, we will report the variance component of the random intercept for individuals. Finally, to examine variance over time, we will calculate the standard deviation of the individual within each publication (i.e., one standard deviation for each article), and use a linear model with year predicting these standard deviations. This model is a traditional simultaneous regression, as averaging the variance by title eliminates the repeated measures variable (individuals). A positive slope would indicate increasing variance over time (i.e., more diversity in the career lengths of scholars), while a negative slope would indicate less variance and diversity in scholars over time.
 
-**_Employment_**. 
-- print out overall
-- print out over time 
-- comment on if all normal academic 
+**_Employment_**. We will summarize the general employment categories of individuals at the time of publication, along with a summary for change over time. 
 
-**_Education_**. 
-- print out overall
-- print out over time
+**_Education_**. We will summarize the general education categories of individuals at the time of publication, along with a summary for change over time. 
 
-**_Types of Publications_**. 
-- print out overall
-- print out over time 
-- open science question 
+**_Types of Publications_**. We will summarize the coded types of publications for individuals and demonstrate the changes in types of publications over time visually. We will comment if more "open" type publications appear to be published, such as data-sets, preprints, and software. 
 
 **_Publication Metrics_**. 
 - means and SDs for i10 and hindex information, and number of publications 
@@ -247,6 +239,36 @@ plot_grid(o_career_graph + theme(text = element_text(size = 8),
           o_career_graph_ed + theme(text = element_text(size = 8), 
                                  axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 0.5)))
 ```
+
+**_Employment_**. Overall, individuals **at the time of publication** in big team science publications are  `r employment_overall$Var1[1]` (`r format(employment_overall$Percent[1], nsmall = 1, digits = 1)`%) and `r employment_overall$Var1[2]` (`r format(employment_overall$Percent[2], nsmall = 1, digits = 1)`%), followed by smaller categories for `r employment_overall$Var1[3]` (`r format(employment_overall$Percent[3], nsmall = 1, digits = 1)`%), `r employment_overall$Var1[4]` (`r format(employment_overall$Percent[4], nsmall = 1, digits = 1)`%), `r employment_overall$Var1[5]` (`r format(employment_overall$Percent[5], nsmall = 1, digits = 1)`%), and `r employment_overall$Var1[6]` (`r format(employment_overall$Percent[6], nsmall = 1, digits = 1)`%). Here, we will talk about the figure below and how the trends occur across time. We will also comment on the number of jobs that would be considered "non-academic". 
+
+```{r figure3, echo = FALSE, warning = FALSE}
+employment_time_plot
+```
+
+**_Education_**. Overall, individuals **at the time of publication** in big team science publications are  `r education_overall$Var1[1]` (`r format(education_overall$Percent[1], nsmall = 1, digits = 1)`%), `r education_overall$Var1[2]` (`r format(education_overall$Percent[2], nsmall = 1, digits = 1)`%), and`r education_overall$Var1[3]` (`r format(education_overall$Percent[3], nsmall = 1, digits = 1)`%). Here, we will talk about the figure below and how the trends occur across time.  
+
+```{r figure4, echo = FALSE, warning = FALSE}
+education_time_plot
+```
+
+**_Types of Publications_**. 
+- print out overall
+- print out over time 
+- open science question 
+
+**_Publication Metrics_**. 
+- means and SDs for i10 and hindex information, and number of publications 
+- same analyses as career length - slope of number of publications and variance of number of publications 
+- slope up means people who are publishing more are more represented in the researchers
+- slope down means more people with less publications
+- answer are we giving opportunities to people who need the bean counting 
+
+**_Geopolitical Regions_**. 
+- overall map of where people get their education
+- overall map of where people are working 
+- is this diversifying over time (more countries as years go up)
+- then the weird analysis to answer about diversifying authors 
 
 # Discussion
 
