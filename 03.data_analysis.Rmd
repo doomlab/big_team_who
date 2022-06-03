@@ -21,6 +21,7 @@ library(tidyr)
 library(ggplot2)
 library(nlme)
 library(RColorBrewer)
+library(countrycode)
 current_year <- 2022
 #### fix sau chins paper #### https://osf.io/gq92w/ 
 ```
@@ -155,6 +156,16 @@ table(bibs$our_keyword, useNA = "ifany")
 
 ```{r}
 JIF <- import("jif.xlsx")
+```
+
+- make sure preprints we are using also have real journal merged in 
+
+```{r}
+journal_count <- bibs %>% group_by(JOURNAL) %>% 
+  summarize(freq = n()) %>% 
+  arrange(desc(freq))
+
+journal_count$JOURNAL[is.na(journal_count$JOURNAL)] <- "Pre-Print"
 ```
 
 ## Article Information 
@@ -340,6 +351,15 @@ merged_df <- long_bib %>%
 
 ```
 
+```{r}
+# total count of authors
+author_count <- 
+  merged_df %>% 
+  group_by(TITLE) %>% 
+  summarize(author_count = n(),
+            year = mean(YEAR))
+```
+
 ### Graph Year Fix
 
 ```{r}
@@ -373,7 +393,9 @@ variance_df <- merged_df %>%
   summarize(year = mean(YEAR), 
             var_o_career_1_pub = sd(o_career_1_pub, na.rm = T),
             var_s_career_1_pub = sd(s_career_1_pub, na.rm = T), 
-            var_o_career_1_degree = sd(o_career_1_degree, na.rm = T))
+            var_o_career_1_degree = sd(o_career_1_degree, na.rm = T),
+            var_o_total = sd(o_total_pub, na.rm = T), 
+            var_s_total = sd(s_total_pub, na.rm = T))
 
 var_o_career_model <- lm(var_o_career_1_pub ~ year, 
                           data = variance_df,
@@ -489,121 +511,104 @@ education_time_plot <- ggplot(education_time, aes(Var2, Freq, fill = Var1)) +
 
 ### Types of Publications
 
+```{r}
+publication_overall <- as.data.frame(table(o_works$our_type)) %>% 
+  arrange(desc(Freq)) %>% 
+  mutate(Percent = Freq / sum(Freq) * 100)
+```
 
+### Publication Metrics
 
 ```{r}
-# what do these people publish overall
-table(o_works$our_type)
+# total pubs orcid ----
 
-# publication rates ORCID
-ggplot(merged_df, aes(graph_year, o_total_pub)) + 
+# graph 
+o_total_graph <- ggplot(merged_df, aes(graph_year, o_total_pub)) + 
   geom_violin() + 
-  geom_jitter(height = 0, width = 0.1) + 
+  geom_jitter(height = 0, width = 0.2, aes(color = TITLE_color)) + 
   theme_classic() + 
-  ylab("Total Publications (ORCID)") + 
-  xlab("Year of Publication") 
+  ylab("Total Number of Publications (ORCID)") + 
+  xlab("Year of Publication") +
+  theme(legend.position="none")  
 
-### will ask KD about this one ###
+# year model slope 
 o_total_model <- lme(o_total_pub ~ YEAR,
                       data = merged_df,
                       na.action = "na.omit",
-                      random = ~1|JOURNAL)
+                      random = ~1|scholar)
 
-summary(o_total_model)
+# variance  model 
+var_o_total_model <- lm(var_o_total ~ year, 
+                          data = variance_df,
+                          na.action = "na.omit")
+```
 
-# publication rates scholar
-ggplot(merged_df, aes(graph_year, s_total_pub)) + 
+```{r}
+# total pubs scholar ----
+
+# graph 
+s_total_graph <- ggplot(merged_df, aes(graph_year, s_total_pub)) + 
   geom_violin() + 
-  geom_jitter(height = 0, width = 0.1) + 
+  geom_jitter(height = 0, width = 0.2, aes(color = TITLE_color)) + 
   theme_classic() + 
-  ylab("Total Publications (Scholar)") + 
-  xlab("Year of Publication") 
+  ylab("Total Number of Publications (ORCID)") + 
+  xlab("Year of Publication") +
+  theme(legend.position="none")  
 
-### will ask KD about this one ###
+# year model slope 
 s_total_model <- lme(s_total_pub ~ YEAR,
                       data = merged_df,
                       na.action = "na.omit",
-                      random = ~1|JOURNAL)
+                      random = ~1|scholar)
 
-summary(s_total_model)
-
-# h index rates scholar
-ggplot(merged_df, aes(graph_year, h_index)) + 
-  geom_violin() + 
-  geom_jitter(height = 0, width = 0.1) + 
-  theme_classic() + 
-  ylab("H Index") + 
-  xlab("Year of Publication") 
-
-### will ask KD about this one ###
-h_index_model <- lme(h_index ~ YEAR,
-                      data = merged_df,
-                      na.action = "na.omit",
-                      random = ~1|JOURNAL)
-
-summary(h_index_model)
-
-# i 10 rates scholar
-ggplot(merged_df, aes(graph_year, i10_index)) + 
-  geom_violin() + 
-  geom_jitter(height = 0, width = 0.1) + 
-  theme_classic() + 
-  ylab("H Index") + 
-  xlab("Year of Publication") 
-
-### will ask KD about this one ###
-i_index_model <- lme(i10_index ~ YEAR,
-                      data = merged_df,
-                      na.action = "na.omit",
-                      random = ~1|JOURNAL)
-
-summary(i_index_model)
+# variance  model 
+var_s_total_model <- lm(var_s_total ~ year, 
+                          data = variance_df,
+                          na.action = "na.omit")
 ```
 
-### More Authors Over Time?
+### Geopolitical Regions  
 
 ```{r}
-author_count <- 
-  merged_df %>% 
+# map of degree representation
+
+# map of last job representation 
+
+# how many different countries does each year have and is that getting bigger
+country_summary <- merged_df %>% 
   group_by(TITLE) %>% 
-  summarize(author_count = n(),
-            year = mean(YEAR))
+  summarize(year = mean(YEAR), 
+            edu_country = length(table(education_summary_organization_address_country)),
+            job_country = length(table(employment_summary_organization_address_country)))
 
-cor(author_count$author_count, author_count$year)
+# totals by edu
+edu_country_model <- lm(edu_country ~ year, 
+                          data = country_summary,
+                          na.action = "na.omit")
 
-ggplot(author_count, aes(factor(year), author_count)) +
-  theme_classic() + 
-  geom_point() + 
-  xlab("Year of Publication") + 
-  ylab("Number of Authors")
-```
+# totals by job
+job_country_model <- lm(job_country ~ year, 
+                          data = country_summary,
+                          na.action = "na.omit")
 
-### Where are Authors?
-
-```{r}
-# where did they get their degree
-merged_df %>% 
-  filter(!duplicated(ORCID)) %>% 
-  count(education_summary_organization_address_country)
-
-table(merged_df$education_summary_organization_address_country,
-      merged_df$YEAR)
-
-# how many different countries does each year have and is that getting bigger 
-
-# where do they work
-merged_df %>% 
-  filter(!duplicated(ORCID)) %>% 
-  count(employment_summary_organization_address_country)
-
-table(merged_df$employment_summary_organization_address_country,
-      merged_df$YEAR)
 ```
 
 ### CRediT and WEIRD
 
 ```{r}
-# un regions grouping do this above 
+# transform to un regions
+merged_df$un_region_ed <- 
+  countrycode(
+    sourcevar = merged_df$education_summary_organization_address_country,
+    origin = "iso2c",
+    destination = "un.regionsub.name")
+
+merged_df$un_region_job <- 
+  countrycode(
+    sourcevar = merged_df$employment_summary_organization_address_country,
+    origin = "iso2c",
+    destination = "un.regionsub.name")
+
 # grab first X authors and last author
 # and the last one for 10 - 49
 num_grab <- 3 
@@ -612,42 +617,10 @@ num_grab <- 3
 
 # over 100 do top 10
 
-# group into UN regions 
+
 ```
 
-- credit contributions ? are we using de-weirding by using those people for translation and data collection only 
-  - grab major roles and see what the diversity is 
-  - look at the first 10 people and the last author 
-  - maybe compare to the other 10 groups (1/3rd, middle, last 1/3rd)
-
-## Journal Analysis
-
-### Which Journals
-
-- make sure preprints we are using also have real journal merged in 
-
-```{r}
-journal_count <- bibs %>% group_by(JOURNAL) %>% 
-  summarize(freq = n()) %>% 
-  arrange(desc(freq))
-
-journal_count$JOURNAL[is.na(journal_count$JOURNAL)] <- "Pre-Print"
-```
-
-### Article Topics Global Type
-
-- hand coded information on what the articles are about 
-- Types of big team research (social, cognitive) using keywords
-
-```{r}
-# table of hand coded type
-```
-
-### Article Types Over Time
-
-- Over time: are things becoming more varied
-- are the publications more varied over time
-
-```{r}
-# table of hand coded type by year 
-```
+- grab the first X authors and the last authors
+- compare to random samples of other authors of the same size chunk 
+- calculate the probability of having *anyone* from a un region in that chunk
+- make two graphs one of probability of being in the first group, one of probability of being in second group

@@ -139,7 +139,7 @@ Next, we matched each author to their Google Scholar and ORCID profile pages, if
 
 **_Employment_**. Employment information was collected from self-entered ORCID data. These values are open text, and therefore, we coded them into coherent categories for traditional educational (graduate student, post doctoral, lecturer),  tenure track (assistant, associate, full professor), and other roles (fellow, research assistant, researcher, head). Employment geopolitical region was also selected when available.   
 
-**_Education_**. As with employment information, we also collected education information from self-entered ORCID data. These values were coded into general categories of bachelor, master, and doctoral degrees. The geopolitical region of the listed education was included when available. For analyses, both employment and education levels were grouped into United Nation regions.   
+**_Education_**. As with employment information, we also collected education information from self-entered ORCID data. These values were coded into general categories of bachelor, master, and doctoral degrees. The geopolitical region of the listed education was included when available. For analyses, both employment and education levels were grouped into United Nation regions.     
 
 **_Types of Publications_**. ORCID includes information about the type of publication pulled from either researcher entered data or Crossref. We coded these publications into general categories including book, conference presentations, data-sets, journal articles, preprints, software, thesis, and other publications. 
 
@@ -165,14 +165,9 @@ We will use $\alpha$ < .05 for all analyses that involve hypothesis testing. We 
 
 **_Education_**. We will summarize the general education categories of individuals at the time of publication, along with a summary for change over time. 
 
-**_Types of Publications_**. We will summarize the coded types of publications for individuals and demonstrate the changes in types of publications over time visually. We will comment if more "open" type publications appear to be published, such as data-sets, preprints, and software. 
+**_Types of Publications_**. We will summarize the coded types of publications for individuals. 
 
-**_Publication Metrics_**. 
-- means and SDs for i10 and hindex information, and number of publications 
-- same analyses as career length - slope of number of publications and variance of number of publications 
-- slope up means people who are publishing more are more represented in the researchers
-- slope down means more people with less publications
-- answer are we giving opportunities to people who need the bean counting 
+**_Publication Metrics_**. We will report descriptive statistics on the total number of publications, i10 index, and h-index for individuals overall. Next, we will use the same analyses described in the career length section to analyze trends over time. An increasing slope over time indicates that individuals who are publishing more are more represented in big-team science over time (i.e., increasing numbers of scholars with higher publication rates), while a negative slope indicates more researchers with less publications. A positive slope for variance indicates increasing variance over time (i.e., more diversity in the individual publication rates), while a negative slope would indicate less diversity in researchers over time. While publication rates do not represent value as a researcher, they are often used in hiring and promotion decisions, and we will use this variable as a proxy to gauge the diversity in scholars represented in big teams. 
 
 **_Geopolitical Regions_**. 
 - overall map of where people get their education
@@ -246,23 +241,37 @@ plot_grid(o_career_graph + theme(text = element_text(size = 8),
 employment_time_plot
 ```
 
-**_Education_**. Overall, individuals **at the time of publication** in big team science publications are  `r education_overall$Var1[1]` (`r format(education_overall$Percent[1], nsmall = 1, digits = 1)`%), `r education_overall$Var1[2]` (`r format(education_overall$Percent[2], nsmall = 1, digits = 1)`%), and`r education_overall$Var1[3]` (`r format(education_overall$Percent[3], nsmall = 1, digits = 1)`%). Here, we will talk about the figure below and how the trends occur across time.  
+**_Education_**. Overall, individuals **at the time of publication** in big team science publications are  `r education_overall$Var1[1]` (`r format(education_overall$Percent[1], nsmall = 1, digits = 1)`%), `r education_overall$Var1[2]` (`r format(education_overall$Percent[2], nsmall = 1, digits = 1)`%), and `r education_overall$Var1[3]` (`r format(education_overall$Percent[3], nsmall = 1, digits = 1)`%). Here, we will talk about the figure below and how the trends occur across time.  
 
 ```{r figure4, echo = FALSE, warning = FALSE}
 education_time_plot
 ```
 
-**_Types of Publications_**. 
-- print out overall
-- print out over time 
-- open science question 
+**_Types of Publications_**. In general, the most common type of publication was `r publication_overall$Var1[1]` (`r format(publication_overall$Percent[1], nsmall = 1, digits = 1)`%), followed by `r publication_overall$Var1[2]` (`r format(publication_overall$Percent[2], nsmall = 1, digits = 1)`%), and smaller categories for `r publication_overall$Var1[3]` (`r format(publication_overall$Percent[3], nsmall = 1, digits = 1)`%), `r publication_overall$Var1[4]` (`r format(publication_overall$Percent[4], nsmall = 1, digits = 1)`%), `r publication_overall$Var1[5]` (`r format(publication_overall$Percent[5], nsmall = 1, digits = 1)`%), and `r publication_overall$Var1[6]` (`r format(publication_overall$Percent[6], nsmall = 1, digits = 1)`%). We will include all information over 1% of the publication totals. 
 
-**_Publication Metrics_**. 
-- means and SDs for i10 and hindex information, and number of publications 
-- same analyses as career length - slope of number of publications and variance of number of publications 
-- slope up means people who are publishing more are more represented in the researchers
-- slope down means more people with less publications
-- answer are we giving opportunities to people who need the bean counting 
+```{r echo = FALSE}
+o_total_output <- tidy(o_total_model)
+var_o_total_output <- tidy(var_o_total_model)
+
+s_total_output <- tidy(s_total_model)
+var_s_total_output <- tidy(var_s_total_model)
+```
+
+**_Publication Metrics_**. The average number of all publications per individual was *M* = `r format(round(mean(merged_df$o_total_pub, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(merged_df$o_total_pub, na.rm = T), digits = 2), nsmall = 2)`) using ORCID and *M* = `r format(round(mean(merged_df$s_total_pub, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(merged_df$s_total_pub, na.rm = T), digits = 2), nsmall = 2)`) using Google Scholar. The average i10 index was *M* = `r format(round(mean(merged_df$i10_index, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(merged_df$i10_index, na.rm = T), digits = 2), nsmall = 2)`) and the average h-index was *M* = `r format(round(mean(merged_df$h_index, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(merged_df$h_index, na.rm = T), digits = 2), nsmall = 2)`). 
+
+Using the same analyses as career length, we will report:
+
+1) Number of publications ORCID: 
+
+  - The slope for number of publications was *b* = `r format(round(o_total_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(o_total_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r o_total_output$df[2]`) = `r format(round(o_total_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(o_total_output$p.value[2])`. 
+  - The variance parameter was *SD* = `r format(round(o_total_output$estimate[3], digits = 2), nsmall = 2)`. 
+  - The slope for variance across years was *b* = `r format(round(var_o_total_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(var_o_total_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r var_o_total_model$df.residual`) = `r format(round(var_o_total_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(var_o_total_output$p.value[2])`.
+  
+2) The number of publications for Scholar:
+
+  - The slope for year of first publication was *b* = `r format(round(s_total_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(s_total_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r s_total_output$df[2]`) = `r format(round(s_total_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(s_total_output$p.value[2])`. 
+  - The variance parameter was *SD* = `r format(round(s_total_output$estimate[3], digits = 2), nsmall = 2)`. 
+  - The slope for variance across years was *b* = `r format(round(var_s_total_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(var_s_total_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r var_s_total_model$df.residual`) = `r format(round(var_s_total_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(var_s_total_output$p.value[2])`.
 
 **_Geopolitical Regions_**. 
 - overall map of where people get their education
@@ -273,6 +282,8 @@ education_time_plot
 # Discussion
 
 To be included after we have completed analyses. 
+
+Discuss the limitation of "who is using ORCID and Scholar" which is likely biasing our results. 
 
 \newpage
 
