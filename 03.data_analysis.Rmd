@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup_analysis, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
 ```
 
 https://www.science.org/content/page/science-information-authors
@@ -22,6 +22,8 @@ library(ggplot2)
 library(nlme)
 library(RColorBrewer)
 library(countrycode)
+library(maps)
+library(MOTE)
 current_year <- 2022
 #### fix sau chins paper #### https://osf.io/gq92w/ 
 ```
@@ -570,11 +572,66 @@ var_s_total_model <- lm(var_s_total ~ year,
 ### Geopolitical Regions  
 
 ```{r}
-# map of degree representation
+# create a world map 
+world_map <- map_data(map = "world")
+world_map$region <- iso.alpha(world_map$region)
+world_map <- subset(world_map, region != "AQ")
 
-# map of last job representation 
+# map of degree representation ----
+o_ed_summary <- o_ed %>% 
+  group_by(ORCID) %>% 
+  arrange(desc(education_summary_start_date_year_value)) %>% 
+  ungroup() %>% 
+  filter(!duplicated(ORCID)) %>% 
+  select(ORCID, education_summary_organization_address_country) 
 
-# how many different countries does each year have and is that getting bigger
+# summarize the same samples
+o_ed_country <- o_ed_summary %>% 
+      group_by(education_summary_organization_address_country) %>% 
+      summarize(n = n()) %>% 
+      filter(!is.na(education_summary_organization_address_country))
+
+# make a map on a continuous scale
+o_ed_country_graph <- 
+  ggplot(o_ed_country) +
+  geom_map(aes(map_id = education_summary_organization_address_country, fill = n), map = world_map) +
+  geom_polygon(data = world_map, 
+               aes(x = long, y = lat, group = group), 
+               colour = 'black', fill = NA) + 
+  theme_void() + 
+  scale_fill_distiller(name = "Sample Size",
+                       palette = "Greys",
+                       direction = 1,
+                       na.value = "white") 
+
+# map of last job representation ----
+o_job_summary <- o_job %>% 
+  group_by(ORCID) %>% 
+  arrange(desc(employment_summary_start_date_year_value)) %>% 
+  ungroup() %>% 
+  filter(!duplicated(ORCID)) %>% 
+  select(ORCID, employment_summary_organization_address_country) 
+
+# summarize the same samples
+o_job_country <- o_job_summary %>% 
+      group_by(employment_summary_organization_address_country) %>% 
+      summarize(n = n()) %>% 
+      filter(!is.na(employment_summary_organization_address_country))
+
+# make a map on a continuous scale
+o_job_country_graph <- 
+  ggplot(o_job_country) +
+  geom_map(aes(map_id = employment_summary_organization_address_country, fill = n), map = world_map) +
+  geom_polygon(data = world_map, 
+               aes(x = long, y = lat, group = group), 
+               colour = 'black', fill = NA) + 
+  theme_void() + 
+  scale_fill_distiller(name = "Sample Size",
+                       palette = "Greys",
+                       direction = 1,
+                       na.value = "white")
+
+# how many different countries does each year have and is that getting bigger -----
 country_summary <- merged_df %>% 
   group_by(TITLE) %>% 
   summarize(year = mean(YEAR), 
@@ -609,18 +666,113 @@ merged_df$un_region_job <-
     origin = "iso2c",
     destination = "un.regionsub.name")
 
-# grab first X authors and last author
-# and the last one for 10 - 49
-num_grab <- 3 
+# for each paper 
+first_probs_ed <- list()
+first_probs_job <- list()
+last_probs_ed <- list()
+last_probs_job <- list()
 
-# 50 to 99 use 5
+# titles
+titles <- author_count$TITLE[author_count$author_count >= 10]
+years <- author_count$year[author_count$author_count >= 10]
 
-# over 100 do top 10
+for (i in 1:length(titles)){
+  
+  # number of authors
+  temp_count <- author_count$author_count[author_count$TITLE == titles[i]]
+  # just this paper
+  temp_DF <- merged_df %>% filter(TITLE == titles[i])
+  # skip short
+  if (temp_count < 10){ next }
+  # number of size
+  if (temp_count >=10 & temp_count < 50){ number_grab <- 3 }
+  if (temp_count >=50 & temp_count < 100){ number_grab <- 5 }
+  if (temp_count >= 100){ number_grab <- 10 }
+  
+  # first authors 
+  first_probs_ed[[i]] <- as.data.frame(table(temp_DF$un_region_ed[c(1:number_grab, temp_count)], useNA = "ifany"))
+  first_probs_job[[i]] <- as.data.frame(table(temp_DF$un_region_job[c(1:number_grab, temp_count)], useNA = "ifany"))
+  
+  # all other authors
+  running_ed <- list()
+  running_job <- list()
+  
+  #for (q in 1:temp_count){ # officially do this 
+  for (q in 1:10){ #unofficially test with this 
+    running_ed[[q]] <- temp_DF[-c(1:number_grab, temp_count), ] %>% 
+      sample_n(number_grab+1) %>% 
+      pull(un_region_ed) %>% 
+      table(., useNA = "ifany") %>% 
+      as.data.frame()
+    
+    running_job[[q]] <- temp_DF[-c(1:number_grab, temp_count), ] %>% 
+      sample_n(number_grab+1) %>% 
+      pull(un_region_job) %>% 
+      table(., useNA = "ifany") %>% 
+      as.data.frame()
+    
+  }
+  
+  ed_DF <- suppressMessages(bind_rows(running_ed))
+  job_DF <- suppressMessages(bind_rows(running_job))
+  colnames(ed_DF) <- colnames(job_DF) <- c("Var1", "Freq")
+  
+  last_probs_ed[[i]] <- ed_DF %>% group_by(Var1) %>% summarize(Freq = round(mean(Freq)))
+  last_probs_job[[i]] <- job_DF %>% group_by(Var1) %>% summarize(Freq = round(mean(Freq)))
+  
+}
 
+gpr_effects_ed <- data.frame(
+  TITLE = titles, 
+  year = years, 
+  v = NA, 
+  low_v = NA, 
+  high_v = NA
+)
 
+gpr_effects_job <- data.frame(
+  TITLE = titles, 
+  year = years, 
+  v = NA, 
+  low_v = NA, 
+  high_v = NA
+)
+
+# for (i in 1:length(first_probs_ed)){
+#   first_ed <- first_probs_ed[[i]]
+#   first_job <- first_probs_job[[i]]
+#   last_ed <- last_probs_ed[[i]]
+#   last_job <- last_probs_job[[i]]
+#   
+#   ed <- first_ed %>% full_join(last_ed, by = c("Var1" = "Var1")) %>% filter(Var1 != "<NA>")
+#   ed$Freq.x[is.na(ed$Freq.x)] <- 0
+#   ed$Freq.y[is.na(ed$Freq.y)] <- 0
+#   ed_chi <- chisq.test(ed[ , c("Freq.x", "Freq.y")])
+#   
+#   ed_mote <- v.chi.sq(x2 = ed_chi$statistic, 
+#                       n = sum(ed_chi$observed), 
+#                       r = nrow(ed_chi$observed),
+#                       c = ncol(ed_chi$observed))
+#   
+#   gpr_effects_ed$v[i] <- ed_mote$v
+#   gpr_effects_ed$low_v[i] <- ed_mote$vlow
+#   gpr_effects_ed$high_v[i] <- ed_mote$vhigh
+#   
+#   job <- first_job %>% full_join(last_job, by = c("Var1" = "Var1")) %>% filter(Var1 != "<NA>")
+#   job$Freq.x[is.na(job$Freq.x)] <- 0
+#   job$Freq.y[is.na(job$Freq.y)] <- 0
+#   job_chi <- chisq.test(job[ , c("Freq.x", "Freq.y")])
+#   
+#   job_mote <- v.chi.sq(x2 = job_chi$statistic, 
+#                       n = sum(job_chi$observed), 
+#                       r = nrow(job_chi$observed),
+#                       c = ncol(job_chi$observed))
+#   
+#   gpr_effects_job$v[i] <- job_mote$v
+#   gpr_effects_job$low_v[i] <- job_mote$vlow
+#   gpr_effects_job$high_v[i] <- job_mote$vhigh
+# 
+# }
 ```
 
-- grab the first X authors and the last authors
-- compare to random samples of other authors of the same size chunk 
-- calculate the probability of having *anyone* from a un region in that chunk
-- make two graphs one of probability of being in the first group, one of probability of being in second group
+

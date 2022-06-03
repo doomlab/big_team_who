@@ -169,11 +169,7 @@ We will use $\alpha$ < .05 for all analyses that involve hypothesis testing. We 
 
 **_Publication Metrics_**. We will report descriptive statistics on the total number of publications, i10 index, and h-index for individuals overall. Next, we will use the same analyses described in the career length section to analyze trends over time. An increasing slope over time indicates that individuals who are publishing more are more represented in big-team science over time (i.e., increasing numbers of scholars with higher publication rates), while a negative slope indicates more researchers with less publications. A positive slope for variance indicates increasing variance over time (i.e., more diversity in the individual publication rates), while a negative slope would indicate less diversity in researchers over time. While publication rates do not represent value as a researcher, they are often used in hiring and promotion decisions, and we will use this variable as a proxy to gauge the diversity in scholars represented in big teams. 
 
-**_Geopolitical Regions_**. 
-- overall map of where people get their education
-- overall map of where people are working 
-- is this diversifying over time (more countries as years go up)
-- then the weird analysis to answer about diversifying authors 
+**_Geopolitical Regions_**. We will present visualizations of the last listed education and job location, and we will discuss the areas of world in which authors generally come from, as well as the lowest representation of authors. To understand the change in representation diversity, we will summarize the total number of geopolitical regions for each paper. Using a linear model, we will examine if the number of regions present is predicted by the year of publication. Increasing diversity would be represented by a positive slope, while decreasing diversity would be represented by a negative slope. Last, we will examine the differences in representation for corresponding author sets versus all other authors. For papers with 10 to 49 authors, we will use the three first authors and the last author to compare against random samples of other authors. For 50 to 99 authors, five first authors plus last will be used, and for all papers with more than 100 authors, we will use ten first authors and the last author. We will calculate the frequencies of each of the UN Sub-Regions for first authors. Then we will randomly sample all authors in subsets of the same size (i.e., 3+1, 5+1, 10+1), and average the frequencies of UN Sub-Regions across these random samples. We will randomly sample the same number of times as the size of the author list (i.e., a paper that has 54 authors will be randomly sampled 54 times with a sample size of six). For each year, we will calculate the effect size of the differences in frequencies comparing first authors to all other authors. Since this data is categorical, we will use Cramer's V to represent the effect size. If the effect size includes zero in it's confidence interval, this result will imply that first and all other authors represent the same pattern of UN Sub-Region diversity. Any confidence interval that does include zero represents a difference in diversity. We will report these values and discuss what regions of the world are represented when effect sizes indicate a different from zero.
 
 # Results
 
@@ -273,17 +269,60 @@ Using the same analyses as career length, we will report:
   - The variance parameter was *SD* = `r format(round(s_total_output$estimate[3], digits = 2), nsmall = 2)`. 
   - The slope for variance across years was *b* = `r format(round(var_s_total_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(var_s_total_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r var_s_total_model$df.residual`) = `r format(round(var_s_total_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(var_s_total_output$p.value[2])`.
 
-**_Geopolitical Regions_**. 
-- overall map of where people get their education
-- overall map of where people are working 
-- is this diversifying over time (more countries as years go up)
-- then the weird analysis to answer about diversifying authors 
+**_Geopolitical Regions_**. We will first present two figures for education and employment geopolitical regions representation in scholars. 
+
+Education Graph
+
+```{r figure5, echo = FALSE, warning = FALSE}
+o_ed_country_graph
+```
+
+Employment Graph
+
+```{r figure6, echo = FALSE, warning = FALSE}
+o_job_country_graph
+```
+
+```{r}
+edu_country_output <- tidy(edu_country_model)
+job_country_output <- tidy(job_country_model)
+```
+
+Next, we will report the results of two linear regression models. The independent variable is year of publication, and the dependent variables include the summary of the total number of different geopolitical regions represented in each publication. 
+- The slope for the education model was *b* = `r format(round(edu_country_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(edu_country_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r edu_country_output$df[2]`) = `r format(round(edu_country_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(edu_country_output$p.value[2])`.
+
+- The slope for the employment model was *b* = `r format(round(job_country_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(job_country_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r job_country_output$df[2]`) = `r format(round(job_country_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(job_country_output$p.value[2])`.
+
+```{r eval = F}
+gpr_effects_ed_summary <- 
+  gpr_effects_ed %>% 
+  group_by(year) %>% 
+  summarize(v = mean(v, na.rm = T), 
+            vlow = mean(low_v, na.rm = T), 
+            vhigh = mean(high_v, na.rm = T))
+
+gpr_effects_job_summary <- 
+  gpr_effects_job %>% 
+  group_by(year) %>% 
+  summarize(v = mean(v, na.rm = T), 
+            vlow = mean(low_v, na.rm = T), 
+            vhigh = mean(high_v, na.rm = T))
+```
+
+
+Last, we will examine the effect sizes of the UN Sub-Regions represented for each year of analysis. We will present a visualization of the effect sizes. 
+
+- add a quick random demo of this simulating fake data
+- create a picture of this idea 
+
+**All models will also include a measure of effect size.**
+#### erin you need to do this #####
 
 # Discussion
 
 To be included after we have completed analyses. 
 
-Discuss the limitation of "who is using ORCID and Scholar" which is likely biasing our results. 
+Discuss the limitation of "who is using ORCID and Scholar" which can bias our results. 
 
 \newpage
 
