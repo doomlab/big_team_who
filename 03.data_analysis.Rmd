@@ -578,7 +578,7 @@ world_map$region <- iso.alpha(world_map$region)
 world_map <- subset(world_map, region != "AQ")
 
 # map of degree representation ----
-o_ed_summary <- o_ed %>% 
+o_ed_summary_map <- o_ed %>% 
   group_by(ORCID) %>% 
   arrange(desc(education_summary_start_date_year_value)) %>% 
   ungroup() %>% 
@@ -586,7 +586,7 @@ o_ed_summary <- o_ed %>%
   select(ORCID, education_summary_organization_address_country) 
 
 # summarize the same samples
-o_ed_country <- o_ed_summary %>% 
+o_ed_country <- o_ed_summary_map %>% 
       group_by(education_summary_organization_address_country) %>% 
       summarize(n = n()) %>% 
       filter(!is.na(education_summary_organization_address_country))
@@ -722,57 +722,80 @@ for (i in 1:length(titles)){
   
 }
 
-gpr_effects_ed <- data.frame(
-  TITLE = titles, 
-  year = years, 
-  v = NA, 
-  low_v = NA, 
-  high_v = NA
-)
+gpr_effects_ed <- bind_rows(first_probs_ed, .id = "source") %>% 
+  full_join(
+    bind_rows(last_probs_ed, .id = "source"), 
+    by = c("source" = "source", "Var1" = "Var1")
+  ) %>% 
+  full_join(
+    data.frame(TITLE = titles, year = years, 
+               source = as.character(1:length(titles))),
+    by = c("source" = "source")
+  )
+colnames(gpr_effects_ed) <- c("source", "unregion", "freq_first", 
+                              "freq_last", "TITLE", "year")
 
-gpr_effects_job <- data.frame(
-  TITLE = titles, 
-  year = years, 
-  v = NA, 
-  low_v = NA, 
-  high_v = NA
-)
+gpr_effects_job <- bind_rows(first_probs_job, .id = "source") %>% 
+  full_join(
+    bind_rows(last_probs_job, .id = "source"), 
+    by = c("source" = "source", "Var1" = "Var1")
+  ) %>% 
+  full_join(
+    data.frame(TITLE = titles, year = years, 
+               source = as.character(1:length(titles))),
+    by = c("source" = "source")
+  )
+colnames(gpr_effects_job) <- c("source", "unregion", "freq_first", 
+                               "freq_last","TITLE", "year")
 
-# for (i in 1:length(first_probs_ed)){
-#   first_ed <- first_probs_ed[[i]]
-#   first_job <- first_probs_job[[i]]
-#   last_ed <- last_probs_ed[[i]]
-#   last_job <- last_probs_job[[i]]
-#   
-#   ed <- first_ed %>% full_join(last_ed, by = c("Var1" = "Var1")) %>% filter(Var1 != "<NA>")
-#   ed$Freq.x[is.na(ed$Freq.x)] <- 0
-#   ed$Freq.y[is.na(ed$Freq.y)] <- 0
-#   ed_chi <- chisq.test(ed[ , c("Freq.x", "Freq.y")])
-#   
-#   ed_mote <- v.chi.sq(x2 = ed_chi$statistic, 
-#                       n = sum(ed_chi$observed), 
-#                       r = nrow(ed_chi$observed),
-#                       c = ncol(ed_chi$observed))
-#   
-#   gpr_effects_ed$v[i] <- ed_mote$v
-#   gpr_effects_ed$low_v[i] <- ed_mote$vlow
-#   gpr_effects_ed$high_v[i] <- ed_mote$vhigh
-#   
-#   job <- first_job %>% full_join(last_job, by = c("Var1" = "Var1")) %>% filter(Var1 != "<NA>")
-#   job$Freq.x[is.na(job$Freq.x)] <- 0
-#   job$Freq.y[is.na(job$Freq.y)] <- 0
-#   job_chi <- chisq.test(job[ , c("Freq.x", "Freq.y")])
-#   
-#   job_mote <- v.chi.sq(x2 = job_chi$statistic, 
-#                       n = sum(job_chi$observed), 
-#                       r = nrow(job_chi$observed),
-#                       c = ncol(job_chi$observed))
-#   
-#   gpr_effects_job$v[i] <- job_mote$v
-#   gpr_effects_job$low_v[i] <- job_mote$vlow
-#   gpr_effects_job$high_v[i] <- job_mote$vhigh
-# 
-# }
+# flatten down by year breakdown 
+gpr_effects_ed$group <- NA
+gpr_effects_ed$year <- as.numeric(gpr_effects_ed$year)
+gpr_effects_ed$group[gpr_effects_ed$year < 2020] <- "Pre-2020"
+gpr_effects_ed$group[gpr_effects_ed$year == 2020] <- "2020"
+gpr_effects_ed$group[gpr_effects_ed$year > 2020] <- "Post-2020"
+
+gpr_effects_ed_summary <- gpr_effects_ed %>% 
+  select(group, unregion, freq_first, freq_last) %>% 
+  group_by(group, unregion) %>% 
+  summarize(total_first = sum(freq_first, na.rm = T),
+            total_last = sum(freq_last, na.rm = T)) %>% 
+  filter(!is.na(unregion))
+
+gpr_effects_job$group <- NA
+gpr_effects_job$year <- as.numeric(gpr_effects_job$year)
+gpr_effects_job$group[gpr_effects_job$year < 2020] <- "Pre-2020"
+gpr_effects_job$group[gpr_effects_job$year == 2020] <- "2020"
+gpr_effects_job$group[gpr_effects_job$year > 2020] <- "Post-2020"
+
+gpr_effects_job_summary <- gpr_effects_job %>% 
+  select(group, unregion, freq_first, freq_last) %>% 
+  group_by(group, unregion) %>% 
+  summarize(total_first = sum(freq_first, na.rm = T),
+            total_last = sum(freq_last, na.rm = T)) %>% 
+  filter(!is.na(unregion))
+
+# pre 2020 ----
+x_pre2020 <- chisq.test(gpr_effects_ed_summary[gpr_effects_ed_summary$group == "Pre-2020", c("total_first", "total_last")])
+v_pre2020 <- v.chi.sq(x2 = x_pre2020$statistic, 
+                      n = sum(x_pre2020$observed),
+                      r = nrow(x_pre2020$observed),
+                      c = ncol(x_pre2020$observed))
+
+# 2020 ----
+x_2020 <- chisq.test(gpr_effects_ed_summary[gpr_effects_ed_summary$group == "2020", c("total_first", "total_last")])
+v_2020 <- v.chi.sq(x2 = x_2020$statistic, 
+                      n = sum(x_2020$observed),
+                      r = nrow(x_2020$observed),
+                      c = ncol(x_2020$observed))
+
+
+# post 2020 ----
+x_post2020 <- chisq.test(gpr_effects_ed_summary[gpr_effects_ed_summary$group == "Post-2020", c("total_first", "total_last")])
+v_post2020 <- v.chi.sq(x2 = x_post2020$statistic, 
+                      n = sum(x_post2020$observed),
+                      r = nrow(x_post2020$observed),
+                      c = ncol(x_post2020$observed))
 ```
 
 

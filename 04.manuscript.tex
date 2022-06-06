@@ -3,12 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-  english,
   man]{apa6}
-\title{Who does big team science?}
-\author{Erin M. Buchanan\textsuperscript{1} \& Savannah C. Lewis\textsuperscript{2}}
-\date{}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{iftex}
@@ -97,6 +92,15 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
 % Manuscript styling
 \usepackage{upgreek}
 \captionsetup{font=singlespacing,justification=justified}
@@ -127,6 +131,20 @@
 % \setlength{\parindent}{0.5in}
 % \setlength{\parskip}{0pt plus 0pt minus 0pt}
 
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
 % \usepackage{etoolbox}
 \makeatletter
 \patchcmd{\HyOrg@maketitle}
@@ -138,7 +156,15 @@
   {\section*{\protect\normalfont{\@title}}}
   {}{\typeout{Failed to patch title.}}
 \makeatother
-\shorttitle{Big Team Science}
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
 \keywords{big team, science, authorship, credit\newline\indent Word count: X}
 \DeclareDelayedFloatFlavor{ThreePartTable}{table}
 \DeclareDelayedFloatFlavor{lltable}{table}
@@ -150,20 +176,16 @@
 
 \linenumbers
 \usepackage{csquotes}
-\ifXeTeX
-  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
-  \usepackage{polyglossia}
-  \setmainlanguage[]{english}
-\else
-  \usepackage[main=english]{babel}
-% get rid of language-specific shorthands (see #6817):
-\let\LanguageShortHands\languageshorthands
-\def\languageshorthands#1{}
-\fi
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 
+\title{Who does big team science?}
+\author{Erin M. Buchanan\textsuperscript{1} \& Savannah C. Lewis\textsuperscript{2}}
+\date{}
+
+
+\shorttitle{Big Team Science}
 
 \authornote{
 
@@ -179,7 +201,7 @@ Correspondence concerning this article should be addressed to Erin M. Buchanan, 
 
 \affiliation{\vspace{0.5cm}\textsuperscript{1} Harrisburg University of Science and Technology\\\textsuperscript{2} University of Alabama}
 
-\abstract{
+\abstract{%
 One or two sentences providing a \textbf{basic introduction} to the field, comprehensible to a scientist in any discipline.
 
 Two to three sentences of \textbf{more detailed background}, comprehensible to scientists in related disciplines.
@@ -296,11 +318,9 @@ We will use \(\alpha\) \textless{} .05 for all analyses that involve hypothesis 
 
 \textbf{\emph{Publication Metrics}}. We will report descriptive statistics on the total number of publications, i10 index, and h-index for individuals overall. Next, we will use the same analyses described in the career length section to analyze trends over time. An increasing slope over time indicates that individuals who are publishing more are more represented in big-team science over time (i.e., increasing numbers of scholars with higher publication rates), while a negative slope indicates more researchers with less publications. A positive slope for variance indicates increasing variance over time (i.e., more diversity in the individual publication rates), while a negative slope would indicate less diversity in researchers over time. While publication rates do not represent value as a researcher, they are often used in hiring and promotion decisions, and we will use this variable as a proxy to gauge the diversity in scholars represented in big teams.
 
-\textbf{\emph{Geopolitical Regions}}.
-- overall map of where people get their education
-- overall map of where people are working
-- is this diversifying over time (more countries as years go up)
-- then the weird analysis to answer about diversifying authors
+\textbf{\emph{Geopolitical Regions}}. We will present visualizations of the last listed education and job location, and we will discuss the areas of world in which authors generally come from, as well as the lowest representation of authors. To understand the change in representation diversity, we will summarize the total number of geopolitical regions for each paper. Using a linear model, we will examine if the number of regions present is predicted by the year of publication. Increasing diversity would be represented by a positive slope, while decreasing diversity would be represented by a negative slope. Last, we will examine the differences in representation for corresponding author sets versus all other authors. For papers with 10 to 49 authors, we will use the three first authors and the last author to compare against random samples of other authors. For 50 to 99 authors, five first authors plus last will be used, and for all papers with more than 100 authors, we will use ten first authors and the last author. We will calculate the frequencies of each of the UN Sub-Regions for first authors. Then we will randomly sample all authors in subsets of the same size (i.e., 3+1, 5+1, 10+1), and average the frequencies of UN Sub-Regions across these random samples. We will randomly sample the same number of times as the size of the author list (i.e., a paper that has 54 authors will be randomly sampled 54 times with a sample size of six).
+
+Given the expected small sample sizes of these contingency tables (i.e., the largest could be \emph{n} = 22 if all author information is available), we will group together titles based on time period using pre-2020, 2020, and post-2020 to show change over time. The choice of these groupings is based on the number of articles avaliable within these time brackets. For each grouping, we will calculate the effect size of the differences in frequencies comparing first authors to all other authors. Since this data is categorical, we will use Cramer's V to represent the effect size. If the effect size includes zero in it's confidence interval, this result will imply that first and all other authors represent the same pattern of UN Sub-Region diversity. Any confidence interval that does include zero represents a difference in diversity. We will report these values and discuss what regions of the world are represented when effect sizes indicate a different from zero using standardized residuals.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -382,11 +402,11 @@ Then we will discuss how these results are represented in our graph (below). We 
 
 \includegraphics{04.manuscript_files/figure-latex/figure2-1.pdf}
 
-\textbf{\emph{Employment}}. Overall, individuals \textbf{at the time of publication} in big team science publications are Professor (28.8\%) and Assistant Professor (24.7\%), followed by smaller categories for Lecturer (16.4\%), Associate Professor ( 9.6\%), Post Doc (8.2\%), and Head (6.8\%). Here, we will talk about the figure below and how the trends occur across time. We will also comment on the number of jobs that would be considered ``non-academic.''
+\textbf{\emph{Employment}}. Overall, individuals \textbf{at the time of publication} in big team science publications are Professor (28.8\%) and Assistant Professor (24.7\%), followed by smaller categories for Lecturer (16.4\%), Associate Professor ( 9.6\%), Post Doc (8.2\%), and Head (6.8\%). Here, we will talk about the figure below and how the trends occur across time. We will also comment on the number of jobs that would be considered ``non-academic''.
 
 \includegraphics{04.manuscript_files/figure-latex/figure3-1.pdf}
 
-\textbf{\emph{Education}}. Overall, individuals \textbf{at the time of publication} in big team science publications are Doctor (79.7\%), Masters (16.5\%), andBachelor (3.8\%). Here, we will talk about the figure below and how the trends occur across time.
+\textbf{\emph{Education}}. Overall, individuals \textbf{at the time of publication} in big team science publications are Doctor (79.7\%), Masters (16.5\%), and Bachelor (3.8\%). Here, we will talk about the figure below and how the trends occur across time.
 
 \includegraphics{04.manuscript_files/figure-latex/figure4-1.pdf}
 
@@ -431,18 +451,51 @@ Using the same analyses as career length, we will report:
   The slope for variance across years was \emph{b} = -38.52, \emph{SE} = 6.27, \emph{t}(2) = -6.14, \emph{p} = .026.
 \end{itemize}
 
-\textbf{\emph{Geopolitical Regions}}.
-- overall map of where people get their education
-- overall map of where people are working
-- is this diversifying over time (more countries as years go up)
-- then the weird analysis to answer about diversifying authors
+\textbf{\emph{Geopolitical Regions}}. We will first present two figures for education and employment geopolitical regions representation in scholars.
+
+Education Graph
+
+\includegraphics{04.manuscript_files/figure-latex/figure5-1.pdf}
+
+Employment Graph
+
+\includegraphics{04.manuscript_files/figure-latex/figure6-1.pdf}
+
+Next, we will report the results of two linear regression models. The independent variable is year of publication, and the dependent variables include the summary of the total number of different geopolitical regions represented in each publication.
+- The slope for the education model was \emph{b} = 0.06, \emph{SE} = 0.09, \emph{t}(68) = 0.63, \emph{p} = .531.
+
+\begin{itemize}
+\tightlist
+\item
+  The slope for the employment model was \emph{b} = 0.01, \emph{SE} = 0.09, \emph{t}(68) = 0.12, \emph{p} = .903.
+\end{itemize}
+
+Last, we will examine the effect sizes of the UN Sub-Regions represented for each grouped year of analysis. Tables of the UN Sub-Regions will be presented in our supplemental documents.
+
+\begin{itemize}
+\item
+  Pre-2020: \(V\) = .36, 95\% CI {[}.54, .78{]} and 0.13, 0.44, 0.94, -0.57, -0.84, -0.57, -0.13, -0.44, -0.94, 0.57, 0.84, and 0.57 will be used to discuss pre-2020 manuscripts.
+\item
+  2020: \(V\) = .64, 95\% CI {[}.48, 1.19{]} and -0.66, 2.31, -1.02, -0.84, 0.66, -2.31, 1.02, and 0.84 will be used to discuss 2020 manuscripts.
+\item
+  Post-2020: \(V\) = .55, 95\% CI {[}.65, 1.28{]} and 1.45, -0.68, -0.68, -0.68, -1.45, 0.68, 0.68, and 0.68 will be used to discuss post-2020 manuscripts.
+\end{itemize}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
 To be included after we have completed analyses.
 
-Discuss the limitation of ``who is using ORCID and Scholar'' which is likely biasing our results.
+\hypertarget{limitations}{%
+\subsection{Limitations}\label{limitations}}
+
+\begin{itemize}
+\tightlist
+\item
+  Discuss the limitation of ``who is using ORCID and Scholar'' which can bias our results.
+\item
+  Other limitations will be included.
+\end{itemize}
 
 \newpage
 
