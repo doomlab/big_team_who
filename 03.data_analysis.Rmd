@@ -25,7 +25,16 @@ library(countrycode)
 library(maps)
 library(MOTE)
 current_year <- 2022
-#### fix sau chins paper #### https://osf.io/gq92w/ 
+
+## fixes
+## update sau chins paper with new list https://osf.io/gq92w/ 
+## make list of OSC
+## add Many Primates list 
+## update Dorison et al. 
+
+
+## double check each publication for proper year and journal
+## look at merged id and incorrect ids 
 ```
 
 ## Import Bib Data
@@ -83,6 +92,32 @@ o_job <- import("ORCID_job.csv")
 s_works <- import("scholar_works.csv") 
 s_info <- import("scholar_info.csv")
 ```
+
+- test the merge 
+
+```{r}
+merged_test <- 
+  long_bib %>% 
+  select(first, last, TITLE) %>% 
+  full_join(
+    # note this isn't perfect ... will have to make sure all versions 
+    # get matched 
+    (id_list %>% select(first, last, full, ORCID, scholar)), 
+    by = c("first" = "first", "last" = "last") 
+  ) 
+
+# if full name is blank, then the person is not in our id_list
+merged_test %>% 
+  filter(!duplicated(merged_test %>% select(first, last))) %>% 
+  filter(is.na(full)) %>% 
+  export("missing_id_list.xlsx")
+
+# if no title they are in id_list but aren't merging correctly 
+merged_test %>% 
+  filter(is.na(TITLE)) %>% 
+  export("incorrect_id_list.xlsx")
+```
+
 
 ## Hand Coded Variables
 
