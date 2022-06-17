@@ -25,16 +25,6 @@ library(countrycode)
 library(maps)
 library(MOTE)
 current_year <- 2022
-
-## fixes
-## update sau chins paper with new list https://osf.io/gq92w/ 
-## make list of OSC
-## add Many Primates list 
-## update Dorison et al. 
-
-
-## double check each publication for proper year and journal
-## look at merged id and incorrect ids 
 ```
 
 ## Import Bib Data
@@ -48,7 +38,8 @@ Notes:
   - The pre-reg of this document only examines a few authors/papers to ensure code can be run and develop workflow. 
 
 ```{r}
-bibs <- bib2df("papers.bib")
+# bibs <- bib2df("papers.bib") original data
+bibs <- bib2df("papers_06_17_22.bib")
 
 # get data into long format
 long_bib <- bibs %>% unnest_longer(col = AUTHOR)
@@ -74,11 +65,7 @@ long_bib <- long_bib %>% separate(col = first, sep = " ",
 long_bib <- long_bib %>% select(-EDITOR)
 ```
 
-In this section, we will add the information for authors when they used a consortium authorship. 
-
-```{r}
-
-```
+Note that we edited the references in Zotero directly to fill in corstium authorships.
 
 ## Import Author Data
 
@@ -93,7 +80,7 @@ s_works <- import("scholar_works.csv")
 s_info <- import("scholar_info.csv")
 ```
 
-- test the merge 
+- test the merge to make sure we have all authors included 
 
 ```{r}
 merged_test <- 
@@ -203,6 +190,8 @@ journal_count <- bibs %>% group_by(JOURNAL) %>%
   arrange(desc(freq))
 
 journal_count$JOURNAL[is.na(journal_count$JOURNAL)] <- "Pre-Print"
+
+# also add information about the preprint RR acceptances 
 ```
 
 ## Article Information 
