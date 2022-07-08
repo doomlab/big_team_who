@@ -82,7 +82,7 @@ works_df <- works_df %>%
                       anytime::anydate(last_modified_date_value/1000))
 
   
-write.csv(works_df, "ORCID_works.csv", row.names = F)
+write.csv(works_df, "works_output/ORCID_works.csv", row.names = F)
 
 ed_df <- do.call(bind_rows, author_ed)
 ed_df$ORCID <- rep(names(author_ed), lapply(author_ed, nrow))
@@ -92,7 +92,7 @@ ed_df <- ed_df %>%
                 education_summary_last_modified_date_value =
                   anytime::anydate(education_summary_last_modified_date_value/1000))
 
-write.csv(ed_df, "ORCID_ed.csv", row.names = F)
+write.csv(ed_df, "works_output/ORCID_ed.csv", row.names = F)
 
 job_df <- do.call(bind_rows, author_job)
 job_df$ORCID <- rep(names(author_job), lapply(author_job, nrow))
@@ -103,7 +103,7 @@ job_df <- job_df %>%
                   anytime::anydate(employment_summary_created_date_value/1000),
                 employment_summary_last_modified_date_value =
                   anytime::anydate(employment_summary_last_modified_date_value/1000))
-write.csv(job_df, "ORCID_job.csv", row.names = F)
+write.csv(job_df, "works_output/ORCID_job.csv", row.names = F)
 ```
 
 ### Scholar 
@@ -138,7 +138,7 @@ for (scholar in scholar_list) {
 
 works_df <- do.call(bind_rows, s_author_works) 
 works_df$scholar <- rep(names(s_author_works), lapply(s_author_works, nrow))
-write.csv(works_df, "scholar_works.csv", row.names = F)
+write.csv(works_df, "works_output/scholar_works.csv", row.names = F)
 
 # paste together information 
 for (scholar in scholar_list){ 
@@ -154,5 +154,5 @@ for (scholar in scholar_list){
 
 info_df <- do.call(bind_rows, s_author_info) 
 info_df$scholar <- info_df$id
-write.csv(info_df, "scholar_info.csv", row.names = F)
+write.csv(info_df, "works_output/scholar_info.csv", row.names = F)
 ```

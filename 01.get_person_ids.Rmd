@@ -17,6 +17,7 @@ library(purrr)
 library(bib2df)
 library(tidyverse)
 library(httr)
+library(googlesheets4)
 
 library(rorcid)
 # orcid_auth() run the first time to set up
@@ -25,6 +26,7 @@ library(rorcid)
 # ORCID_TOKEN="numberhere"
 
 library(scholar)
+library(rio)
 ```
 
 ## Import the BibTeX File
@@ -37,8 +39,9 @@ Notes:
   - We will have to manually add the names for several papers that used consortium authors. 
   - The pre-reg of this document only examines a few authors/papers to ensure code can be run and develop workflow. 
 
-```{r}
-bibs <- bib2df("papers.bib")
+```{r eval = F}
+# bibs <- bib2df("papers.bib")
+bibs <- bib2df("manuscript_data/papers_06_17_22.bib")
 ```
 
 ## ORCID
@@ -50,7 +53,7 @@ In this section, we will figure out the ORCIDs for each author if possible.
   - Because authors will repeat, we need to put this in long format with one row per author and all other information saved. 
   - Next, split author name, so we can look it up with orcid.
 
-```{r}
+```{r eval = F}
 # get data into long format
 long_bib <- bibs %>% unnest_longer(col = AUTHOR)
 
@@ -73,7 +76,7 @@ long_bib <- long_bib %>% separate(col = first, sep = " ",
 
 # drop editor column so it is a non-nested DF
 long_bib <- long_bib %>% select(-EDITOR)
-write.csv(long_bib, "unedited_bib.csv", row.names = F)
+write.csv(long_bib, "id_output/unedited_bib.csv", row.names = F)
 ```
 
 To make the finalized data:
@@ -151,14 +154,14 @@ for (i in 1:nrow(get_id)){
   
 }
 
-write.csv(get_id, "possible_orc_ids.csv", row.names = F)
+write.csv(get_id, "id_output/possible_orc_ids.csv", row.names = F)
 ```
 
 ## Google Scholar
 
 - First, fix the scholar package issue that it doesn't correctly pull ids that have punctuation in them.
 
-```{r eval = F}
+```{r}
 get_scholar <- function (last_name = "", first_name = "", affiliation = NA) 
 {
     if (!any(nzchar(c(first_name, last_name)))) 
@@ -224,6 +227,79 @@ for(i in 1:length(scholars)) {
 
 get_id$scholar <- scholars
 
-write.csv(get_id, "possible_both_ids.csv", row.names = F)
+write.csv(get_id, "id_output/possible_both_ids.csv", row.names = F)
 ```
+
+## Get Data Round 2
+
+```{r}
+DF <- read_sheet("https://docs.google.com/spreadsheets/d/1dSlIQXeLcFgkITyfy15_yAdtjct1AedjD6s5D4qTzCw/edit#gid=1698777071")
+```
+
+## Work on ORC 
+
+```{r eval = F}
+ORC <- DF %>% 
+  filter(ORCID == "FIND")
+
+for (i in 2447:nrow(ORC)){
+#for (i in 1:10){ #temporary do a small number 
+  
+  # find possible candidates 
+  possibles <- orcid_search(family_name = ORC$last[i], 
+                            given_name = ORC$first[i])
+  
+  cat(i)
+  cat("\n")
+  
+  # if nrow == 1 then figure out if there's a match
+  if (nrow(possibles) == 1){
+    ORC$ORCID[i] <- possibles$orcid
+  }
+  
+  # be nice to api take a break 
+  Sys.sleep(runif(1, 3, 5))
+  
+}
+
+DF <- DF %>% 
+  full_join(ORCF %>% select(first, last, ORCID), 
+            by = c("first" = "first", "last" = "last"))
+
+export(DF, "id_output/orc_final.xlsx")
+```
+
+## Get Scholar IDs
+
+```{r}
+scholars <- DF %>% filter(scholar == "FIND")
+p_get_scholar_id <- possibly(get_scholar, otherwise = NA_character_)
+
+nrow(scholars)
+# start at Bergmann 134
+
+for(i in 258:300) {
+  
+  possibles <- p_get_scholar_id(last_name = scholars$last[i], 
+                                first_name = scholars$first[i])
+  
+  if (length(possibles) == 1) { scholars$scholar[i] <- possibles }
+  
+  # be nice to api take a break 
+  Sys.sleep(runif(5, 3, 5))
+  
+  # if divisible by 10
+  if (i %% 10 == 0){
+    export(scholars, "id_output/scholar_update.xlsx")
+  }
+}
+
+DF <- DF %>% 
+  full_join(scholars %>% select(first, last, scholar), 
+            by = c("first" = "first", "last" = "last"))
+
+export(DF, "id_output/scholar_final.xlsx")
+
+```
+
 

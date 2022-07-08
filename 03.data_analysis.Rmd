@@ -39,7 +39,7 @@ Notes:
 
 ```{r}
 # bibs <- bib2df("papers.bib") original data
-bibs <- bib2df("papers_06_17_22.bib")
+bibs <- bib2df("manuscript_data/papers_06_17_22.bib")
 
 # get data into long format
 long_bib <- bibs %>% unnest_longer(col = AUTHOR)
@@ -70,14 +70,14 @@ Note that we edited the references in Zotero directly to fill in corstium author
 ## Import Author Data
 
 ```{r}
-id_list <- import("test_utf8.xlsx")
+id_list <- import("manuscript_data/test_utf8.xlsx")
 
-o_works <- import("ORCID_works.csv")
-o_ed <- import("ORCID_ed.csv")
-o_job <- import("ORCID_job.csv")
+o_works <- import("works_output/ORCID_works.csv")
+o_ed <- import("works_output/ORCID_ed.csv")
+o_job <- import("works_output/ORCID_job.csv")
 
-s_works <- import("scholar_works.csv") 
-s_info <- import("scholar_info.csv")
+s_works <- import("works_output/scholar_works.csv") 
+s_info <- import("works_output/scholar_info.csv")
 ```
 
 - test the merge to make sure we have all authors included 
@@ -97,12 +97,12 @@ merged_test <-
 merged_test %>% 
   filter(!duplicated(merged_test %>% select(first, last))) %>% 
   filter(is.na(full)) %>% 
-  export("missing_id_list.xlsx")
+  export("id_output/missing_id_list.xlsx")
 
 # if no title they are in id_list but aren't merging correctly 
 merged_test %>% 
   filter(is.na(TITLE)) %>% 
-  export("incorrect_id_list.xlsx")
+  export("id_output/incorrect_id_list.xlsx")
 ```
 
 
@@ -179,7 +179,7 @@ table(bibs$our_keyword, useNA = "ifany")
 ## Journal Information
 
 ```{r}
-JIF <- import("jif.xlsx")
+JIF <- import("manuscript_data/jif.xlsx")
 ```
 
 - make sure preprints we are using also have real journal merged in 
