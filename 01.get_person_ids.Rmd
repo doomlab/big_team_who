@@ -242,7 +242,7 @@ DF <- read_sheet("https://docs.google.com/spreadsheets/d/1dSlIQXeLcFgkITyfy15_yA
 ORC <- DF %>% 
   filter(ORCID == "FIND")
 
-for (i in 2447:nrow(ORC)){
+for (i in 1:nrow(ORC)){
 #for (i in 1:10){ #temporary do a small number 
   
   # find possible candidates 
@@ -278,7 +278,7 @@ p_get_scholar_id <- possibly(get_scholar, otherwise = NA_character_)
 nrow(scholars)
 # start at Bergmann 134
 
-for(i in 258:300) {
+for(i in 3601:nrow(scholars)) {
   
   possibles <- p_get_scholar_id(last_name = scholars$last[i], 
                                 first_name = scholars$first[i])
