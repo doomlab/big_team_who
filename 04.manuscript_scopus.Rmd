@@ -1,0 +1,400 @@
+---
+title             : "Who does big team science?"
+shorttitle        : "Big Team Science"
+
+author: 
+  - name          : "Erin M. Buchanan"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "326 Market St., Harrisburg, PA 17101"
+    email         : "ebuchanan@harrisburgu.edu"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - Conceptualization
+      - Data curation
+      - Formal Analysis
+      - Methodology
+      - Project administration
+      - Visualization
+      - Writing – original draft
+      - Writing – review & editing
+  - name          : "Savannah C. Lewis"
+    affiliation   : "2"
+    role:
+      - Conceptualization
+      - Data curation
+      - Methodology
+      - Project administration
+      - Writing – original draft
+      - Writing – review & editing
+affiliation:
+  - id            : "1"
+    institution   : "Harrisburg University of Science and Technology"
+  - id            : "2"
+    institution   : "University of Alabama"
+    
+authornote: |
+  Erin M. Buchanan is a Professor of Cognitive Analytics at Harrisburg University of Science and Technology. Savannah C. Lewis is a graduate student at the University of Alabama.  
+  
+  Thank you to Dwayne Lieck for providing an extensive list of large scale projects for this manuscript. 
+
+abstract: |
+  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
+  
+  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
+  
+  One sentence clearly stating the **general problem** being addressed by  this particular study.
+  
+  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
+  
+  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
+  
+  One or two sentences to put the results into a more **general context**.
+  
+  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "big team, science, authorship, credit"
+wordcount         : "X"
+
+#bibliography      : ["big_team_refs.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library(papaja)
+library(knitr)
+library(cowplot)
+library(broom.mixed)
+current_year <- 2022
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(538943)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+```{r bringinanalysis, include = FALSE, echo = FALSE}
+output <- knit_child("03.data_analysis.Rmd")
+```
+
+# Significance 
+
+science collaboration overall 
+  - what is collaboration
+  - is it increasing 
+  - globalization should help
+
+rise of big team science because the need for resources, replication, reproducibility, generalization  
+  - physics
+  - biology 
+  - psychology
+  
+metascience
+  - most research is on lessons learned, why bts is useful
+  - little research on who/fields has done bts
+  - has the globalization of science actually impacted people other than NA and Europe 
+
+Collaboration in scientific endeavors involves multiple researchers at multiple institutions to communicate and work together to advance knowledge in their chosen field. While collaboration is not new in science, the current interest of "big team science" is increasing. We define big team science as at least ten authors with ten different institutional affiliations. The globalization of science has allowed researchers across the world to contribute to research projects, but little research has examined *who* participates in big team science projects. 
+
+idea of BTS is not new, but interest is new, and globalization allows us to do BTS with projects such as PSA/CERN/Reproducibility projects. But we don't know if this uptick in large scale projects has diversified the *people* involved in BTS. Is this increasing inclusivity? At what level of career are people doing BTS? Is that changing over time? And how is that including new and varied researchers outside NA and Europe? Are we including people in positions that may impact their career? WERID thing is innovative
+
+    Significance: Describe how the project addresses an important problem or a critical barrier to progress in the field and how it can advance knowledge in the ICSR Research Themes.
+    
+We specifically expect to examine ICSR's Research Themes of inclusivity, research careers, and research globalization. As we examine these themes, it will a bring new knowledge of how big team science projects impact each theme and field of study. 
+
+# Potential Outlets 
+
+We will aim for high impact broad scope journals such as *Science*, *Nature* or *Nature Human Behaviour*. Other journals would include review publications within psychology to compare the social sciences to other sciences: *Perspectives in Psychological Science*, *Psychological Bulletin*, *Psychological Review*, or *Current Directions in Psychological Science*. 
+
+# Approach 
+
+    Approach: Please describe:
+        An explicit research question or hypothesis you plan to test, and specific aims/objective related to that question.
+        The project’s overall strategy and planned methodology.
+        How the proposed project will make use of one or more of the available ICSR Lab datasets.
+        Any especially innovative or novel aspect of the proposed project.
+
+
+- Research Question 1: What journals publish big team science papers?
+- Research Question 2: What are the types of articles that are being published in big team science?
+- Research Question 3: Who is involved in big team science? 
+
+For each of these research questions, we will examine the overall results of all big team research projects, and examine for change in result trends across years of publication. 
+
+# Method
+
+## Studies 
+
+We defined **big team science publications** as publications with at least 10 authors that were published in peer-reviewed journals or had posted a full paper pre-print for publication review. We specifically focused on social science research, primarily *psychology* for this manuscript. First, we added all known publications from collaborative teams, such as the PSA, Many Labs, and Many Babies. We examined journals that frequently publish registered replication reports (i.e., *Advances in Methods and Practices in Psychological Science*) for additional publications with at least 10 authors. From these manuscripts, we identified common authors who frequently participate in these studies, and examined their Google Scholar or Open Researcher and Contributor IDentifier (ORCID) page for other publications. We reached out to social networks on Twitter to identify other publications. Last, we used Google Scholar and EBSCO to search for large projects using the following search terms: collaboration, multicultural, large scale, and big team science. 
+
+- definition for big team size: 10 authors + at least 10 different institutions
+- we will use all categories but break into the big four: https://service.elsevier.com/app/answers/detail/a_id/14882/supporthub/scopus/~/what-are-the-most-frequent-subject-area-categories-and-classifications-used-in/ 
+- we would get everything from df_ani 
+- only use 1970 and forward 
+
+## Data Curation
+
+### RQ1: Journal Information 
+
+Using these criteria, we identified `r nrow(bibs)` articles for inclusion on this manuscript. The publication dates on these articles ranged from `r min(bibs$YEAR)` to `r max(bibs$YEAR)`, and we used the pre-print last updated date as the publication date for those articles. The current impact factor (i.e., 2022) for each journal was found on the journal page and included for journal statistics.
+
+journal information we could include:
+  - total number of articles overall 
+  - number of distinct journals in each of the four areas 
+  - JIF df_sources, snip
+  - https://liu.cwp.libguides.com/c.php?g=45770&p=4417804
+
+### RQ2: Article Information 
+
+For each publication, we coded the list of keywords into broad labels for areas of social science (i.e., Social Psychology, Cognitive Psychology). In this section, we elected to code each article with only one main research area. Research is often cross-disciplinary, however, for simplicity, we applied one global label to each article that represented the perceived main area of study (based on what course this material might be taught in, the publication journal focus). The list of broad areas includes clinical, cognitive, developmental, educational, and social psychology. Last, we included a metascience category that covered articles that were detailing the science of science. The Open Science Collaboration [CITE] was included in this category because the aim of the paper was a focus on replication across multiple field types. Other metascience categories included papers that focused on research degrees of freedom, analysis choices, and types of samples. 
+
+- keywords are easier now - could use the ASJC smaller subfield areas to create a list 
+- https://service.elsevier.com/app/answers/detail/a_id/15181/supporthub/scopus/
+- table of all the codes 
+
+### RQ3: Author Information   
+
+```{r authors, include = FALSE, echo = FALSE}
+min(author_count$author_count)
+max(author_count$author_count)
+format(mean(author_count$author_count), nsmall = 2, digits = 2)
+format(sd(author_count$author_count), nsmall = 2, digits = 2)
+nrow(id_list)
+```
+
+The author list was then extracted from each publication. In the case of consortium authorship, we extracted the complete authorship from the meta-data or pre-print publication. The total number of unique authors was `r nrow(id_list)`. The number of authors on each publication ranged from `r min(author_count$author_count)` to `r max(author_count$author_count)` with an average of `r format(mean(author_count$author_count), nsmall = 2, digits = 2)` authors (*SD* = `r format(sd(author_count$author_count), nsmall = 2, digits = 2)`). 
+
+- calculate the min to max
+- average authors 
+- SD authors 
+
+Next, we matched each author to their Google Scholar and ORCID profile pages, if available. We originally used the *R* packages, *rorcid* [CITE] and *scholar* [CITE] to try to match published author names to profile pages. This process did not result in a large number of matches, and we therefore curated the list of profile pages manually, checking each author against the publication list. We used these two packages and profile pages to collect authorship statistics described below. If a researcher was not present in either of these databases, their information was excluded from the relevant analyses below. 
+
+- here we would pull all author ids and then grab all their papers - grab from the whole dataset not just 1970  
+
+**_Career Length_**. Career length for each author was defined using multiple variables to see if results from the two data sources would converge on similar answers. Both ORCID and Google Scholar provide a list of publications for authors, and we first calculated career length as the year of first publication listed for each author. In ORCID, a researcher can enter their educational background with completion years for each degree. We defined career length for this variable as years since first degree listed. Publication years are often curated directly from meta-data provided by Crossref (ORCID) or online sources used by Google Scholar. Authors may also directly add publications and their information into both systems. The limitation to using education as a metric for career length is that the researcher must directly enter this information into ORCID.
+
+- year from first publication should be what we would do 
+
+**_Employment_**. Employment information was collected from self-entered ORCID data. These values are open text, and therefore, we coded them into coherent categories for traditional educational (graduate student, post doctoral, lecturer),  tenure track (assistant, associate, full professor), and other roles (fellow, research assistant, researcher, head). Employment geopolitical region was also selected when available.   
+
+- can't get this part really - we could get institution from publication and country from publication 
+
+**_Education_**. As with employment information, we also collected education information from self-entered ORCID data. These values were coded into general categories of bachelor, master, and doctoral degrees. The geopolitical region of the listed education was included when available. For analyses, both employment and education levels were grouped into United Nation regions. 
+
+- we can get the degrees from the author table
+
+**_Types of Publications_**. ORCID includes information about the type of publication pulled from either researcher entered data or Crossref. We coded these publications into general categories including book, conference presentations, data-sets, journal articles, preprints, software, thesis, and other publications. 
+
+- publication type:
+
+The classification of the publication, which may be: ab Abstract Report, ar Article, ip Article in Press, bk Book, bz Business Article, ch Book Chapter, cp Conference Paper, cr Conference Review, dp Data paper, ed Editorial, er Erratum, le Letter, no Note, pp Preprint, pr Press Release, rp Report, re Review, sh Survey, tb Retracted.
+
+- just make a graph of the options 
+
+**_Publication Metrics_**. We calculated total number of publications of any type from both Google Scholar and ORCID. We additionally pulled both the h-index and i-10 index from Google Scholar. The h-index represents the highest *h* number of publications that have at least *h* citations, while the i-10 index represents the number of publications with at least 10 citations.
+
+- for each author:
+  - total number of publications
+  - h index
+  - i 10 index
+
+## Data analysis
+
+### RQ1: Journals
+
+Results for types of journals will include a summary of the journals that publish big-team science papers and an average of the 2-year and 5-year impact factors for the journals. 
+
+### RQ2: Articles
+
+Results for types of articles will include a summary of the coded areas for each article, presented overall and across the years of publication. 
+
+### RQ3: Authors. \
+
+We will use $\alpha$ < .05 for all analyses that involve hypothesis testing. We make no directional predictions. 
+
+**_Career Length_**. For each of the three variables in career length (ORCID year of first pub, Scholar year of first pub, ORCID year of first degree), we will create a visualization of the trend and variance of researcher career length across publication years. To analyze trends over time, we will use the slope from a multilevel model (MLM) using the individual as a random intercept, career length as the dependent variable, and year of publication as the predictor variable. MLMs are regression models that control for the correlated error due to the repeated and nested nature of the data [CITE]. In this model, each individual's starting career length is arbitrary, which we allow to vary with the random intercept by participant. A positive slope for year of publication would indicate increasing years of first publication (i.e., more younger scholars over time), while a negative slope would indicate older years of first publication (i.e., more older scholars over time). In order to show variance between individuals, we will report the variance component of the random intercept for individuals. Finally, to examine variance over time, we will calculate the standard deviation of the individual within each publication (i.e., one standard deviation for each article), and use a linear model with year predicting these standard deviations. This model is a traditional simultaneous regression, as averaging the variance by title eliminates the repeated measures variable (individuals). A positive slope would indicate increasing variance over time (i.e., more diversity in the career lengths of scholars), while a negative slope would indicate less variance and diversity in scholars over time.
+
+- so we cant do MLM 
+- for each paper we could calculate an average career length, then run the regression 
+- then calculate the standard deviation and do the same analysis as described 
+
+**_Employment_**. We will summarize the general employment categories of individuals at the time of publication, along with a summary for change over time. 
+**_Education_**. We will summarize the general education categories of individuals at the time of publication, along with a summary for change over time. 
+
+**_Types of Publications_**. We will summarize the coded types of publications for individuals. 
+
+**_Publication Metrics_**. We will report descriptive statistics on the total number of publications, i10 index, and h-index for individuals overall. Next, we will use the same analyses described in the career length section to analyze trends over time. An increasing slope over time indicates that individuals who are publishing more are more represented in big-team science over time (i.e., increasing numbers of scholars with higher publication rates), while a negative slope indicates more researchers with less publications. A positive slope for variance indicates increasing variance over time (i.e., more diversity in the individual publication rates), while a negative slope would indicate less diversity in researchers over time. While publication rates do not represent value as a researcher, they are often used in hiring and promotion decisions, and we will use this variable as a proxy to gauge the diversity in scholars represented in big teams. 
+same idea average down by paper for mean and standard deviation 
+
+**_Geopolitical Regions_**. We will present visualizations of the last listed education and job location, and we will discuss the areas of world in which authors generally come from, as well as the lowest representation of authors. To understand the change in representation diversity, we will summarize the total number of geopolitical regions for each paper. Using a linear model, we will examine if the number of regions present is predicted by the year of publication. Increasing diversity would be represented by a positive slope, while decreasing diversity would be represented by a negative slope. Last, we will examine the differences in representation for corresponding author sets versus all other authors. For papers with 10 to 49 authors, we will use the three first authors and the last author to compare against random samples of other authors. For 50 to 99 authors, five first authors plus last will be used, and for all papers with more than 100 authors, we will use ten first authors and the last author. We will calculate the frequencies of each of the UN Sub-Regions for first authors. Then we will randomly sample all authors in subsets of the same size (i.e., 3+1, 5+1, 10+1), and average the frequencies of UN Sub-Regions across these random samples. We will randomly sample the same number of times as the size of the author list (i.e., a paper that has 54 authors will be randomly sampled 54 times with a sample size of six). 
+
+- may not need to do this random sample thing if we have large enough datasets? 
+- pool them together and then compare? 
+- maybe group them in the sizes we are interested in, then convert to proportions
+- average those proportions ? plot comparisons of the proportions and confidence intervals for each group 
+
+Given the expected small sample sizes of these contingency tables (i.e., the largest could be *n* = 22 if all author information is available), we will group together titles based on time period using pre-2020, 2020, and post-2020 to show change over time. The choice of these groupings is based on the number of articles available within these time brackets. For each grouping, we will calculate the effect size of the differences in frequencies comparing first authors to all other authors. Since this data is categorical, we will use Cramer's V to represent the effect size. If the effect size includes zero in it's confidence interval, this result will imply that first and all other authors represent the same pattern of UN Sub-Region diversity. Any confidence interval that does include zero represents a difference in diversity. We will report these values and discuss what regions of the world are represented when effect sizes indicate a different from zero using standardized residuals.
+
+# Results
+
+### RQ1: Journals
+
+Articles were most commonly published in `r journal_count$JOURNAL[1]` (*n* = `r journal_count$freq[1]`), `r journal_count$JOURNAL[2]` (*n* = `r journal_count$freq[2]`), `r journal_count$JOURNAL[3]` (*n* = `r journal_count$freq[3]`), `r journal_count$JOURNAL[4]` (*n* = `r journal_count$freq[4]`), and `r journal_count$JOURNAL[5]` (*n* = `r journal_count$freq[5]`). A complete list of journals can be found on our Open Science Framework page XXX. The average 2-year impact factor for official journal publications was `r format(mean(JIF$JIF2, na.rm = T), nsmall = 2, digits = 2)` (*SD* = `r format(sd(JIF$JIF2, na.rm = T), nsmall = 2, digits = 2)`) and the average 5-year impact factor was `r format(mean(JIF$JIF5, na.rm = T), nsmall = 2, digits = 2)` (*SD* = `r format(sd(JIF$JIF5, na.rm = T), nsmall = 2, digits = 2)`).
+
+### RQ2: Articles
+
+Articles were primarily `r article_overall$Var1[1]` (`r format(article_overall$Percent[1], nsmall = 1, digits = 1)`%) and `r article_overall$Var1[2]` (`r format(article_overall$Percent[2], nsmall = 1, digits = 1)`%), followed by smaller categories for `r article_overall$Var1[3]` (`r format(article_overall$Percent[3], nsmall = 1, digits = 1)`%), `r article_overall$Var1[4]` (`r format(article_overall$Percent[4], nsmall = 1, digits = 1)`%), `r article_overall$Var1[5]` (`r format(article_overall$Percent[5], nsmall = 1, digits = 1)`%), and `r article_overall$Var1[6]` (`r format(article_overall$Percent[6], nsmall = 1, digits = 1)`%). Here, we will talk about the figure below and how the trends occur across time.  
+
+```{r figure1, echo = FALSE}
+article_time_plot
+```
+
+### RQ3: Authors. \
+
+```{r echo = FALSE}
+o_career_output <- tidy(o_career_model)
+var_o_career_output <- tidy(var_o_career_model)
+
+s_career_output <- tidy(s_career_model)
+var_s_career_output <- tidy(var_s_career_model)
+
+o_career_ed_output <- tidy(o_career_ed_model)
+var_o_career_ed_output <- tidy(var_o_career_ed_model)
+```
+
+**_Career Length_**. The average career length was `r format(round(current_year - mean(o_works_summary$o_career_1_pub, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(current_year - o_works_summary$o_career_1_pub, na.rm = T), digits = 2), nsmall = 2)`) for ORCID first publication year (i.e., current year minus year of first publication), *M* = `r format(round(current_year - mean(s_works_summary$s_career_1_pub, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(current_year - s_works_summary$s_career_1_pub, na.rm = T), digits = 2), nsmall = 2)`) for Scholar year of first publication, and *M* = `r format(round(current_year - mean(o_ed_summary$o_career_1_degree, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(current_year - o_ed_summary$o_career_1_degree, na.rm = T), digits = 2), nsmall = 2)`) for ORCID year of first degree. In each of the analyses, we use the actual year of first publication/education, as subtracting publication and using it as a predictor would create a perfect solution for each model. 
+
+Next, we will talk about the results from three variables:
+
+1) ORCID year first publication: 
+
+  - The slope for year of first publication was *b* = `r format(round(o_career_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(o_career_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r o_career_output$df[2]`) = `r format(round(o_career_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(o_career_output$p.value[2])`. 
+  - The variance parameter was *SD* = `r format(round(o_career_output$estimate[3], digits = 2), nsmall = 2)`. 
+  - The slope for variance across years was *b* = `r format(round(var_o_career_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(var_o_career_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r var_o_career_model$df.residual`) = `r format(round(var_o_career_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(var_o_career_output$p.value[2])`.
+  
+2) Scholar year first publication: 
+
+  - The slope for year of first publication was *b* = `r format(round(s_career_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(s_career_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r s_career_output$df[2]`) = `r format(round(s_career_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(s_career_output$p.value[2])`. 
+  - The variance parameter was *SD* = `r format(round(s_career_output$estimate[3], digits = 2), nsmall = 2)`. 
+  - The slope for variance across years was *b* = `r format(round(var_s_career_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(var_s_career_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r var_s_career_model$df.residual`) = `r format(round(var_s_career_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(var_s_career_output$p.value[2])`.
+  
+3) ORCID year first degree: 
+
+  - The slope for year of first degree was *b* = `r format(round(o_career_ed_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(o_career_ed_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r o_career_ed_output$df[2]`) = `r format(round(o_career_ed_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(o_career_ed_output$p.value[2])`. 
+  - The variance parameter was *SD* = `r format(round(o_career_ed_output$estimate[3], digits = 2), nsmall = 2)`. 
+  - The slope for variance across years was *b* = `r format(round(var_o_career_ed_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(var_o_career_ed_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r var_o_career_ed_model$df.residual`) = `r format(round(var_o_career_ed_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(var_o_career_ed_output$p.value[2])`.
+  
+Then we will discuss how these results are represented in our graph (below). We will discuss any discrepancies in the results across the three different statistics. 
+
+```{r figure2, echo = FALSE, warning = FALSE}
+plot_grid(o_career_graph + theme(text = element_text(size = 8), 
+                                 axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 0.5)), 
+          s_career_graph + theme(text = element_text(size = 8), 
+                                 axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 0.5)), 
+          o_career_graph_ed + theme(text = element_text(size = 8), 
+                                 axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 0.5)))
+```
+
+**_Employment_**. Overall, individuals **at the time of publication** in big team science publications are  `r employment_overall$Var1[1]` (`r format(employment_overall$Percent[1], nsmall = 1, digits = 1)`%) and `r employment_overall$Var1[2]` (`r format(employment_overall$Percent[2], nsmall = 1, digits = 1)`%), followed by smaller categories for `r employment_overall$Var1[3]` (`r format(employment_overall$Percent[3], nsmall = 1, digits = 1)`%), `r employment_overall$Var1[4]` (`r format(employment_overall$Percent[4], nsmall = 1, digits = 1)`%), `r employment_overall$Var1[5]` (`r format(employment_overall$Percent[5], nsmall = 1, digits = 1)`%), and `r employment_overall$Var1[6]` (`r format(employment_overall$Percent[6], nsmall = 1, digits = 1)`%). Here, we will talk about the figure below and how the trends occur across time. We will also comment on the number of jobs that would be considered "non-academic". 
+
+```{r figure3, echo = FALSE, warning = FALSE}
+employment_time_plot
+```
+
+**_Education_**. Overall, individuals **at the time of publication** in big team science publications are  `r education_overall$Var1[1]` (`r format(education_overall$Percent[1], nsmall = 1, digits = 1)`%), `r education_overall$Var1[2]` (`r format(education_overall$Percent[2], nsmall = 1, digits = 1)`%), and `r education_overall$Var1[3]` (`r format(education_overall$Percent[3], nsmall = 1, digits = 1)`%). Here, we will talk about the figure below and how the trends occur across time.  
+
+```{r figure4, echo = FALSE, warning = FALSE}
+education_time_plot
+```
+
+**_Types of Publications_**. In general, the most common type of publication was `r publication_overall$Var1[1]` (`r format(publication_overall$Percent[1], nsmall = 1, digits = 1)`%), followed by `r publication_overall$Var1[2]` (`r format(publication_overall$Percent[2], nsmall = 1, digits = 1)`%), and smaller categories for `r publication_overall$Var1[3]` (`r format(publication_overall$Percent[3], nsmall = 1, digits = 1)`%), `r publication_overall$Var1[4]` (`r format(publication_overall$Percent[4], nsmall = 1, digits = 1)`%), `r publication_overall$Var1[5]` (`r format(publication_overall$Percent[5], nsmall = 1, digits = 1)`%), and `r publication_overall$Var1[6]` (`r format(publication_overall$Percent[6], nsmall = 1, digits = 1)`%). We will include all information over 1% of the publication totals. 
+
+```{r echo = FALSE}
+o_total_output <- tidy(o_total_model)
+var_o_total_output <- tidy(var_o_total_model)
+
+s_total_output <- tidy(s_total_model)
+var_s_total_output <- tidy(var_s_total_model)
+```
+
+**_Publication Metrics_**. The average number of all publications per individual was *M* = `r format(round(mean(merged_df$o_total_pub, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(merged_df$o_total_pub, na.rm = T), digits = 2), nsmall = 2)`) using ORCID and *M* = `r format(round(mean(merged_df$s_total_pub, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(merged_df$s_total_pub, na.rm = T), digits = 2), nsmall = 2)`) using Google Scholar. The average i10 index was *M* = `r format(round(mean(merged_df$i10_index, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(merged_df$i10_index, na.rm = T), digits = 2), nsmall = 2)`) and the average h-index was *M* = `r format(round(mean(merged_df$h_index, na.rm = T), digits = 2), nsmall = 2)` (*SD* = `r format(round(sd(merged_df$h_index, na.rm = T), digits = 2), nsmall = 2)`). 
+
+Using the same analyses as career length, we will report:
+
+1) Number of publications ORCID: 
+
+  - The slope for number of publications was *b* = `r format(round(o_total_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(o_total_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r o_total_output$df[2]`) = `r format(round(o_total_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(o_total_output$p.value[2])`. 
+  - The variance parameter was *SD* = `r format(round(o_total_output$estimate[3], digits = 2), nsmall = 2)`. 
+  - The slope for variance across years was *b* = `r format(round(var_o_total_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(var_o_total_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r var_o_total_model$df.residual`) = `r format(round(var_o_total_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(var_o_total_output$p.value[2])`.
+  
+2) The number of publications for Scholar:
+
+  - The slope for year of first publication was *b* = `r format(round(s_total_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(s_total_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r s_total_output$df[2]`) = `r format(round(s_total_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(s_total_output$p.value[2])`. 
+  - The variance parameter was *SD* = `r format(round(s_total_output$estimate[3], digits = 2), nsmall = 2)`. 
+  - The slope for variance across years was *b* = `r format(round(var_s_total_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(var_s_total_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r var_s_total_model$df.residual`) = `r format(round(var_s_total_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(var_s_total_output$p.value[2])`.
+
+**_Geopolitical Regions_**. We will first present two figures for education and employment geopolitical regions representation in scholars. 
+
+Education Graph
+
+```{r figure5, echo = FALSE, warning = FALSE}
+o_ed_country_graph
+```
+
+Employment Graph
+
+```{r figure6, echo = FALSE, warning = FALSE}
+o_job_country_graph
+```
+
+```{r echo = F}
+edu_country_output <- tidy(edu_country_model)
+job_country_output <- tidy(job_country_model)
+```
+
+Next, we will report the results of two linear regression models. The independent variable is year of publication, and the dependent variables include the summary of the total number of different geopolitical regions represented in each publication. 
+- The slope for the education model was *b* = `r format(round(edu_country_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(edu_country_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r edu_country_model$df.residual`) = `r format(round(edu_country_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(edu_country_output$p.value[2])`.
+
+- The slope for the employment model was *b* = `r format(round(job_country_output$estimate[2], digits = 2), nsmall = 2)`, *SE* = `r format(round(job_country_output$std.error[2], digits = 2), nsmall = 2)`, *t*(`r job_country_model$df.residual`) = `r format(round(job_country_output$statistic[2], digits = 2), nsmall = 2)`, *p* = `r printp(job_country_output$p.value[2])`.
+
+Last, we will examine the effect sizes of the UN Sub-Regions represented for each grouped year of analysis. Tables of the UN Sub-Regions will be presented in our supplemental documents. 
+
+- Pre-2020: `r v_pre2020$estimate` and `r x_pre2020$stdres` will be used to discuss pre-2020 manuscripts. 
+
+- 2020: `r v_2020$estimate` and `r x_2020$stdres` will be used to discuss 2020 manuscripts. 
+
+- Post-2020: `r v_post2020$estimate` and `r x_post2020$stdres` will be used to discuss post-2020 manuscripts.
+
+# Discussion
+
+To be included after we have completed analyses. 
+
+## Limitations
+
+- Discuss the limitation of "who is using ORCID and Scholar" which can bias our results. 
+- Other limitations will be included. 
+
+\newpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup
