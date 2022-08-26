@@ -92,20 +92,22 @@ output <- knit_child("03.data_analysis.Rmd")
 
 # Significance 
 
-science collaboration overall 
+science collaboration overall (sav)
   - what is collaboration
   - is it increasing 
   - globalization should help
 
-rise of big team science because the need for resources, replication, reproducibility, generalization  
+rise of big team science because the need for resources, replication, reproducibility, generalization (erin)
   - physics
   - biology 
   - psychology
   
-metascience
+metascience (erin)
   - most research is on lessons learned, why bts is useful
   - little research on who/fields has done bts
   - has the globalization of science actually impacted people other than NA and Europe 
+  
+about this project paragraph (erin)
 
 Collaboration in scientific endeavors involves multiple researchers at multiple institutions to communicate and work together to advance knowledge in their chosen field. While collaboration is not new in science, the current interest of "big team science" is increasing. We define big team science as at least ten authors with ten different institutional affiliations. The globalization of science has allowed researchers across the world to contribute to research projects, but little research has examined *who* participates in big team science projects. 
 
