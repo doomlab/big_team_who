@@ -92,10 +92,16 @@ output <- knit_child("03.data_analysis.Rmd")
 
 # Significance 
 
-science collaboration overall (sav)
+
+  science collaboration overall (sav)
   - what is collaboration
   - is it increasing 
   - globalization should help
+
+According to the Oxford English dictionary, collaboration is two or more people working together to achieve a certain goal. Collaboration in scientific endeavors involves multiple researchers at multiple institutions to communicate and work together to advance knowledge in their chosen field. Collaboration can look differently in every project dependent on the skill sets, questions and perspectives of your collaborators. While collaboration is not new in science, the current interest of "big team science" is increasing. Big team science organizations utilize and run on collaboration to ensure that diverse populations and ideas are brought into research projects, which in turn allows for more reliability and generalizability in the results and method of the study. In regards to this project, the definitions of Big Team Science will be defined as a collaboration of ten or more authors from ten different institutions. 
+Big Team Science seems to be increasing as a result of the current state of the scientific field and with the increase in technology in the world.The idea of BTS is not new, but interest is new, and globalization allows us to do BTS with projects such as PSA/CERN/Reproducibility projects. Technological advances have provided easier ways to collaborate with people who are from other universities and countries through document sharing platforms (i.e. Google, github, and Open Science Framework), video chatting platforms (i.e. as zoom, skype, microsoft teams) and messaging and data tracking platforms (i.e. Slack, Shiny app, Trello boards, when2meet, etc.). The credibility movement seems to suggest that by having both collaborations that span across the globe and subfield of psychology, age groups and education levels should help to drive psychological science in the path of better materials, reliability, generalizability and more robust sample size in a study. 
+
+ADD STUFF ABOUT THE CREDIBILITY MOVEMENT HERE….
 
 rise of big team science because the need for resources, replication, reproducibility, generalization (erin)
   - physics
@@ -109,14 +115,13 @@ metascience (erin)
   
 about this project paragraph (erin)
 
-Collaboration in scientific endeavors involves multiple researchers at multiple institutions to communicate and work together to advance knowledge in their chosen field. While collaboration is not new in science, the current interest of "big team science" is increasing. We define big team science as at least ten authors with ten different institutional affiliations. The globalization of science has allowed researchers across the world to contribute to research projects, but little research has examined *who* participates in big team science projects. 
-
-idea of BTS is not new, but interest is new, and globalization allows us to do BTS with projects such as PSA/CERN/Reproducibility projects. But we don't know if this uptick in large scale projects has diversified the *people* involved in BTS. Is this increasing inclusivity? At what level of career are people doing BTS? Is that changing over time? And how is that including new and varied researchers outside NA and Europe? Are we including people in positions that may impact their career? WERID thing is innovative
-
     Significance: Describe how the project addresses an important problem or a critical barrier to progress in the field and how it can advance knowledge in the ICSR Research Themes.
     
-We specifically expect to examine ICSR's Research Themes of inclusivity, research careers, and research globalization. As we examine these themes, it will a bring new knowledge of how big team science projects impact each theme and field of study. 
+We specifically expect to examine ICSR's Research Themes of inclusivity, research careers, and research globalization. As we examine these themes, it will bring new knowledge of how big team science projects impact each theme and field of study. 
 
+The globalization of science has allowed researchers across the world to contribute to research projects, but little research has examined *who* participates in big team science projects. We see an increase in BTS but we don't know if this uptick in large scale projects has diversified the *people* involved in BTS. Is this increasing inclusivity? At what level of career are people doing BTS? Is that changing over time? And how is that including new and varied researchers outside NA and Europe? Are we including people in positions that may impact their career? WEIRD thing is innovative
+
+  
 # Potential Outlets 
 
 We will aim for high impact broad scope journals such as *Science*, *Nature* or *Nature Human Behaviour*. Other journals would include review publications within psychology to compare the social sciences to other sciences: *Perspectives in Psychological Science*, *Psychological Bulletin*, *Psychological Review*, or *Current Directions in Psychological Science*. 
