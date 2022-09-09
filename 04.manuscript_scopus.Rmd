@@ -71,7 +71,7 @@ header-includes:
 
 csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja')`"
 documentclass     : "apa7"
-output            : papaja::apa6_pdf
+output            : papaja::apa6_docx
 ---
 
 ```{r setup, include = FALSE}
@@ -137,7 +137,7 @@ resources on an answer we already "know" [@isager2021; @isager2021a]?
 
 However, the success and interest in the large-scale reproducibility
 projects [@opensciencecollaboration2015; @10.7554/eLife.71601], paired
-with the meta-scienctific publications focusing on researcher practices
+with the meta-scientific publications focusing on researcher practices
 and incentive structures [@silberzahn2018many; @john2012] led to a
 change in journal guidelines and incentives for researchers interested
 in participating in large-scale replication studies [@grahe2014;
