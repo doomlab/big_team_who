@@ -173,7 +173,7 @@ these organizations and one-time groups for BTS studies have provided an
 incredible wealth of data for the scientific community, we do not yet
 know exactly *who* is involved with, and benefits from, the BTS and
 credibility movement. Publications on BTS generally explore challenges,
-lessons learned, the need for BTS [@forscher2020; @coles2022].
+lessons learned, and the need for BTS [@forscher2020; @coles2022].
 
 Therefore, the goal of this manuscript is to examine the *people*
 involved in BTS projects. We specifically expect to examine ICSR's
