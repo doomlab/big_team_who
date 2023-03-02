@@ -69,17 +69,27 @@ header-includes:
       {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
     \makeatother
 
-csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja')`"
+csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja'`)"
 documentclass     : "apa7"
 output            : papaja::apa6_docx
 ---
 
 ```{r setup, include = FALSE}
+#knitr::opts_knit(echo = TRUE)
 library(papaja)
 library(knitr)
+library(ggplot2)
+library(treemapify)
+library(countrycode)
+library(rio)
+library(maps)
+library(dplyr)
 ```
 
-# Significance
+```{r data, include = FALSE}
+geo_country <- import("py_outputs/geo_country.xlsx")
+```
+
 
 According to the Oxford English dictionary, collaboration is two or more
 people working together to achieve a certain goal [@oed2016].
@@ -204,7 +214,7 @@ other sciences: *Perspectives in Psychological Science*, *Psychological
 Bulletin*, *Psychological Review*, or *Current Directions in
 Psychological Science*.
 
-# Approach
+# Research Questions
 
 -   Research Question 1: What publication sources publish big team
     science papers?
@@ -234,7 +244,7 @@ achieved with open-source databases.
 We have defined **BTS publications** as publications with at least 10
 authors at 10 different institutions that were published in
 peer-reviewed journals or had posted a full paper pre-print. We will use
-data from 1970 and forward in the publications (`ani)` database, as it
+data from 1970 and forward in the publications (`ani`) database, as it
 is noted online that this time period includes cited references for
 calculation of several of our variables described below. We will analyze
 our results based on the big four subject areas: Physical Sciences,
@@ -249,7 +259,7 @@ publication sources: the name of the publication (source title), subject
 area (both the large four subject areas and the smaller four digit all
 science journal classification ASJC codes). We will examine journal
 impact using the Source Normalized Impact per Paper from the journal
-(`sources)` database.
+(`sources`) database.
 
 ### RQ2: Publication Information.
 
@@ -387,12 +397,119 @@ testing. We make no directional predictions.
     authors, and we will discuss the areas of world in which authors
     generally come from, as well as the lowest representation of
     authors.
+    
+```{r geo-map}
+# serbia has changed codes
+geo_country$affiliation_tag_country <- toupper(geo_country$affiliation_tag_country)
+geo_country <- subset(geo_country, affiliation_tag_country != "NONE")
+geo_country$affiliation_tag_country[geo_country$affiliation_tag_country == "SCG"] <- "SRB"
+
+geo_country <- geo_country %>% 
+  group_by(affiliation_tag_country) %>% 
+  summarize(count = sum(count))
+
+# convert country code to region code
+# this will warn you about the ones that have multiple countries 
+# create a world map 
+world_map <- map_data(map = "world")
+world_map$orig_region <- world_map$region
+world_map$region <- iso.alpha(world_map$region, n = 3)
+world_map <- subset(world_map, region != "ATA")
+
+# make a map on a continuous scale
+ggplot(geo_country) +
+  geom_map(aes(map_id = affiliation_tag_country, fill = count), map = world_map) +
+  geom_polygon(data = world_map, 
+               aes(x = long, y = lat, group = group), 
+               colour = 'black', fill = NA) + 
+  theme_void() + 
+  scale_fill_distiller(name = "Sample Size",
+                       palette = "Greys",
+                       direction = 1,
+                       na.value = "white") 
+
+ggsave("figure/continuous_country.png")
+  
+# maybe try binning
+geo_country$count_binned <- if_else(
+  geo_country$count >= 10000, "10,000+", 
+  if_else(
+    geo_country$count < 10000 & geo_country$count >= 5000, "5,000-9,999",
+    if_else(
+      geo_country$count < 5000 & geo_country$count >= 1000, "1,000-4,999",
+      if_else(
+        geo_country$count < 1000 & geo_country$count >= 100, "100-999",
+        "< 100"
+      )
+    )
+  )
+)
+
+geo_country$count_binned <- factor(geo_country$count_binned, 
+                                   levels = unique(geo_country$count_binned))
+
+# map of binned data 
+bin_country <- ggplot(geo_country) +
+  geom_map(aes(map_id = affiliation_tag_country, fill = count_binned), map = world_map) +
+  geom_polygon(data = world_map, 
+               aes(x = long, y = lat, group = group), 
+               colour = 'black', fill = NA) + 
+  theme_void() + 
+  scale_fill_manual(name = "Sample Size",
+                    values = c( "black", "#323232", "#646464","#969696","#c8c8c8")) 
+
+bin_country
+
+ggsave("figure/binned_country.png", bin_country)
+
+# tree map
+geo_country$un_region_sub <- countrycode(
+  sourcevar = geo_country$affiliation_tag_country,
+  origin = 'iso3c', 
+  destination = 'un.regionsub.name'
+)
+
+geo_country$un_region <- countrycode(
+  sourcevar = geo_country$affiliation_tag_country,
+  origin = 'iso3c', 
+  destination = 'un.region.name'
+)
+
+geo_country$un_region[geo_country$affiliation_tag_country == "TWN"] <- "Asia"
+geo_country$un_region_sub[geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
+
+geo_country <- geo_country %>% 
+  na.omit()
+
+tree <- ggplot(geo_country, aes(area = count, fill = count_binned,
+               label = affiliation_tag_country, subgroup = un_region_sub)) +
+  geom_treemap() +
+  geom_treemap_subgroup_border(colour = "white", size = 5) +
+  # geom_treemap_subgroup_text(place = "top", grow = TRUE,
+  #                            alpha = 0.25, colour = "black",
+  #                            fontface = "italic") +
+  geom_treemap_text(colour = "white", place = "centre",
+                    size = 15, grow = FALSE) +  
+  scale_fill_manual(name = "Sample Size",
+                    values = c("#c8c8c8", "#969696", "#646464", "#323232", "black")) 
+  # scale_fill_gradient(name = "Sample Size",
+  #                     low = "#c8c8c8", 
+  #                     high = "#323232") 
+
+tree 
+
+ggsave("figure/treemap.png",
+       tree)
+```
+
+
 -   To understand the change in representation diversity, we will
     summarize the total number of geopolitical regions for each paper.
     Using a linear model, we will examine if the number of regions
     present is predicted by the year of publication. Increasing
     diversity would be represented by a positive slope, while decreasing
     diversity would be represented by a negative slope.
+
 -   Last, we will examine the differences in representation for
     corresponding author sets versus all other authors. For papers with
     10 to 49 authors, we will use the three first authors and the last
