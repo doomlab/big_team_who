@@ -84,11 +84,21 @@ library(countrycode)
 library(rio)
 library(maps)
 library(dplyr)
+library(tidyr)
+library(MOTE)
 ```
 
 ```{r data, include = FALSE}
-geo_country <- import("py_outputs/geo_country.xlsx")
-geo_region <- import("py_outputs/geo_region.xlsx")
+# things to import
+var_list <- c("author_time", "career_time", "geo_country", "inst_time", 
+              "keywords", "large_first_gp", "large_other_gp", "medium_first_gp", 
+              "medium_other_gp", "normal_pub_type", "pub_time_count", 
+              "pub_time_subject", "pub_types", "small_first_gp", "small_other_gp")
+
+var_list_import <- paste0("py_outputs/", var_list, ".xlsx")
+
+DF <- lapply(var_list_import, import)
+names(DF) <- var_list
 ```
 
 
@@ -623,11 +633,11 @@ Note: the last rows are the information for Intercept
     
 ```{r geo-map}
 # serbia has changed codes
-geo_country$affiliation_tag_country <- toupper(geo_country$affiliation_tag_country)
-geo_country <- subset(geo_country, affiliation_tag_country != "NONE")
-geo_country$affiliation_tag_country[geo_country$affiliation_tag_country == "SCG"] <- "SRB"
+DF$geo_country$affiliation_tag_country <- toupper(DF$geo_country$affiliation_tag_country)
+DF$geo_country <- subset(DF$geo_country, affiliation_tag_country != "NONE")
+DF$geo_country$affiliation_tag_country[DF$geo_country$affiliation_tag_country == "SCG"] <- "SRB"
 
-geo_country <- geo_country %>% 
+DF$geo_country <- DF$geo_country %>% 
   group_by(affiliation_tag_country) %>% 
   summarize(count = sum(count))
 
@@ -640,7 +650,7 @@ world_map$region <- iso.alpha(world_map$region, n = 3)
 world_map <- subset(world_map, region != "ATA")
 
 # make a map on a continuous scale
-ggplot(geo_country) +
+ggplot(DF$geo_country) +
   geom_map(aes(map_id = affiliation_tag_country, fill = count), map = world_map) +
   geom_polygon(data = world_map, 
                aes(x = long, y = lat, group = group), 
@@ -654,25 +664,25 @@ ggplot(geo_country) +
 ggsave("figure/continuous_country.png")
   
 # maybe try binning
-geo_country$count_binned <- if_else(
-  geo_country$count >= 10000, "10,000+", 
+DF$geo_country$count_binned <- if_else(
+  DF$geo_country$count >= 10000, "10,000+", 
   if_else(
-    geo_country$count < 10000 & geo_country$count >= 5000, "5,000-9,999",
+    DF$geo_country$count < 10000 & DF$geo_country$count >= 5000, "5,000-9,999",
     if_else(
-      geo_country$count < 5000 & geo_country$count >= 1000, "1,000-4,999",
+      DF$geo_country$count < 5000 & DF$geo_country$count >= 1000, "1,000-4,999",
       if_else(
-        geo_country$count < 1000 & geo_country$count >= 100, "100-999",
+        DF$geo_country$count < 1000 & DF$geo_country$count >= 100, "100-999",
         "< 100"
       )
     )
   )
 )
 
-geo_country$count_binned <- factor(geo_country$count_binned, 
-                                   levels = unique(geo_country$count_binned))
+DF$geo_country$count_binned <- factor(DF$geo_country$count_binned, 
+                                   levels = unique(DF$geo_country$count_binned))
 
 # map of binned data 
-bin_country <- ggplot(geo_country) +
+bin_country <- ggplot(DF$geo_country) +
   geom_map(aes(map_id = affiliation_tag_country, fill = count_binned), map = world_map) +
   geom_polygon(data = world_map, 
                aes(x = long, y = lat, group = group), 
@@ -686,25 +696,25 @@ bin_country
 ggsave("figure/binned_country.png", bin_country)
 
 # tree map
-geo_country$un_region_sub <- countrycode(
-  sourcevar = geo_country$affiliation_tag_country,
+DF$geo_country$un_region_sub <- countrycode(
+  sourcevar = DF$geo_country$affiliation_tag_country,
   origin = 'iso3c', 
   destination = 'un.regionsub.name'
 )
 
-geo_country$un_region <- countrycode(
-  sourcevar = geo_country$affiliation_tag_country,
+DF$geo_country$un_region <- countrycode(
+  sourcevar = DF$geo_country$affiliation_tag_country,
   origin = 'iso3c', 
   destination = 'un.region.name'
 )
 
-geo_country$un_region[geo_country$affiliation_tag_country == "TWN"] <- "Asia"
-geo_country$un_region_sub[geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
+DF$geo_country$un_region[DF$geo_country$affiliation_tag_country == "TWN"] <- "Asia"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
 
-geo_country <- geo_country %>% 
+DF$geo_country <- DF$geo_country %>% 
   na.omit()
 
-tree <- ggplot(geo_country, aes(area = count, fill = count_binned,
+tree <- ggplot(DF$geo_country, aes(area = count, fill = count_binned,
                label = affiliation_tag_country, subgroup = un_region_sub)) +
   geom_treemap() +
   geom_treemap_subgroup_border(colour = "white", size = 5) +
@@ -724,14 +734,54 @@ tree
 ggsave("figure/treemap.png", tree)
 ```
 
-
 -   To understand the change in representation diversity, we will
     summarize the total number of geopolitical regions for each paper.
     Using a linear model, we will examine if the number of regions
     present is predicted by the year of publication. Increasing
     diversity would be represented by a positive slope, while decreasing
     diversity would be represented by a negative slope.
-    
+
+```{r}
+label <- c("Physical", "Social", "Health", "Life")
+b_values <- c(-0.061001, -0.077040, -0.017775, -0.014946)
+se_values <- c(0.022958, 0.058153, 0.009794, 0.010485)
+r2_values <- c(0.002357, 0.004491, 0.000434, 0.000434)
+sample_size <- 13000
+
+r2_low <- 1:length(r2_values)
+r2_high <- 1:length(r2_values)
+for (i in 1:length(r2_values)){
+  temp <- ci.R2(R2 = r2_values[i], 1, sample_size)
+  r2_low[i] <- temp$Lower.Conf.Limit.R2
+  r2_high[i] <- temp$Upper.Conf.Limit.R2
+}
+
+graph_data <- data.frame(
+  "label" = label,
+  "estimate" = b_values,
+  "type" = "Coefficient",
+  "low" = b_values - qt(.025, sample_size, lower.tail = F)*se_values,
+  "high" = b_values + qt(.025, sample_size, lower.tail = F)*se_values) %>% 
+  bind_rows(
+    data.frame(  
+      "label" = label, 
+      "estimate" = r2_values,
+      "type" = "Effect Size",
+      "low" = r2_low,
+      "high" = r2_high)
+  )
+
+ggplot(graph_data, aes(label, estimate)) + 
+  geom_point() +
+  geom_pointrange(aes(ymin = low, ymax = high)) +
+  theme_classic() + 
+  facet_wrap(~type) + 
+  geom_hline(yintercept = 0) + 
+  coord_flip() + 
+  xlab("Subject Area") + 
+  ylab("")
+```
+   
     
 total number of unique GP for each publication 
 using year to predict GP 
@@ -811,12 +861,90 @@ Note: the last rows are the information for Intercept
     from zero using standardized residuals.
     
 ```{r}
-library(tidyr)
-geo_region_wide <- geo_region %>% 
+DF$small_first_gp <- DF$small_first_gp %>% 
   pivot_wider(id_cols = Year, 
               names_from = aff_un, 
               values_from = count,
               values_fill = 0)
+
+DF$small_other_gp <- DF$small_other_gp %>% 
+  pivot_wider(id_cols = Year, 
+              names_from = aff_un, 
+              values_from = count,
+              values_fill = 0) %>% 
+  select(colnames(DF$small_first_gp))
+
+small_effect <- data.frame(
+  year = 1:length(unique(DF$small_first_gp$Year)),
+  v = 1:length(unique(DF$small_first_gp$Year)),
+  low = 1:length(unique(DF$small_first_gp$Year)),
+  high = 1:length(unique(DF$small_first_gp$Year))
+)
+i <- 1
+for (year in unique(DF$small_first_gp$Year)){
+  temp_table <- DF$small_first_gp %>% filter(Year == year) %>% select(-Year) %>% 
+    bind_rows(DF$small_other_gp %>% filter(Year == year) %>% select(-Year))
+  
+  col_total <- colSums(temp_table)
+  temp_table <- temp_table %>% 
+    select(names(col_total)[col_total > 0])
+  #### FIX WARNING ISSUE HERE#####
+  temp <- suppressWarnings(chisq.test(as.matrix(temp_table)))
+  mote_temp <- suppressWarnings(v.chi.sq(x2 = temp$statistic, n = sum(temp_table), 
+                        r = nrow(temp_table), c = ncol(temp_table), 
+                        a = .05))
+  small_effect$year[i] <- year
+  small_effect$v[i] <- mote_temp$v
+  small_effect$low[i] <- mote_temp$vlow
+  small_effect$high[i] <- mote_temp$vhigh
+  i <- i + 1
+}
+
+ggplot(small_effect, aes(year,v)) + 
+  geom_point() + 
+  theme_classic() + 
+  geom_pointrange(aes(ymin = low, ymax = high)) + 
+  xlab("Year") + 
+  ylab("Effect Size")
+
+DF_decade <- DF$small_first_gp %>% 
+  mutate(who = "First") %>% 
+  bind_rows(
+    DF$small_other_gp %>% 
+      mutate(who = "Other")
+  ) %>% 
+  mutate(Decade = ifelse(Year < 1990, "1980s", 
+                         ifelse(Year < 2000, "1990s", 
+                                ifelse(Year < 2010, "2000s", 
+                                       ifelse(Year < 2020, "2010s", "2020s"))))) %>% 
+  group_by(who, Decade) %>% 
+  summarize_all(sum) %>% 
+  pivot_longer(cols = `Western Europe`:Mirconesia,
+               names_to = "Country", 
+               values_to = "Count")
+
+DF_decade$region <- factor(
+  DF_decade$Country,
+  levels = unique(DF_decade$Country),
+  labels = 
+)
+
+"Africa"
+"Americas"
+"Asia"
+"Europe"
+"Oceania"
+
+
+
+ggplot(DF_decade, aes(who, Count, fill = Country)) + 
+    geom_bar(position="fill", stat="identity") + 
+  theme_classic() + 
+  facet_grid(~Decade) + 
+  xlab("Author Type") + 
+  ylab("Percent")
+
+## do the seven big regions
 ```
 
 end up with a list of effect sizes by year by small medium large 
