@@ -88,6 +88,7 @@ library(dplyr)
 
 ```{r data, include = FALSE}
 geo_country <- import("py_outputs/geo_country.xlsx")
+geo_region <- import("py_outputs/geo_region.xlsx")
 ```
 
 
@@ -304,10 +305,64 @@ To present results on this research question, we will analyze:
 
 -   Number of articles for inclusion: total, separated by four subject
     areas, presenting graphics of the number of publication across time
+    
+total
+
+13581
+
++----------------+-----+
+|publication_type|count|
++----------------+-----+
+|              sh|   41|
+|              cp|  266|
+|              ar|12689|
+|              dp|    4|
+|              pp|  580|
+|              ip|    1|
++----------------+-----+
+
+subject area 
++-----------------+-----+
+|      SubjectArea|count|
++-----------------+-----+
+|  Health Sciences|10685|
+|Physical Sciences| 6151|
+|Multidisciplinary| 1569|
+|  Social Sciences|  543|
+|    Life Sciences| 7686|
++-----------------+-----+
+
+time
+
+pub_time_count
+    
 -   Number of distinct journals within each of the four subject areas
+
+Out[52]: 2534
+
++-----------------+------------+
+|      SubjectArea|count(srcid)|
++-----------------+------------+
+|  Health Sciences|        1472|
+|Physical Sciences|         641|
+|Multidisciplinary|          14|
+|  Social Sciences|         206|
+|    Life Sciences|        1024|
++-----------------+------------+
+
 -   Statistics (mean, median, standard deviation, minimum, maximum) of
     the journal impact using Source Normalized Impact per Paper for the
     four subject areas.
+
++-----------------+------------------+------------------+---------+------------+---------+
+|      SubjectArea|         avg(snip)| stddev_samp(snip)|min(snip)|median(snip)|max(snip)|
++-----------------+------------------+------------------+---------+------------+---------+
+|  Health Sciences|  4.39848449724717|7.1846479513521615|      0.0|       2.078|  173.932|
+|Physical Sciences|1.7298434289762685| 1.336672368345959|    0.155|       1.278|   30.405|
+|Multidisciplinary| 6.092944123314063|   4.3151334953509|    0.032|       3.341|   11.342|
+|  Social Sciences| 2.204784860557769|2.1441319264666743|    0.017|       1.605|   30.405|
+|    Life Sciences| 2.524247249015079| 2.044898988084329|    0.017|       1.742|   12.624|
++-----------------+------------------+------------------+---------+------------+---------+
 
 ### RQ2: Publication Information.
 
@@ -318,19 +373,37 @@ For each publication, we will examine:
     over time to determine if there is increasing interest in a specific
     subarea over time for each of the four larger subject area
     classifications.
+    
+pub_time_subject
+    
 -   The keywords present in the publications data overall to identify
     trends and common themes in the publications for the four subject
     areas using visualizations (wordclouds) to depict the common
     keywords.
+    
+keywords 
 
 ### RQ3: Authors.
 
 We will first present:
 
 -   The total number of unique authors
+
++-----------+
+|count(auid)|
++-----------+
+|     257536|
++-----------+
+
 -   Statistics (mean, standard deviation, minimum, maximum, median) on
     the number of authors included on publications.
+    
+	count(Authorseq)	avg(Authorseq)	stddev_samp(Authorseq)	min(Authorseq)	median(Authorseq)	max(Authorseq)
+0	13581	49.904646	207.006114	10	19.0	5155
+
 -   We will present visualizations of these results across time.
+
+author_time 
 
 We will use $\alpha$ \< .05 for all analyses that involve hypothesis
 testing. We make no directional predictions.
@@ -339,6 +412,9 @@ testing. We make no directional predictions.
 
 -   We will create a visualization of the trend and variance of
     researcher career length across publication years.
+    
+career_time 
+
 -   To analyze trends over time, we will calculate the average career
     length for each publication (i.e., average the author career length
     to create one score for each paper) and run a regression analysis
@@ -356,6 +432,58 @@ testing. We make no directional predictions.
     diversity in scholars over time.
 -   These analyses will be completed separately for each of the four
     large subject areas.
+    
+------ Physical Sciences ------
+
+Note: the last rows are the information for Intercept
+## -------------------------------------------------
+##   Estimate   |   Std.Error | t Values  |  P-value
+##  -0.531373   0.030990  -17.146   0.000000
+##  -0.207000   0.059698   -3.467   0.000533
+## 2020.342936   0.367600 5496.040   0.000000
+## ---
+## Mean squared error:  30.862113 , RMSE:  5.555368
+## Multiple R-squared: 0.145118 ,             Total iterations: 0
+------------
+
+------ Social Sciences ------
+
+Note: the last rows are the information for Intercept
+## -------------------------------------------------
+##   Estimate   |   Std.Error | t Values  |  P-value
+##  -0.437422   0.093563   -4.675   0.000004
+##  -0.104549   0.146459   -0.714   0.475750
+## 2019.182625   0.764850 2639.973   0.000000
+## ---
+## Mean squared error:  30.685713 , RMSE:  5.539469
+## Multiple R-squared: 0.118772 ,             Total iterations: 0
+------------
+
+------ Health Sciences ------
+
+Note: the last rows are the information for Intercept
+## -------------------------------------------------
+##   Estimate   |   Std.Error | t Values  |  P-value
+##  -0.460876   0.019674  -23.425   0.000000
+##  -0.218675   0.037611   -5.814   0.000000
+## 2019.076458   0.231406 8725.260   0.000000
+## ---
+## Mean squared error:  30.039405 , RMSE:  5.480822
+## Multiple R-squared: 0.144584 ,             Total iterations: 0
+------------
+
+------ Life Sciences ------
+
+Note: the last rows are the information for Intercept
+## -------------------------------------------------
+##   Estimate   |   Std.Error | t Values  |  P-value
+##  -0.604957   0.026519  -22.812   0.000000
+##  -0.056843   0.046915   -1.212   0.225716
+## 2019.490201   0.276602 7301.067   0.000000
+## ---
+## Mean squared error:  27.654316 , RMSE:  5.258737
+## Multiple R-squared: 0.175747 ,             Total iterations: 0
+------------
 
 ***Institution***.
 
@@ -364,32 +492,127 @@ testing. We make no directional predictions.
     time. These visualizations will be presented separately for each of
     the four subject areas.
 
++----------------------+
+|count(affiliation_ids)|
++----------------------+
+|                 35114|
++----------------------+
+
+inst time 
+
 ***Education***.
 
--   We will summarize the general education categories of individuals at
-    the time of publication, along with a summary for change over time.
+We will summarize the general education categories of individuals at the time of publication, along with a summary for change over time.
+
+    Figure out how messy this is for text processing requirements
+    For each publication, plot of proportion of doctorates across time - if the number is going down, we are involving more diverse types of people (assuming that doctorates are "normal" academics/researchers)
+    We will only perform this analysis if the proportion of information avaliable is over 50%.
+
++-----------+------+
+|    degrees| count|
++-----------+------+
+|       null|656440|
+|         MD|  8190|
+|        PhD|  3879|
+|    MD, PhD|  1267|
+|       M.D.|  1002|
+|        Dr.|   490|
+|        MSc|   461|
+|        MPH|   368|
+| Prof., PhD|   349|
+|      Ph.D.|   348|
+|         MS|   330|
+|     MD PhD|   285|
+|        MD.|   279|
+|   Prof. MD|   266|
+|  Prof. PhD|   239|
+|         BS|   232|
+|       Prof|   220|
+|         BA|   196|
+|M.D., Ph.D.|   191|
+|    MD, MPH|   158|
++-----------+------+
 
 ***Types of Publications***.
 
 -   We will summarize the coded types of publications for individuals.
 
+pub_type versus normal_pub_type
+
 ***Publication Metrics***.
 
--   We will report descriptive statistics on the total number of
-    publications, i10 index, and h-index for individuals overall.
--   Next, we will use the same analyses described in the career length
-    section to analyze trends over time. An increasing slope over time
-    indicates that individuals who are publishing more are more
-    represented in BTS over time (i.e., increasing numbers of scholars
-    with higher publication rates), while a negative slope indicates
-    more researchers with less publications.
--   A positive slope for standard deviation indicates increasing
-    variance over time (i.e., more diversity in the individual
-    publication rates), while a negative slope would indicate less
-    diversity in researchers over time. While publication rates do not
-    represent value as a researcher, they are often used in hiring and
-    promotion decisions, and we will use this variable as a proxy to
-    gauge the diversity in scholars represented in big teams.
+
+    We will report descriptive statistics on the total number of publications and h-index for individuals overall.
+        Do this for each unique person and report averages
+        Do this for each publication and create an average for each publication
+    Next, we will use the same analyses described in the career length section to analyze trends over time. An increasing slope over time indicates that individuals who are publishing more are more represented in BTS over time (i.e., increasing numbers of scholars with higher publication rates), while a negative slope indicates more researchers with less publications.
+    A positive slope for standard deviation indicates increasing variance over time (i.e., more diversity in the individual publication rates), while a negative slope would indicate less diversity in researchers over time. While publication rates do not represent value as a researcher, they are often used in hiring and promotion decisions, and we will use this variable as a proxy to gauge the diversity in scholars represented in big teams.
+    We will separate these by each of the four subject areas.
+
+
+	avg_pub_count	std_pub_count
+0	4.451816	6.901369
+
+	avg(avg_pub_count AS mean_of_avg_pub_count)	stddev_samp(avg_pub_count AS std_of_avg_pub_count)	avg(std_pub_count AS mean_of_std_pub_count)	stddev_samp(std_pub_count AS std_of_std_pub_count)
+0	7.581413	5.797233	7.140015	5.10383
+
+	avg_HIndex	std_HIndex	med_HIndex
+0	14.242142	43.798203	2.0
+
+	avg_of_avg_HIndex	std_of_avg_HIndex	avg_of_std_HIndex	std_of_std_HIndex	med_of_med_HIndex
+0	28.136255	38.013819	36.430509	46.474619	5.0
+
+------ Physical Sciences ------
+
+Note: the last rows are the information for Intercept
+## -------------------------------------------------
+##   Estimate   |   Std.Error | t Values  |  P-value
+##  -0.004420   0.022715   -0.195   0.845717
+##  -0.105746   0.034058   -3.105   0.001922
+## 2015.347578   0.195556 10305.717   0.000000
+## ---
+## Mean squared error:  35.756076 , RMSE:  5.979638
+## Multiple R-squared: 0.009554 ,             Total iterations: 0
+------------
+
+------ Social Sciences ------
+
+Note: the last rows are the information for Intercept
+## -------------------------------------------------
+##   Estimate   |   Std.Error | t Values  |  P-value
+##  -0.335536   0.179536   -1.869   0.062389
+##   0.130796   0.186924    0.700   0.484517
+## 2016.658826   0.487148 4139.727   0.000000
+## ---
+## Mean squared error:  34.070868 , RMSE:  5.837026
+## Multiple R-squared: 0.021558 ,             Total iterations: 0
+------------
+
+------ Health Sciences ------
+
+Note: the last rows are the information for Intercept
+## -------------------------------------------------
+##   Estimate   |   Std.Error | t Values  |  P-value
+##  -0.235551   0.028158   -8.365   0.000000
+##  -0.006692   0.026612   -0.251   0.801476
+## 2014.979175   0.119976 16794.893   0.000000
+## ---
+## Mean squared error:  33.860172 , RMSE:  5.818949
+## Multiple R-squared: 0.035782 ,             Total iterations: 0
+------------
+
+------ Life Sciences ------
+
+Note: the last rows are the information for Intercept
+## -------------------------------------------------
+##   Estimate   |   Std.Error | t Values  |  P-value
+##  -0.430599   0.037807  -11.389   0.000000
+##   0.133215   0.034255    3.889   0.000102
+## 2016.008237   0.147870 13633.624   0.000000
+## ---
+## Mean squared error:  31.736306 , RMSE:  5.633499
+## Multiple R-squared: 0.054081 ,             Total iterations: 0
+------------
 
 ***Geopolitical Regions***.
 
@@ -498,8 +721,7 @@ tree <- ggplot(geo_country, aes(area = count, fill = count_binned,
 
 tree 
 
-ggsave("figure/treemap.png",
-       tree)
+ggsave("figure/treemap.png", tree)
 ```
 
 
@@ -509,6 +731,61 @@ ggsave("figure/treemap.png",
     present is predicted by the year of publication. Increasing
     diversity would be represented by a positive slope, while decreasing
     diversity would be represented by a negative slope.
+    
+    
+total number of unique GP for each publication 
+using year to predict GP 
+positive slope means that as year goes up number of GP goes up 
+negative slope means that as year goes up number of GP goes down 
+forest plot of the effects + confidence interval 
+    
+------ Physical Sciences ------
+
+Note: the last rows are the information for Intercept
+## -------------------------------------------------
+##   Estimate   |   Std.Error | t Values  |  P-value
+##  -0.061001   0.022958   -2.657   0.007923
+## 130.518393  46.247823    2.822   0.004802
+## ---
+## Mean squared error:  56.853041 , RMSE:  7.540096
+## Multiple R-squared: 0.002357 ,             Total iterations: 0
+------------
+
+------ Social Sciences ------
+
+Note: the last rows are the information for Intercept
+## -------------------------------------------------
+##   Estimate   |   Std.Error | t Values  |  P-value
+##  -0.077040   0.058153   -1.325   0.186023
+## 160.766462 117.214988    1.372   0.170993
+## ---
+## Mean squared error:  45.807761 , RMSE:  6.768143
+## Multiple R-squared: 0.004491 ,             Total iterations: 0
+------------
+
+------ Health Sciences ------
+
+Note: the last rows are the information for Intercept
+## -------------------------------------------------
+##   Estimate   |   Std.Error | t Values  |  P-value
+##  -0.017775   0.009794   -1.815   0.069578
+##  40.118948  19.718323    2.035   0.041926
+## ---
+## Mean squared error:  25.532574 , RMSE:  5.052977
+## Multiple R-squared: 0.000434 ,             Total iterations: 0
+------------
+
+------ Life Sciences ------
+
+Note: the last rows are the information for Intercept
+## -------------------------------------------------
+##   Estimate   |   Std.Error | t Values  |  P-value
+##  -0.014946   0.010485   -1.425   0.154081
+##  34.499812  21.117788    1.634   0.102392
+## ---
+## Mean squared error:  17.279398 , RMSE:  4.156850
+## Multiple R-squared: 0.000434 ,             Total iterations: 0
+------------
 
 -   Last, we will examine the differences in representation for
     corresponding author sets versus all other authors. For papers with
@@ -530,8 +807,25 @@ ggsave("figure/treemap.png",
     authors represent the same pattern of UN Sub-Region diversity. Any
     confidence interval that does include zero represents a difference
     in diversity. We will report these values and discuss what regions
-    of the world are represented when effect sizes indicate a different
+    of the world are represented when effect sizes indicate a difference
     from zero using standardized residuals.
+    
+```{r}
+library(tidyr)
+geo_region_wide <- geo_region %>% 
+  pivot_wider(id_cols = Year, 
+              names_from = aff_un, 
+              values_from = count,
+              values_fill = 0)
+```
+
+end up with a list of effect sizes by year by small medium large 
+x axis is year
+y axis is the effect size and the confidence interval 
+if diversity is increasing then the patterns would be more similar (effect size of zero)
+if diversity is not increasing then the patterns would be different (effect size does not include zero)
+
+who is not represented in the "corresponding" spots - proportion chart by decades stacked bar chart of the decades 
 
 \newpage
 
