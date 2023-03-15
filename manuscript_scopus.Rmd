@@ -47,9 +47,7 @@ footnotelist      : no
 linenumbers       : yes
 mask              : no
 draft             : no
-#documentclass     : "apa6"
 classoption       : "man"
-#output            : papaja::apa6_pdf
 editor_options: 
   markdown: 
     wrap: 72
@@ -69,7 +67,7 @@ header-includes:
       {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
     \makeatother
 
-csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja'`)"
+csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja')`"
 documentclass     : "apa7"
 output            : papaja::apa6_docx
 ---
@@ -86,6 +84,7 @@ library(maps)
 library(dplyr)
 library(tidyr)
 library(MOTE)
+library(MBESS)
 ```
 
 ```{r data, include = FALSE}
