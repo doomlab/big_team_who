@@ -86,6 +86,11 @@ library(tidyr)
 library(MOTE)
 library(MBESS)
 library(patchwork)
+library(flextable)
+library(wordcloud2)
+library(htmlwidgets)
+library(webshot)
+library(figpatch)
 ```
 
 ```{r data, include = FALSE}
@@ -93,7 +98,8 @@ library(patchwork)
 var_list <- c("author_time", "career_time", "geo_country", "inst_time", 
               "keywords", "large_first_gp", "large_other_gp", "medium_first_gp", 
               "medium_other_gp", "normal_pub_type", "pub_time_count", 
-              "pub_time_subject", "pub_types", "small_first_gp", "small_other_gp")
+              "pub_time_subject", "pub_types", "small_first_gp", "small_other_gp",
+              "snip")
 
 var_list_import <- paste0("py_outputs/", var_list, ".xlsx")
 
@@ -259,7 +265,7 @@ data from 1970 and forward in the publications (`ani`) database, as it
 is noted online that this time period includes cited references for
 calculation of several of our variables described below. We will analyze
 our results based on the big four subject areas: Physical Sciences,
-Health Sciences, Social Sciences, and Life Sciences.
+Health Sciences, Social Sciences, and Life Sciences. We filtered the database to include articles, articles in press, business articles, conference papers, data papers, preprints, and surveys using Elsevier's classification system. 
 
 ## Data Curation
 
@@ -302,10 +308,7 @@ publication type variable for each author publication to present
 information about the types of papers BTS authors publish.
 
 ***Publication Metrics***. For each author, we will calculate the total
-number of publications, the h-index, and the i-10 index. The h-index
-represents the highest *h* number of publications that have at least *h*
-citations, while the i-10 index represents the number of publications
-with at least 10 citations.
+number of publications, and the h-index. The h-index represents the highest *h* number of publications that have at least *h* citations.
 
 ## Data analysis
 
@@ -315,64 +318,51 @@ To present results on this research question, we will analyze:
 
 -   Number of articles for inclusion: total, separated by four subject
     areas, presenting graphics of the number of publication across time
-    
-total
+    total
 
-13581
+```{r}
+total_num <- 13581
+health_num <- 10685
+physical_num <- 6151
+social_num <- 543
+life_num <- 7686
+```
 
-+----------------+-----+
-|publication_type|count|
-+----------------+-----+
-|              sh|   41|
-|              cp|  266|
-|              ar|12689|
-|              dp|    4|
-|              pp|  580|
-|              ip|    1|
-+----------------+-----+
+The total number of articles included in this analysis was `r total_num` including `r health_num` Health Sciences articles, `r physical_num` Physical Sciences articles, `r social_num` Social Sciences articles, and `r life_num` Life Sciences articles. Articles could be classified into multiple categories. 
 
-subject area 
-+-----------------+-----+
-|      SubjectArea|count|
-+-----------------+-----+
-|  Health Sciences|10685|
-|Physical Sciences| 6151|
-|Multidisciplinary| 1569|
-|  Social Sciences|  543|
-|    Life Sciences| 7686|
-+-----------------+-----+
-
-time
-
-pub_time_count
+```{r}
+ggplot(DF$pub_time_count %>% 
+         filter(SubjectArea != "Multidisciplinary"), aes(Year, count, color = SubjectArea)) + 
+  theme_classic() + 
+  geom_point() + 
+  scale_color_brewer(palette = "Spectral", name = "Subject Area") + 
+  ylab("Number of Articles Per Year") + 
+  xlab("Publication Year") + 
+  theme(legend.position = "bottom")
+```
     
 -   Number of distinct journals within each of the four subject areas
 
-Out[52]: 2534
+```{r}
+journals <- 2534
+health_journal <- 1472
+physical_journal <- 641
+social_journal <- 206
+life_journal <- 1024
+```
 
-+-----------------+------------+
-|      SubjectArea|count(srcid)|
-+-----------------+------------+
-|  Health Sciences|        1472|
-|Physical Sciences|         641|
-|Multidisciplinary|          14|
-|  Social Sciences|         206|
-|    Life Sciences|        1024|
-+-----------------+------------+
+The number of distinct journals big team science articles were published in was `r journals` with `r health_journal` journals in Health Sciences, `r physical_journal` journals in Physical Sciences, `r social_journal` journals in Social Sciences, and `r life_journal` journals in Life Sciences. The descriptive statistics for the Source Normalized Impact per Paper is presented in Table X. 
 
--   Statistics (mean, median, standard deviation, minimum, maximum) of
-    the journal impact using Source Normalized Impact per Paper for the
-    four subject areas.
-
-+-----------------+------------------+------------------+---------+------------+---------+
-|      SubjectArea|         avg(snip)| stddev_samp(snip)|min(snip)|median(snip)|max(snip)|
-+-----------------+------------------+------------------+---------+------------+---------+
-|  Health Sciences|  4.39848449724717|7.1846479513521615|      0.0|       2.078|  173.932|
-|Physical Sciences|1.7298434289762685| 1.336672368345959|    0.155|       1.278|   30.405|
-|Multidisciplinary| 6.092944123314063|   4.3151334953509|    0.032|       3.341|   11.342|
-|  Social Sciences| 2.204784860557769|2.1441319264666743|    0.017|       1.605|   30.405|
-|    Life Sciences| 2.524247249015079| 2.044898988084329|    0.017|       1.742|   12.624|
-+-----------------+------------------+------------------+---------+------------+---------+
+```{r results = 'asis', include = TRUE}
+flextable(
+  DF$snip %>% 
+    mutate(M = apa_num(M), 
+           SD = apa_num(SD), 
+           Minimum = apa_num(Minimum), 
+           Median = apa_num(Median), 
+           Maximum = apa_num(Maximum))
+)
+```
 
 ### RQ2: Publication Information.
 
@@ -384,14 +374,123 @@ For each publication, we will examine:
     subarea over time for each of the four larger subject area
     classifications.
     
-pub_time_subject
-    
+```{r}
+#DF$pub_time_subject$ASJC <- factor(DF$pub_time_subject$ASJC)
+pub_total <- DF$pub_time_subject %>% 
+  group_by(SubjectArea, ASJC) %>% 
+  summarize(count = sum(count), .groups = "keep") %>% 
+  filter(SubjectArea != "Multidisciplinary")
+
+health_cloud <- wordcloud2(pub_total %>% 
+             filter(SubjectArea == "Health Sciences") %>% 
+             ungroup() %>% 
+             select(ASJC, count)) 
+
+saveWidget(health_cloud, "tmp.html", selfcontained = F)
+webshot("tmp.html", "figure/health_cloud.png", vwidth = 600, vheight = 600)
+
+physical_cloud <- wordcloud2(pub_total %>% 
+             filter(SubjectArea == "Physical Sciences") %>% 
+             ungroup() %>% 
+             select(ASJC, count)) 
+
+saveWidget(physical_cloud, "tmp.html", selfcontained = F)
+webshot("tmp.html", "figure/physical_cloud.png", vwidth = 600, vheight = 600)
+
+life_cloud <- wordcloud2(pub_total %>% 
+             filter(SubjectArea == "Life Sciences") %>% 
+             ungroup() %>% 
+             select(ASJC, count)) 
+
+saveWidget(life_cloud, "tmp.html", selfcontained = F)
+webshot("tmp.html", "figure/life_cloud.png", vwidth = 600, vheight = 600)
+
+social_cloud <- wordcloud2(pub_total %>% 
+             filter(SubjectArea == "Social Sciences") %>% 
+             ungroup() %>% 
+             select(ASJC, count)) 
+
+saveWidget(social_cloud, "tmp.html", selfcontained = F)
+webshot("tmp.html", "figure/social_cloud.png", vwidth = 600, vheight = 600)
+```
+
+```{r}
+h <- fig("figure/health_cloud.png")
+p <- fig("figure/physical_cloud.png") 
+l <- fig("figure/life_cloud.png") 
+s <- fig("figure/social_cloud.png") 
+
+
+
+h + ggtitle("Health Sciences") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+p + ggtitle("Physical Sciences") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+l + ggtitle("Life Sciences") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+s + ggtitle("Social Sciences") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  plot_layout(ncol = 2, 
+              nrow = 2)
+```    
+
 -   The keywords present in the publications data overall to identify
     trends and common themes in the publications for the four subject
     areas using visualizations (wordclouds) to depict the common
     keywords.
     
-keywords 
+```{r}
+health_cloud <- wordcloud2(DF$keywords %>% 
+             filter(SubjectArea == "Health Sciences") %>% 
+             ungroup() %>% 
+             select(keywords_nostop, count)) 
+
+saveWidget(health_cloud, "tmp.html", selfcontained = F)
+webshot("tmp.html", "figure/health_key.png", vwidth = 600, vheight = 600)
+
+physical_cloud <- wordcloud2(DF$keywords %>% 
+             filter(SubjectArea == "Physical Sciences") %>% 
+             ungroup() %>% 
+             select(keywords_nostop, count), 
+             minSize = 20) 
+
+saveWidget(physical_cloud, "tmp.html", selfcontained = F)
+webshot("tmp.html", "figure/physical_key.png", vwidth = 600, vheight = 600)
+
+life_cloud <- wordcloud2(DF$keywords %>% 
+             filter(SubjectArea == "Life Sciences") %>% 
+             ungroup() %>% 
+             select(keywords_nostop, count)) 
+
+saveWidget(life_cloud, "tmp.html", selfcontained = F)
+webshot("tmp.html", "figure/life_key.png", vwidth = 600, vheight = 600)
+
+social_cloud <- wordcloud2(DF$keywords  %>% 
+             filter(SubjectArea == "Social Sciences") %>% 
+             ungroup() %>% 
+             select(keywords_nostop, count)) 
+
+saveWidget(social_cloud, "tmp.html", selfcontained = F)
+webshot("tmp.html", "figure/social_key.png", vwidth = 600, vheight = 600)
+```
+
+```{r}
+h <- fig("figure/health_key.png")
+p <- fig("figure/physical_key.png") 
+l <- fig("figure/life_key.png") 
+s <- fig("figure/social_key.png") 
+
+h + ggtitle("Health Sciences") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+p + ggtitle("Physical Sciences") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+l + ggtitle("Life Sciences") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+s + ggtitle("Social Sciences") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  plot_layout(ncol = 2, 
+              nrow = 2)
+```
 
 ### RQ3: Authors.
 
@@ -399,101 +498,118 @@ We will first present:
 
 -   The total number of unique authors
 
-+-----------+
-|count(auid)|
-+-----------+
-|     257536|
-+-----------+
+```{r}
+total_authors <- 257536
+avg_authors <- apa_num(49.904646)
+sd_authors <- apa_num(207.006114)
+min_authors <- 10
+med_authors <- 19
+max_authors <- 5155
+```
+
+The total number of unique authors across all publications was `r total_authors`.
 
 -   Statistics (mean, standard deviation, minimum, maximum, median) on
     the number of authors included on publications.
     
-	count(Authorseq)	avg(Authorseq)	stddev_samp(Authorseq)	min(Authorseq)	median(Authorseq)	max(Authorseq)
-0	13581	49.904646	207.006114	10	19.0	5155
+The mean number of authors per publication was *M* = `r avg_authors` (*SD* = `r sd_authors`, *Med* = `r med_authors`) with a range of `r min_authors` to `r max_authors`. 
 
 -   We will present visualizations of these results across time.
 
-author_time 
+```{r}
+avg_author_time <- 
+  DF$author_time %>% 
+  filter(SubjectArea != "Multidisciplinary") %>% 
+  filter(Number_Papers >= 3) %>% 
+  mutate(low = (Average_Num_Authors - as.numeric(SD_Num_Authors)), 
+         high = (Average_Num_Authors + as.numeric(SD_Num_Authors)))
+  
+ggplot(avg_author_time, aes(Year, Average_Num_Authors)) + 
+  theme_classic() + 
+  geom_point(aes(size = Number_Papers)) + 
+  #geom_point() + 
+  #geom_pointrange(aes(ymin = low, ymax = high)) + 
+  facet_wrap(~SubjectArea) + 
+  ylab("Average Number of Authors") + 
+  xlab("Publication Year") + 
+  theme(legend.position = "none")
+```
 
-We will use $\alpha$ \< .05 for all analyses that involve hypothesis
-testing. We make no directional predictions.
+We will use the 95% confidence interval to make all claims of predictors or effects different zero. The confidence interval that does not include zero would be considered different from zero (to four decimal places). We make no directional predictions.
 
 ***Career Length***.
 
 -   We will create a visualization of the trend and variance of
     researcher career length across publication years.
     
-career_time 
+```{r}
+ggplot(DF$career_time %>% 
+         filter(SubjectArea != "Multidisciplinary"), 
+       aes(Year, avg_career, color = sd_career)) +
+  theme_classic() + 
+  geom_point() +
+  facet_wrap(~SubjectArea) + 
+  theme(legend.position = "non") + 
+  ylab("Average Career Length") +
+  xlab("Year of Publication")
+```
 
--   To analyze trends over time, we will calculate the average career
-    length for each publication (i.e., average the author career length
-    to create one score for each paper) and run a regression analysis
-    using career length to predict year of publication. A positive slope
-    for year of publication would indicate increasing years of first
-    publication (i.e., more younger scholars over time), while a
-    negative slope would indicate older years of first publication
-    (i.e., more older scholars over time).
--   In order to show variance between individuals, we calculate the
-    standard deviation of career length for each publication and run a
-    regression analysis using this variance representation to predict
-    publication year. A positive slope would indicate increasing
-    variance over time (i.e., more diversity in the career lengths of
-    scholars), while a negative slope would indicate less variance and
-    diversity in scholars over time.
--   These analyses will be completed separately for each of the four
-    large subject areas.
-    
------- Physical Sciences ------
+-  To analyze trends over time, we will calculate the average career length for each publication (i.e., average the author career length to create one score for each paper) and run a regression analysis using career length to predict year of publication. In order to show variance between individuals, we calculate the standard deviation of career length for each publication and run a regression analysis using this variance representation to predict publication year. These two variables will be used together. 
+- Negative slopes would indicate more young scholars in later years (i.e., lower average career length as time increases). Positive slopes would indicate older scholars in later years (i.e., higher average career length as time increases). 
+- Negative slopes imply that variability decreases over the years, so the average career length is more homogeneous. Positive slopes imply that variability increases over the years, so the average career length is varied across individuals (lots of different types of scholars). 
+-   These analyses will be completed separately for each of the four large subject areas.
 
-Note: the last rows are the information for Intercept
-## -------------------------------------------------
-##   Estimate   |   Std.Error | t Values  |  P-value
-##  -0.531373   0.030990  -17.146   0.000000
-##  -0.207000   0.059698   -3.467   0.000533
-## 2020.342936   0.367600 5496.040   0.000000
-## ---
-## Mean squared error:  30.862113 , RMSE:  5.555368
-## Multiple R-squared: 0.145118 ,             Total iterations: 0
-------------
+```{r}
+label <- c("Physical", "Social", "Health", "Life")
+avg_b_values <- c(-0.531373, -0.437422, -0.460876, -0.604957)
+avg_se_values <- c(0.030990, 0.058153, 0.009794, 0.026519)
+sd_b_values <- c(-0.207000, -0.104549, -0.218675, -0.056843)
+sd_se_values <- c(0.059698, 0.058153, 0.009794, 0.046915)
+r2_values <- c(0.145118, 0.118772, 0.144584, 0.175747)
+sample_size <- 13000
 
------- Social Sciences ------
+r2_low <- 1:length(r2_values)
+r2_high <- 1:length(r2_values)
+for (i in 1:length(r2_values)){
+  temp <- ci.R2(R2 = r2_values[i], 1, sample_size)
+  r2_low[i] <- temp$Lower.Conf.Limit.R2
+  r2_high[i] <- temp$Upper.Conf.Limit.R2
+}
 
-Note: the last rows are the information for Intercept
-## -------------------------------------------------
-##   Estimate   |   Std.Error | t Values  |  P-value
-##  -0.437422   0.093563   -4.675   0.000004
-##  -0.104549   0.146459   -0.714   0.475750
-## 2019.182625   0.764850 2639.973   0.000000
-## ---
-## Mean squared error:  30.685713 , RMSE:  5.539469
-## Multiple R-squared: 0.118772 ,             Total iterations: 0
-------------
+graph_data <- data.frame(
+  "label" = label,
+  "estimate" = avg_b_values,
+  "type" = "M Coefficient",
+  "low" = avg_b_values - qt(.025, sample_size, lower.tail = F)*avg_se_values,
+  "high" = avg_b_values + qt(.025, sample_size, lower.tail = F)*avg_se_values) %>% 
+    bind_rows(
+    data.frame(
+    "label" = label,
+    "estimate" = sd_b_values,
+    "type" = "SD Coefficient",
+    "low" = sd_b_values - qt(.025, sample_size, lower.tail = F)*sd_se_values,
+    "high" = sd_b_values + qt(.025, sample_size, lower.tail = F)*sd_se_values) 
+    ) %>% 
+  bind_rows(
+    data.frame(  
+      "label" = label, 
+      "estimate" = r2_values,
+      "type" = "Effect Size",
+      "low" = r2_low,
+      "high" = r2_high)
+  )
 
------- Health Sciences ------
+ggplot(graph_data, aes(label, estimate)) + 
+  geom_point() +
+  geom_pointrange(aes(ymin = low, ymax = high)) +
+  theme_classic() + 
+  facet_wrap(~type) + 
+  geom_hline(yintercept = 0) + 
+  coord_flip() + 
+  xlab("Subject Area") + 
+  ylab("")
+```
 
-Note: the last rows are the information for Intercept
-## -------------------------------------------------
-##   Estimate   |   Std.Error | t Values  |  P-value
-##  -0.460876   0.019674  -23.425   0.000000
-##  -0.218675   0.037611   -5.814   0.000000
-## 2019.076458   0.231406 8725.260   0.000000
-## ---
-## Mean squared error:  30.039405 , RMSE:  5.480822
-## Multiple R-squared: 0.144584 ,             Total iterations: 0
-------------
-
------- Life Sciences ------
-
-Note: the last rows are the information for Intercept
-## -------------------------------------------------
-##   Estimate   |   Std.Error | t Values  |  P-value
-##  -0.604957   0.026519  -22.812   0.000000
-##  -0.056843   0.046915   -1.212   0.225716
-## 2019.490201   0.276602 7301.067   0.000000
-## ---
-## Mean squared error:  27.654316 , RMSE:  5.258737
-## Multiple R-squared: 0.175747 ,             Total iterations: 0
-------------
 
 ***Institution***.
 
@@ -502,13 +618,27 @@ Note: the last rows are the information for Intercept
     time. These visualizations will be presented separately for each of
     the four subject areas.
 
-+----------------------+
-|count(affiliation_ids)|
-+----------------------+
-|                 35114|
-+----------------------+
+```{r}
+affs <- 35114
+```
 
-inst time 
+The total number of unique affiliation across all papers was `r affs`.  
+
+```{r}
+ggplot(DF$inst_time %>% 
+         filter(SubjectArea != "Multidisciplinary") %>% 
+         mutate(Decade = ifelse(Year < 1990, "1980s", 
+                         ifelse(Year < 2000, "1990s", 
+                                ifelse(Year < 2010, "2000s", 
+                                       ifelse(Year < 2020, "2010s", "2020s"))))), 
+       aes(Decade, `count(affiliation_ids)`)) + 
+  #geom_point() + 
+  geom_violin() + 
+  theme_classic() + 
+  facet_wrap(~SubjectArea) + 
+  ylab("Number of Affiliations") + 
+  xlab("Decade")
+```
 
 ***Education***.
 
@@ -547,82 +677,112 @@ We will summarize the general education categories of individuals at the time of
 
 -   We will summarize the coded types of publications for individuals.
 
-pub_type versus normal_pub_type
+```{r}
+pub_types <- bind_rows(
+  DF$pub_types %>% mutate(type = "Big Team"), 
+  DF$normal_pub_type %>% mutate(type = "Normal")
+)
+
+ggplot(pub_types, aes(type, count, fill = publication_type)) + 
+    geom_bar(position="fill", stat="identity", color = "black") + 
+  theme_classic() +  
+  xlab("Author Type") + 
+  ylab("Percent of Paper Types") + 
+  theme(legend.position = "none")
+
+# can probably figure out how to combine these feasibly to make it readable
+# ab Abstract Report, ar Article, ip Article in Press, bk Book, bz Business Article, ch Book Chapter, cp Conference Paper, cr Conference Review, dp Data paper, ed Editorial, er Erratum, le Letter, no Note, pp Preprint, pr Press Release, rp Report, re Review, sh Survey, tb Retracted.
+```
+
+# can probably figure out how to combine these feasibly to make it readable
+
+# ab Abstract Report, ar Article, ip Article in Press, bk Book, bz Business Article, ch Book Chapter, cp Conference Paper, cr Conference Review, dp Data paper, ed Editorial, er Erratum, le Letter, no Note, pp Preprint, pr Press Release, rp Report, re Review, sh Survey, tb Retracted.
+
 
 ***Publication Metrics***.
 
+- We will report descriptive statistics on the total number of publications and h-index for individuals overall.
+  - Do this for each unique person and report averages
+  - Do this for each publication and create an average for each publication
 
-    We will report descriptive statistics on the total number of publications and h-index for individuals overall.
-        Do this for each unique person and report averages
-        Do this for each publication and create an average for each publication
-    Next, we will use the same analyses described in the career length section to analyze trends over time. An increasing slope over time indicates that individuals who are publishing more are more represented in BTS over time (i.e., increasing numbers of scholars with higher publication rates), while a negative slope indicates more researchers with less publications.
-    A positive slope for standard deviation indicates increasing variance over time (i.e., more diversity in the individual publication rates), while a negative slope would indicate less diversity in researchers over time. While publication rates do not represent value as a researcher, they are often used in hiring and promotion decisions, and we will use this variable as a proxy to gauge the diversity in scholars represented in big teams.
-    We will separate these by each of the four subject areas.
+```{r}
+avg_pub_count_author	<- apa_num(4.451816)
+std_pub_count_author <- apa_num(6.901369)
 
+avg_pub_count_paper <- apa_num(7.581413)
+sd_pub_count_paper <- apa_num(5.797233)
+avg_SD_pub_count_paper <- apa_num(7.140015)
+SD_SD_pub_count_paper <- apa_num(5.10383)
 
-	avg_pub_count	std_pub_count
-0	4.451816	6.901369
+avg_HIndex <- apa_num(14.242142)
+std_HIndex <- apa_num(43.798203)
+med_HIndex <- apa_num(2.0)
 
-	avg(avg_pub_count AS mean_of_avg_pub_count)	stddev_samp(avg_pub_count AS std_of_avg_pub_count)	avg(std_pub_count AS mean_of_std_pub_count)	stddev_samp(std_pub_count AS std_of_std_pub_count)
-0	7.581413	5.797233	7.140015	5.10383
+avg_of_avg_HIndex <- apa_num(28.136255)
+std_of_avg_HIndex <- apa_num(38.013819)
+avg_of_std_HIndex <- apa_num(36.430509)
+std_of_std_HIndex <- apa_num(46.474619)
+med_of_med_HIndex <- apa_num(5.0)
+```
 
-	avg_HIndex	std_HIndex	med_HIndex
-0	14.242142	43.798203	2.0
+The average number of publications by authors on big team sciences papers is *M* = `r avg_pub_count_author` (*SD* = `r std_pub_count_author`). The publication counts were averaged across authors for each publication, and then these average publication counts were averaged across publications *M* = `r avg_pub_count_paper` (*SD* = `r sd_pub_count_paper`). The average variability (i.e., the average standard deviation with authors of a manuscript) with publication counts of a paper was $M_{SD}$ = `r avg_SD_pub_count_paper` ($SD_{SD}$ = `r SD_SD_pub_count_paper`). 
 
-	avg_of_avg_HIndex	std_of_avg_HIndex	avg_of_std_HIndex	std_of_std_HIndex	med_of_med_HIndex
-0	28.136255	38.013819	36.430509	46.474619	5.0
+The same process was completed with *h*-index for each author and publication. The average *h*-index for authors overall was *M* = `r avg_HIndex` (*SD* = `r std_HIndex`, *Med* = `r med_HIndex`). The average *h*-index for publications was *M* = `r avg_of_avg_HIndex` (*SD* = `r std_of_avg_HIndex`), and the variability of *h*-index across manuscripts was $M_{SD}$ = `r avg_of_std_HIndex` ($SD_{SD}$ = `r std_of_std_HIndex`, $Med_{Med}$ = `r med_of_med_HIndex`).
 
------- Physical Sciences ------
+- Next, we will use the same analyses described in the career length section to analyze trends over time. An increasing slope over time indicates that individuals who are publishing more are more represented in BTS over time (i.e., increasing numbers of scholars with higher publication rates), while a negative slope indicates more researchers with less publications.
+- A positive slope for standard deviation indicates increasing variance over time (i.e., more diversity in the individual publication rates), while a negative slope would indicate less diversity in researchers over time. While publication rates do not represent value as a researcher, they are often used in hiring and promotion decisions, and we will use this variable as a proxy to gauge the diversity in scholars represented in big teams.
+- We will separate these by each of the four subject areas.
 
-Note: the last rows are the information for Intercept
-## -------------------------------------------------
-##   Estimate   |   Std.Error | t Values  |  P-value
-##  -0.004420   0.022715   -0.195   0.845717
-##  -0.105746   0.034058   -3.105   0.001922
-## 2015.347578   0.195556 10305.717   0.000000
-## ---
-## Mean squared error:  35.756076 , RMSE:  5.979638
-## Multiple R-squared: 0.009554 ,             Total iterations: 0
-------------
+```{r}
+label <- c("Physical", "Social", "Health", "Life")
+avg_b_values <- c(-0.004420, -0.335536, -0.235551, -0.430599)
+avg_se_values <- c(0.022715, 0.179536, 0.028158, 0.037807)
+sd_b_values <- c(-0.105746, 0.130796, -0.006692, 0.133215)
+sd_se_values <- c(0.034058, 0.186924, 0.026612, 0.034255)
+r2_values <- c(0.009554, 0.021558, 0.035782, 0.054081)
+sample_size <- 13000
 
------- Social Sciences ------
+r2_low <- 1:length(r2_values)
+r2_high <- 1:length(r2_values)
+for (i in 1:length(r2_values)){
+  temp <- ci.R2(R2 = r2_values[i], 1, sample_size)
+  r2_low[i] <- temp$Lower.Conf.Limit.R2
+  r2_high[i] <- temp$Upper.Conf.Limit.R2
+}
 
-Note: the last rows are the information for Intercept
-## -------------------------------------------------
-##   Estimate   |   Std.Error | t Values  |  P-value
-##  -0.335536   0.179536   -1.869   0.062389
-##   0.130796   0.186924    0.700   0.484517
-## 2016.658826   0.487148 4139.727   0.000000
-## ---
-## Mean squared error:  34.070868 , RMSE:  5.837026
-## Multiple R-squared: 0.021558 ,             Total iterations: 0
-------------
+graph_data <- data.frame(
+  "label" = label,
+  "estimate" = avg_b_values,
+  "type" = "M Coefficient",
+  "low" = avg_b_values - qt(.025, sample_size, lower.tail = F)*avg_se_values,
+  "high" = avg_b_values + qt(.025, sample_size, lower.tail = F)*avg_se_values) %>% 
+    bind_rows(
+    data.frame(
+    "label" = label,
+    "estimate" = sd_b_values,
+    "type" = "SD Coefficient",
+    "low" = sd_b_values - qt(.025, sample_size, lower.tail = F)*sd_se_values,
+    "high" = sd_b_values + qt(.025, sample_size, lower.tail = F)*sd_se_values) 
+    ) %>% 
+  bind_rows(
+    data.frame(  
+      "label" = label, 
+      "estimate" = r2_values,
+      "type" = "Effect Size",
+      "low" = r2_low,
+      "high" = r2_high)
+  )
 
------- Health Sciences ------
-
-Note: the last rows are the information for Intercept
-## -------------------------------------------------
-##   Estimate   |   Std.Error | t Values  |  P-value
-##  -0.235551   0.028158   -8.365   0.000000
-##  -0.006692   0.026612   -0.251   0.801476
-## 2014.979175   0.119976 16794.893   0.000000
-## ---
-## Mean squared error:  33.860172 , RMSE:  5.818949
-## Multiple R-squared: 0.035782 ,             Total iterations: 0
-------------
-
------- Life Sciences ------
-
-Note: the last rows are the information for Intercept
-## -------------------------------------------------
-##   Estimate   |   Std.Error | t Values  |  P-value
-##  -0.430599   0.037807  -11.389   0.000000
-##   0.133215   0.034255    3.889   0.000102
-## 2016.008237   0.147870 13633.624   0.000000
-## ---
-## Mean squared error:  31.736306 , RMSE:  5.633499
-## Multiple R-squared: 0.054081 ,             Total iterations: 0
-------------
+ggplot(graph_data, aes(label, estimate)) + 
+  geom_point() +
+  geom_pointrange(aes(ymin = low, ymax = high)) +
+  theme_classic() + 
+  facet_wrap(~type) + 
+  geom_hline(yintercept = 0) + 
+  coord_flip() + 
+  xlab("Subject Area") + 
+  ylab("")
+```
 
 ***Geopolitical Regions***.
 
@@ -781,61 +941,6 @@ ggplot(graph_data, aes(label, estimate)) +
   xlab("Subject Area") + 
   ylab("")
 ```
-   
-    
-total number of unique GP for each publication 
-using year to predict GP 
-positive slope means that as year goes up number of GP goes up 
-negative slope means that as year goes up number of GP goes down 
-forest plot of the effects + confidence interval 
-    
------- Physical Sciences ------
-
-Note: the last rows are the information for Intercept
-## -------------------------------------------------
-##   Estimate   |   Std.Error | t Values  |  P-value
-##  -0.061001   0.022958   -2.657   0.007923
-## 130.518393  46.247823    2.822   0.004802
-## ---
-## Mean squared error:  56.853041 , RMSE:  7.540096
-## Multiple R-squared: 0.002357 ,             Total iterations: 0
-------------
-
------- Social Sciences ------
-
-Note: the last rows are the information for Intercept
-## -------------------------------------------------
-##   Estimate   |   Std.Error | t Values  |  P-value
-##  -0.077040   0.058153   -1.325   0.186023
-## 160.766462 117.214988    1.372   0.170993
-## ---
-## Mean squared error:  45.807761 , RMSE:  6.768143
-## Multiple R-squared: 0.004491 ,             Total iterations: 0
-------------
-
------- Health Sciences ------
-
-Note: the last rows are the information for Intercept
-## -------------------------------------------------
-##   Estimate   |   Std.Error | t Values  |  P-value
-##  -0.017775   0.009794   -1.815   0.069578
-##  40.118948  19.718323    2.035   0.041926
-## ---
-## Mean squared error:  25.532574 , RMSE:  5.052977
-## Multiple R-squared: 0.000434 ,             Total iterations: 0
-------------
-
------- Life Sciences ------
-
-Note: the last rows are the information for Intercept
-## -------------------------------------------------
-##   Estimate   |   Std.Error | t Values  |  P-value
-##  -0.014946   0.010485   -1.425   0.154081
-##  34.499812  21.117788    1.634   0.102392
-## ---
-## Mean squared error:  17.279398 , RMSE:  4.156850
-## Multiple R-squared: 0.000434 ,             Total iterations: 0
-------------
 
 -   Last, we will examine the differences in representation for
     corresponding author sets versus all other authors. For papers with
@@ -851,19 +956,14 @@ Note: the last rows are the information for Intercept
     be binned by 5-year or smaller increments to increase sample size).
     For each grouping, we will calculate the effect size of the
     differences in frequencies comparing first authors to all other
-    authors. Since this data is categorical, we will use Cramer's V to
+    authors. Since this data is categorical, we will use Cramer's *V* to
     represent the effect size. If the effect size includes zero in its
     confidence interval, this result will imply that first and all other
     authors represent the same pattern of UN Sub-Region diversity. Any
     confidence interval that does include zero represents a difference
-    in diversity. We will report these values and discuss what regions
-    of the world are represented when effect sizes indicate a difference
-    from zero using standardized residuals.
+    in diversity. 
     
-    ## fix the stupid CIs
-    
-    
-```{r small-effects}
+```{r small-effects, warning = FALSE}
 DF$small_first_gp <- DF$small_first_gp %>% 
   filter(aff_un != "other") %>% 
   pivot_wider(id_cols = Year, 
@@ -965,7 +1065,7 @@ small_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
   scale_fill_brewer(name = "Region", palette = "Spectral")
 ```
 
-```{r medium-effects}
+```{r medium-effects, warning = FALSE}
 DF$medium_first_gp <- DF$medium_first_gp %>% 
   filter(aff_un != "other") %>% 
   pivot_wider(id_cols = Year, 
@@ -1066,7 +1166,7 @@ medium_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
   scale_fill_brewer(name = "Region", palette = "Spectral")
 ```
 
-```{r large-effects}
+```{r large-effects, warning = FALSE}
 DF$large_first_gp <- DF$large_first_gp %>% 
   filter(aff_un != "other") %>% 
   pivot_wider(id_cols = Year, 
@@ -1167,7 +1267,7 @@ large_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
   scale_fill_brewer(name = "Region", palette = "Spectral")
 ```
 
-```{r final-graphs}
+```{r author-gpe-figure, include = TRUE}
 small_author + #theme(legend.position = "none") + 
 medium_author + #theme(legend.position = "none") + 
 large_author + #theme(legend.position = "none") + 
@@ -1179,7 +1279,9 @@ plot_layout(
 
 ggsave("figure/author_country.png", width = 10, height = 7, 
        units = "in")
+```
 
+```{r effect-gpe-figure, include = TRUE}
 small_dot + 
   theme(legend.position = "none") + 
   coord_cartesian(ylim = c(0,1)) +
