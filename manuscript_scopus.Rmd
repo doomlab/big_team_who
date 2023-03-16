@@ -85,6 +85,7 @@ library(dplyr)
 library(tidyr)
 library(MOTE)
 library(MBESS)
+library(patchwork)
 ```
 
 ```{r data, include = FALSE}
@@ -859,14 +860,19 @@ Note: the last rows are the information for Intercept
     of the world are represented when effect sizes indicate a difference
     from zero using standardized residuals.
     
-```{r}
+    ## fix the stupid CIs
+    
+    
+```{r small-effects}
 DF$small_first_gp <- DF$small_first_gp %>% 
+  filter(aff_un != "other") %>% 
   pivot_wider(id_cols = Year, 
               names_from = aff_un, 
               values_from = count,
               values_fill = 0)
 
 DF$small_other_gp <- DF$small_other_gp %>% 
+  filter(aff_un != "other") %>% 
   pivot_wider(id_cols = Year, 
               names_from = aff_un, 
               values_from = count,
@@ -887,24 +893,39 @@ for (year in unique(DF$small_first_gp$Year)){
   col_total <- colSums(temp_table)
   temp_table <- temp_table %>% 
     select(names(col_total)[col_total > 0])
-  #### FIX WARNING ISSUE HERE#####
   temp <- suppressWarnings(chisq.test(as.matrix(temp_table)))
-  mote_temp <- suppressWarnings(v.chi.sq(x2 = temp$statistic, n = sum(temp_table), 
+  
+  tryCatch(mote_temp <- v.chi.sq(x2 = temp$statistic, n = sum(temp_table), 
                         r = nrow(temp_table), c = ncol(temp_table), 
-                        a = .05))
+                        a = .05), 
+       warning = function(w) { 
+         mote_temp <<- v.chi.sq(x2 = temp$statistic, n = sum(temp_table), 
+                        r = nrow(temp_table), c = ncol(temp_table), 
+                        a = .05)
+         mote_temp$vlow <<- 0
+  }
+  )
+  
   small_effect$year[i] <- year
   small_effect$v[i] <- mote_temp$v
   small_effect$low[i] <- mote_temp$vlow
   small_effect$high[i] <- mote_temp$vhigh
+  small_effect$people[i] <- mote_temp$n
   i <- i + 1
 }
 
-ggplot(small_effect, aes(year,v)) + 
-  geom_point() + 
+small_effect$high[is.na(small_effect$high)] <- 0
+small_effect <- 
+  small_effect %>% 
+  filter(v != Inf)
+
+small_dot <- ggplot(small_effect, aes(year,v)) + 
+  geom_point(aes(size = people)) + 
   theme_classic() + 
   geom_pointrange(aes(ymin = low, ymax = high)) + 
   xlab("Year") + 
-  ylab("Effect Size")
+  ylab("Effect Size") + 
+  scale_size_continuous(name = "Num Authors")
 
 DF_decade <- DF$small_first_gp %>% 
   mutate(who = "First") %>% 
@@ -922,28 +943,260 @@ DF_decade <- DF$small_first_gp %>%
                names_to = "Country", 
                values_to = "Count")
 
-DF_decade$region <- factor(
-  DF_decade$Country,
-  levels = unique(DF_decade$Country),
-  labels = 
-)
+# North America, Africa (combine), NWS Europe, Eastern Asia, Latin America, Rest of Europe, Rest of Asia, Everything Else 
 
-"Africa"
-"Americas"
-"Asia"
-"Europe"
-"Oceania"
+DF_decade$Country_2 <- DF_decade$Country
+DF_decade$Country_2 <- gsub(".*Africa.*", "Africa", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Northern Europe|Southern Europe|Western Europe", "NWS Europe", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("South-Eastern Europe|Eastern Europe", "ESE Europe", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Central Asia|South-Eastern Asia|Southern Asia|Western Asia", "Asia", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Melanesia|Mirconesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
 
+DF_decade_sm <- DF_decade %>% 
+  group_by(Country_2, Decade, who) %>% 
+  summarize(Count = sum(Count), .groups = "keep")
 
-
-ggplot(DF_decade, aes(who, Count, fill = Country)) + 
-    geom_bar(position="fill", stat="identity") + 
+small_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) + 
+    geom_bar(position="fill", stat="identity", color = "black") + 
   theme_classic() + 
   facet_grid(~Decade) + 
   xlab("Author Type") + 
-  ylab("Percent")
+  ylab("Percent of Authors") + 
+  scale_fill_brewer(name = "Region", palette = "Spectral")
+```
 
-## do the seven big regions
+```{r medium-effects}
+DF$medium_first_gp <- DF$medium_first_gp %>% 
+  filter(aff_un != "other") %>% 
+  pivot_wider(id_cols = Year, 
+              names_from = aff_un, 
+              values_from = count,
+              values_fill = 0)
+
+DF$medium_other_gp <- DF$medium_other_gp %>% 
+  filter(aff_un != "other") %>% 
+  pivot_wider(id_cols = Year, 
+              names_from = aff_un, 
+              values_from = count,
+              values_fill = 0) %>% 
+  select(colnames(DF$medium_first_gp))
+
+medium_effect <- data.frame(
+  year = 1:length(unique(DF$medium_first_gp$Year)),
+  v = 1:length(unique(DF$medium_first_gp$Year)),
+  low = 1:length(unique(DF$medium_first_gp$Year)),
+  high = 1:length(unique(DF$medium_first_gp$Year))
+)
+i <- 1
+for (year in unique(DF$medium_first_gp$Year)){
+  temp_table <- DF$medium_first_gp %>% filter(Year == year) %>% select(-Year) %>% 
+    bind_rows(DF$medium_other_gp %>% filter(Year == year) %>% select(-Year))
+  
+  col_total <- colSums(temp_table)
+  temp_table <- temp_table %>% 
+    select(names(col_total)[col_total > 0])
+  temp <- suppressWarnings(chisq.test(as.matrix(temp_table)))
+  tryCatch(mote_temp <- v.chi.sq(x2 = temp$statistic, n = sum(temp_table), 
+                        r = nrow(temp_table), c = ncol(temp_table), 
+                        a = .05), 
+       warning = function(w) { 
+         mote_temp <<- v.chi.sq(x2 = temp$statistic, n = sum(temp_table), 
+                        r = nrow(temp_table), c = ncol(temp_table), 
+                        a = .05)
+         mote_temp$vlow <<- 0
+  }
+  )
+  medium_effect$year[i] <- year
+  medium_effect$v[i] <- mote_temp$v
+  medium_effect$low[i] <- mote_temp$vlow
+  medium_effect$high[i] <- mote_temp$vhigh
+  medium_effect$people[i] <- mote_temp$n
+  i <- i + 1
+}
+
+medium_effect$high[is.na(medium_effect$high)] <- 0
+medium_effect <- 
+  medium_effect %>% 
+  filter(v != Inf)
+
+medium_dot <- ggplot(medium_effect, aes(year,v)) + 
+  geom_point(aes(size = people)) + 
+  theme_classic() + 
+  geom_pointrange(aes(ymin = low, ymax = high)) + 
+  xlab("Year") + 
+  ylab("Effect Size") + 
+  scale_size_continuous(name = "Num Authors")
+
+DF_decade <- DF$medium_first_gp %>% 
+  mutate(who = "First") %>% 
+  bind_rows(
+    DF$medium_other_gp %>% 
+      mutate(who = "Other")
+  ) %>% 
+  mutate(Decade = ifelse(Year < 1990, "1980s", 
+                         ifelse(Year < 2000, "1990s", 
+                                ifelse(Year < 2010, "2000s", 
+                                       ifelse(Year < 2020, "2010s", "2020s"))))) %>% 
+  group_by(who, Decade) %>% 
+  summarize_all(sum) %>% 
+  pivot_longer(cols = `Western Europe`:Melanesia, 
+               #### check this later ####
+               names_to = "Country", 
+               values_to = "Count")
+
+# North America, Africa (combine), NWS Europe, Eastern Asia, Latin America, Rest of Europe, Rest of Asia, Everything Else 
+
+DF_decade$Country_2 <- DF_decade$Country
+DF_decade$Country_2 <- gsub(".*Africa.*", "Africa", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Northern Europe|Southern Europe|Western Europe", "NWS Europe", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("South-Eastern Europe|Eastern Europe", "ESE Europe", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Central Asia|South-Eastern Asia|Southern Asia|Western Asia", "Asia", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Melanesia|Mirconesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
+
+DF_decade_sm <- DF_decade %>% 
+  group_by(Country_2, Decade, who) %>% 
+  summarize(Count = sum(Count), .groups = "keep")
+
+medium_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) + 
+    geom_bar(position="fill", stat="identity", color = "black") + 
+  theme_classic() + 
+  facet_grid(~Decade) + 
+  xlab("Author Type") + 
+  ylab("Percent of Authors") + 
+  scale_fill_brewer(name = "Region", palette = "Spectral")
+```
+
+```{r large-effects}
+DF$large_first_gp <- DF$large_first_gp %>% 
+  filter(aff_un != "other") %>% 
+  pivot_wider(id_cols = Year, 
+              names_from = aff_un, 
+              values_from = count,
+              values_fill = 0)
+
+DF$large_other_gp <- DF$large_other_gp %>% 
+  filter(aff_un != "other") %>% 
+  pivot_wider(id_cols = Year, 
+              names_from = aff_un, 
+              values_from = count,
+              values_fill = 0) %>% 
+  select(colnames(DF$large_first_gp))
+
+large_effect <- data.frame(
+  year = 1:length(unique(DF$large_first_gp$Year)),
+  v = 1:length(unique(DF$large_first_gp$Year)),
+  low = 1:length(unique(DF$large_first_gp$Year)),
+  high = 1:length(unique(DF$large_first_gp$Year))
+)
+i <- 1
+for (year in unique(DF$large_first_gp$Year)){
+  temp_table <- DF$large_first_gp %>% filter(Year == year) %>% select(-Year) %>% 
+    bind_rows(DF$large_other_gp %>% filter(Year == year) %>% select(-Year))
+  
+  col_total <- colSums(temp_table)
+  temp_table <- temp_table %>% 
+    select(names(col_total)[col_total > 0])
+  temp <- suppressWarnings(chisq.test(as.matrix(temp_table)))
+  tryCatch(mote_temp <- v.chi.sq(x2 = temp$statistic, n = sum(temp_table), 
+                        r = nrow(temp_table), c = ncol(temp_table), 
+                        a = .05), 
+       warning = function(w) { 
+         mote_temp <<- v.chi.sq(x2 = temp$statistic, n = sum(temp_table), 
+                        r = nrow(temp_table), c = ncol(temp_table), 
+                        a = .05)
+         mote_temp$vlow <<- 0
+  }
+  )
+  large_effect$year[i] <- year
+  large_effect$v[i] <- mote_temp$v
+  large_effect$low[i] <- mote_temp$vlow
+  large_effect$high[i] <- mote_temp$vhigh
+  large_effect$people[i] <- mote_temp$n
+  i <- i + 1
+}
+
+large_effect$high[is.na(large_effect$high)] <- 0
+large_effect <- 
+  large_effect %>% 
+  filter(v != Inf)
+
+large_dot <- ggplot(large_effect, aes(year,v)) + 
+  geom_point(aes(size = people)) + 
+  theme_classic() + 
+  geom_pointrange(aes(ymin = low, ymax = high)) + 
+  xlab("Year") + 
+  ylab("Effect Size") + 
+  scale_size_continuous(name = "Num Authors")
+
+DF_decade <- DF$large_first_gp %>% 
+  mutate(who = "First") %>% 
+  bind_rows(
+    DF$large_other_gp %>% 
+      mutate(who = "Other")
+  ) %>% 
+  mutate(Decade = ifelse(Year < 1990, "1980s", 
+                         ifelse(Year < 2000, "1990s", 
+                                ifelse(Year < 2010, "2000s", 
+                                       ifelse(Year < 2020, "2010s", "2020s"))))) %>% 
+  group_by(who, Decade) %>% 
+  summarize_all(sum) %>% 
+  pivot_longer(cols = `Western Europe`:`Central Asia`, 
+               #### check this later ####
+               names_to = "Country", 
+               values_to = "Count")
+
+# North America, Africa (combine), NWS Europe, Eastern Asia, Latin America, Rest of Europe, Rest of Asia, Everything Else 
+
+DF_decade$Country_2 <- DF_decade$Country
+DF_decade$Country_2 <- gsub(".*Africa.*", "Africa", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Northern Europe|Southern Europe|Western Europe", "NWS Europe", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("South-Eastern Europe|Eastern Europe", "ESE Europe", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Central Asia|South-Eastern Asia|Southern Asia|Western Asia", "Asia", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Melanesia|Mirconesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
+
+DF_decade_sm <- DF_decade %>% 
+  group_by(Country_2, Decade, who) %>% 
+  summarize(Count = sum(Count), .groups = "keep")
+
+large_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) + 
+    geom_bar(position="fill", stat="identity", color = "black") + 
+  theme_classic() + 
+  facet_grid(~Decade) + 
+  xlab("Author Type") + 
+  ylab("Percent of Authors") + 
+  scale_fill_brewer(name = "Region", palette = "Spectral")
+```
+
+```{r final-graphs}
+small_author + #theme(legend.position = "none") + 
+medium_author + #theme(legend.position = "none") + 
+large_author + #theme(legend.position = "none") + 
+guide_area() + 
+plot_layout(
+  ncol = 2,
+  nrow = 2, 
+  guides = "collect")
+
+ggsave("figure/author_country.png", width = 10, height = 7, 
+       units = "in")
+
+small_dot + 
+  theme(legend.position = "none") + 
+  coord_cartesian(ylim = c(0,1)) +
+medium_dot + 
+  theme(legend.position = "none") + 
+  coord_cartesian(ylim = c(0,1)) +
+large_dot + 
+  theme(legend.position = "none") + 
+  coord_cartesian(ylim = c(0,1)) +
+guide_area() + 
+plot_layout(
+  ncol = 2,
+  nrow = 2, 
+  guides = "collect")
+
+ggsave("figure/effect_country.png", width = 10, height = 7, 
+       units = "in")
 ```
 
 end up with a list of effect sizes by year by small medium large 
@@ -963,6 +1216,7 @@ who is not represented in the "corresponding" spots - proportion chart by decade
 \setlength{\parindent}{-0.5in}
 \setlength{\leftskip}{0.5in}
 ```
+
 ::: {#refs custom-style="Bibliography"}
 :::
 
