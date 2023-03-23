@@ -91,6 +91,25 @@ library(wordcloud2)
 library(htmlwidgets)
 library(webshot)
 library(figpatch)
+
+strip_labels <- expression(
+  "M Coefficient" = b[M],
+  "SD Coefficient" = b[SD],
+  "Effect Size" = R^2
+)
+
+label_expressions <- function(values) {
+  stopifnot(is.expression(values))
+  as_labeller(function(x) {
+    if (is.null(names(values))) {
+      x <- seq_along(x)
+      if (length(x)!=length(values)) warning(paste0("Number of labels(", 
+        length(values), ") does not match number of values (", length(x), ")"))
+    }
+    as.list(values[x])
+  }, default=identity)
+}
+
 ```
 
 ```{r data, include = FALSE}
@@ -99,7 +118,7 @@ var_list <- c("author_time", "career_time", "geo_country", "inst_time",
               "keywords", "large_first_gp", "large_other_gp", "medium_first_gp", 
               "medium_other_gp", "normal_pub_type", "pub_time_count", 
               "pub_time_subject", "pub_types", "small_first_gp", "small_other_gp",
-              "snip")
+              "snip", "ASJC_codes", "snip_all")
 
 var_list_import <- paste0("py_outputs/", var_list, ".xlsx")
 
@@ -295,9 +314,9 @@ variables described below.
 ***Career Length***. Career length for each author will be defined as
 the year of the first publication listed for each author.
 
-***Institution***. We will use the affiliation ids and country to gather
+***Institution and Geopolitical Region ***. We will use the affiliation ids and country to gather
 information about the places of education and/or employment for authors.
-Country will likely be binned into United Nation Sub-Region for
+Country will likely be binned into United Nation Region, Sub-Region,  or smaller clusters for
 analyses.
 
 ***Education***. We will also collect degree information from the author
@@ -351,11 +370,26 @@ social_journal <- 206
 life_journal <- 1024
 ```
 
-The number of distinct journals big team science articles were published in was `r journals` with `r health_journal` journals in Health Sciences, `r physical_journal` journals in Physical Sciences, `r social_journal` journals in Social Sciences, and `r life_journal` journals in Life Sciences. The descriptive statistics for the Source Normalized Impact per Paper is presented in Table X. 
+The number of distinct journals big team science articles were published in was `r journals` with `r health_journal` journals in Health Sciences, `r physical_journal` journals in Physical Sciences, `r social_journal` journals in Social Sciences, and `r life_journal` journals in Life Sciences. The descriptive statistics for the Source Normalized Impact per Paper is presented in Table X. For comparison, the SNIP descriptive statistics for all papers is shown in Table X. 
+
+Big-Team Science SNIP
 
 ```{r results = 'asis', include = TRUE}
 flextable(
   DF$snip %>% 
+    mutate(M = apa_num(M), 
+           SD = apa_num(SD), 
+           Minimum = apa_num(Minimum), 
+           Median = apa_num(Median), 
+           Maximum = apa_num(Maximum))
+)
+```
+
+All Journal Articles SNIP
+
+```{r results = 'asis', include = TRUE}
+flextable(
+  DF$snip_all %>% 
     mutate(M = apa_num(M), 
            SD = apa_num(SD), 
            Minimum = apa_num(Minimum), 
@@ -379,12 +413,18 @@ For each publication, we will examine:
 pub_total <- DF$pub_time_subject %>% 
   group_by(SubjectArea, ASJC) %>% 
   summarize(count = sum(count), .groups = "keep") %>% 
-  filter(SubjectArea != "Multidisciplinary")
+  filter(SubjectArea != "Multidisciplinary") %>% 
+  left_join(DF$ASJC_codes %>% select(Name, Code), by = c("ASJC" = "Code"))
 
 health_cloud <- wordcloud2(pub_total %>% 
              filter(SubjectArea == "Health Sciences") %>% 
              ungroup() %>% 
-             select(ASJC, count)) 
+             select(Name, count) %>% 
+               arrange(desc(count)) %>% 
+               slice_head(n = 20),
+             minRotation = -pi/6, 
+             maxRotation = -pi/6,
+             rotateRatio = 0)
 
 saveWidget(health_cloud, "tmp.html", selfcontained = F)
 webshot("tmp.html", "figure/health_cloud.png", vwidth = 600, vheight = 600)
@@ -392,7 +432,13 @@ webshot("tmp.html", "figure/health_cloud.png", vwidth = 600, vheight = 600)
 physical_cloud <- wordcloud2(pub_total %>% 
              filter(SubjectArea == "Physical Sciences") %>% 
              ungroup() %>% 
-             select(ASJC, count)) 
+             select(Name, count) %>% 
+               arrange(desc(count)) %>% 
+               slice_head(n = 20),
+             minRotation = -pi/6, 
+             maxRotation = -pi/6,
+             rotateRatio = 0, 
+             size = 1.5) 
 
 saveWidget(physical_cloud, "tmp.html", selfcontained = F)
 webshot("tmp.html", "figure/physical_cloud.png", vwidth = 600, vheight = 600)
@@ -400,7 +446,12 @@ webshot("tmp.html", "figure/physical_cloud.png", vwidth = 600, vheight = 600)
 life_cloud <- wordcloud2(pub_total %>% 
              filter(SubjectArea == "Life Sciences") %>% 
              ungroup() %>% 
-             select(ASJC, count)) 
+             select(Name, count) %>% 
+               arrange(desc(count)) %>% 
+               slice_head(n = 20),
+             minRotation = -pi/6, 
+             maxRotation = -pi/6,
+             rotateRatio = 0) 
 
 saveWidget(life_cloud, "tmp.html", selfcontained = F)
 webshot("tmp.html", "figure/life_cloud.png", vwidth = 600, vheight = 600)
@@ -408,7 +459,13 @@ webshot("tmp.html", "figure/life_cloud.png", vwidth = 600, vheight = 600)
 social_cloud <- wordcloud2(pub_total %>% 
              filter(SubjectArea == "Social Sciences") %>% 
              ungroup() %>% 
-             select(ASJC, count)) 
+             select(Name, count) %>% 
+               arrange(desc(count)) %>% 
+               slice_head(n = 20),
+             minRotation = -pi/6, 
+             maxRotation = -pi/6,
+             rotateRatio = 0, 
+             size = .2) 
 
 saveWidget(social_cloud, "tmp.html", selfcontained = F)
 webshot("tmp.html", "figure/social_cloud.png", vwidth = 600, vheight = 600)
@@ -603,7 +660,7 @@ ggplot(graph_data, aes(label, estimate)) +
   geom_point() +
   geom_pointrange(aes(ymin = low, ymax = high)) +
   theme_classic() + 
-  facet_wrap(~type) + 
+  facet_wrap(~type, labeller  = labeller(type = label_expressions(strip_labels))) + 
   geom_hline(yintercept = 0) + 
   coord_flip() + 
   xlab("Subject Area") + 
@@ -625,18 +682,20 @@ affs <- 35114
 The total number of unique affiliation across all papers was `r affs`.  
 
 ```{r}
+DF$inst_time$normalized <- DF$inst_time$unique / DF$inst_time$total * 100
+
 ggplot(DF$inst_time %>% 
          filter(SubjectArea != "Multidisciplinary") %>% 
          mutate(Decade = ifelse(Year < 1990, "1980s", 
                          ifelse(Year < 2000, "1990s", 
                                 ifelse(Year < 2010, "2000s", 
                                        ifelse(Year < 2020, "2010s", "2020s"))))), 
-       aes(Decade, `count(affiliation_ids)`)) + 
+       aes(Decade, `normalized`)) + 
   #geom_point() + 
   geom_violin() + 
   theme_classic() + 
   facet_wrap(~SubjectArea) + 
-  ylab("Number of Affiliations") + 
+  ylab("Percent of Unique Affiliations") + 
   xlab("Decade")
 ```
 
@@ -777,7 +836,7 @@ ggplot(graph_data, aes(label, estimate)) +
   geom_point() +
   geom_pointrange(aes(ymin = low, ymax = high)) +
   theme_classic() + 
-  facet_wrap(~type) + 
+  facet_wrap(~type, labeller  = labeller(type = label_expressions(strip_labels))) + 
   geom_hline(yintercept = 0) + 
   coord_flip() + 
   xlab("Subject Area") + 
@@ -799,7 +858,8 @@ DF$geo_country$affiliation_tag_country[DF$geo_country$affiliation_tag_country ==
 
 DF$geo_country <- DF$geo_country %>% 
   group_by(affiliation_tag_country) %>% 
-  summarize(count = sum(count))
+  summarize(count = sum(count),
+            count_all = sum(all_count))
 
 # convert country code to region code
 # this will warn you about the ones that have multiple countries 
@@ -841,6 +901,13 @@ DF$geo_country$count_binned <- if_else(
 DF$geo_country$count_binned <- factor(DF$geo_country$count_binned, 
                                    levels = unique(DF$geo_country$count_binned))
 
+DF$geo_country$count_binned <- factor(DF$geo_country$count_binned, 
+                                      levels = c("< 100", 
+                                                 "100-999", 
+                                                 "1,000-4,999", 
+                                                 "5,000-9,999", 
+                                                 "10,000+"))
+
 # map of binned data 
 bin_country <- ggplot(DF$geo_country) +
   geom_map(aes(map_id = affiliation_tag_country, fill = count_binned), map = world_map) +
@@ -848,8 +915,9 @@ bin_country <- ggplot(DF$geo_country) +
                aes(x = long, y = lat, group = group), 
                colour = 'black', fill = NA) + 
   theme_void() + 
-  scale_fill_manual(name = "Sample Size",
-                    values = c( "black", "#323232", "#646464","#969696","#c8c8c8")) 
+  # scale_fill_manual(name = "Sample Size",
+  #                   values = c( "black", "#323232", "#646464","#969696","#c8c8c8")) 
+  scale_fill_brewer(name = "Sample Size", palette = "Spectral")
 
 bin_country
 
@@ -881,10 +949,11 @@ tree <- ggplot(DF$geo_country, aes(area = count, fill = count_binned,
   # geom_treemap_subgroup_text(place = "top", grow = TRUE,
   #                            alpha = 0.25, colour = "black",
   #                            fontface = "italic") +
-  geom_treemap_text(colour = "white", place = "centre",
+  geom_treemap_text(colour = "black", place = "centre",
                     size = 15, grow = FALSE) +  
-  scale_fill_manual(name = "Sample Size",
-                    values = c("#c8c8c8", "#969696", "#646464", "#323232", "black")) 
+  # scale_fill_manual(name = "Sample Size",
+  #                   values = c("#c8c8c8", "#969696", "#646464", "#323232", "black")) 
+  scale_fill_brewer(name = "Sample Size", palette = "Spectral")
   # scale_fill_gradient(name = "Sample Size",
   #                     low = "#c8c8c8", 
   #                     high = "#323232") 
@@ -892,6 +961,83 @@ tree <- ggplot(DF$geo_country, aes(area = count, fill = count_binned,
 tree 
 
 ggsave("figure/treemap.png", tree)
+```
+
+```{r geo-map-all}
+# make a map on a continuous scale
+ggplot(DF$geo_country) +
+  geom_map(aes(map_id = affiliation_tag_country, fill = count_all), map = world_map) +
+  geom_polygon(data = world_map, 
+               aes(x = long, y = lat, group = group), 
+               colour = 'black', fill = NA) + 
+  theme_void() + 
+  scale_fill_distiller(name = "Sample Size",
+                       palette = "Greys",
+                       direction = 1,
+                       na.value = "white") 
+
+ggsave("figure/continuous_country_all.png")
+  
+# maybe try binning
+DF$geo_country$count_binned_all <- if_else(
+  DF$geo_country$count_all >= 10000, "10,000+", 
+  if_else(
+    DF$geo_country$count_all < 10000 & DF$geo_country$count_all >= 5000, "5,000-9,999",
+    if_else(
+      DF$geo_country$count_all < 5000 & DF$geo_country$count_all >= 1000, "1,000-4,999",
+      if_else(
+        DF$geo_country$count_all < 1000 & DF$geo_country$count_all >= 100, "100-999",
+        "< 100"
+      )
+    )
+  )
+)
+
+DF$geo_country$count_binned_all <- factor(DF$geo_country$count_binned_all, 
+                                   levels = unique(DF$geo_country$count_binned_all))
+
+DF$geo_country$count_binned_all <- factor(DF$geo_country$count_binned_all, 
+                                      levels = c("< 100", 
+                                                 "100-999", 
+                                                 "1,000-4,999", 
+                                                 "5,000-9,999", 
+                                                 "10,000+"))
+
+# map of binned data 
+bin_country_all <- ggplot(DF$geo_country) +
+  geom_map(aes(map_id = affiliation_tag_country, fill = count_binned_all), map = world_map) +
+  geom_polygon(data = world_map, 
+               aes(x = long, y = lat, group = group), 
+               colour = 'black', fill = NA) + 
+  theme_void() + 
+  # scale_fill_manual(name = "Sample Size",
+  #                   values = c( "black", "#323232", "#646464","#969696","#c8c8c8")) 
+  scale_fill_brewer(name = "Sample Size", palette = "Spectral")
+
+bin_country_all
+
+ggsave("figure/binned_country_all.png", bin_country_all)
+
+
+tree_all <- ggplot(DF$geo_country, aes(area = count_all, fill = count_binned_all,
+               label = affiliation_tag_country, subgroup = un_region_sub)) +
+  geom_treemap() +
+  geom_treemap_subgroup_border(colour = "white", size = 5) +
+  # geom_treemap_subgroup_text(place = "top", grow = TRUE,
+  #                            alpha = 0.25, colour = "black",
+  #                            fontface = "italic") +
+  geom_treemap_text(colour = "black", place = "centre",
+                    size = 15, grow = FALSE) +  
+  # scale_fill_manual(name = "Sample Size",
+  #                   values = c("#c8c8c8", "#969696", "#646464", "#323232", "black")) 
+  scale_fill_brewer(name = "Sample Size", palette = "Spectral")
+  # scale_fill_gradient(name = "Sample Size",
+  #                     low = "#c8c8c8", 
+  #                     high = "#323232") 
+
+tree_all
+
+ggsave("figure/treemap_all.png", tree_all)
 ```
 
 -   To understand the change in representation diversity, we will
@@ -935,7 +1081,7 @@ ggplot(graph_data, aes(label, estimate)) +
   geom_point() +
   geom_pointrange(aes(ymin = low, ymax = high)) +
   theme_classic() + 
-  facet_wrap(~type) + 
+  facet_wrap(~type, labeller  = labeller(type = label_expressions(strip_labels))) + 
   geom_hline(yintercept = 0) + 
   coord_flip() + 
   xlab("Subject Area") + 
@@ -1024,7 +1170,7 @@ small_dot <- ggplot(small_effect, aes(year,v)) +
   theme_classic() + 
   geom_pointrange(aes(ymin = low, ymax = high)) + 
   xlab("Year") + 
-  ylab("Effect Size") + 
+  ylab(expression(phi)) + 
   scale_size_continuous(name = "Num Authors")
 
 DF_decade <- DF$small_first_gp %>% 
@@ -1124,7 +1270,7 @@ medium_dot <- ggplot(medium_effect, aes(year,v)) +
   theme_classic() + 
   geom_pointrange(aes(ymin = low, ymax = high)) + 
   xlab("Year") + 
-  ylab("Effect Size") + 
+  ylab(expression(phi)) + 
   scale_size_continuous(name = "Num Authors")
 
 DF_decade <- DF$medium_first_gp %>% 
@@ -1225,7 +1371,7 @@ large_dot <- ggplot(large_effect, aes(year,v)) +
   theme_classic() + 
   geom_pointrange(aes(ymin = low, ymax = high)) + 
   xlab("Year") + 
-  ylab("Effect Size") + 
+  ylab(expression(phi)) + 
   scale_size_continuous(name = "Num Authors")
 
 DF_decade <- DF$large_first_gp %>% 
@@ -1268,9 +1414,9 @@ large_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
 ```
 
 ```{r author-gpe-figure, include = TRUE}
-small_author + #theme(legend.position = "none") + 
-medium_author + #theme(legend.position = "none") + 
-large_author + #theme(legend.position = "none") + 
+small_author + ggtitle("10-49 Authors") + #theme(legend.position = "none") +
+medium_author + ggtitle("50-99 Authors") + #theme(legend.position = "none") + 
+large_author + ggtitle("100 + Authors") + #theme(legend.position = "none") + 
 guide_area() + 
 plot_layout(
   ncol = 2,
@@ -1284,13 +1430,16 @@ ggsave("figure/author_country.png", width = 10, height = 7,
 ```{r effect-gpe-figure, include = TRUE}
 small_dot + 
   theme(legend.position = "none") + 
-  coord_cartesian(ylim = c(0,1)) +
+  coord_cartesian(ylim = c(0,1), xlim = c(1980, 2025)) +
+  ggtitle("10-49 Authors") + 
 medium_dot + 
   theme(legend.position = "none") + 
-  coord_cartesian(ylim = c(0,1)) +
+  coord_cartesian(ylim = c(0,1), xlim = c(1980, 2025)) +
+  ggtitle("50-99 Authors") +
 large_dot + 
   theme(legend.position = "none") + 
-  coord_cartesian(ylim = c(0,1)) +
+  coord_cartesian(ylim = c(0,1), xlim = c(1980, 2025)) +
+  ggtitle("100 + Authors") + 
 guide_area() + 
 plot_layout(
   ncol = 2,
