@@ -688,7 +688,7 @@ ggplot(pub_types, aes(type, count, fill = publication_type)) +
   theme_classic() +  
   xlab("Author Type") + 
   ylab("Percent of Paper Types") + 
-  theme(legend.position = "none")
+  theme(legend.position = "right")
 
 # can probably figure out how to combine these feasibly to make it readable
 # ab Abstract Report, ar Article, ip Article in Press, bk Book, bz Business Article, ch Book Chapter, cp Conference Paper, cr Conference Review, dp Data paper, ed Editorial, er Erratum, le Letter, no Note, pp Preprint, pr Press Release, rp Report, re Review, sh Survey, tb Retracted.
@@ -1028,10 +1028,10 @@ small_dot <- ggplot(small_effect, aes(year,v)) +
   scale_size_continuous(name = "Num Authors")
 
 DF_decade <- DF$small_first_gp %>% 
-  mutate(who = "First") %>% 
+  mutate(who = "F") %>% 
   bind_rows(
     DF$small_other_gp %>% 
-      mutate(who = "Other")
+      mutate(who = "O")
   ) %>% 
   mutate(Decade = ifelse(Year < 1990, "1980s", 
                          ifelse(Year < 2000, "1990s", 
@@ -1128,10 +1128,10 @@ medium_dot <- ggplot(medium_effect, aes(year,v)) +
   scale_size_continuous(name = "Num Authors")
 
 DF_decade <- DF$medium_first_gp %>% 
-  mutate(who = "First") %>% 
+  mutate(who = "F") %>% 
   bind_rows(
     DF$medium_other_gp %>% 
-      mutate(who = "Other")
+      mutate(who = "O")
   ) %>% 
   mutate(Decade = ifelse(Year < 1990, "1980s", 
                          ifelse(Year < 2000, "1990s", 
@@ -1229,10 +1229,10 @@ large_dot <- ggplot(large_effect, aes(year,v)) +
   scale_size_continuous(name = "Num Authors")
 
 DF_decade <- DF$large_first_gp %>% 
-  mutate(who = "First") %>% 
+  mutate(who = "F") %>% 
   bind_rows(
     DF$large_other_gp %>% 
-      mutate(who = "Other")
+      mutate(who = "O")
   ) %>% 
   mutate(Decade = ifelse(Year < 1990, "1980s", 
                          ifelse(Year < 2000, "1990s", 
