@@ -1170,7 +1170,7 @@ small_dot <- ggplot(small_effect, aes(year,v)) +
   theme_classic() + 
   geom_pointrange(aes(ymin = low, ymax = high)) + 
   xlab("Year") + 
-  ylab(expression(R^2)) + 
+  ylab(expression(phi)) + 
   scale_size_continuous(name = "Num Authors")
 
 DF_decade <- DF$small_first_gp %>% 
@@ -1270,7 +1270,7 @@ medium_dot <- ggplot(medium_effect, aes(year,v)) +
   theme_classic() + 
   geom_pointrange(aes(ymin = low, ymax = high)) + 
   xlab("Year") + 
-  ylab(expression(R^2)) + 
+  ylab(expression(phi)) + 
   scale_size_continuous(name = "Num Authors")
 
 DF_decade <- DF$medium_first_gp %>% 
@@ -1371,7 +1371,7 @@ large_dot <- ggplot(large_effect, aes(year,v)) +
   theme_classic() + 
   geom_pointrange(aes(ymin = low, ymax = high)) + 
   xlab("Year") + 
-  ylab(expression(R^2)) + 
+  ylab(expression(phi)) + 
   scale_size_continuous(name = "Num Authors")
 
 DF_decade <- DF$large_first_gp %>% 
@@ -1430,15 +1430,15 @@ ggsave("figure/author_country.png", width = 10, height = 7,
 ```{r effect-gpe-figure, include = TRUE}
 small_dot + 
   theme(legend.position = "none") + 
-  coord_cartesian(ylim = c(0,1)) +
+  coord_cartesian(ylim = c(0,1), xlim = c(1980, 2025)) +
   ggtitle("10-49 Authors") + 
 medium_dot + 
   theme(legend.position = "none") + 
-  coord_cartesian(ylim = c(0,1)) +
+  coord_cartesian(ylim = c(0,1), xlim = c(1980, 2025)) +
   ggtitle("50-99 Authors") +
 large_dot + 
   theme(legend.position = "none") + 
-  coord_cartesian(ylim = c(0,1)) +
+  coord_cartesian(ylim = c(0,1), xlim = c(1980, 2025)) +
   ggtitle("100 + Authors") + 
 guide_area() + 
 plot_layout(
