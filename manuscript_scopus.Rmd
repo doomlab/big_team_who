@@ -107,7 +107,7 @@ label_expressions <- function(values) {
         length(values), ") does not match number of values (", length(x), ")"))
     }
     as.list(values[x])
-  }, default=identity)
+  }, default = identity)
 }
 
 ```
@@ -125,7 +125,6 @@ var_list_import <- paste0("py_outputs/", var_list, ".xlsx")
 DF <- lapply(var_list_import, import)
 names(DF) <- var_list
 ```
-
 
 According to the Oxford English dictionary, collaboration is two or more
 people working together to achieve a certain goal [@oed2016].
@@ -377,6 +376,7 @@ Big-Team Science SNIP
 ```{r results = 'asis', include = TRUE}
 flextable(
   DF$snip %>% 
+    filter(`Subject Area` != "Multidisciplinary") %>% 
     mutate(M = apa_num(M), 
            SD = apa_num(SD), 
            Minimum = apa_num(Minimum), 
@@ -390,6 +390,7 @@ All Journal Articles SNIP
 ```{r results = 'asis', include = TRUE}
 flextable(
   DF$snip_all %>% 
+    filter(`Subject Area` != "Multidisciplinary") %>% 
     mutate(M = apa_num(M), 
            SD = apa_num(SD), 
            Minimum = apa_num(Minimum), 
@@ -407,6 +408,8 @@ For each publication, we will examine:
     over time to determine if there is increasing interest in a specific
     subarea over time for each of the four larger subject area
     classifications.
+    
+#### REDO THIS WITH QUANTEDA ####
     
 ```{r}
 #DF$pub_time_subject$ASJC <- factor(DF$pub_time_subject$ASJC)
@@ -573,6 +576,8 @@ The mean number of authors per publication was *M* = `r avg_authors` (*SD* = `r 
 
 -   We will present visualizations of these results across time.
 
+##### FIX CAPTIONS #####
+
 ```{r}
 avg_author_time <- 
   DF$author_time %>% 
@@ -581,15 +586,15 @@ avg_author_time <-
   mutate(low = (Average_Num_Authors - as.numeric(SD_Num_Authors)), 
          high = (Average_Num_Authors + as.numeric(SD_Num_Authors)))
   
-ggplot(avg_author_time, aes(Year, Average_Num_Authors)) + 
+ggplot(avg_author_time, aes(Year, Med_Num_Authors)) + 
   theme_classic() + 
   geom_point(aes(size = Number_Papers)) + 
-  #geom_point() + 
+  geom_point(aes(Year, Average_Num_Authors, color = "red")) + 
   #geom_pointrange(aes(ymin = low, ymax = high)) + 
   facet_wrap(~SubjectArea) + 
   ylab("Average Number of Authors") + 
   xlab("Publication Year") + 
-  theme(legend.position = "none")
+  theme(legend.position = "bottom")
 ```
 
 We will use the 95% confidence interval to make all claims of predictors or effects different zero. The confidence interval that does not include zero would be considered different from zero (to four decimal places). We make no directional predictions.
@@ -604,9 +609,9 @@ ggplot(DF$career_time %>%
          filter(SubjectArea != "Multidisciplinary"), 
        aes(Year, avg_career, color = sd_career)) +
   theme_classic() + 
-  geom_point() +
+  geom_point(aes(size = num_papers)) +
   facet_wrap(~SubjectArea) + 
-  theme(legend.position = "non") + 
+  theme(legend.position = "bottom") + 
   ylab("Average Career Length") +
   xlab("Year of Publication")
 ```
@@ -615,6 +620,8 @@ ggplot(DF$career_time %>%
 - Negative slopes would indicate more young scholars in later years (i.e., lower average career length as time increases). Positive slopes would indicate older scholars in later years (i.e., higher average career length as time increases). 
 - Negative slopes imply that variability decreases over the years, so the average career length is more homogeneous. Positive slopes imply that variability increases over the years, so the average career length is varied across individuals (lots of different types of scholars). 
 -   These analyses will be completed separately for each of the four large subject areas.
+
+#### MOVE R2 to the right #####
 
 ```{r}
 label <- c("Physical", "Social", "Health", "Life")
@@ -666,7 +673,6 @@ ggplot(graph_data, aes(label, estimate)) +
   xlab("Subject Area") + 
   ylab("")
 ```
-
 
 ***Institution***.
 
@@ -740,7 +746,9 @@ We will summarize the general education categories of individuals at the time of
 pub_types <- bind_rows(
   DF$pub_types %>% mutate(type = "Big Team"), 
   DF$normal_pub_type %>% mutate(type = "Normal")
-)
+) %>% 
+  filter(publication_type == "ar" | publication_type == "pp" | 
+           publication_type == "dp")
 
 ggplot(pub_types, aes(type, count, fill = publication_type)) + 
     geom_bar(position="fill", stat="identity", color = "black") + 
@@ -1039,6 +1047,8 @@ tree_all
 
 ggsave("figure/treemap_all.png", tree_all)
 ```
+
+#### four panel plot with tree and country next to each other ####
 
 -   To understand the change in representation diversity, we will
     summarize the total number of geopolitical regions for each paper.
@@ -1449,14 +1459,6 @@ plot_layout(
 ggsave("figure/effect_country.png", width = 10, height = 7, 
        units = "in")
 ```
-
-end up with a list of effect sizes by year by small medium large 
-x axis is year
-y axis is the effect size and the confidence interval 
-if diversity is increasing then the patterns would be more similar (effect size of zero)
-if diversity is not increasing then the patterns would be different (effect size does not include zero)
-
-who is not represented in the "corresponding" spots - proportion chart by decades stacked bar chart of the decades 
 
 \newpage
 
