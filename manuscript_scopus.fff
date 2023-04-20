@@ -93,7 +93,7 @@
 
 \centering
 \includegraphics{manuscript_scopus_files/figure-latex/fig-diversity-1.pdf}
-\caption{\label{fig:fig-diversity}Number of geopolitical regions and variance in the number of regions represented in big-team science publiactions predicting time and the overall mode effect size.}
+\caption{\label{fig:fig-diversity}Number of geopolitical regions represented in big-team science publiactions predicting time and the overall model effect size.}
 \end{figure*}
 \efloatseparator
  
@@ -102,7 +102,7 @@
 
 \centering
 \includegraphics{manuscript_scopus_files/figure-latex/author-gpe-figure-1.pdf}
-\caption{\label{fig:author-gpe-figure}A comparison of author affiliation geopolitical region across decades.}
+\caption{\label{fig:author-gpe-figure}A comparison of author affiliation geopolitical region across decades. F stands for first authors and O stands for other authors.}
 \end{figure*}
 \efloatseparator
  

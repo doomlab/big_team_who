@@ -95,6 +95,11 @@ strip_labels <- expression(
   "Effect Size" = R^2
 )
 
+strip_labels_2 <- expression(
+  "Coefficient" = b,
+  "Effect Size" = R^2
+)
+
 label_expressions <- function(values) {
   stopifnot(is.expression(values))
   as_labeller(function(x) {
@@ -733,7 +738,7 @@ The total number of unique affiliation across all papers was `r affs`.
 ```{r fig-inst, include = TRUE, fig.cap="Number of unique institutions involved in big-team science papers across decades."}
 DF$inst_time$normalized <- DF$inst_time$unique / DF$inst_time$total * 100
 
-ggplot(DF$inst_time %>% 
+picture <- ggplot(DF$inst_time %>% 
          filter(SubjectArea != "Multidisciplinary") %>% 
          mutate(Decade = ifelse(Year < 1990, "1980s", 
                          ifelse(Year < 2000, "1990s", 
@@ -746,6 +751,8 @@ ggplot(DF$inst_time %>%
   facet_wrap(~SubjectArea) + 
   ylab("Percent of Unique Affiliations") + 
   xlab("Decade")
+
+suppressWarnings(print(picture))
 ```
 
 ***Education***.
@@ -1003,16 +1010,18 @@ bin_country <- ggplot(DF$geo_country) +
   scale_fill_brewer(name = "Sample Size", palette = "Spectral")
 
 # tree map
-DF$geo_country$un_region_sub <- countrycode(
+DF$geo_country$un_region_sub <- suppressWarnings(
+  countrycode(
   sourcevar = DF$geo_country$affiliation_tag_country,
   origin = 'iso3c', 
-  destination = 'un.regionsub.name'
+  destination = 'un.regionsub.name')
 )
 
-DF$geo_country$un_region <- countrycode(
+DF$geo_country$un_region <- suppressWarnings(
+  countrycode(
   sourcevar = DF$geo_country$affiliation_tag_country,
   origin = 'iso3c', 
-  destination = 'un.region.name'
+  destination = 'un.region.name')
 )
 
 DF$geo_country$un_region[DF$geo_country$affiliation_tag_country == "TWN"] <- "Asia"
@@ -1120,7 +1129,7 @@ tree_all + ggtitle("All Publications Mosiac Chart") +
     diversity would be represented by a positive slope, while decreasing
     diversity would be represented by a negative slope.
 
-```{r fig-diversity, include = TRUE, fig.cap= "Number of geopolitical regions and variance in the number of regions represented in big-team science publiactions predicting time and the overall mode effect size."}
+```{r fig-diversity, include = TRUE, fig.cap= "Number of geopolitical regions represented in big-team science publiactions predicting time and the overall model effect size."}
 label <- c("Physical", "Social", "Health", "Life")
 b_values <- c(-0.061001, -0.077040, -0.017775, -0.014946)
 se_values <- c(0.022958, 0.058153, 0.009794, 0.010485)
@@ -1150,16 +1159,16 @@ graph_data <- data.frame(
       "high" = r2_high)
   )
 
-graph_data$type <- factor(
-  graph_data$type, 
-  levels = c("M Coefficient", "SD Coefficient", "Effect Size")
-)
+# graph_data$type <- factor(
+#   graph_data$type, 
+#   levels = c("Coefficient", "Effect Size")
+# )
 
 ggplot(graph_data, aes(label, estimate)) + 
   geom_point() +
   geom_pointrange(aes(ymin = low, ymax = high)) +
   theme_classic() + 
-  facet_wrap(~type, labeller  = labeller(type = label_expressions(strip_labels))) + 
+  facet_wrap(~type, labeller  = labeller(type = label_expressions(strip_labels_2))) + 
   geom_hline(yintercept = 0) + 
   coord_flip() + 
   xlab("Subject Area") + 
@@ -1491,7 +1500,7 @@ large_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
   scale_fill_brewer(name = "Region", palette = "Spectral")
 ```
 
-```{r author-gpe-figure, include = TRUE, fig.cap="A comparison of author affiliation geopolitical region across decades."}
+```{r author-gpe-figure, include = TRUE, fig.cap="A comparison of author affiliation geopolitical region across decades. F stands for first authors and O stands for other authors."}
 small_author + ggtitle("10-49 Authors") + #theme(legend.position = "none") +
 medium_author + ggtitle("50-99 Authors") + #theme(legend.position = "none") + 
 large_author + ggtitle("100 + Authors") + #theme(legend.position = "none") + 
