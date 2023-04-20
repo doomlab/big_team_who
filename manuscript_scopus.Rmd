@@ -26,7 +26,6 @@ author:
       - Writing – original draft
       - Writing – review & editing
 affiliation:
-    
   - id            : "1"
     institution   : "Harrisburg University of Science and Technology"
   - id            : "2"
@@ -69,11 +68,11 @@ header-includes:
 
 csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja')`"
 documentclass     : "apa7"
-output            : papaja::apa6_docx
+output            : papaja::apa6_pdf
 ---
 
 ```{r setup, include = FALSE}
-#knitr::opts_knit(echo = TRUE)
+knitr::opts_knit$set(echo = FALSE, warning = FALSE, message = FALSE, include = FALSE, error = FALSE)
 library(papaja)
 library(knitr)
 library(ggplot2)
@@ -86,10 +85,8 @@ library(tidyr)
 library(MOTE)
 library(MBESS)
 library(patchwork)
-library(flextable)
-library(wordcloud2)
-library(htmlwidgets)
-library(webshot)
+library(ggplot2)
+library(ggwordcloud)
 library(figpatch)
 
 strip_labels <- expression(
@@ -283,7 +280,10 @@ data from 1970 and forward in the publications (`ani`) database, as it
 is noted online that this time period includes cited references for
 calculation of several of our variables described below. We will analyze
 our results based on the big four subject areas: Physical Sciences,
-Health Sciences, Social Sciences, and Life Sciences. We filtered the database to include articles, articles in press, business articles, conference papers, data papers, preprints, and surveys using Elsevier's classification system. 
+Health Sciences, Social Sciences, and Life Sciences. We filtered the
+database to include articles, articles in press, business articles,
+conference papers, data papers, preprints, and surveys using Elsevier's
+classification system.
 
 ## Data Curation
 
@@ -313,20 +313,19 @@ variables described below.
 ***Career Length***. Career length for each author will be defined as
 the year of the first publication listed for each author.
 
-***Institution and Geopolitical Region ***. We will use the affiliation ids and country to gather
-information about the places of education and/or employment for authors.
-Country will likely be binned into United Nation Region, Sub-Region,  or smaller clusters for
-analyses.
+***Institution and Geopolitical Region*** . We will use the affiliation
+ids and country to gather information about the places of education
+and/or employment for authors. Country will likely be binned into United Nation Region, Sub-Region, or smaller clusters for analyses.
 
-***Education***. We will also collect degree information from the author
-table.
+***Education***. We will also collect degree information from the author table.
 
 ***Types of Publications***. We will gather information from the
 publication type variable for each author publication to present
 information about the types of papers BTS authors publish.
 
 ***Publication Metrics***. For each author, we will calculate the total
-number of publications, and the h-index. The h-index represents the highest *h* number of publications that have at least *h* citations.
+number of publications, and the h-index. The h-index represents the
+highest *h* number of publications that have at least *h* citations.
 
 ## Data analysis
 
@@ -346,9 +345,12 @@ social_num <- 543
 life_num <- 7686
 ```
 
-The total number of articles included in this analysis was `r total_num` including `r health_num` Health Sciences articles, `r physical_num` Physical Sciences articles, `r social_num` Social Sciences articles, and `r life_num` Life Sciences articles. Articles could be classified into multiple categories. 
+*Number of articles*. The total number of articles included in this analysis was `r total_num` including `r health_num` Health Sciences articles, `r physical_num`
+Physical Sciences articles, `r social_num` Social Sciences articles, and
+`r life_num` Life Sciences articles. Articles could be classified into
+multiple categories. Figure X shows the number of articles published across time for each of the four large subject areas. 
 
-```{r}
+```{r fig-pub-time, include = TRUE, fig.cap="Number of big-team science publications separated by four large subject areas across years."}
 ggplot(DF$pub_time_count %>% 
          filter(SubjectArea != "Multidisciplinary"), aes(Year, count, color = SubjectArea)) + 
   theme_classic() + 
@@ -358,7 +360,7 @@ ggplot(DF$pub_time_count %>%
   xlab("Publication Year") + 
   theme(legend.position = "bottom")
 ```
-    
+
 -   Number of distinct journals within each of the four subject areas
 
 ```{r}
@@ -369,34 +371,38 @@ social_journal <- 206
 life_journal <- 1024
 ```
 
-The number of distinct journals big team science articles were published in was `r journals` with `r health_journal` journals in Health Sciences, `r physical_journal` journals in Physical Sciences, `r social_journal` journals in Social Sciences, and `r life_journal` journals in Life Sciences. The descriptive statistics for the Source Normalized Impact per Paper is presented in Table X. For comparison, the SNIP descriptive statistics for all papers is shown in Table X. 
+*Number of journals*. The number of distinct journals big team science articles were published
+in was `r journals` with `r health_journal` journals in Health Sciences,
+`r physical_journal` journals in Physical Sciences, `r social_journal`
+journals in Social Sciences, and `r life_journal` journals in Life
+Sciences. The descriptive statistics for the Source Normalized Impact
+per Paper is presented in Table X. For comparison, the SNIP descriptive
+statistics for all papers is shown in Table X.
 
-Big-Team Science SNIP
-
-```{r results = 'asis', include = TRUE}
-flextable(
+```{r tab-snip, results = 'asis', include = TRUE}
+apa_table(
   DF$snip %>% 
     filter(`Subject Area` != "Multidisciplinary") %>% 
     mutate(M = apa_num(M), 
            SD = apa_num(SD), 
            Minimum = apa_num(Minimum), 
            Median = apa_num(Median), 
-           Maximum = apa_num(Maximum))
-)
+           Maximum = apa_num(Maximum)), 
+  caption = "Big-Team Science SNIP Values")
 ```
 
-All Journal Articles SNIP
+
 
 ```{r results = 'asis', include = TRUE}
-flextable(
+apa_table(
   DF$snip_all %>% 
     filter(`Subject Area` != "Multidisciplinary") %>% 
     mutate(M = apa_num(M), 
            SD = apa_num(SD), 
            Minimum = apa_num(Minimum), 
            Median = apa_num(Median), 
-           Maximum = apa_num(Maximum))
-)
+           Maximum = apa_num(Maximum)),
+  caption = "All Journal Articles SNIP Values")
 ```
 
 ### RQ2: Publication Information.
@@ -404,149 +410,160 @@ flextable(
 For each publication, we will examine:
 
 -   The totals of the number of articles published within the smaller
-    subject area classifications. We will visualize these differences
-    over time to determine if there is increasing interest in a specific
-    subarea over time for each of the four larger subject area
-    classifications.
-    
-#### REDO THIS WITH QUANTEDA ####
-    
-```{r}
+    subject area classifications. We will visualize these differences to show the areas of interest for each of the four large subject areas. 
+
+```{r eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
+### NOTE YOU WILL NEED TO RUN THIS ###
 #DF$pub_time_subject$ASJC <- factor(DF$pub_time_subject$ASJC)
 pub_total <- DF$pub_time_subject %>% 
   group_by(SubjectArea, ASJC) %>% 
-  summarize(count = sum(count), .groups = "keep") %>% 
+  summarize(Count_Size = sum(count), .groups = "keep") %>% 
   filter(SubjectArea != "Multidisciplinary") %>% 
   left_join(DF$ASJC_codes %>% select(Name, Code), by = c("ASJC" = "Code"))
 
-health_cloud <- wordcloud2(pub_total %>% 
-             filter(SubjectArea == "Health Sciences") %>% 
-             ungroup() %>% 
-             select(Name, count) %>% 
-               arrange(desc(count)) %>% 
-               slice_head(n = 20),
-             minRotation = -pi/6, 
-             maxRotation = -pi/6,
-             rotateRatio = 0)
+# health
 
-saveWidget(health_cloud, "tmp.html", selfcontained = F)
-webshot("tmp.html", "figure/health_cloud.png", vwidth = 600, vheight = 600)
+health_cloud <- pub_total %>% 
+  filter(SubjectArea == "Health Sciences") %>% 
+  ungroup() %>%
+  arrange(desc(Count_Size)) %>% 
+  ggplot() + 
+  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
+  theme_minimal() + 
+  scale_size_area(max_size = 15)
 
-physical_cloud <- wordcloud2(pub_total %>% 
-             filter(SubjectArea == "Physical Sciences") %>% 
-             ungroup() %>% 
-             select(Name, count) %>% 
-               arrange(desc(count)) %>% 
-               slice_head(n = 20),
-             minRotation = -pi/6, 
-             maxRotation = -pi/6,
-             rotateRatio = 0, 
-             size = 1.5) 
+ggsave("figure/health_cloud.png", dpi = 300, width = 8,
+       height = 4, units = "in")
 
-saveWidget(physical_cloud, "tmp.html", selfcontained = F)
-webshot("tmp.html", "figure/physical_cloud.png", vwidth = 600, vheight = 600)
+physical_cloud <- pub_total %>% 
+  filter(SubjectArea == "Physical Sciences") %>% 
+  ungroup() %>%
+  arrange(desc(Count_Size)) %>% 
+  ggplot() + 
+  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
+  theme_minimal() + 
+  scale_size_area(max_size = 15)
 
-life_cloud <- wordcloud2(pub_total %>% 
-             filter(SubjectArea == "Life Sciences") %>% 
-             ungroup() %>% 
-             select(Name, count) %>% 
-               arrange(desc(count)) %>% 
-               slice_head(n = 20),
-             minRotation = -pi/6, 
-             maxRotation = -pi/6,
-             rotateRatio = 0) 
+ggsave("figure/physical_cloud.png", dpi = 300, width = 8,
+       height = 4, units = "in")
 
-saveWidget(life_cloud, "tmp.html", selfcontained = F)
-webshot("tmp.html", "figure/life_cloud.png", vwidth = 600, vheight = 600)
+life_cloud <- pub_total %>% 
+  filter(SubjectArea == "Life Sciences") %>% 
+  ungroup() %>%
+  arrange(desc(Count_Size)) %>% 
+  ggplot() + 
+  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
+  theme_minimal() + 
+  scale_size_area(max_size = 15)
 
-social_cloud <- wordcloud2(pub_total %>% 
-             filter(SubjectArea == "Social Sciences") %>% 
-             ungroup() %>% 
-             select(Name, count) %>% 
-               arrange(desc(count)) %>% 
-               slice_head(n = 20),
-             minRotation = -pi/6, 
-             maxRotation = -pi/6,
-             rotateRatio = 0, 
-             size = .2) 
+ggsave("figure/life_cloud.png", dpi = 300, width = 8,
+       height = 4, units = "in")
 
-saveWidget(social_cloud, "tmp.html", selfcontained = F)
-webshot("tmp.html", "figure/social_cloud.png", vwidth = 600, vheight = 600)
+social_cloud <- pub_total %>% 
+  filter(SubjectArea == "Social Sciences") %>% 
+  ungroup() %>%
+  arrange(desc(Count_Size)) %>% 
+  ggplot() + 
+  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
+  theme_minimal() + 
+  scale_size_area(max_size = 15)
+
+ggsave("figure/social_cloud.png", dpi = 300, width = 8,
+       height = 4, units = "in")
 ```
 
-```{r}
-h <- fig("figure/health_cloud.png")
-p <- fig("figure/physical_cloud.png") 
-l <- fig("figure/life_cloud.png") 
-s <- fig("figure/social_cloud.png") 
+```{r fig-clouds, include = TRUE, fig.cap = "Journal Areas for Big-Team Science Publications by Subject Area"}
 
+health_cloud <- fig("figure/health_cloud.png")
+physical_cloud <- fig("figure/physical_cloud.png") 
+life_cloud <- fig("figure/life_cloud.png") 
+social_cloud <- fig("figure/social_cloud.png") 
 
-
-h + ggtitle("Health Sciences") + 
+health_cloud + ggtitle("Health Sciences") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-p + ggtitle("Physical Sciences") + 
+physical_cloud + ggtitle("Physical Sciences") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-l + ggtitle("Life Sciences") + 
+life_cloud + ggtitle("Life Sciences") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-s + ggtitle("Social Sciences") + 
+social_cloud + ggtitle("Social Sciences") + 
   theme(plot.title = element_text(hjust = 0.5)) +
   plot_layout(ncol = 2, 
               nrow = 2)
-```    
+```
 
 -   The keywords present in the publications data overall to identify
     trends and common themes in the publications for the four subject
     areas using visualizations (wordclouds) to depict the common
     keywords.
-    
-```{r}
-health_cloud <- wordcloud2(DF$keywords %>% 
-             filter(SubjectArea == "Health Sciences") %>% 
-             ungroup() %>% 
-             select(keywords_nostop, count)) 
 
-saveWidget(health_cloud, "tmp.html", selfcontained = F)
-webshot("tmp.html", "figure/health_key.png", vwidth = 600, vheight = 600)
+```{r eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
+### NOTE YOU WILL NEED TO RERUN THIS ###
+health_cloud <- DF$keywords %>% 
+   filter(SubjectArea == "Health Sciences") %>% 
+   ungroup() %>% 
+   select(keywords_nostop, count) %>% 
+  dplyr::rename(Count_Size = count, Name = keywords_nostop) %>% 
+  ggplot() + 
+  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
+  theme_minimal() + 
+  scale_size_area(max_size = 15)
 
-physical_cloud <- wordcloud2(DF$keywords %>% 
-             filter(SubjectArea == "Physical Sciences") %>% 
-             ungroup() %>% 
-             select(keywords_nostop, count), 
-             minSize = 20) 
+ggsave("figure/health_key.png", dpi = 300, width = 8,
+       height = 4, units = "in")
 
-saveWidget(physical_cloud, "tmp.html", selfcontained = F)
-webshot("tmp.html", "figure/physical_key.png", vwidth = 600, vheight = 600)
+physical_cloud <- DF$keywords %>% 
+   filter(SubjectArea == "Physical Sciences") %>% 
+   ungroup() %>% 
+   select(keywords_nostop, count) %>% 
+  dplyr::rename(Count_Size = count, Name = keywords_nostop) %>% 
+  ggplot() + 
+  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
+  theme_minimal() + 
+  scale_size_area(max_size = 15)
 
-life_cloud <- wordcloud2(DF$keywords %>% 
-             filter(SubjectArea == "Life Sciences") %>% 
-             ungroup() %>% 
-             select(keywords_nostop, count)) 
+ggsave("figure/physical_key.png", dpi = 300, width = 8,
+       height = 4, units = "in")
 
-saveWidget(life_cloud, "tmp.html", selfcontained = F)
-webshot("tmp.html", "figure/life_key.png", vwidth = 600, vheight = 600)
+life_cloud <- DF$keywords %>% 
+   filter(SubjectArea == "Life Sciences") %>% 
+   ungroup() %>% 
+   select(keywords_nostop, count) %>% 
+  dplyr::rename(Count_Size = count, Name = keywords_nostop) %>% 
+  ggplot() + 
+  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
+  theme_minimal() + 
+  scale_size_area(max_size = 15)
 
-social_cloud <- wordcloud2(DF$keywords  %>% 
-             filter(SubjectArea == "Social Sciences") %>% 
-             ungroup() %>% 
-             select(keywords_nostop, count)) 
+ggsave("figure/life_key.png", dpi = 300, width = 8,
+       height = 4, units = "in")
 
-saveWidget(social_cloud, "tmp.html", selfcontained = F)
-webshot("tmp.html", "figure/social_key.png", vwidth = 600, vheight = 600)
+social_cloud <- DF$keywords %>% 
+   filter(SubjectArea == "Social Sciences") %>% 
+   ungroup() %>% 
+   select(keywords_nostop, count) %>% 
+  dplyr::rename(Count_Size = count, Name = keywords_nostop) %>% 
+  ggplot() + 
+  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
+  theme_minimal() + 
+  scale_size_area(max_size = 15)
+
+ggsave("figure/social_key.png", dpi = 300, width = 8,
+       height = 4, units = "in")
 ```
 
-```{r}
-h <- fig("figure/health_key.png")
-p <- fig("figure/physical_key.png") 
-l <- fig("figure/life_key.png") 
-s <- fig("figure/social_key.png") 
+```{r fig-keywords, include = TRUE, fig.cap="Keyword Analysis for Each of the Four Subject Areas."}
+health_key <- fig("figure/health_key.png")
+physical_key <- fig("figure/physical_key.png") 
+life_key <- fig("figure/life_key.png") 
+social_key <- fig("figure/social_key.png") 
 
-h + ggtitle("Health Sciences") + 
+health_key + ggtitle("Health Sciences") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-p + ggtitle("Physical Sciences") + 
+physical_key + ggtitle("Physical Sciences") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-l + ggtitle("Life Sciences") + 
+life_key + ggtitle("Life Sciences") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-s + ggtitle("Social Sciences") + 
+social_key + ggtitle("Social Sciences") + 
   theme(plot.title = element_text(hjust = 0.5)) +
   plot_layout(ncol = 2, 
               nrow = 2)
@@ -567,18 +584,19 @@ med_authors <- 19
 max_authors <- 5155
 ```
 
-The total number of unique authors across all publications was `r total_authors`.
+The total number of unique authors across all publications was
+`r total_authors`.
 
 -   Statistics (mean, standard deviation, minimum, maximum, median) on
     the number of authors included on publications.
-    
-The mean number of authors per publication was *M* = `r avg_authors` (*SD* = `r sd_authors`, *Med* = `r med_authors`) with a range of `r min_authors` to `r max_authors`. 
+
+The mean number of authors per publication was *M* = `r avg_authors`
+(*SD* = `r sd_authors`, *Med* = `r med_authors`) with a range of
+`r min_authors` to `r max_authors`.
 
 -   We will present visualizations of these results across time.
 
-##### FIX CAPTIONS #####
-
-```{r}
+```{r fig-author-year, include = TRUE, fig.cap="Number of authors included on big-team science papers per year by subject area. Colored dots indicate the mean number of authors, while the black dots represent the median number of authors. The size of the black dots indicate the number of papers in that year."}
 avg_author_time <- 
   DF$author_time %>% 
   filter(SubjectArea != "Multidisciplinary") %>% 
@@ -594,17 +612,22 @@ ggplot(avg_author_time, aes(Year, Med_Num_Authors)) +
   facet_wrap(~SubjectArea) + 
   ylab("Average Number of Authors") + 
   xlab("Publication Year") + 
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom") + 
+  guides(color = "none") + 
+  scale_size_continuous(name = "Number Papers")
 ```
 
-We will use the 95% confidence interval to make all claims of predictors or effects different zero. The confidence interval that does not include zero would be considered different from zero (to four decimal places). We make no directional predictions.
+We will use the 95% confidence interval to make all claims of predictors
+or effects different zero. The confidence interval that does not include
+zero would be considered different from zero (to four decimal places).
+We make no directional predictions.
 
 ***Career Length***.
 
 -   We will create a visualization of the trend and variance of
     researcher career length across publication years.
-    
-```{r}
+
+```{r fig-career, include = TRUE, fig.cap = "Average career length for big-team science authors. Larger dots indicate more papers for each estimation. Lighter colored dots mean less variability in author career length, while darker dots mean more variability in career length."}
 ggplot(DF$career_time %>% 
          filter(SubjectArea != "Multidisciplinary"), 
        aes(Year, avg_career, color = sd_career)) +
@@ -613,17 +636,32 @@ ggplot(DF$career_time %>%
   facet_wrap(~SubjectArea) + 
   theme(legend.position = "bottom") + 
   ylab("Average Career Length") +
-  xlab("Year of Publication")
+  xlab("Year of Publication") + 
+  guides(color = "none") + 
+  scale_size_continuous(name = "Number Papers")
 ```
 
--  To analyze trends over time, we will calculate the average career length for each publication (i.e., average the author career length to create one score for each paper) and run a regression analysis using career length to predict year of publication. In order to show variance between individuals, we calculate the standard deviation of career length for each publication and run a regression analysis using this variance representation to predict publication year. These two variables will be used together. 
-- Negative slopes would indicate more young scholars in later years (i.e., lower average career length as time increases). Positive slopes would indicate older scholars in later years (i.e., higher average career length as time increases). 
-- Negative slopes imply that variability decreases over the years, so the average career length is more homogeneous. Positive slopes imply that variability increases over the years, so the average career length is varied across individuals (lots of different types of scholars). 
--   These analyses will be completed separately for each of the four large subject areas.
+-   To analyze trends over time, we will calculate the average career
+    length for each publication (i.e., average the author career length
+    to create one score for each paper) and run a regression analysis
+    using career length to predict year of publication. In order to show
+    variance between individuals, we calculate the standard deviation of
+    career length for each publication and run a regression analysis
+    using this variance representation to predict publication year.
+    These two variables will be used together.
+-   Negative slopes would indicate more young scholars in later years
+    (i.e., lower average career length as time increases). Positive
+    slopes would indicate older scholars in later years (i.e., higher
+    average career length as time increases).
+-   Negative slopes imply that variability decreases over the years, so
+    the average career length is more homogeneous. Positive slopes imply
+    that variability increases over the years, so the average career
+    length is varied across individuals (lots of different types of
+    scholars).
+-   These analyses will be completed separately for each of the four
+    large subject areas.
 
-#### MOVE R2 to the right #####
-
-```{r}
+```{r fig-career-results, include = TRUE, fig.cap = "Coefficient values for the average career length, variance in career length, and the effect size for each model predicting year of publication."}
 label <- c("Physical", "Social", "Health", "Life")
 avg_b_values <- c(-0.531373, -0.437422, -0.460876, -0.604957)
 avg_se_values <- c(0.030990, 0.058153, 0.009794, 0.026519)
@@ -663,6 +701,11 @@ graph_data <- data.frame(
       "high" = r2_high)
   )
 
+graph_data$type <- factor(
+  graph_data$type, 
+  levels = c("M Coefficient", "SD Coefficient", "Effect Size")
+)
+
 ggplot(graph_data, aes(label, estimate)) + 
   geom_point() +
   geom_pointrange(aes(ymin = low, ymax = high)) +
@@ -685,9 +728,9 @@ ggplot(graph_data, aes(label, estimate)) +
 affs <- 35114
 ```
 
-The total number of unique affiliation across all papers was `r affs`.  
+The total number of unique affiliation across all papers was `r affs`.
 
-```{r}
+```{r fig-inst, include = TRUE, fig.cap="Number of unique institutions involved in big-team science papers across decades."}
 DF$inst_time$normalized <- DF$inst_time$unique / DF$inst_time$total * 100
 
 ggplot(DF$inst_time %>% 
@@ -707,42 +750,59 @@ ggplot(DF$inst_time %>%
 
 ***Education***.
 
-We will summarize the general education categories of individuals at the time of publication, along with a summary for change over time.
+We will summarize the general education categories of individuals at the
+time of publication, along with a summary for change over time.
 
-    Figure out how messy this is for text processing requirements
-    For each publication, plot of proportion of doctorates across time - if the number is going down, we are involving more diverse types of people (assuming that doctorates are "normal" academics/researchers)
-    We will only perform this analysis if the proportion of information avaliable is over 50%.
+- For each publication, plot of proportion of doctorates across time - if the number is going down, we are involving more diverse types of people (assuming that doctorates are "normal" academics/researchers)
+- We will only perform this analysis if the proportion of information avaliable is over 50%.
 
-+-----------+------+
-|    degrees| count|
-+-----------+------+
-|       null|656440|
-|         MD|  8190|
-|        PhD|  3879|
-|    MD, PhD|  1267|
-|       M.D.|  1002|
-|        Dr.|   490|
-|        MSc|   461|
-|        MPH|   368|
-| Prof., PhD|   349|
-|      Ph.D.|   348|
-|         MS|   330|
-|     MD PhD|   285|
-|        MD.|   279|
-|   Prof. MD|   266|
-|  Prof. PhD|   239|
-|         BS|   232|
-|       Prof|   220|
-|         BA|   196|
-|M.D., Ph.D.|   191|
-|    MD, MPH|   158|
-+-----------+------+
++--------+--------+
+| d      | count  |
+| egrees |        |
++--------+--------+
+| ``` CE | 656440 |
+| F7FA46 | 8190   |
+|        | 3879   |
+|   null | 1267   |
+|        | 1002   |
+|     MD | 490    |
+|        | 461    |
+|    PhD | 368    |
+| M      | 349    |
+| D, PhD | 348    |
+|        | 330    |
+|   M.D. | 285    |
+|        | 279    |
+|    Dr. | 266    |
+|        | 239    |
+|    MSc | 232    |
+|        | 220    |
+|    MPH | 196    |
+| ```    | 191    |
+|        | 158    |
+| Prof., |        |
+| PhD    |        |
+| Ph.D.  |        |
+| MS MD  |        |
+| PhD    |        |
+| MD.    |        |
+| Prof.  |        |
+| MD     |        |
+| Prof.  |        |
+| PhD BS |        |
+| Prof   |        |
+| BA     |        |
+| M.D.,  |        |
+| Ph.D.  |        |
+| MD,    |        |
+| MPH    |        |
++--------+--------+
 
 ***Types of Publications***.
 
 -   We will summarize the coded types of publications for individuals.
 
-```{r}
+```{r fig-pub-types, include = TRUE, fig.cap = "Types of publications for big-team science and all authors."}
 pub_types <- bind_rows(
   DF$pub_types %>% mutate(type = "Big Team"), 
   DF$normal_pub_type %>% mutate(type = "Normal")
@@ -755,22 +815,21 @@ ggplot(pub_types, aes(type, count, fill = publication_type)) +
   theme_classic() +  
   xlab("Author Type") + 
   ylab("Percent of Paper Types") + 
-  theme(legend.position = "right")
+  theme(legend.position = "bottom") + 
+  scale_fill_discrete(name = "Publication Type", labels = c("Article", "Data Paper", "Pre-Print"))
 
 # can probably figure out how to combine these feasibly to make it readable
 # ab Abstract Report, ar Article, ip Article in Press, bk Book, bz Business Article, ch Book Chapter, cp Conference Paper, cr Conference Review, dp Data paper, ed Editorial, er Erratum, le Letter, no Note, pp Preprint, pr Press Release, rp Report, re Review, sh Survey, tb Retracted.
 ```
 
-# can probably figure out how to combine these feasibly to make it readable
-
-# ab Abstract Report, ar Article, ip Article in Press, bk Book, bz Business Article, ch Book Chapter, cp Conference Paper, cr Conference Review, dp Data paper, ed Editorial, er Erratum, le Letter, no Note, pp Preprint, pr Press Release, rp Report, re Review, sh Survey, tb Retracted.
-
 
 ***Publication Metrics***.
 
-- We will report descriptive statistics on the total number of publications and h-index for individuals overall.
-  - Do this for each unique person and report averages
-  - Do this for each publication and create an average for each publication
+-   We will report descriptive statistics on the total number of
+    publications and h-index for individuals overall.
+    -   Do this for each unique person and report averages
+    -   Do this for each publication and create an average for each
+        publication
 
 ```{r}
 avg_pub_count_author	<- apa_num(4.451816)
@@ -792,15 +851,40 @@ std_of_std_HIndex <- apa_num(46.474619)
 med_of_med_HIndex <- apa_num(5.0)
 ```
 
-The average number of publications by authors on big team sciences papers is *M* = `r avg_pub_count_author` (*SD* = `r std_pub_count_author`). The publication counts were averaged across authors for each publication, and then these average publication counts were averaged across publications *M* = `r avg_pub_count_paper` (*SD* = `r sd_pub_count_paper`). The average variability (i.e., the average standard deviation with authors of a manuscript) with publication counts of a paper was $M_{SD}$ = `r avg_SD_pub_count_paper` ($SD_{SD}$ = `r SD_SD_pub_count_paper`). 
+The average number of publications by authors on big team sciences
+papers is *M* = `r avg_pub_count_author` (*SD* =
+`r std_pub_count_author`). The publication counts were averaged across
+authors for each publication, and then these average publication counts
+were averaged across publications *M* = `r avg_pub_count_paper` (*SD* =
+`r sd_pub_count_paper`). The average variability (i.e., the average
+standard deviation with authors of a manuscript) with publication counts
+of a paper was $M_{SD}$ = `r avg_SD_pub_count_paper` ($SD_{SD}$ =
+`r SD_SD_pub_count_paper`).
 
-The same process was completed with *h*-index for each author and publication. The average *h*-index for authors overall was *M* = `r avg_HIndex` (*SD* = `r std_HIndex`, *Med* = `r med_HIndex`). The average *h*-index for publications was *M* = `r avg_of_avg_HIndex` (*SD* = `r std_of_avg_HIndex`), and the variability of *h*-index across manuscripts was $M_{SD}$ = `r avg_of_std_HIndex` ($SD_{SD}$ = `r std_of_std_HIndex`, $Med_{Med}$ = `r med_of_med_HIndex`).
+The same process was completed with *h*-index for each author and
+publication. The average *h*-index for authors overall was *M* =
+`r avg_HIndex` (*SD* = `r std_HIndex`, *Med* = `r med_HIndex`). The
+average *h*-index for publications was *M* = `r avg_of_avg_HIndex` (*SD*
+= `r std_of_avg_HIndex`), and the variability of *h*-index across
+manuscripts was $M_{SD}$ = `r avg_of_std_HIndex` ($SD_{SD}$ =
+`r std_of_std_HIndex`, $Med_{Med}$ = `r med_of_med_HIndex`).
 
-- Next, we will use the same analyses described in the career length section to analyze trends over time. An increasing slope over time indicates that individuals who are publishing more are more represented in BTS over time (i.e., increasing numbers of scholars with higher publication rates), while a negative slope indicates more researchers with less publications.
-- A positive slope for standard deviation indicates increasing variance over time (i.e., more diversity in the individual publication rates), while a negative slope would indicate less diversity in researchers over time. While publication rates do not represent value as a researcher, they are often used in hiring and promotion decisions, and we will use this variable as a proxy to gauge the diversity in scholars represented in big teams.
-- We will separate these by each of the four subject areas.
+-   Next, we will use the same analyses described in the career length
+    section to analyze trends over time. An increasing slope over time
+    indicates that individuals who are publishing more are more
+    represented in BTS over time (i.e., increasing numbers of scholars
+    with higher publication rates), while a negative slope indicates
+    more researchers with less publications.
+-   A positive slope for standard deviation indicates increasing
+    variance over time (i.e., more diversity in the individual
+    publication rates), while a negative slope would indicate less
+    diversity in researchers over time. While publication rates do not
+    represent value as a researcher, they are often used in hiring and
+    promotion decisions, and we will use this variable as a proxy to
+    gauge the diversity in scholars represented in big teams.
+-   We will separate these by each of the four subject areas.
 
-```{r}
+```{r fig-pub-results, include = TRUE, fig.cap = "Coefficient values for the publication totals, variance in publication totals, and the effect size for each model predicting year of publication."}
 label <- c("Physical", "Social", "Health", "Life")
 avg_b_values <- c(-0.004420, -0.335536, -0.235551, -0.430599)
 avg_se_values <- c(0.022715, 0.179536, 0.028158, 0.037807)
@@ -840,6 +924,11 @@ graph_data <- data.frame(
       "high" = r2_high)
   )
 
+graph_data$type <- factor(
+  graph_data$type, 
+  levels = c("M Coefficient", "SD Coefficient", "Effect Size")
+)
+
 ggplot(graph_data, aes(label, estimate)) + 
   geom_point() +
   geom_pointrange(aes(ymin = low, ymax = high)) +
@@ -857,7 +946,7 @@ ggplot(graph_data, aes(label, estimate)) +
     authors, and we will discuss the areas of world in which authors
     generally come from, as well as the lowest representation of
     authors.
-    
+
 ```{r geo-map}
 # serbia has changed codes
 DF$geo_country$affiliation_tag_country <- toupper(DF$geo_country$affiliation_tag_country)
@@ -876,20 +965,6 @@ world_map <- map_data(map = "world")
 world_map$orig_region <- world_map$region
 world_map$region <- iso.alpha(world_map$region, n = 3)
 world_map <- subset(world_map, region != "ATA")
-
-# make a map on a continuous scale
-ggplot(DF$geo_country) +
-  geom_map(aes(map_id = affiliation_tag_country, fill = count), map = world_map) +
-  geom_polygon(data = world_map, 
-               aes(x = long, y = lat, group = group), 
-               colour = 'black', fill = NA) + 
-  theme_void() + 
-  scale_fill_distiller(name = "Sample Size",
-                       palette = "Greys",
-                       direction = 1,
-                       na.value = "white") 
-
-ggsave("figure/continuous_country.png")
   
 # maybe try binning
 DF$geo_country$count_binned <- if_else(
@@ -927,10 +1002,6 @@ bin_country <- ggplot(DF$geo_country) +
   #                   values = c( "black", "#323232", "#646464","#969696","#c8c8c8")) 
   scale_fill_brewer(name = "Sample Size", palette = "Spectral")
 
-bin_country
-
-ggsave("figure/binned_country.png", bin_country)
-
 # tree map
 DF$geo_country$un_region_sub <- countrycode(
   sourcevar = DF$geo_country$affiliation_tag_country,
@@ -965,27 +1036,9 @@ tree <- ggplot(DF$geo_country, aes(area = count, fill = count_binned,
   # scale_fill_gradient(name = "Sample Size",
   #                     low = "#c8c8c8", 
   #                     high = "#323232") 
-
-tree 
-
-ggsave("figure/treemap.png", tree)
 ```
 
 ```{r geo-map-all}
-# make a map on a continuous scale
-ggplot(DF$geo_country) +
-  geom_map(aes(map_id = affiliation_tag_country, fill = count_all), map = world_map) +
-  geom_polygon(data = world_map, 
-               aes(x = long, y = lat, group = group), 
-               colour = 'black', fill = NA) + 
-  theme_void() + 
-  scale_fill_distiller(name = "Sample Size",
-                       palette = "Greys",
-                       direction = 1,
-                       na.value = "white") 
-
-ggsave("figure/continuous_country_all.png")
-  
 # maybe try binning
 DF$geo_country$count_binned_all <- if_else(
   DF$geo_country$count_all >= 10000, "10,000+", 
@@ -1022,11 +1075,6 @@ bin_country_all <- ggplot(DF$geo_country) +
   #                   values = c( "black", "#323232", "#646464","#969696","#c8c8c8")) 
   scale_fill_brewer(name = "Sample Size", palette = "Spectral")
 
-bin_country_all
-
-ggsave("figure/binned_country_all.png", bin_country_all)
-
-
 tree_all <- ggplot(DF$geo_country, aes(area = count_all, fill = count_binned_all,
                label = affiliation_tag_country, subgroup = un_region_sub)) +
   geom_treemap() +
@@ -1042,13 +1090,28 @@ tree_all <- ggplot(DF$geo_country, aes(area = count_all, fill = count_binned_all
   # scale_fill_gradient(name = "Sample Size",
   #                     low = "#c8c8c8", 
   #                     high = "#323232") 
-
-tree_all
-
-ggsave("figure/treemap_all.png", tree_all)
 ```
 
-#### four panel plot with tree and country next to each other ####
+```{r fig-map-both, include = TRUE, fig.cap="Geopolitical regions represented in big-team science publications versus all publications."}
+bin_country + ggtitle("Big-Team Publication Map") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  theme(legend.position = "none") + 
+tree + ggtitle("Big-Team Publication Mosiac Chart") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  guides(fill = "none") + 
+bin_country_all + ggtitle("All Publications Map") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  guides(fill = "none") + 
+tree_all + ggtitle("All Publications Mosiac Chart") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  guides(fill = "none") + 
+  plot_layout(ncol = 2, 
+              nrow = 2) + 
+  plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+
+# need to do the legend 
+```
+
 
 -   To understand the change in representation diversity, we will
     summarize the total number of geopolitical regions for each paper.
@@ -1057,7 +1120,7 @@ ggsave("figure/treemap_all.png", tree_all)
     diversity would be represented by a positive slope, while decreasing
     diversity would be represented by a negative slope.
 
-```{r}
+```{r fig-diversity, include = TRUE, fig.cap= "Number of geopolitical regions and variance in the number of regions represented in big-team science publiactions predicting time and the overall mode effect size."}
 label <- c("Physical", "Social", "Health", "Life")
 b_values <- c(-0.061001, -0.077040, -0.017775, -0.014946)
 se_values <- c(0.022958, 0.058153, 0.009794, 0.010485)
@@ -1086,6 +1149,11 @@ graph_data <- data.frame(
       "low" = r2_low,
       "high" = r2_high)
   )
+
+graph_data$type <- factor(
+  graph_data$type, 
+  levels = c("M Coefficient", "SD Coefficient", "Effect Size")
+)
 
 ggplot(graph_data, aes(label, estimate)) + 
   geom_point() +
@@ -1117,8 +1185,8 @@ ggplot(graph_data, aes(label, estimate)) +
     confidence interval, this result will imply that first and all other
     authors represent the same pattern of UN Sub-Region diversity. Any
     confidence interval that does include zero represents a difference
-    in diversity. 
-    
+    in diversity.
+
 ```{r small-effects, warning = FALSE}
 DF$small_first_gp <- DF$small_first_gp %>% 
   filter(aff_un != "other") %>% 
@@ -1423,7 +1491,7 @@ large_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
   scale_fill_brewer(name = "Region", palette = "Spectral")
 ```
 
-```{r author-gpe-figure, include = TRUE}
+```{r author-gpe-figure, include = TRUE, fig.cap="A comparison of author affiliation geopolitical region across decades."}
 small_author + ggtitle("10-49 Authors") + #theme(legend.position = "none") +
 medium_author + ggtitle("50-99 Authors") + #theme(legend.position = "none") + 
 large_author + ggtitle("100 + Authors") + #theme(legend.position = "none") + 
@@ -1437,7 +1505,7 @@ ggsave("figure/author_country.png", width = 10, height = 7,
        units = "in")
 ```
 
-```{r effect-gpe-figure, include = TRUE}
+```{r effect-gpe-figure, include = TRUE, fig.cap = "Effect size of the differences in representation for UN Regions for author affiliations in big-team science papers by year."}
 small_dot + 
   theme(legend.position = "none") + 
   coord_cartesian(ylim = c(0,1), xlim = c(1980, 2025)) +
@@ -1469,7 +1537,6 @@ ggsave("figure/effect_country.png", width = 10, height = 7,
 \setlength{\parindent}{-0.5in}
 \setlength{\leftskip}{0.5in}
 ```
-
 ::: {#refs custom-style="Bibliography"}
 :::
 

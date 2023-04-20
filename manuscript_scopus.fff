@@ -1,0 +1,115 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-pub-time-1.pdf}
+\caption{\label{fig:fig-pub-time}Number of big-team science publications separated by four large subject areas across years.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-clouds-1.pdf}
+\caption{\label{fig:fig-clouds}Journal Areas for Big-Team Science Publications by Subject Area}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-keywords-1.pdf}
+\caption{\label{fig:fig-keywords}Keyword Analysis for Each of the Four Subject Areas.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-author-year-1.pdf}
+\caption{\label{fig:fig-author-year}Number of authors included on big-team science papers per year by subject area. Colored dots indicate the mean number of authors, while the black dots represent the median number of authors. The size of the black dots indicate the number of papers in that year.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-career-1.pdf}
+\caption{\label{fig:fig-career}Average career length for big-team science authors. Larger dots indicate more papers for each estimation. Lighter colored dots mean less variability in author career length, while darker dots mean more variability in career length.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-career-results-1.pdf}
+\caption{\label{fig:fig-career-results}Coefficient values for the average career length, variance in career length, and the effect size for each model predicting year of publication.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-inst-1.pdf}
+\caption{\label{fig:fig-inst}Number of unique institutions involved in big-team science papers across decades.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-pub-types-1.pdf}
+\caption{\label{fig:fig-pub-types}Types of publications for big-team science and all authors.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-pub-results-1.pdf}
+\caption{\label{fig:fig-pub-results}Coefficient values for the publication totals, variance in publication totals, and the effect size for each model predicting year of publication.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-map-both-1.pdf}
+\caption{\label{fig:fig-map-both}Geopolitical regions represented in big-team science publications versus all publications.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-diversity-1.pdf}
+\caption{\label{fig:fig-diversity}Number of geopolitical regions and variance in the number of regions represented in big-team science publiactions predicting time and the overall mode effect size.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/author-gpe-figure-1.pdf}
+\caption{\label{fig:author-gpe-figure}A comparison of author affiliation geopolitical region across decades.}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/effect-gpe-figure-1.pdf}
+\caption{\label{fig:effect-gpe-figure}Effect size of the differences in representation for UN Regions for author affiliations in big-team science papers by year.}
+\end{figure*}
