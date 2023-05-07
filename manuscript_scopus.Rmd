@@ -975,18 +975,30 @@ world_map <- subset(world_map, region != "ATA")
   
 # maybe try binning
 DF$geo_country$count_binned <- if_else(
-  DF$geo_country$count >= 10000, "10,000+", 
+  DF$geo_country$count >= 1000000, "1,000,000+", 
   if_else(
-    DF$geo_country$count < 10000 & DF$geo_country$count >= 5000, "5,000-9,999",
+    DF$geo_country$count >= 500000 & DF$geo_country$count < 1000000, "500,000-999,999",
     if_else(
-      DF$geo_country$count < 5000 & DF$geo_country$count >= 1000, "1,000-4,999",
+      DF$geo_country$count >= 100000 & DF$geo_country$count < 500000, "100,000-499,999",
       if_else(
-        DF$geo_country$count < 1000 & DF$geo_country$count >= 100, "100-999",
-        "< 100"
+        DF$geo_country$count >= 10000 & DF$geo_country$count < 100000, "10,000-99,999", 
+        if_else(
+          DF$geo_country$count < 10000 & DF$geo_country$count >= 5000, "5,000-9,999",
+          if_else(
+            DF$geo_country$count < 5000 & DF$geo_country$count >= 1000, "1,000-4,999",
+            if_else(
+              DF$geo_country$count < 1000 & DF$geo_country$count >= 100, "100-999",
+              "< 100"
+            )
+          )
+        )
       )
     )
   )
 )
+  
+  
+  
 
 DF$geo_country$count_binned <- factor(DF$geo_country$count_binned, 
                                    levels = unique(DF$geo_country$count_binned))
@@ -996,7 +1008,10 @@ DF$geo_country$count_binned <- factor(DF$geo_country$count_binned,
                                                  "100-999", 
                                                  "1,000-4,999", 
                                                  "5,000-9,999", 
-                                                 "10,000+"))
+                                                 "10,000-99,999",
+                                                 "100,000-499,999",
+                                                 "500,000-999,999",
+                                                 "1,000,000+"))
 
 # map of binned data 
 bin_country <- ggplot(DF$geo_country) +
@@ -1008,6 +1023,8 @@ bin_country <- ggplot(DF$geo_country) +
   # scale_fill_manual(name = "Sample Size",
   #                   values = c( "black", "#323232", "#646464","#969696","#c8c8c8")) 
   scale_fill_brewer(name = "Sample Size", palette = "Spectral")
+
+# Warning: Some values were not matched unambiguously: ANT, ATA, BUR, BUX, BYS, CAI, CSK, CZH, DDR, EUE, HVO, PCI, ROM, SUN, SUX, TWN, UNO, YMD, YUG, ZAR
 
 # tree map
 DF$geo_country$un_region_sub <- suppressWarnings(
@@ -1050,14 +1067,23 @@ tree <- ggplot(DF$geo_country, aes(area = count, fill = count_binned,
 ```{r geo-map-all}
 # maybe try binning
 DF$geo_country$count_binned_all <- if_else(
-  DF$geo_country$count_all >= 10000, "10,000+", 
+  DF$geo_country$count_all >= 1000000, "1,000,000+", 
   if_else(
-    DF$geo_country$count_all < 10000 & DF$geo_country$count_all >= 5000, "5,000-9,999",
+    DF$geo_country$count_all >= 500000 & DF$geo_country$count_all < 1000000, "500,000-999,999",
     if_else(
-      DF$geo_country$count_all < 5000 & DF$geo_country$count_all >= 1000, "1,000-4,999",
+      DF$geo_country$count_all >= 100000 & DF$geo_country$count_all < 500000, "100,000-499,999",
       if_else(
-        DF$geo_country$count_all < 1000 & DF$geo_country$count_all >= 100, "100-999",
-        "< 100"
+        DF$geo_country$count_all >= 10000 & DF$geo_country$count_all < 100000, "10,000-99,999", 
+        if_else(
+          DF$geo_country$count_all < 10000 & DF$geo_country$count_all >= 5000, "5,000-9,999",
+          if_else(
+            DF$geo_country$count_all < 5000 & DF$geo_country$count_all >= 1000, "1,000-4,999",
+            if_else(
+              DF$geo_country$count_all < 1000 & DF$geo_country$count_all >= 100, "100-999",
+              "< 100"
+            )
+          )
+        )
       )
     )
   )
@@ -1071,7 +1097,10 @@ DF$geo_country$count_binned_all <- factor(DF$geo_country$count_binned_all,
                                                  "100-999", 
                                                  "1,000-4,999", 
                                                  "5,000-9,999", 
-                                                 "10,000+"))
+                                                 "10,000-99,999",
+                                                 "100,000-499,999",
+                                                 "500,000-999,999",
+                                                 "1,000,000+"))
 
 # map of binned data 
 bin_country_all <- ggplot(DF$geo_country) +

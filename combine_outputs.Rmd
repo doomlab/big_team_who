@@ -1,0 +1,40 @@
+---
+title: "Combine Files"
+author: "Erin M. Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{r}
+library(rio)
+library(dplyr)
+```
+
+## Combinations
+
+```{r}
+## geo political region 
+# row	affiliation_tag_country	count	all_count
+# 0	None	128448	1201063
+# geo_country.xlsx
+
+geo1 <- import("scopus_combine/geo_country_1.csv")
+geo2 <- import("scopus_combine/geo_country_2.csv")
+
+geo_together <- geo1 %>% 
+  full_join(
+    geo2, by = c("affiliation_tag_country" = "country")
+  )
+colnames(geo_together) <- c("affiliation_tag_country", "count", "all_count")
+
+geo_together$count[is.na(geo_together$count)] <- 0
+
+export(geo_together, "py_outputs/geo_country.xlsx", rownames = F)
+```
+
