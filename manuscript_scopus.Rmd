@@ -342,12 +342,13 @@ To present results on this research question, we will analyze:
     areas, presenting graphics of the number of publication across time
     total
 
-```{r}
-total_num <- 13581
-health_num <- 10685
-physical_num <- 6151
-social_num <- 543
-life_num <- 7686
+```{r total-articles}
+# updated 
+total_num <- 462970
+health_num <- 403697
+physical_num <- 207192
+social_num <- 23020
+life_num <- 275249
 ```
 
 *Number of articles*. The total number of articles included in this analysis was `r total_num` including `r health_num` Health Sciences articles, `r physical_num`
@@ -368,12 +369,13 @@ ggplot(DF$pub_time_count %>%
 
 -   Number of distinct journals within each of the four subject areas
 
-```{r}
-journals <- 2534
-health_journal <- 1472
-physical_journal <- 641
-social_journal <- 206
-life_journal <- 1024
+```{r total-journals}
+# updated
+journals <- 14263
+health_journal <- 6301
+physical_journal <- 5505
+social_journal <- 2314
+life_journal <- 4030
 ```
 
 *Number of journals*. The number of distinct journals big team science articles were published
@@ -385,6 +387,7 @@ per Paper is presented in Table X. For comparison, the SNIP descriptive
 statistics for all papers is shown in Table X.
 
 ```{r tab-snip, results = 'asis', include = TRUE}
+# updated
 apa_table(
   DF$snip %>% 
     filter(`Subject Area` != "Multidisciplinary") %>% 
@@ -399,6 +402,7 @@ apa_table(
 
 
 ```{r results = 'asis', include = TRUE}
+# updated
 apa_table(
   DF$snip_all %>% 
     filter(`Subject Area` != "Multidisciplinary") %>% 
@@ -417,7 +421,7 @@ For each publication, we will examine:
 -   The totals of the number of articles published within the smaller
     subject area classifications. We will visualize these differences to show the areas of interest for each of the four large subject areas. 
 
-```{r eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
+```{r make-clouds, eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
 ### NOTE YOU WILL NEED TO RUN THIS ###
 #DF$pub_time_subject$ASJC <- factor(DF$pub_time_subject$ASJC)
 pub_total <- DF$pub_time_subject %>% 
@@ -501,7 +505,7 @@ social_cloud + ggtitle("Social Sciences") +
     areas using visualizations (wordclouds) to depict the common
     keywords.
 
-```{r eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
+```{r make-clouds2, eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
 ### NOTE YOU WILL NEED TO RERUN THIS ###
 health_cloud <- DF$keywords %>% 
    filter(SubjectArea == "Health Sciences") %>% 
@@ -580,8 +584,8 @@ We will first present:
 
 -   The total number of unique authors
 
-```{r}
-total_authors <- 257536
+```{r total-authors}
+total_authors <- 2786877 # only this updated
 avg_authors <- apa_num(49.904646)
 sd_authors <- apa_num(207.006114)
 min_authors <- 10
@@ -667,13 +671,14 @@ ggplot(DF$career_time %>%
     large subject areas.
 
 ```{r fig-career-results, include = TRUE, fig.cap = "Coefficient values for the average career length, variance in career length, and the effect size for each model predicting year of publication."}
+# updated
 label <- c("Physical", "Social", "Health", "Life")
-avg_b_values <- c(-0.531373, -0.437422, -0.460876, -0.604957)
-avg_se_values <- c(0.030990, 0.058153, 0.009794, 0.026519)
-sd_b_values <- c(-0.207000, -0.104549, -0.218675, -0.056843)
-sd_se_values <- c(0.059698, 0.058153, 0.009794, 0.046915)
-r2_values <- c(0.145118, 0.118772, 0.144584, 0.175747)
-sample_size <- 13000
+avg_b_values <- c(-0.694505, -0.364097, -0.450156, -0.510173)
+avg_se_values <- c(0.002903, 0.006058, 0.001443, 0.001924)
+sd_b_values <- c(-0.284249, -0.134722, -0.136871, -0.052559)
+sd_se_values <- c(0.007381, 0.014757, 0.003646, 0.004821)
+r2_values <- c(0.461106, 0.253958, 0.299746, 0.346628)
+sample_size <- total_num
 
 r2_low <- 1:length(r2_values)
 r2_high <- 1:length(r2_values)
@@ -729,8 +734,9 @@ ggplot(graph_data, aes(label, estimate)) +
     time. These visualizations will be presented separately for each of
     the four subject areas.
 
-```{r}
-affs <- 35114
+```{r total-aff}
+# updated
+affs <- 434092
 ```
 
 The total number of unique affiliation across all papers was `r affs`.
@@ -754,56 +760,6 @@ picture <- ggplot(DF$inst_time %>%
 
 suppressWarnings(print(picture))
 ```
-
-***Education***.
-
-We will summarize the general education categories of individuals at the
-time of publication, along with a summary for change over time.
-
-- For each publication, plot of proportion of doctorates across time - if the number is going down, we are involving more diverse types of people (assuming that doctorates are "normal" academics/researchers)
-- We will only perform this analysis if the proportion of information avaliable is over 50%.
-
-+--------+--------+
-| d      | count  |
-| egrees |        |
-+--------+--------+
-| ``` CE | 656440 |
-| F7FA46 | 8190   |
-|        | 3879   |
-|   null | 1267   |
-|        | 1002   |
-|     MD | 490    |
-|        | 461    |
-|    PhD | 368    |
-| M      | 349    |
-| D, PhD | 348    |
-|        | 330    |
-|   M.D. | 285    |
-|        | 279    |
-|    Dr. | 266    |
-|        | 239    |
-|    MSc | 232    |
-|        | 220    |
-|    MPH | 196    |
-| ```    | 191    |
-|        | 158    |
-| Prof., |        |
-| PhD    |        |
-| Ph.D.  |        |
-| MS MD  |        |
-| PhD    |        |
-| MD.    |        |
-| Prof.  |        |
-| MD     |        |
-| Prof.  |        |
-| PhD BS |        |
-| Prof   |        |
-| BA     |        |
-| M.D.,  |        |
-| Ph.D.  |        |
-| MD,    |        |
-| MPH    |        |
-+--------+--------+
 
 ***Types of Publications***.
 
@@ -892,13 +848,14 @@ manuscripts was $M_{SD}$ = `r avg_of_std_HIndex` ($SD_{SD}$ =
 -   We will separate these by each of the four subject areas.
 
 ```{r fig-pub-results, include = TRUE, fig.cap = "Coefficient values for the publication totals, variance in publication totals, and the effect size for each model predicting year of publication."}
+# updated 
 label <- c("Physical", "Social", "Health", "Life")
-avg_b_values <- c(-0.004420, -0.335536, -0.235551, -0.430599)
-avg_se_values <- c(0.022715, 0.179536, 0.028158, 0.037807)
-sd_b_values <- c(-0.105746, 0.130796, -0.006692, 0.133215)
-sd_se_values <- c(0.034058, 0.186924, 0.026612, 0.034255)
-r2_values <- c(0.009554, 0.021558, 0.035782, 0.054081)
-sample_size <- 13000
+avg_b_values <- c(0.005832, -0.026835, -0.020444, -0.007609)
+avg_se_values <- c(0.000189, 0.001245, 0.000230, 0.000231)
+sd_b_values <- c(-0.023375, 0.015881, 0.008203, -0.003291)
+sd_se_values <- c(0.000255, 0.001118, 0.000220, 0.000265)
+r2_values <- c(0.137207, 0.033117, 0.046249, 0.030199)
+sample_size <- total_num
 
 r2_low <- 1:length(r2_values)
 r2_high <- 1:length(r2_values)
@@ -956,6 +913,7 @@ ggplot(graph_data, aes(label, estimate)) +
 
 ```{r geo-map}
 # serbia has changed codes
+# updated but needs work
 DF$geo_country$affiliation_tag_country <- toupper(DF$geo_country$affiliation_tag_country)
 DF$geo_country <- subset(DF$geo_country, affiliation_tag_country != "NONE")
 DF$geo_country$affiliation_tag_country[DF$geo_country$affiliation_tag_country == "SCG"] <- "SRB"
@@ -1159,11 +1117,12 @@ tree_all + ggtitle("All Publications Mosiac Chart") +
     diversity would be represented by a negative slope.
 
 ```{r fig-diversity, include = TRUE, fig.cap= "Number of geopolitical regions represented in big-team science publiactions predicting time and the overall model effect size."}
+# updated 
 label <- c("Physical", "Social", "Health", "Life")
-b_values <- c(-0.061001, -0.077040, -0.017775, -0.014946)
-se_values <- c(0.022958, 0.058153, 0.009794, 0.010485)
-r2_values <- c(0.002357, 0.004491, 0.000434, 0.000434)
-sample_size <- 13000
+b_values <- c(0.015622, 0.034822, 0.019287, 0.011870)
+se_values <- c(0.002748, 0.006295, 0.001209, 0.001552)
+r2_values <- c(0.000315, 0.001822, 0.000926, 0.000371)
+sample_size <- total_num
 
 r2_low <- 1:length(r2_values)
 r2_high <- 1:length(r2_values)
