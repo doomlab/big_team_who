@@ -35,6 +35,13 @@ colnames(geo_together) <- c("affiliation_tag_country", "count", "all_count")
 
 geo_together$count[is.na(geo_together$count)] <- 0
 
-export(geo_together, "py_outputs/geo_country.xlsx", rownames = F)
+export(geo_together, "py_outputs/geo_country.xlsx", rowNames = F)
 ```
+
+
+
+
+
+
+
 

@@ -50,8 +50,8 @@ classoption       : "man"
 editor_options: 
   markdown: 
     wrap: 72
+  chunk_output_type: inline
 bibliography: references.bib
-
 header-includes:
   - |
     \makeatletter
@@ -59,13 +59,9 @@ header-includes:
       {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
       {-1em}%
       {\normalfont\normalsize\bfseries\typesectitle}}
-    
-    \renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
       {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
       {-\z@\relax}%
       {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
-    \makeatother
-
 csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja')`"
 documentclass     : "apa7"
 output            : papaja::apa6_pdf
@@ -344,11 +340,11 @@ To present results on this research question, we will analyze:
 
 ```{r total-articles}
 # updated 
-total_num <- 462970
-health_num <- 403697
-physical_num <- 207192
-social_num <- 23020
-life_num <- 275249
+total_num <- 510334
+health_num <- 445301
+physical_num <- 228194
+social_num <- 26652
+life_num <- 307514
 ```
 
 *Number of articles*. The total number of articles included in this analysis was `r total_num` including `r health_num` Health Sciences articles, `r physical_num`
@@ -358,7 +354,9 @@ multiple categories. Figure X shows the number of articles published across time
 
 ```{r fig-pub-time, include = TRUE, fig.cap="Number of big-team science publications separated by four large subject areas across years."}
 ggplot(DF$pub_time_count %>% 
-         filter(SubjectArea != "Multidisciplinary"), aes(Year, count, color = SubjectArea)) + 
+         filter(SubjectArea != "Multidisciplinary") %>% 
+         filter(Year < 2023), 
+       aes(Year, count, color = SubjectArea)) + 
   theme_classic() + 
   geom_point() + 
   scale_color_brewer(palette = "Spectral", name = "Subject Area") + 
@@ -371,11 +369,11 @@ ggplot(DF$pub_time_count %>%
 
 ```{r total-journals}
 # updated
-journals <- 14263
-health_journal <- 6301
-physical_journal <- 5505
-social_journal <- 2314
-life_journal <- 4030
+journals <- 14924
+health_journal <- 6559
+physical_journal <- 5787
+social_journal <- 2500
+life_journal <- 4187
 ```
 
 *Number of journals*. The number of distinct journals big team science articles were published
@@ -388,6 +386,7 @@ statistics for all papers is shown in Table X.
 
 ```{r tab-snip, results = 'asis', include = TRUE}
 # updated
+#### make this one table #### 
 apa_table(
   DF$snip %>% 
     filter(`Subject Area` != "Multidisciplinary") %>% 
@@ -400,8 +399,7 @@ apa_table(
 ```
 
 
-
-```{r results = 'asis', include = TRUE}
+```{r tab-snip-all, results = 'asis', include = TRUE}
 # updated
 apa_table(
   DF$snip_all %>% 
@@ -431,7 +429,6 @@ pub_total <- DF$pub_time_subject %>%
   left_join(DF$ASJC_codes %>% select(Name, Code), by = c("ASJC" = "Code"))
 
 # health
-
 health_cloud <- pub_total %>% 
   filter(SubjectArea == "Health Sciences") %>% 
   ungroup() %>%
@@ -444,6 +441,7 @@ health_cloud <- pub_total %>%
 ggsave("figure/health_cloud.png", dpi = 300, width = 8,
        height = 4, units = "in")
 
+# physical
 physical_cloud <- pub_total %>% 
   filter(SubjectArea == "Physical Sciences") %>% 
   ungroup() %>%
@@ -456,6 +454,7 @@ physical_cloud <- pub_total %>%
 ggsave("figure/physical_cloud.png", dpi = 300, width = 8,
        height = 4, units = "in")
 
+# life
 life_cloud <- pub_total %>% 
   filter(SubjectArea == "Life Sciences") %>% 
   ungroup() %>%
@@ -468,6 +467,7 @@ life_cloud <- pub_total %>%
 ggsave("figure/life_cloud.png", dpi = 300, width = 8,
        height = 4, units = "in")
 
+# social
 social_cloud <- pub_total %>% 
   filter(SubjectArea == "Social Sciences") %>% 
   ungroup() %>%
@@ -507,6 +507,7 @@ social_cloud + ggtitle("Social Sciences") +
 
 ```{r make-clouds2, eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
 ### NOTE YOU WILL NEED TO RERUN THIS ###
+# health
 health_cloud <- DF$keywords %>% 
    filter(SubjectArea == "Health Sciences") %>% 
    ungroup() %>% 
@@ -520,6 +521,7 @@ health_cloud <- DF$keywords %>%
 ggsave("figure/health_key.png", dpi = 300, width = 8,
        height = 4, units = "in")
 
+# physical
 physical_cloud <- DF$keywords %>% 
    filter(SubjectArea == "Physical Sciences") %>% 
    ungroup() %>% 
@@ -533,6 +535,7 @@ physical_cloud <- DF$keywords %>%
 ggsave("figure/physical_key.png", dpi = 300, width = 8,
        height = 4, units = "in")
 
+# life
 life_cloud <- DF$keywords %>% 
    filter(SubjectArea == "Life Sciences") %>% 
    ungroup() %>% 
@@ -546,6 +549,7 @@ life_cloud <- DF$keywords %>%
 ggsave("figure/life_key.png", dpi = 300, width = 8,
        height = 4, units = "in")
 
+# social 
 social_cloud <- DF$keywords %>% 
    filter(SubjectArea == "Social Sciences") %>% 
    ungroup() %>% 
@@ -585,7 +589,8 @@ We will first present:
 -   The total number of unique authors
 
 ```{r total-authors}
-total_authors <- 2786877 # only this updated
+total_authors <- 3047067 # only this updated
+#### DAMMIT FORGOT THIS ####
 avg_authors <- apa_num(49.904646)
 sd_authors <- apa_num(207.006114)
 min_authors <- 10
@@ -609,7 +614,7 @@ The mean number of authors per publication was *M* = `r avg_authors`
 avg_author_time <- 
   DF$author_time %>% 
   filter(SubjectArea != "Multidisciplinary") %>% 
-  filter(Number_Papers >= 3) %>% 
+  # filter(Number_Papers >= 3) %>% 
   mutate(low = (Average_Num_Authors - as.numeric(SD_Num_Authors)), 
          high = (Average_Num_Authors + as.numeric(SD_Num_Authors)))
   
@@ -671,13 +676,13 @@ ggplot(DF$career_time %>%
     large subject areas.
 
 ```{r fig-career-results, include = TRUE, fig.cap = "Coefficient values for the average career length, variance in career length, and the effect size for each model predicting year of publication."}
-# updated
+
 label <- c("Physical", "Social", "Health", "Life")
-avg_b_values <- c(-0.694505, -0.364097, -0.450156, -0.510173)
-avg_se_values <- c(0.002903, 0.006058, 0.001443, 0.001924)
-sd_b_values <- c(-0.284249, -0.134722, -0.136871, -0.052559)
-sd_se_values <- c(0.007381, 0.014757, 0.003646, 0.004821)
-r2_values <- c(0.461106, 0.253958, 0.299746, 0.346628)
+avg_b_values <- c(-0.692014, -0.365357, -0.451827, -0.508350)
+avg_se_values <- c(0.002727, 0.005525, 0.001348, 0.001786)
+sd_b_values <- c(-0.265538, -0.097108, -0.096730, -0.013958)
+sd_se_values <- c(0.007018, 0.013409, 0.003451, 0.004523)
+r2_values <- c(0.465446, 0.254312, 0.303781, 0.350923)
 sample_size <- total_num
 
 r2_low <- 1:length(r2_values)
@@ -736,7 +741,7 @@ ggplot(graph_data, aes(label, estimate)) +
 
 ```{r total-aff}
 # updated
-affs <- 434092
+affs <- 463876
 ```
 
 The total number of unique affiliation across all papers was `r affs`.
@@ -766,12 +771,12 @@ suppressWarnings(print(picture))
 -   We will summarize the coded types of publications for individuals.
 
 ```{r fig-pub-types, include = TRUE, fig.cap = "Types of publications for big-team science and all authors."}
+#### try donut chart ####
 pub_types <- bind_rows(
   DF$pub_types %>% mutate(type = "Big Team"), 
-  DF$normal_pub_type %>% mutate(type = "Normal")
-) %>% 
-  filter(publication_type == "ar" | publication_type == "pp" | 
-           publication_type == "dp")
+  DF$normal_pub_type %>% mutate(type = "Normal")) %>% 
+    filter(!is.na(publication_type)) %>% 
+  filter(publication_type != "cb")
 
 ggplot(pub_types, aes(type, count, fill = publication_type)) + 
     geom_bar(position="fill", stat="identity", color = "black") + 
@@ -779,7 +784,7 @@ ggplot(pub_types, aes(type, count, fill = publication_type)) +
   xlab("Author Type") + 
   ylab("Percent of Paper Types") + 
   theme(legend.position = "bottom") + 
-  scale_fill_discrete(name = "Publication Type", labels = c("Article", "Data Paper", "Pre-Print"))
+  scale_fill_discrete(name = "Publication Type")
 
 # can probably figure out how to combine these feasibly to make it readable
 # ab Abstract Report, ar Article, ip Article in Press, bk Book, bz Business Article, ch Book Chapter, cp Conference Paper, cr Conference Review, dp Data paper, ed Editorial, er Erratum, le Letter, no Note, pp Preprint, pr Press Release, rp Report, re Review, sh Survey, tb Retracted.
@@ -794,24 +799,24 @@ ggplot(pub_types, aes(type, count, fill = publication_type)) +
     -   Do this for each publication and create an average for each
         publication
 
-```{r}
-avg_pub_count_author	<- apa_num(4.451816)
-std_pub_count_author <- apa_num(6.901369)
+```{r pub-hindex}
+avg_pub_count_author	<- apa_num(38.368910766896065)
+std_pub_count_author <- apa_num(102.53740454680472)
 
-avg_pub_count_paper <- apa_num(7.581413)
-sd_pub_count_paper <- apa_num(5.797233)
-avg_SD_pub_count_paper <- apa_num(7.140015)
-SD_SD_pub_count_paper <- apa_num(5.10383)
+avg_pub_count_paper <- apa_num(162.50184385336053)
+sd_pub_count_paper <- apa_num(155.1665533053519)
+avg_SD_pub_count_paper <- apa_num(164.27249797983876)
+SD_SD_pub_count_paper <- apa_num(127.20989934008757)
 
-avg_HIndex <- apa_num(14.242142)
-std_HIndex <- apa_num(43.798203)
-med_HIndex <- apa_num(2.0)
+avg_HIndex <- apa_num(33.64589690529209)
+std_HIndex <- apa_num(127.33565834550778)
+med_HIndex <- apa_num(8.0)
 
-avg_of_avg_HIndex <- apa_num(28.136255)
-std_of_avg_HIndex <- apa_num(38.013819)
-avg_of_std_HIndex <- apa_num(36.430509)
-std_of_std_HIndex <- apa_num(46.474619)
-med_of_med_HIndex <- apa_num(5.0)
+avg_of_avg_HIndex <- apa_num(198.87318851400775)
+std_of_avg_HIndex <- apa_num(248.7847084313958)
+avg_of_std_HIndex <- apa_num(211.7985924228093)
+std_of_std_HIndex <- apa_num(238.53141146314053)
+med_of_med_HIndex <- apa_num(68.0)
 ```
 
 The average number of publications by authors on big team sciences
@@ -848,13 +853,13 @@ manuscripts was $M_{SD}$ = `r avg_of_std_HIndex` ($SD_{SD}$ =
 -   We will separate these by each of the four subject areas.
 
 ```{r fig-pub-results, include = TRUE, fig.cap = "Coefficient values for the publication totals, variance in publication totals, and the effect size for each model predicting year of publication."}
-# updated 
+
 label <- c("Physical", "Social", "Health", "Life")
-avg_b_values <- c(0.005832, -0.026835, -0.020444, -0.007609)
-avg_se_values <- c(0.000189, 0.001245, 0.000230, 0.000231)
-sd_b_values <- c(-0.023375, 0.015881, 0.008203, -0.003291)
-sd_se_values <- c(0.000255, 0.001118, 0.000220, 0.000265)
-r2_values <- c(0.137207, 0.033117, 0.046249, 0.030199)
+avg_b_values <- c(0.004248, -0.027315, -0.021713, -0.009466)
+avg_se_values <- c(0.000179, 0.001073, 0.000211, 0.000213)
+sd_b_values <- c(-0.021552, 0.016810, 0.010139, -0.000378)
+sd_se_values <- c(0.000241, 0.000921, 0.000198, 0.000235)
+r2_values <- c(0.135965, 0.035968, 0.048999, 0.030748)
 sample_size <- total_num
 
 r2_low <- 1:length(r2_values)
@@ -1002,6 +1007,35 @@ DF$geo_country$un_region <- suppressWarnings(
 DF$geo_country$un_region[DF$geo_country$affiliation_tag_country == "TWN"] <- "Asia"
 DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
 
+
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "ANT"] <- "Western Europe"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "BUR"] <- "Western Africa"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
+
+#### stopped here ####
+
+# BUX-
+# BYS -Byelorussian SSR – From June 1992
+# CAI-
+# CSK-Czechoslovakia – From June 1993
+# CZH-
+# DDR -East Germany from 1974 to 1990
+# EUE  -European Union laissez-passer[6
+# HVO -Upper Volta
+# PCI -Pacific Islands (Trust Territory)
+# ROM- Romania – From February 2002; Code changed to ROU[
+# SUN  -USSR From June 2008; Transitionally reserved from September 1992; Officially assigned before being deleted
+# SUX-
+# TWN- Taiwan still
+# UNO-
+# YMD -Yemen, Democratic
+# YUG -Yugoslavia – From July 2003
+# ZAR -Zaire – From July 1997
+
 DF$geo_country <- DF$geo_country %>% 
   na.omit()
 
@@ -1117,11 +1151,11 @@ tree_all + ggtitle("All Publications Mosiac Chart") +
     diversity would be represented by a negative slope.
 
 ```{r fig-diversity, include = TRUE, fig.cap= "Number of geopolitical regions represented in big-team science publiactions predicting time and the overall model effect size."}
-# updated 
+
 label <- c("Physical", "Social", "Health", "Life")
-b_values <- c(0.015622, 0.034822, 0.019287, 0.011870)
-se_values <- c(0.002748, 0.006295, 0.001209, 0.001552)
-r2_values <- c(0.000315, 0.001822, 0.000926, 0.000371)
+b_values <- c(0.002175, 0.033175, 0.016824, 0.008029)
+se_values <- c(0.002578, 0.006039, 0.001150, 0.001476)
+r2_values <- c(0.000006, 0.001542, 0.000708, 0.000170)
 sample_size <- total_num
 
 r2_low <- 1:length(r2_values)
