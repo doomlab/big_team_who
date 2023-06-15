@@ -589,13 +589,13 @@ We will first present:
 -   The total number of unique authors
 
 ```{r total-authors}
-total_authors <- 3047067 # only this updated
+total_authors <- 510334 # only this updated
 #### DAMMIT FORGOT THIS ####
-avg_authors <- apa_num(49.904646)
-sd_authors <- apa_num(207.006114)
+avg_authors <- apa_num(49.30516877182394)
+sd_authors <- apa_num(212.9786134634032)
 min_authors <- 10
-med_authors <- 19
-max_authors <- 5155
+med_authors <- 18
+max_authors <- 5568
 ```
 
 The total number of unique authors across all publications was
