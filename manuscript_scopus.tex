@@ -5,16 +5,19 @@
 \documentclass[
   man]{apa7}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -171,19 +174,16 @@
   {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
   {-1em}%
   {\normalfont\normalsize\bfseries\typesectitle}}
-
-\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
   {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
   {-\z@\relax}%
   {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
-\makeatother
 
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Who does big team science?},
   pdfauthor={Erin M. Buchanan1 \& Savannah C. Lewis2},
@@ -252,7 +252,7 @@ having both collaborations that span across the globe and subfield of
 psychology, age groups, and education levels should help to drive
 psychological science in the path of better materials, reliability,
 generalizability and more robust sample size in a study
-(Auspurg \& Brüderl, 2021; LeBel et al., 2018; Nosek \& Lakens, 2014b).
+(Auspurg \& Brüderl, 2021; LeBel et al., 2018; Nosek \& Lakens, 2014a).
 
 The credibility movement was originally defined by a focus on large
 scale replications using in collaborative environments (Vazire et al., 2022).
@@ -263,7 +263,7 @@ investigations on this specific topic to date. Potentially, the lack of
 investigation is tied to the newness of the large-scale research in many
 fields, as it is only in recent years that publications like the Open
 Science Collaboration (Open Science Collaboration, 2015), Many Labs
-Collaborations (Buttrick et al., 2020; Ebersole et al., 2020, 2016; Klein et al., 2022; for example, Klein et al., 2018; Mathur et al., 2020; Skorb et al., 2020) or the first papers
+Collaborations (Buttrick et al., 2020; Ebersole et al., 2016, 2020; for example, Klein et al., 2018; Klein et al., 2022; Mathur et al., 2020; Skorb et al., 2020) or the first papers
 from the Psychological Science Accelerator (Bago et al., 2022; Dorison et al., 2022; Jones et al., 2021; Legate et al., 2022; Moshontz et al., 2018; Wang et al., 2021). Generally, the
 researcher incentive for replication was low: journals often prioritize
 ``novel'' or new results which led to rejection of replication manuscripts
@@ -280,7 +280,7 @@ and incentive structures (John et al., 2012; Silberzahn et al., 2018) led to a
 change in journal guidelines and incentives for researchers interested
 in participating in large-scale replication studies (Grahe, 2014; Kidwell et al., 2016; Mayo-Wilson et al., 2021; Nosek et al., 2015). For example, the support
 for Registered Reports, papers accepted before the data has been
-collected (Nosek \& Lakens, 2014a; S. Stewart et al., 2020), and entire sub-sections of
+collected (Nosek \& Lakens, 2014b; S. Stewart et al., 2020), and entire sub-sections of
 journals devoted to only replication studies (e.g., \emph{Nature, Royal
 Society Open Science, Advances in Methods and Practices in Psychological
 Science}) has allowed researchers to invest in projects that they know
@@ -566,7 +566,7 @@ We will first present:
 \end{itemize}
 
 The total number of unique authors across all publications was
-3047067.
+510334.
 
 \begin{itemize}
 \tightlist
@@ -575,9 +575,9 @@ The total number of unique authors across all publications was
   the number of authors included on publications.
 \end{itemize}
 
-The mean number of authors per publication was \emph{M} = 49.90
-(\emph{SD} = 207.01, \emph{Med} = 19) with a range of
-10 to 5155.
+The mean number of authors per publication was \emph{M} = 49.31
+(\emph{SD} = 212.98, \emph{Med} = 18) with a range of
+10 to 5568.
 
 \begin{itemize}
 \tightlist
@@ -927,11 +927,11 @@ Newson, M., Buhrmester, M., Xygalatas, D., \& Whitehouse, H. (2021). Go WILD, no
 \leavevmode\vadjust pre{\hypertarget{ref-nosek2015}{}}%
 Nosek, B. A., Alter, G., Banks, G. C., Borsboom, D., Bowman, S. D., Breckler, S. J., Buck, S., Chambers, C. D., Chin, G., Christensen, G., Contestabile, M., Dafoe, A., Eich, E., Freese, J., Glennerster, R., Goroff, D., Green, D. P., Hesse, B., Humphreys, M., \ldots{} Yarkoni, T. (2015). Promoting an open research culture. \emph{Science}, \emph{348}(6242), 1422--1425. \url{https://doi.org/10.1126/science.aab2374}
 
-\leavevmode\vadjust pre{\hypertarget{ref-nosek2014}{}}%
-Nosek, B. A., \& Lakens, D. (2014a). Registered Reports: A Method to Increase the Credibility of Published Results. \emph{Social Psychology}, \emph{45}(3), 137--141. \url{https://doi.org/10.1027/1864-9335/a000192}
-
 \leavevmode\vadjust pre{\hypertarget{ref-nosek2014method}{}}%
-Nosek, B. A., \& Lakens, D. (2014b). A method to increase the credibility of published results. \emph{Social Psychology}, \emph{45}(3), 137141.
+Nosek, B. A., \& Lakens, D. (2014a). A method to increase the credibility of published results. \emph{Social Psychology}, \emph{45}(3), 137141.
+
+\leavevmode\vadjust pre{\hypertarget{ref-nosek2014}{}}%
+Nosek, B. A., \& Lakens, D. (2014b). Registered Reports: A Method to Increase the Credibility of Published Results. \emph{Social Psychology}, \emph{45}(3), 137--141. \url{https://doi.org/10.1027/1864-9335/a000192}
 
 \leavevmode\vadjust pre{\hypertarget{ref-nosek2012}{}}%
 Nosek, B. A., Spies, J. R., \& Motyl, M. (2012). Scientific Utopia: II. Restructuring Incentives and Practices to Promote Truth Over Publishability. \emph{Perspectives on Psychological Science}, \emph{7}(6), 615--631. \url{https://doi.org/10.1177/1745691612459058}

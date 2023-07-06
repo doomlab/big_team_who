@@ -64,7 +64,7 @@ header-includes:
       {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
 csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja')`"
 documentclass     : "apa7"
-output            : papaja::apa6_pdf
+output            : papaja::apa6_docx
 ---
 
 ```{r setup, include = FALSE}
@@ -959,9 +959,6 @@ DF$geo_country$count_binned <- if_else(
     )
   )
 )
-  
-  
-  
 
 DF$geo_country$count_binned <- factor(DF$geo_country$count_binned, 
                                    levels = unique(DF$geo_country$count_binned))
@@ -1006,35 +1003,18 @@ DF$geo_country$un_region <- suppressWarnings(
 
 DF$geo_country$un_region[DF$geo_country$affiliation_tag_country == "TWN"] <- "Asia"
 DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
-
-
 DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "ANT"] <- "Western Europe"
 DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "BUR"] <- "Western Africa"
-DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
-DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
-DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
-DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
-DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "TWN"] <- "Eastern Asia"
-
-#### stopped here ####
-
-# BUX-
-# BYS -Byelorussian SSR – From June 1992
-# CAI-
-# CSK-Czechoslovakia – From June 1993
-# CZH-
-# DDR -East Germany from 1974 to 1990
-# EUE  -European Union laissez-passer[6
-# HVO -Upper Volta
-# PCI -Pacific Islands (Trust Territory)
-# ROM- Romania – From February 2002; Code changed to ROU[
-# SUN  -USSR From June 2008; Transitionally reserved from September 1992; Officially assigned before being deleted
-# SUX-
-# TWN- Taiwan still
-# UNO-
-# YMD -Yemen, Democratic
-# YUG -Yugoslavia – From July 2003
-# ZAR -Zaire – From July 1997
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "BYS"] <- "Eastern Europe"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "CSK"] <- "Eastern Europe"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "DOR"] <- "Eastern Europe"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "HVO"] <- "Sub-Saharan Africa"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "PCI"] <- "Eastern Asia"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "ROM"] <- "Eastern Europe"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "SUN"] <- "Eastern Europe"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "YMD"] <- "Western Asia"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "YUG"] <- "Eastern Europe"
+DF$geo_country$un_region_sub[DF$geo_country$affiliation_tag_country == "ZAR"] <- "Sub-Saharan Africa"
 
 DF$geo_country <- DF$geo_country %>% 
   na.omit()
@@ -1534,6 +1514,8 @@ plot_layout(
 
 ggsave("figure/author_country.png", width = 10, height = 7, 
        units = "in")
+
+# fix the legend
 ```
 
 ```{r effect-gpe-figure, include = TRUE, fig.cap = "Effect size of the differences in representation for UN Regions for author affiliations in big-team science papers by year."}
@@ -1568,6 +1550,7 @@ ggsave("figure/effect_country.png", width = 10, height = 7,
 \setlength{\parindent}{-0.5in}
 \setlength{\leftskip}{0.5in}
 ```
+
 ::: {#refs custom-style="Bibliography"}
 :::
 
