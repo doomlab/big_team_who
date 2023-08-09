@@ -1,0 +1,204 @@
+---
+appendix: "appendix.Rmd"
+---
+
+# Supplemental Materials
+
+## RQ1: Publisher Information.
+
+```{r setup-appendix}
+knitr::opts_knit$set(echo = FALSE, warning = FALSE, message = FALSE, include = FALSE, error = FALSE)
+library(papaja)
+library(knitr)
+library(ggplot2)
+library(treemapify)
+library(countrycode)
+library(rio)
+library(maps)
+library(dplyr)
+library(tidyr)
+library(MOTE)
+library(MBESS)
+library(patchwork)
+library(ggplot2)
+library(ggwordcloud)
+library(figpatch)
+library(RColorBrewer)
+library(latex2exp)
+library(ggridges)
+```
+
+**Number of Journals**.
+
+Table \@ref(tab:tab-snip) indicates the SNIP values for BTS publications, while Table \@ref(tab:tab-snip-all). The results from these tables indicate that impact values are slightly higher for BTS publications, while the overall median, minimum, and maximum are the same for each grouping. 
+
+```{r tab-snip, results = 'asis', include = TRUE}
+# updated
+apa_table(
+  DF$snip %>% 
+    filter(`Subject Area` != "Multidisciplinary") %>% 
+    mutate(M = apa_num(M), 
+           SD = apa_num(SD), 
+           Minimum = apa_num(Minimum), 
+           Median = apa_num(Median), 
+           Maximum = apa_num(Maximum)), 
+  caption = "Big-Team Science SNIP Values")
+```
+
+```{r tab-snip-all, results = 'asis', include = TRUE}
+# updated
+apa_table(
+  DF$snip_all %>% 
+    filter(`Subject Area` != "Multidisciplinary") %>% 
+    mutate(M = apa_num(M), 
+           SD = apa_num(SD), 
+           Minimum = apa_num(Minimum), 
+           Median = apa_num(Median), 
+           Maximum = apa_num(Maximum)),
+  caption = "All Journal Articles SNIP Values")
+```
+
+
+## RQ2: Publication Information.
+
+**Keywords**. Figure \@ref(fig:fig-keywords) indicates the most common keywords present for the BTS publications by subject area. The keywords were tokenized into single tokens. Keywords were then lowercased, and all stop words (for example, the, an, of, into, for) were removed. Finally, a frequency count of tokens was tabulated for each subject area, and this count is used to create the final word cloud presented.  
+
+```{r make-clouds2, eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
+### NOTE YOU WILL NEED TO RERUN THIS ###
+# health
+health_cloud <- DF$keywords %>% 
+   filter(SubjectArea == "Health Sciences") %>% 
+   ungroup() %>% 
+   select(keywords_nostop, count) %>% 
+  dplyr::rename(Count_Size = count, Name = keywords_nostop) %>% 
+  ggplot() + 
+  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
+  theme_minimal() + 
+  scale_size_area(max_size = 15)
+
+ggsave("figure/health_key.png", dpi = 300, width = 8,
+       height = 4, units = "in")
+
+# physical
+physical_cloud <- DF$keywords %>% 
+   filter(SubjectArea == "Physical Sciences") %>% 
+   ungroup() %>% 
+   select(keywords_nostop, count) %>% 
+  dplyr::rename(Count_Size = count, Name = keywords_nostop) %>% 
+  ggplot() + 
+  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
+  theme_minimal() + 
+  scale_size_area(max_size = 15)
+
+ggsave("figure/physical_key.png", dpi = 300, width = 8,
+       height = 4, units = "in")
+
+# life
+life_cloud <- DF$keywords %>% 
+   filter(SubjectArea == "Life Sciences") %>% 
+   ungroup() %>% 
+   select(keywords_nostop, count) %>% 
+  dplyr::rename(Count_Size = count, Name = keywords_nostop) %>% 
+  ggplot() + 
+  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
+  theme_minimal() + 
+  scale_size_area(max_size = 15)
+
+ggsave("figure/life_key.png", dpi = 300, width = 8,
+       height = 4, units = "in")
+
+# social 
+social_cloud <- DF$keywords %>% 
+   filter(SubjectArea == "Social Sciences") %>% 
+   ungroup() %>% 
+   select(keywords_nostop, count) %>% 
+  dplyr::rename(Count_Size = count, Name = keywords_nostop) %>% 
+  ggplot() + 
+  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
+  theme_minimal() + 
+  scale_size_area(max_size = 15)
+
+ggsave("figure/social_key.png", dpi = 300, width = 8,
+       height = 4, units = "in")
+```
+
+```{r fig-keywords, include = TRUE, fig.cap="Keyword Analysis for Each of the Four Subject Areas."}
+health_key <- fig("figure/health_key.png")
+physical_key <- fig("figure/physical_key.png") 
+life_key <- fig("figure/life_key.png") 
+social_key <- fig("figure/social_key.png") 
+
+health_key + ggtitle("Health Sciences") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+physical_key + ggtitle("Physical Sciences") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+life_key + ggtitle("Life Sciences") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+social_key + ggtitle("Social Sciences") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  plot_layout(ncol = 2, 
+              nrow = 2)
+```
+
+## RQ3: Authors
+
+**Institution**.
+
+Institution was normalized by taking the total number of unique institutions and dividing by the total number of institution listings. The patterns are similar for each decade in that papers are often either half unique institutions or mostly unique institutions overall as show in Figure \@ref(fig:fig-inst).
+
+```{r fig-inst, include = TRUE, fig.cap="Number of unique institutions involved in big-team science papers across decades."}
+DF$inst_time$normalized <- DF$inst_time$unique / DF$inst_time$total * 100
+
+graph_data_inst <- DF$inst_time %>% 
+         filter(SubjectArea != "Multidisciplinary") %>% 
+         mutate(Decade = ifelse(Year < 1990, "1980s", 
+                         ifelse(Year < 2000, "1990s", 
+                                ifelse(Year < 2010, "2000s", 
+                                       ifelse(Year < 2020, "2010s", "2020s"))))) %>% 
+  mutate(Decade = as.factor(Decade))
+
+picture <- ggplot(graph_data_inst,
+                  aes(y = Decade, x = normalized)) + 
+  geom_density_ridges2() + 
+  theme_classic() + 
+  facet_wrap(~SubjectArea) + 
+  xlab("Percent of Unique Affiliations") + 
+  ylab("Decade") +
+  coord_cartesian(xlim = c(0, 100))
+
+
+suppressWarnings(print(picture))
+```
+
+***Types of Publications***.
+
+
+
+```{r fig-pub-types, include = TRUE, fig.cap = "Types of publications for big-team science and all authors."}
+
+pub_types <- bind_rows(
+  DF$pub_types %>% mutate(type = "Big Team"), 
+  DF$normal_pub_type %>% mutate(type = "Normal")) %>% 
+    filter(!is.na(publication_type)) %>% 
+  filter(publication_type != "cb")
+
+ggplot(pub_types, aes(area = count, fill = count,
+               label = publication_type)) +
+  geom_treemap() +
+  facet_wrap(~type) + 
+  geom_treemap_text(colour = "black", place = "centre",
+                    size = 15, grow = FALSE) +  
+  #scale_fill_brewer(name = "Sample Size", palette = "Spectral") +
+  theme_classic()
+
+# ggplot(pub_types, aes(type, count, fill = publication_type)) + 
+#     geom_bar(position="fill", stat="identity", color = "black") + 
+#   theme_classic() +  
+#   xlab("Author Type") + 
+#   ylab("Percent of Paper Types") + 
+#   theme(legend.position = "bottom") + 
+#   scale_fill_discrete(name = "Publication Type")
+
+# can probably figure out how to combine these feasibly to make it readable
+# ab Abstract Report, ar Article, ip Article in Press, bk Book, bz Business Article, ch Book Chapter, cp Conference Paper, cr Conference Review, dp Data paper, ed Editorial, er Erratum, le Letter, no Note, pp Preprint, pr Press Release, rp Report, re Review, sh Survey, tb Retracted.
+```

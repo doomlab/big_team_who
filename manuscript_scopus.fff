@@ -5,8 +5,6 @@
 \includegraphics{manuscript_scopus_files/figure-latex/fig-pub-time-1.pdf}
 \caption{\label{fig:fig-pub-time}Number of big-team science publications separated by four large subject areas across years.}
 \end{figure*}
-\efloatseparator
- 
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
@@ -14,71 +12,27 @@
 \includegraphics{manuscript_scopus_files/figure-latex/fig-clouds-1.pdf}
 \caption{\label{fig:fig-clouds}Journal Areas for Big-Team Science Publications by Subject Area}
 \end{figure*}
-\efloatseparator
- 
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
-\includegraphics{manuscript_scopus_files/figure-latex/fig-keywords-1.pdf}
-\caption{\label{fig:fig-keywords}Keyword Analysis for Each of the Four Subject Areas.}
-\end{figure*}
-\efloatseparator
- 
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
 \centering
 \includegraphics{manuscript_scopus_files/figure-latex/fig-author-year-1.pdf}
-\caption{\label{fig:fig-author-year}Number of authors included on big-team science papers per year by subject area. Colored dots indicate the mean number of authors, while the black dots represent the median number of authors. The size of the black dots indicate the number of papers in that year.}
+\caption{\label{fig:fig-author-year}Number of authors included on big-team science papers per year by subject area. Given the large skew in the data, the left panel presents the median number of authors per manuscript, and the right panel presents the average number of authors per manuscript by year.}
 \end{figure*}
-\efloatseparator
- 
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
 \centering
 \includegraphics{manuscript_scopus_files/figure-latex/fig-career-1.pdf}
-\caption{\label{fig:fig-career}Average career length for big-team science authors. Larger dots indicate more papers for each estimation. Lighter colored dots mean less variability in author career length, while darker dots mean more variability in career length.}
+\caption{\label{fig:fig-career}Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year.}
 \end{figure*}
-\efloatseparator
- 
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
 \centering
-\includegraphics{manuscript_scopus_files/figure-latex/fig-career-results-1.pdf}
-\caption{\label{fig:fig-career-results}Coefficient values for the average career length, variance in career length, and the effect size for each model predicting year of publication.}
+\includegraphics{manuscript_scopus_files/figure-latex/fig-heatmap-1.pdf}
+\caption{\label{fig:fig-heatmap}Heatmap results of regression analyses for career length, number of publications, and geopolitical diversity in region. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.}
 \end{figure*}
-\efloatseparator
- 
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
-\includegraphics{manuscript_scopus_files/figure-latex/fig-inst-1.pdf}
-\caption{\label{fig:fig-inst}Number of unique institutions involved in big-team science papers across decades.}
-\end{figure*}
-\efloatseparator
- 
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
-\includegraphics{manuscript_scopus_files/figure-latex/fig-pub-types-1.pdf}
-\caption{\label{fig:fig-pub-types}Types of publications for big-team science and all authors.}
-\end{figure*}
-\efloatseparator
- 
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
-\includegraphics{manuscript_scopus_files/figure-latex/fig-pub-results-1.pdf}
-\caption{\label{fig:fig-pub-results}Coefficient values for the publication totals, variance in publication totals, and the effect size for each model predicting year of publication.}
-\end{figure*}
-\efloatseparator
- 
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
@@ -86,17 +40,6 @@
 \includegraphics{manuscript_scopus_files/figure-latex/fig-map-both-1.pdf}
 \caption{\label{fig:fig-map-both}Geopolitical regions represented in big-team science publications versus all publications.}
 \end{figure*}
-\efloatseparator
- 
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
-\includegraphics{manuscript_scopus_files/figure-latex/fig-diversity-1.pdf}
-\caption{\label{fig:fig-diversity}Number of geopolitical regions represented in big-team science publiactions predicting time and the overall model effect size.}
-\end{figure*}
-\efloatseparator
- 
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
@@ -104,8 +47,6 @@
 \includegraphics{manuscript_scopus_files/figure-latex/author-gpe-figure-1.pdf}
 \caption{\label{fig:author-gpe-figure}A comparison of author affiliation geopolitical region across decades. F stands for first authors and O stands for other authors.}
 \end{figure*}
-\efloatseparator
- 
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 

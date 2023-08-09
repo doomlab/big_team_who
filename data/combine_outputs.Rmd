@@ -24,8 +24,8 @@ library(dplyr)
 # 0	None	128448	1201063
 # geo_country.xlsx
 
-geo1 <- import("scopus_combine/geo_country_1.csv")
-geo2 <- import("scopus_combine/geo_country_2.csv")
+geo1 <- import("data/scopus_combine/geo_country_1.csv")
+geo2 <- import("data/scopus_combine/geo_country_2.csv")
 
 geo_together <- geo1 %>% 
   full_join(
@@ -35,7 +35,7 @@ colnames(geo_together) <- c("affiliation_tag_country", "count", "all_count")
 
 geo_together$count[is.na(geo_together$count)] <- 0
 
-export(geo_together, "py_outputs/geo_country.xlsx", rowNames = F)
+export(geo_together, "data/scopus_outputs/geo_country.xlsx", rowNames = F)
 ```
 
 

@@ -3,7 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-  man]{apa7}
+  man,floatsintext]{apa6}
 \usepackage{amsmath,amssymb}
 \usepackage{iftex}
 \ifPDFTeX
@@ -158,26 +158,11 @@
     {}{\InnerPatchFailed}%
   }
 {}{\PatchFailed}
-\keywords{big team, science, authorship, credit\newline\indent Word count: X}
-\DeclareDelayedFloatFlavor{ThreePartTable}{table}
-\DeclareDelayedFloatFlavor{lltable}{table}
-\DeclareDelayedFloatFlavor*{longtable}{table}
-\makeatletter
-\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
-\makeatother
+\keywords{big team, science, authorship, credit}
 \usepackage{lineno}
 
 \linenumbers
 \usepackage{csquotes}
-\makeatletter
-\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
-  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
-  {-1em}%
-  {\normalfont\normalsize\bfseries\typesectitle}}
-  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
-  {-\z@\relax}%
-  {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
-
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -214,7 +199,7 @@ Correspondence concerning this article should be addressed to Erin M. Buchanan, 
 \affiliation{\vspace{0.5cm}\textsuperscript{1} Harrisburg University of Science and Technology\\\textsuperscript{2} University of Alabama}
 
 \abstract{%
-This paper will examine the nature of publications in Big Team Science (BTS) - large-scale collaborations between multiple researchers at multiple institutions. As interest in BTS increases, it is useful to explore who is currently involved in BTS projects to determine diversity in both research subject and researcher representation. The types of publication outlets, number of publications, and subject areas of publication will be presented to summarize the publications in BTS. Information about authors included in BTS will be presented including career length, numbers of publications/impact variables, education, and affiliation. Last, we will explore the representation of geopolitical regions by examining affiliation location to explore the impact of BTS on the de-WEIRD movement to diversify researcher representation.
+This paper examined the nature of publications in Big Team Science (BTS) - large-scale collaborations between multiple researchers at multiple institutions. As interest in BTS increases, it is useful to explore who is currently involved in BTS projects to determine diversity in both research subject and researcher representation. The types of publication outlets, number of publications, and subject areas of publication are presented to summarize the publications in BTS. Information about authors included in BTS will be presented including career length, numbers of publications/impact variables, education, and affiliation. Last, we will explore the representation of geopolitical regions by examining affiliation location to explore the impact of BTS on the de-WEIRD movement to diversify researcher representation. REWRITE THIS
 }
 
 
@@ -230,7 +215,7 @@ advance knowledge in their chosen field. Collaboration can manifest
 uniquely in each project dependent on the skill sets, hypotheses, and
 perspectives of collaborators. While collaboration is not new in
 science, the current interest of ``big team science'' is increasing
-(Coles et al., 2022; Forscher et al., 2020; N. Stewart et al., 2017). Big team science projects
+(Coles, Hamlin, Sullivan, Parker, \& Altschul, 2022; Forscher et al., 2020; N. Stewart, Chandler, \& Paolacci, 2017). Big team science projects
 and/or organizations utilize and run on large-scale collaboration to
 ensure that diverse populations and ideas are brought into research
 projects, which in turn allows for more reliability and generalizability
@@ -241,60 +226,57 @@ least ten different institutions.
 BTS appears to be increasing as a result of two sources: 1) increasing
 globalization and technology that allows for real-time interdisciplinary
 research, and 2) increasing interest in reproducibility, replication,
-and generalizability (Maxwell et al., 2015; Nelson et al., 2018; Zwaan et al., 2018).
+and generalizability (Maxwell, Lau, \& Howard, 2015; Nelson, Simmons, \& Simonsohn, 2018; Zwaan, Etz, Lucas, \& Donnellan, 2018).
 Technological advances have provided easier ways to collaborate with
 people who are from other universities and countries through document
 sharing platforms (e.g., Google, GitHub, and the Open Science
 Framework), video chatting platforms (e.g., Zoom, Microsoft Teams), and
 messaging and project management platforms (e.g., Slack, Trello,
 when2meet, etc.). The credibility movement seems to suggest that by
-having both collaborations that span across the globe and subfield of
-psychology, age groups, and education levels should help to drive
-psychological science in the path of better materials, reliability,
-generalizability and more robust sample size in a study
-(Auspurg \& Brüderl, 2021; LeBel et al., 2018; Nosek \& Lakens, 2014a).
+having both collaborations that span across the globe and subfields of
+research areas, age groups, and education levels should help to drive science in the path of better materials, reliability,
+generalizability and more robust sample sizes (when necessary) in a study
+(Auspurg \& Brüderl, 2021; LeBel, McCarthy, Earp, Elson, \& Vanpaemel, 2018; Brian A. Nosek \& Lakens, 2014a).
 
 The credibility movement was originally defined by a focus on large
-scale replications using in collaborative environments (Vazire et al., 2022).
-Generally, the movement has been driven by early career researchers
+scale replications using in collaborative environments (Vazire, Schiavone, \& Bottesini, 2022).
+Generally, the movement appears to have been driven by early career researchers
 (i.e., those who are within five years of their first appointment)
 (Maizey \& Tzavella, 2019); however, there are no large meta-scientific
 investigations on this specific topic to date. Potentially, the lack of
 investigation is tied to the newness of the large-scale research in many
 fields, as it is only in recent years that publications like the Open
 Science Collaboration (Open Science Collaboration, 2015), Many Labs
-Collaborations (Buttrick et al., 2020; Ebersole et al., 2016, 2020; for example, Klein et al., 2018; Klein et al., 2022; Mathur et al., 2020; Skorb et al., 2020) or the first papers
+Collaborations (Buttrick et al., 2020; Ebersole et al., 2016, 2020; Richard A. Klein et al., 2022; for example, Richard A. Klein et al., 2018; Mathur et al., 2020; Skorb et al., 2020) or the first papers
 from the Psychological Science Accelerator (Bago et al., 2022; Dorison et al., 2022; Jones et al., 2021; Legate et al., 2022; Moshontz et al., 2018; Wang et al., 2021). Generally, the
 researcher incentive for replication was low: journals often prioritize
 ``novel'' or new results which led to rejection of replication manuscripts
-and publication bias (Franco et al., 2014; Hubbard \& Armstrong, 1997; Nosek et al., 2012), the
+and publication bias (Franco, Malhotra, \& Simonovits, 2014; Hubbard \& Armstrong, 1997; Brian A. Nosek, Spies, \& Motyl, 2012), the
 ``failure'' to replicate was often placed on the replication team as ``bad
 science'' rather than a careful consideration of publication biases and
-(potential) questionable research practices (Ioannidis, 2015; Klein et al., 2022; Maxwell et al., 2015), and why should someone want to spend time and
+(potential) questionable research practices (Ioannidis, 2015; Richard A. Klein et al., 2022; Maxwell et al., 2015), and why should someone want to spend time and
 resources on an answer we already ``know'' (Isager et al., 2021a, 2021b)?
 
 However, the success and interest in the large-scale reproducibility
 projects (Errington et al., 2021; Open Science Collaboration, 2015), paired
 with the meta-scientific publications focusing on researcher practices
-and incentive structures (John et al., 2012; Silberzahn et al., 2018) led to a
+and incentive structures (John, Loewenstein, \& Prelec, 2012; Silberzahn et al., 2018) led to a
 change in journal guidelines and incentives for researchers interested
-in participating in large-scale replication studies (Grahe, 2014; Kidwell et al., 2016; Mayo-Wilson et al., 2021; Nosek et al., 2015). For example, the support
+in participating in large-scale replication studies (Grahe, 2014; Kidwell et al., 2016; Mayo-Wilson et al., 2021; B. A. Nosek et al., 2015). For example, the support
 for Registered Reports, papers accepted before the data has been
-collected (Nosek \& Lakens, 2014b; S. Stewart et al., 2020), and entire sub-sections of
-journals devoted to only replication studies (e.g., \emph{Nature, Royal
-Society Open Science, Advances in Methods and Practices in Psychological
-Science}) has allowed researchers to invest in projects that they know
+collected (Brian A. Nosek \& Lakens, 2014b; S. Stewart et al., 2020), and entire sub-sections of
+journals devoted to only replication studies (e.g., \emph{Nature, Royal Society Open Science, Advances in Methods and Practices in Psychological Science}) has allowed researchers to invest in projects that they know
 should be published when the project is complete. Further, the
-implementation of the Transparency and Openness Guidelines (Nosek et al., 2015)
-and the Contributor Role Taxonomy (CRediT) system (Allen et al., 2019) have
+implementation of the Transparency and Openness Guidelines (B. A. Nosek et al., 2015)
+and the Contributor Role Taxonomy (CRediT) system (Allen, O'Connell, \& Kiermer, 2019) have
 pushed journals and researchers to promote more open, inclusive
 publication practices.
 
 The credibility movement has been mirrored by the calls for
 diversification or de-WEIRDing (e.g., Western, Educated, Industrialized,
-Rich, and Democratic) scientific research (Henrich et al., 2010; Newson et al., 2021; Rad et al., 2018) by improving representation in research samples. Like the
-large-scale studies in Physics ({``A Philosophical Case for Big Physics,''} 2021; Castelnovo et al., 2018) and
-Biology (Collins et al., 2003), the social sciences struggle to represent the
+Rich, and Democratic) scientific research (Henrich, Heine, \& Norenzayan, 2010; Newson, Buhrmester, Xygalatas, \& Whitehouse, 2021; Rad, Martingano, \& Ginges, 2018) by improving representation in research samples. Like the
+large-scale studies in Physics ({``A Philosophical Case for Big Physics,''} 2021; Castelnovo, Florio, Forte, Rossi, \& Sirtori, 2018) and
+Biology (Collins, Morgan, \& Patrinos, 2003), the social sciences struggle to represent the
 breadth of humanity across both researcher and population
 characteristics. Now, grassroots organizations, such as the
 Psychological Science Accelerator (Moshontz et al., 2018), ManyBabies
@@ -311,11 +293,8 @@ credibility movement. Publications on BTS generally explore challenges,
 lessons learned, and the need for BTS (Coles et al., 2022; Forscher et al., 2020).
 
 Therefore, the goal of this manuscript is to examine the \emph{people}
-involved in BTS projects. We specifically expect to examine ICSR's
-Research Themes of inclusivity, research careers, and research
-globalization. As we examine these themes, it will bring new knowledge
-of how BTS projects impact each theme and field of study. We see an
-increase in interest and publications in BTS but we do not yet know if
+involved in BTS projects. We specifically examined the themes of inclusivity, research careers, and research globalization. We see an
+increasing interest and number of publications in BTS but we do not yet know if
 this uptick in large-scale projects has diversified the \emph{people}
 involved in BTS. While a few publications have noted that BTS appears to
 be early career researchers (Maizey \& Tzavella, 2019), no one has systematically
@@ -329,16 +308,6 @@ several author(s) and last author)? As hiring and promoting practices
 often place a heavy weight on publications and especially ``influential''
 publications, it becomes necessary to critically examine the
 representation present in authorship in BTS projects.
-
-\hypertarget{potential-outlets}{%
-\section{Potential Outlets}\label{potential-outlets}}
-
-We will aim for high impact broad scope journals such as \emph{Science},
-\emph{Nature} or \emph{Nature Human Behaviour}. Other journals would include
-review publications within psychology to compare the social sciences to
-other sciences: \emph{Perspectives in Psychological Science}, \emph{Psychological
-Bulletin}, \emph{Psychological Review}, or \emph{Current Directions in
-Psychological Science}.
 
 \hypertarget{research-questions}{%
 \section{Research Questions}\label{research-questions}}
@@ -355,20 +324,7 @@ Psychological Science}.
   Research Question 3: Who is involved in big team science?
 \end{itemize}
 
-For each of these research questions, we will examine the overall
-results of all big team research projects, and examine for change in
-result trends across years of publication. Below we detail our methods
-and the ICSR/Scopus data to answer these questions, along with examples
-of the statistical results we expect to report in the manuscript. We
-began this project with data using Google Scholar and ORCID information.
-These sources were severely limited in their scope and breadth, as they
-are often curated with automatic processes or self-entered data, and we
-believe that access to Scopus and ICSR would allow us to accurately
-portray the BTS movement and its impact on diversity across many fields.
-The novelty of this project is that it would focus on all of published
-works, rather than a specific subfield (like Psychology) and give a lens
-into global representation in science that would otherwise not be
-achieved with open-source databases.
+This manuscript was preregistered with the same conceptual ideas using Google Scholar and ORC-ID databases (\url{https://osf.io/f2dtr}) but then was updated with access to the Scopus database for a broader picture of BTS projects (\url{https://osf.io/fheun}). All materials and code can be found on our OSF page: \url{https://osf.io/cgx6u/} or corresponding GitHub archive: \url{https://github.com/doomlab/big_team_who}.
 
 \hypertarget{method}{%
 \section{Method}\label{method}}
@@ -376,17 +332,17 @@ achieved with open-source databases.
 \hypertarget{publications}{%
 \subsection{Publications}\label{publications}}
 
-We have defined \textbf{BTS publications} as publications with at least 10
-authors at 10 different institutions that were published in
-peer-reviewed journals or had posted a full paper pre-print. We will use
-data from 1970 and forward in the publications (\texttt{ani}) database, as it
+We have defined BTS publications as publications with at least ten
+authors at ten different institutions that were published in
+peer-reviewed journals or had posted a full paper pre-print. We used
+data from 1970 and forward in the Scopus database, as it
 is noted online that this time period includes cited references for
 calculation of several of our variables described below. We will analyze
-our results based on the big four subject areas: Physical Sciences,
+our results based on four subject areas present in the Scopus database: Physical Sciences,
 Health Sciences, Social Sciences, and Life Sciences. We filtered the
 database to include articles, articles in press, business articles,
 conference papers, data papers, preprints, and surveys using Elsevier's
-classification system.
+classification system. This project was supported by access to the Scopus database through the International Center for the Study of Research.
 
 \hypertarget{data-curation}{%
 \subsection{Data Curation}\label{data-curation}}
@@ -394,66 +350,50 @@ classification system.
 \hypertarget{rq1-publisher-information.}{%
 \subsubsection{RQ1: Publisher Information.}\label{rq1-publisher-information.}}
 
-Using these criteria, we will extract the following information for
-publication sources: the name of the publication (source title), subject
-area (both the large four subject areas and the smaller four digit all
-science journal classification ASJC codes). We will examine journal
-impact using the Source Normalized Impact per Paper from the journal
-(\texttt{sources}) database.
+We extracted the following information for publication sources: the name of the publication (source title), subject area (both the large four subject areas and the smaller four digit all science journal classification {[}ASJC{]} code), and the journal
+impact using the Source Normalized Impact per Paper (SNIP).
 
 \hypertarget{rq2-publication-information.}{%
 \subsubsection{RQ2: Publication Information.}\label{rq2-publication-information.}}
 
-For each publication of the identified BTS publications, we will analyze
+For each publication of the identified BTS publications, we examined
 the full four digit ASJC subject areas codes for each of the larger four
 subject areas and the keywords present for these publications.
 
 \hypertarget{rq3-author-information.}{%
 \subsubsection{RQ3: Author Information.}\label{rq3-author-information.}}
 
-The author list will then be extracted from each publication. Next, we
-will use the author (\texttt{au}) and affiliation (\texttt{af}) array to curate a list
-of all publications and author information included in BTS papers. We
-will use these two arrays with the publication array to calculate the
-variables described below.
+The author list was extracted from each publication. Next, we used the author and affiliation arrays to curate a list of all publications and author information included in BTS papers to calculate the variables described below.
 
-\textbf{\emph{Career Length}}. Career length for each author will be defined as
-the year of the first publication listed for each author.
+\textbf{\emph{Career Length}}. Career length for each author was defined as
+the year of the first publication minus the current year listed for each author.
 
-\textbf{\emph{Institution and Geopolitical Region}} . We will use the affiliation
+\textbf{\emph{Institution and Geopolitical Region}}. We used the affiliation
 ids and country to gather information about the places of education
-and/or employment for authors. Country will likely be binned into United Nation Region, Sub-Region, or smaller clusters for analyses.
+and/or employment for authors. Geopolitical region was created by binning these codes into United Nation Regions.
 
-\textbf{\emph{Education}}. We will also collect degree information from the author table.
+\textbf{\emph{Education}}. We collected degree information from the author table.
 
-\textbf{\emph{Types of Publications}}. We will gather information from the
-publication type variable for each author publication to present
+\textbf{\emph{Types of Publications}}. We took information from the
+publication type variable for each author's publications to present
 information about the types of papers BTS authors publish.
 
-\textbf{\emph{Publication Metrics}}. For each author, we will calculate the total
+\textbf{\emph{Publication Metrics}}. For each author, we calculated the total
 number of publications, and the h-index. The h-index represents the
 highest \emph{h} number of publications that have at least \emph{h} citations.
 
-\hypertarget{data-analysis}{%
-\subsection{Data analysis}\label{data-analysis}}
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+We used the 95\% confidence interval to make decisions on predictor or effect size differences from zero. The confidence interval that does not include zero would be considered different from zero (to four decimal places). We made no directional predictions.
 
 \hypertarget{rq1-publisher-information.-1}{%
-\subsubsection{RQ1: Publisher Information.}\label{rq1-publisher-information.-1}}
-
-To present results on this research question, we will analyze:
-
-\begin{itemize}
-\tightlist
-\item
-  Number of articles for inclusion: total, separated by four subject
-  areas, presenting graphics of the number of publication across time
-  total
-\end{itemize}
+\subsection{RQ1: Publisher Information.}\label{rq1-publisher-information.-1}}
 
 \emph{Number of articles}. The total number of articles included in this analysis was 510334 including 445301 Health Sciences articles, 228194
 Physical Sciences articles, 26652 Social Sciences articles, and
 307514 Life Sciences articles. Articles could be classified into
-multiple categories. Figure X shows the number of articles published across time for each of the four large subject areas.
+multiple categories. Figure \ref{fig:fig-pub-time} shows the number of articles published across time for each of the four large subject areas.
 
 \begin{figure}
 \centering
@@ -461,77 +401,17 @@ multiple categories. Figure X shows the number of articles published across time
 \caption{\label{fig:fig-pub-time}Number of big-team science publications separated by four large subject areas across years.}
 \end{figure}
 
-\begin{itemize}
-\tightlist
-\item
-  Number of distinct journals within each of the four subject areas
-\end{itemize}
-
 \emph{Number of journals}. The number of distinct journals big team science articles were published
 in was 14924 with 6559 journals in Health Sciences,
 5787 journals in Physical Sciences, 2500
 journals in Social Sciences, and 4187 journals in Life
 Sciences. The descriptive statistics for the Source Normalized Impact
-per Paper is presented in Table X. For comparison, the SNIP descriptive
-statistics for all papers is shown in Table X.
-
-\begin{table}[tbp]
-
-\begin{center}
-\begin{threeparttable}
-
-\caption{\label{tab:tab-snip}Big-Team Science SNIP Values}
-
-\begin{tabular}{llllll}
-\toprule
-Subject Area & \multicolumn{1}{c}{M} & \multicolumn{1}{c}{SD} & \multicolumn{1}{c}{Minimum} & \multicolumn{1}{c}{Median} & \multicolumn{1}{c}{Maximum}\\
-\midrule
-Health Sciences & 2.36 & 3.59 & 0.00 & 1.58 & 173.93\\
-Physical Sciences & 1.57 & 1.17 & 0.00 & 1.27 & 30.40\\
-Social Sciences & 1.94 & 1.72 & 0.00 & 1.52 & 30.40\\
-Life Sciences & 2.02 & 1.60 & 0.00 & 1.51 & 19.07\\
-\bottomrule
-\end{tabular}
-
-\end{threeparttable}
-\end{center}
-
-\end{table}
-
-\begin{table}[tbp]
-
-\begin{center}
-\begin{threeparttable}
-
-\caption{\label{tab:tab-snip-all}All Journal Articles SNIP Values}
-
-\begin{tabular}{llllll}
-\toprule
-Subject Area & \multicolumn{1}{c}{M} & \multicolumn{1}{c}{SD} & \multicolumn{1}{c}{Minimum} & \multicolumn{1}{c}{Median} & \multicolumn{1}{c}{Maximum}\\
-\midrule
-Health Sciences & 1.45 & 2.87 & 0.00 & 1.15 & 173.93\\
-Physical Sciences & 1.08 & 0.77 & 0.00 & 0.97 & 30.40\\
-Social Sciences & 1.32 & 1.03 & 0.00 & 1.15 & 30.40\\
-Life Sciences & 1.19 & 0.86 & 0.00 & 1.06 & 19.07\\
-\bottomrule
-\end{tabular}
-
-\end{threeparttable}
-\end{center}
-
-\end{table}
+per Paper is presented the supplemental materials with a comparison for all papers.
 
 \hypertarget{rq2-publication-information.-1}{%
-\subsubsection{RQ2: Publication Information.}\label{rq2-publication-information.-1}}
+\subsection{RQ2: Publication Information.}\label{rq2-publication-information.-1}}
 
-For each publication, we will examine:
-
-\begin{itemize}
-\tightlist
-\item
-  The totals of the number of articles published within the smaller
-  subject area classifications. We will visualize these differences to show the areas of interest for each of the four large subject areas.
-\end{itemize}
+Publication interest area was summarized by the four large subject areas creating a word cloud plot of the total number of publications within the ASJCs. Figure @\ref(fig:fig-clouds) displays that the health sciences tends to publish within medicine and oncology, with a corresponding focus of cancer research and genetics for the life sciences. The physical sciences is mostly dominated by physics research, chemistry, and ecology. The BTS publications in the social sciences are mostly within psychology, education, and health.
 
 \begin{figure}
 \centering
@@ -539,143 +419,45 @@ For each publication, we will examine:
 \caption{\label{fig:fig-clouds}Journal Areas for Big-Team Science Publications by Subject Area}
 \end{figure}
 
-\begin{itemize}
-\tightlist
-\item
-  The keywords present in the publications data overall to identify
-  trends and common themes in the publications for the four subject
-  areas using visualizations (wordclouds) to depict the common
-  keywords.
-\end{itemize}
-
-\begin{figure}
-\centering
-\includegraphics{manuscript_scopus_files/figure-latex/fig-keywords-1.pdf}
-\caption{\label{fig:fig-keywords}Keyword Analysis for Each of the Four Subject Areas.}
-\end{figure}
-
 \hypertarget{rq3-authors.}{%
-\subsubsection{RQ3: Authors.}\label{rq3-authors.}}
+\subsection{RQ3: Authors.}\label{rq3-authors.}}
 
-We will first present:
-
-\begin{itemize}
-\tightlist
-\item
-  The total number of unique authors
-\end{itemize}
-
-The total number of unique authors across all publications was
-510334.
-
-\begin{itemize}
-\tightlist
-\item
-  Statistics (mean, standard deviation, minimum, maximum, median) on
-  the number of authors included on publications.
-\end{itemize}
-
-The mean number of authors per publication was \emph{M} = 49.31
-(\emph{SD} = 212.98, \emph{Med} = 18) with a range of
-10 to 5568.
-
-\begin{itemize}
-\tightlist
-\item
-  We will present visualizations of these results across time.
-\end{itemize}
+The total number of unique authors across all publications was 510334. The mean number of authors per publication was \emph{M} = 49.31 (\emph{SD} = 212.98, \emph{Med} = 18) with a range of 10 to 5568. The median and average number of authors by subject area are displayed in Figure \ref{fig:fig-author-year}. In general, the average and median number of authors increased over time, with the exception of the skew in the physical sciences. Interestingly, the effect in the physical sciences appears to be declining toward the general trends seen in other areas in the last few decades.
 
 \begin{figure}
 \centering
 \includegraphics{manuscript_scopus_files/figure-latex/fig-author-year-1.pdf}
-\caption{\label{fig:fig-author-year}Number of authors included on big-team science papers per year by subject area. Colored dots indicate the mean number of authors, while the black dots represent the median number of authors. The size of the black dots indicate the number of papers in that year.}
+\caption{\label{fig:fig-author-year}Number of authors included on big-team science papers per year by subject area. Given the large skew in the data, the left panel presents the median number of authors per manuscript, and the right panel presents the average number of authors per manuscript by year.}
 \end{figure}
-
-We will use the 95\% confidence interval to make all claims of predictors
-or effects different zero. The confidence interval that does not include
-zero would be considered different from zero (to four decimal places).
-We make no directional predictions.
 
 \textbf{\emph{Career Length}}.
 
-\begin{itemize}
-\tightlist
-\item
-  We will create a visualization of the trend and variance of
-  researcher career length across publication years.
-\end{itemize}
+Figure \ref{fig:fig-career} portrays the average career length for authors involved in BTS publications across years. Career length was defined as the year of first publication minus the current year, and higher numbers mean longer careers. To analyze trends over time, we calculated the average career length for each publication (i.e., average author career lengths to create one score for each paper) and analyzed a regression analysis using career length to predict year of publication. In order to show variance between individuals, we calculated the standard deviation of career length for each publication and used variance as an additional predictor.
+
+Negative career length slopes would indicate more young scholars in later years (i.e., lower average career length as time increases). Positive career length slopes would indicate older scholars in later years (i.e., higher average career length as time increases). Negative career variance slopes imply that variability decreases over the years, so the average career length is more homogeneous. Positive career length slopes imply that variability increases over the years, so the average career length is varied across individuals (i.e., different stages of scholars). Figure \ref{fig:fig-heatmap} displays the results for all regression analyses to compare coefficient strength across and within hypothesis.
+
+All values for this analyses were different from zero. The slopes for the average career length were negative for all four subject areas, indicating a trend toward younger scientist involvement over time for each area, with the strongest effect in the Physical sciences. The coefficient for variability in career length was also negative for each of the four subject areas with the highest in the Physical sciences and lowest in the Life Sciences. This result indicates a decrease in the variability of career lengths over time, likely from two sources: 1) more publications with more authors, thus, lowering variance estimations, and 2) more young scholars overall. The effect sizes for this analysis were surprisingly large ranging from \(R^2\) to .25 to .47. All values and their confidence intervals can be found on our OSF page.
 
 \begin{figure}
 \centering
 \includegraphics{manuscript_scopus_files/figure-latex/fig-career-1.pdf}
-\caption{\label{fig:fig-career}Average career length for big-team science authors. Larger dots indicate more papers for each estimation. Lighter colored dots mean less variability in author career length, while darker dots mean more variability in career length.}
+\caption{\label{fig:fig-career}Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year.}
 \end{figure}
 
-\begin{itemize}
-\tightlist
-\item
-  To analyze trends over time, we will calculate the average career
-  length for each publication (i.e., average the author career length
-  to create one score for each paper) and run a regression analysis
-  using career length to predict year of publication. In order to show
-  variance between individuals, we calculate the standard deviation of
-  career length for each publication and run a regression analysis
-  using this variance representation to predict publication year.
-  These two variables will be used together.
-\item
-  Negative slopes would indicate more young scholars in later years
-  (i.e., lower average career length as time increases). Positive
-  slopes would indicate older scholars in later years (i.e., higher
-  average career length as time increases).
-\item
-  Negative slopes imply that variability decreases over the years, so
-  the average career length is more homogeneous. Positive slopes imply
-  that variability increases over the years, so the average career
-  length is varied across individuals (lots of different types of
-  scholars).
-\item
-  These analyses will be completed separately for each of the four
-  large subject areas.
-\end{itemize}
+\begin{verbatim}
+## Warning in width_strings[fixed_areas[[i]]$cols] == "-1null" && length(w) == :
+## 'length(x) = 3 > 1' in coercion to 'logical(1)'
+\end{verbatim}
 
 \begin{figure}
 \centering
-\includegraphics{manuscript_scopus_files/figure-latex/fig-career-results-1.pdf}
-\caption{\label{fig:fig-career-results}Coefficient values for the average career length, variance in career length, and the effect size for each model predicting year of publication.}
+\includegraphics{manuscript_scopus_files/figure-latex/fig-heatmap-1.pdf}
+\caption{\label{fig:fig-heatmap}Heatmap results of regression analyses for career length, number of publications, and geopolitical diversity in region. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.}
 \end{figure}
 
 \textbf{\emph{Institution}}.
 
-\begin{itemize}
-\tightlist
-\item
-  We will summarize the number of affiliation ids present in BTS
-  publications by subject area and visualize these results across
-  time. These visualizations will be presented separately for each of
-  the four subject areas.
-\end{itemize}
-
 The total number of unique affiliation across all papers was 463876.
-
-\begin{figure}
-\centering
-\includegraphics{manuscript_scopus_files/figure-latex/fig-inst-1.pdf}
-\caption{\label{fig:fig-inst}Number of unique institutions involved in big-team science papers across decades.}
-\end{figure}
-
-\textbf{\emph{Types of Publications}}.
-
-\begin{itemize}
-\tightlist
-\item
-  We will summarize the coded types of publications for individuals.
-\end{itemize}
-
-\begin{figure}
-\centering
-\includegraphics{manuscript_scopus_files/figure-latex/fig-pub-types-1.pdf}
-\caption{\label{fig:fig-pub-types}Types of publications for big-team science and all authors.}
-\end{figure}
 
 \textbf{\emph{Publication Metrics}}.
 
@@ -734,12 +516,6 @@ manuscripts was \(M_{SD}\) = 211.80 (\(SD_{SD}\) =
   We will separate these by each of the four subject areas.
 \end{itemize}
 
-\begin{figure}
-\centering
-\includegraphics{manuscript_scopus_files/figure-latex/fig-pub-results-1.pdf}
-\caption{\label{fig:fig-pub-results}Coefficient values for the publication totals, variance in publication totals, and the effect size for each model predicting year of publication.}
-\end{figure}
-
 \textbf{\emph{Geopolitical Regions}}.
 
 \begin{itemize}
@@ -758,7 +534,6 @@ manuscripts was \(M_{SD}\) = 211.80 (\(SD_{SD}\) =
 \end{figure}
 
 \begin{itemize}
-\tightlist
 \item
   To understand the change in representation diversity, we will
   summarize the total number of geopolitical regions for each paper.
@@ -766,16 +541,6 @@ manuscripts was \(M_{SD}\) = 211.80 (\(SD_{SD}\) =
   present is predicted by the year of publication. Increasing
   diversity would be represented by a positive slope, while decreasing
   diversity would be represented by a negative slope.
-\end{itemize}
-
-\begin{figure}
-\centering
-\includegraphics{manuscript_scopus_files/figure-latex/fig-diversity-1.pdf}
-\caption{\label{fig:fig-diversity}Number of geopolitical regions represented in big-team science publiactions predicting time and the overall model effect size.}
-\end{figure}
-
-\begin{itemize}
-\tightlist
 \item
   Last, we will examine the differences in representation for
   corresponding author sets versus all other authors. For papers with
@@ -832,10 +597,10 @@ Allen, L., O'Connell, A., \& Kiermer, V. (2019). How can we ensure visibility an
 Auspurg, K., \& Brüderl, J. (2021). Has the credibility of the social sciences been credibly destroyed? Reanalyzing the {``}many analysts, one data set{''} project. \emph{Socius : Sociological Research for a Dynamic World}, \emph{7}, 23780231211024420.
 
 \leavevmode\vadjust pre{\hypertarget{ref-bago2022}{}}%
-Bago, B., Kovacs, M., Protzko, J., Nagy, T., Kekecs, Z., Palfi, B., Adamkovic, M., Adamus, S., Albalooshi, S., Albayrak-Aydemir, N., Alfian, I. N., Alper, S., Alvarez-Solas, S., Alves, S. G., Amaya, S., Andresen, P. K., Anjum, G., Ansari, D., Arriaga, P., \ldots{} Aczel, B. (2022). Situational factors shape moral judgements in the trolley dilemma in Eastern, Southern and Western countries in a culturally diverse sample. \emph{Nature Human Behaviour}, 1--13. \url{https://doi.org/10.1038/s41562-022-01319-5}
+Bago, B., Kovacs, M., Protzko, J., Nagy, T., Kekecs, Z., Palfi, B., \ldots{} Aczel, B. (2022). Situational factors shape moral judgements in the trolley dilemma in Eastern, Southern and Western countries in a culturally diverse sample. \emph{Nature Human Behaviour}, 1--13. \url{https://doi.org/10.1038/s41562-022-01319-5}
 
 \leavevmode\vadjust pre{\hypertarget{ref-buttrick2020}{}}%
-Buttrick, N. R., Aczel, B., Aeschbach, L. F., Bakos, B. E., Brühlmann, F., Claypool, H. M., Hüffmeier, J., Kovacs, M., Schuepfer, K., Szecsi, P., Szuts, A., Szöke, O., Thomae, M., Torka, A.-K., Walker, R. J., \& Wood, M. J. (2020). Many Labs 5: Registered Replication of Vohs and Schooler (2008), Experiment 1. \emph{Advances in Methods and Practices in Psychological Science}, \emph{3}(3), 429--438. \url{https://doi.org/10.1177/2515245920917931}
+Buttrick, N. R., Aczel, B., Aeschbach, L. F., Bakos, B. E., Brühlmann, F., Claypool, H. M., \ldots{} Wood, M. J. (2020). Many Labs 5: Registered Replication of Vohs and Schooler (2008), Experiment 1. \emph{Advances in Methods and Practices in Psychological Science}, \emph{3}(3), 429--438. \url{https://doi.org/10.1177/2515245920917931}
 
 \leavevmode\vadjust pre{\hypertarget{ref-castelnovo2018}{}}%
 Castelnovo, P., Florio, M., Forte, S., Rossi, L., \& Sirtori, E. (2018). The economic impact of technological procurement for large-scale research infrastructures: Evidence from the Large Hadron Collider at CERN. \emph{Research Policy}, \emph{47}(9), 1853--1867. \url{https://doi.org/10.1016/j.respol.2018.06.018}
@@ -847,13 +612,13 @@ Coles, N. A., Hamlin, J. K., Sullivan, L. L., Parker, T. H., \& Altschul, D. (20
 Collins, F. S., Morgan, M., \& Patrinos, A. (2003). The human genome project: Lessons from large-scale biology. \emph{Science}, \emph{300}(5617), 286--290. \url{https://doi.org/10.1126/science.1084564}
 
 \leavevmode\vadjust pre{\hypertarget{ref-dorison2022}{}}%
-Dorison, C., Lerner, J., Heller, B., Rothman, A., Kawachi, I., Wang, K., Rees, V., Gill, B., Gibbs, N., Ebersole, C., Vally, Z., Tajchman, Z., Zsido, A., Zrimsek, M., Chen, Z., Ziano, I., Gialitaki, Z., Ceary, C., Jang, Y., \ldots{} Coles, N. (2022). A global test of message framing on behavioural intentions, policy support, information seeking, and experienced anxiety during the COVID-19 pandemic. \emph{Affective Science}. \url{https://doi.org/10.31234/osf.io/sevkf}
+Dorison, C., Lerner, J., Heller, B., Rothman, A., Kawachi, I., Wang, K., \ldots{} Coles, N. (2022). A global test of message framing on behavioural intentions, policy support, information seeking, and experienced anxiety during the COVID-19 pandemic. \emph{Affective Science}. \url{https://doi.org/10.31234/osf.io/sevkf}
 
 \leavevmode\vadjust pre{\hypertarget{ref-ebersole2016}{}}%
-Ebersole, C. R., Atherton, O. E., Belanger, A. L., Skulborstad, H. M., Allen, J. M., Banks, J. B., Baranski, E., Bernstein, M. J., Bonfiglio, D. B. V., Boucher, L., Brown, E. R., Budiman, N. I., Cairo, A. H., Capaldi, C. A., Chartier, C. R., Chung, J. M., Cicero, D. C., Coleman, J. A., Conway, J. G., \ldots{} Nosek, B. A. (2016). Many Labs 3: Evaluating participant pool quality across the academic semester via replication. \emph{Journal of Experimental Social Psychology}, \emph{67}, 68--82. \url{https://doi.org/10.1016/j.jesp.2015.10.012}
+Ebersole, C. R., Atherton, O. E., Belanger, A. L., Skulborstad, H. M., Allen, J. M., Banks, J. B., \ldots{} Nosek, B. A. (2016). Many Labs 3: Evaluating participant pool quality across the academic semester via replication. \emph{Journal of Experimental Social Psychology}, \emph{67}, 68--82. \url{https://doi.org/10.1016/j.jesp.2015.10.012}
 
 \leavevmode\vadjust pre{\hypertarget{ref-ebersole2020}{}}%
-Ebersole, C. R., Mathur, M. B., Baranski, E., Bart-Plange, D.-J., Buttrick, N. R., Chartier, C. R., Corker, K. S., Corley, M., Hartshorne, J. K., IJzerman, H., Lazarević, L. B., Rabagliati, H., Ropovik, I., Aczel, B., Aeschbach, L. F., Andrighetto, L., Arnal, J. D., Arrow, H., Babincak, P., \ldots{} Nosek, B. A. (2020). Many Labs 5: Testing Pre-Data-Collection Peer Review as an Intervention to Increase Replicability. \emph{Advances in Methods and Practices in Psychological Science}, \emph{3}(3), 309--331. \url{https://doi.org/10.1177/2515245920958687}
+Ebersole, C. R., Mathur, M. B., Baranski, E., Bart-Plange, D.-J., Buttrick, N. R., Chartier, C. R., \ldots{} Nosek, B. A. (2020). Many Labs 5: Testing Pre-Data-Collection Peer Review as an Intervention to Increase Replicability. \emph{Advances in Methods and Practices in Psychological Science}, \emph{3}(3), 309--331. \url{https://doi.org/10.1177/2515245920958687}
 
 \leavevmode\vadjust pre{\hypertarget{ref-10.7554ux2feLife.71601}{}}%
 Errington, T. M., Mathur, M., Soderberg, C. K., Denis, A., Perfito, N., Iorns, E., \& Nosek, B. A. (2021). Investigating the replicability of preclinical cancer biology. \emph{eLife}, \emph{10}, e71601. \url{https://doi.org/10.7554/eLife.71601}
@@ -874,40 +639,40 @@ Henrich, J., Heine, S. J., \& Norenzayan, A. (2010). The weirdest people in the 
 Hubbard, R., \& Armstrong, J. S. (1997). Publication Bias against Null Results. \emph{Psychological Reports}, \emph{80}(1), 337--338. \url{https://doi.org/10.2466/pr0.1997.80.1.337}
 
 \leavevmode\vadjust pre{\hypertarget{ref-ioannidis2015}{}}%
-Ioannidis, J. P. A. (2015). Failure to replicate: Sound the alarm. \emph{Cerebrum: The Dana Forum on Brain Science}, \emph{2015}. \url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4938249/}
+Ioannidis, J. P. A. (2015). Failure to replicate: Sound the alarm. \emph{Cerebrum: The Dana Forum on Brain Science}, \emph{2015}. Retrieved from \url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4938249/}
 
 \leavevmode\vadjust pre{\hypertarget{ref-isager2021}{}}%
-Isager, P. M., Aert, R. C. M. van, Bahník, Š., Brandt, M. J., DeSoto, K. A., Giner-Sorolla, R., Krueger, J. I., Perugini, M., Ropovik, I., van 't Veer, A. E., Vranka, M., \& Lakens, D. (2021a). Deciding what to replicate: A decision model for replication study selection under resource and knowledge constraints. \emph{Psychological Methods}. \url{https://doi.org/10.1037/met0000438}
+Isager, P. M., Aert, R. C. M. van, Bahník, Š., Brandt, M. J., DeSoto, K. A., Giner-Sorolla, R., \ldots{} Lakens, D. (2021a). Deciding what to replicate: A decision model for replication study selection under resource and knowledge constraints. \emph{Psychological Methods}. \url{https://doi.org/10.1037/met0000438}
 
 \leavevmode\vadjust pre{\hypertarget{ref-isager2021a}{}}%
-Isager, P. M., Aert, R. C. M. van, Bahník, Š., Brandt, M. J., DeSoto, K. A., Giner-Sorolla, R., Krueger, J. I., Perugini, M., Ropovik, I., van 't Veer, A. E., Vranka, M., \& Lakens, D. (2021b). Deciding what to replicate: A decision model for replication study selection under resource and knowledge constraints. \emph{Psychological Methods}. \url{https://doi.org/10.1037/met0000438}
+Isager, P. M., Aert, R. C. M. van, Bahník, Š., Brandt, M. J., DeSoto, K. A., Giner-Sorolla, R., \ldots{} Lakens, D. (2021b). Deciding what to replicate: A decision model for replication study selection under resource and knowledge constraints. \emph{Psychological Methods}. \url{https://doi.org/10.1037/met0000438}
 
 \leavevmode\vadjust pre{\hypertarget{ref-john2012}{}}%
 John, L. K., Loewenstein, G., \& Prelec, D. (2012). Measuring the Prevalence of Questionable Research Practices With Incentives for Truth Telling. \emph{Psychological Science}, \emph{23}(5), 524--532. \url{https://doi.org/10.1177/0956797611430953}
 
 \leavevmode\vadjust pre{\hypertarget{ref-jones2021}{}}%
-Jones, B. C., DeBruine, L. M., Flake, J. K., Liuzza, M. T., Antfolk, J., Arinze, N. C., Ndukaihe, I. L. G., Bloxsom, N. G., Lewis, S. C., Foroni, F., Willis, M. L., Cubillas, C. P., Vadillo, M. A., Turiegano, E., Gilead, M., Simchon, A., Saribay, S. A., Owsley, N. C., Jang, C., \ldots{} Coles, N. A. (2021). To which world regions does the valence{\textendash}dominance model of social perception apply? \emph{Nature Human Behaviour}, \emph{5}(1), 159--169. \url{https://doi.org/10.1038/s41562-020-01007-2}
+Jones, B. C., DeBruine, L. M., Flake, J. K., Liuzza, M. T., Antfolk, J., Arinze, N. C., \ldots{} Coles, N. A. (2021). To which world regions does the valence{\textendash}dominance model of social perception apply? \emph{Nature Human Behaviour}, \emph{5}(1), 159--169. \url{https://doi.org/10.1038/s41562-020-01007-2}
 
 \leavevmode\vadjust pre{\hypertarget{ref-kidwell2016}{}}%
-Kidwell, M. C., Lazarević, L. B., Baranski, E., Hardwicke, T. E., Piechowski, S., Falkenberg, L.-S., Kennett, C., Slowik, A., Sonnleitner, C., Hess-Holden, C., Errington, T. M., Fiedler, S., \& Nosek, B. A. (2016). Badges to Acknowledge Open Practices: A Simple, Low-Cost, Effective Method for Increasing Transparency. \emph{PLOS Biology}, \emph{14}(5), e1002456. \url{https://doi.org/10.1371/journal.pbio.1002456}
+Kidwell, M. C., Lazarević, L. B., Baranski, E., Hardwicke, T. E., Piechowski, S., Falkenberg, L.-S., \ldots{} Nosek, B. A. (2016). Badges to Acknowledge Open Practices: A Simple, Low-Cost, Effective Method for Increasing Transparency. \emph{PLOS Biology}, \emph{14}(5), e1002456. \url{https://doi.org/10.1371/journal.pbio.1002456}
 
 \leavevmode\vadjust pre{\hypertarget{ref-klein2022}{}}%
-Klein, R. A., Cook, C. L., Ebersole, C. R., Vitiello, C., Nosek, B. A., Hilgard, J., Ahn, P. H., Brady, A. J., Chartier, C. R., Christopherson, C. D., Clay, S., Collisson, B., Crawford, J. T., Cromar, R., Gardiner, G., Gosnell, C. L., Grahe, J., Hall, C., Howard, I., \ldots{} Ratliff, K. A. (2022). Many Labs 4: Failure to Replicate Mortality Salience Effect With and Without Original Author Involvement. \emph{Collabra: Psychology}, \emph{8}(1), 35271. \url{https://doi.org/10.1525/collabra.35271}
+Klein, Richard A., Cook, C. L., Ebersole, C. R., Vitiello, C., Nosek, B. A., Hilgard, J., \ldots{} Ratliff, K. A. (2022). Many Labs 4: Failure to Replicate Mortality Salience Effect With and Without Original Author Involvement. \emph{Collabra: Psychology}, \emph{8}(1), 35271. \url{https://doi.org/10.1525/collabra.35271}
 
 \leavevmode\vadjust pre{\hypertarget{ref-klein2018}{}}%
-Klein, R. A., Vianello, M., Hasselman, F., Adams, B. G., Adams, R. B., Alper, S., Aveyard, M., Axt, J. R., Babalola, M. T., Bahník, Š., Batra, R., Berkics, M., Bernstein, M. J., Berry, D. R., Bialobrzeska, O., Binan, E. D., Bocian, K., Brandt, M. J., Busching, R., \ldots{} Nosek, B. A. (2018). Many Labs 2: Investigating Variation in Replicability Across Samples and Settings. \emph{Advances in Methods and Practices in Psychological Science}, \emph{1}(4), 443--490. \url{https://doi.org/10.1177/2515245918810225}
+Klein, Richard A., Vianello, M., Hasselman, F., Adams, B. G., Adams, R. B., Alper, S., \ldots{} Nosek, B. A. (2018). Many Labs 2: Investigating Variation in Replicability Across Samples and Settings. \emph{Advances in Methods and Practices in Psychological Science}, \emph{1}(4), 443--490. \url{https://doi.org/10.1177/2515245918810225}
 
 \leavevmode\vadjust pre{\hypertarget{ref-lebel2018}{}}%
 LeBel, E. P., McCarthy, R. J., Earp, B. D., Elson, M., \& Vanpaemel, W. (2018). A Unified Framework to Quantify the Credibility of Scientific Findings. \emph{Advances in Methods and Practices in Psychological Science}, \emph{1}(3), 389--402. \url{https://doi.org/10.1177/2515245918787489}
 
 \leavevmode\vadjust pre{\hypertarget{ref-legate2022}{}}%
-Legate, N., Nguyen, T., Weinstein, N., Moller, A., Legault, L., Maniaci, M. R., Ebersole, C. R., Adamkovic, M., Adetula, D. G. A., Agesin, B. B., Ahlgren, L., Akkas, H., Almeida, I., Anjum, G., Antoniadi, M., Arinze, A. I., Arvanitis, A., Rana, K., Badalyan, V., \ldots{} Primbs, M. (2022). A global experiment on motivating social distancing during the COVID-19 pandemic. \emph{Proceedings of the National Academy of Sciences}. \url{https://doi.org/10.31234/osf.io/n3dyf}
+Legate, N., Nguyen, T., Weinstein, N., Moller, A., Legault, L., Maniaci, M. R., \ldots{} Primbs, M. (2022). A global experiment on motivating social distancing during the COVID-19 pandemic. \emph{Proceedings of the National Academy of Sciences}. \url{https://doi.org/10.31234/osf.io/n3dyf}
 
 \leavevmode\vadjust pre{\hypertarget{ref-maizey2019}{}}%
 Maizey, L., \& Tzavella, L. (2019). Barriers and solutions for early career researchers in tackling the reproducibility crisis in cognitive neuroscience. \emph{Cortex}, \emph{113}, 357--359. \url{https://doi.org/10.1016/j.cortex.2018.12.015}
 
 \leavevmode\vadjust pre{\hypertarget{ref-mathur2020}{}}%
-Mathur, M. B., Bart-Plange, D.-J., Aczel, B., Bernstein, M. H., Ciunci, A. M., Ebersole, C. R., Falcão, F., Ashbaugh, K., Hilliard, R. A., Jern, A., Kellier, D. J., Kessinger, G., Kolb, V. S., Kovacs, M., Lage, C. A., Langford, E. V., Lins, S., Manfredi, D., Meyet, V., \ldots{} Frank, M. C. (2020). Many Labs 5: Registered Multisite Replication of the Tempting-Fate Effects in Risen and Gilovich (2008). \emph{Advances in Methods and Practices in Psychological Science}, \emph{3}(3), 394--404. \url{https://doi.org/10.1177/2515245918785165}
+Mathur, M. B., Bart-Plange, D.-J., Aczel, B., Bernstein, M. H., Ciunci, A. M., Ebersole, C. R., \ldots{} Frank, M. C. (2020). Many Labs 5: Registered Multisite Replication of the Tempting-Fate Effects in Risen and Gilovich (2008). \emph{Advances in Methods and Practices in Psychological Science}, \emph{3}(3), 394--404. \url{https://doi.org/10.1177/2515245918785165}
 
 \leavevmode\vadjust pre{\hypertarget{ref-maxwell2015}{}}%
 Maxwell, S. E., Lau, M. Y., \& Howard, G. S. (2015). Is psychology suffering from a replication crisis?: What does 'failure to replicate' really mean? \emph{American Psychologist}, \emph{70}(6), 487--498. \url{https://doi.org/10.1037/a0039400}
@@ -916,7 +681,7 @@ Maxwell, S. E., Lau, M. Y., \& Howard, G. S. (2015). Is psychology suffering fro
 Mayo-Wilson, E., Grant, S., Supplee, L., Kianersi, S., Amin, A., DeHaven, A., \& Mellor, D. (2021). Evaluating implementation of the transparency and openness promotion~(TOP) guidelines:~The TRUST process for rating journal policies, procedures, and practices. \emph{Research Integrity and Peer Review}, \emph{6}(1), 9. \url{https://doi.org/10.1186/s41073-021-00112-8}
 
 \leavevmode\vadjust pre{\hypertarget{ref-moshontz2018}{}}%
-Moshontz, H., Campbell, L., Ebersole, C. R., IJzerman, H., Urry, H. L., Forscher, P. S., Grahe, J. E., McCarthy, R. J., Musser, E. D., Antfolk, J., Castille, C. M., Evans, T. R., Fiedler, S., Flake, J. K., Forero, D. A., Janssen, S. M. J., Keene, J. R., Protzko, J., Aczel, B., \ldots{} Chartier, C. R. (2018). The Psychological Science Accelerator: Advancing Psychology Through a Distributed Collaborative Network. \emph{Advances in Methods and Practices in Psychological Science}, \emph{1}(4), 501--515. \url{https://doi.org/10.1177/2515245918797607}
+Moshontz, H., Campbell, L., Ebersole, C. R., IJzerman, H., Urry, H. L., Forscher, P. S., \ldots{} Chartier, C. R. (2018). The Psychological Science Accelerator: Advancing Psychology Through a Distributed Collaborative Network. \emph{Advances in Methods and Practices in Psychological Science}, \emph{1}(4), 501--515. \url{https://doi.org/10.1177/2515245918797607}
 
 \leavevmode\vadjust pre{\hypertarget{ref-nelson2018}{}}%
 Nelson, L. D., Simmons, J., \& Simonsohn, U. (2018). Psychology's renaissance. \emph{Annual Review of Psychology}, \emph{69}(1), 511--534. \url{https://doi.org/10.1146/annurev-psych-122216-011836}
@@ -925,19 +690,19 @@ Nelson, L. D., Simmons, J., \& Simonsohn, U. (2018). Psychology's renaissance. \
 Newson, M., Buhrmester, M., Xygalatas, D., \& Whitehouse, H. (2021). Go WILD, not WEIRD. \emph{Journal for the Cognitive Science of Religion}, \emph{6}(1-2). \url{https://doi.org/10.1558/jcsr.38413}
 
 \leavevmode\vadjust pre{\hypertarget{ref-nosek2015}{}}%
-Nosek, B. A., Alter, G., Banks, G. C., Borsboom, D., Bowman, S. D., Breckler, S. J., Buck, S., Chambers, C. D., Chin, G., Christensen, G., Contestabile, M., Dafoe, A., Eich, E., Freese, J., Glennerster, R., Goroff, D., Green, D. P., Hesse, B., Humphreys, M., \ldots{} Yarkoni, T. (2015). Promoting an open research culture. \emph{Science}, \emph{348}(6242), 1422--1425. \url{https://doi.org/10.1126/science.aab2374}
+Nosek, B. A., Alter, G., Banks, G. C., Borsboom, D., Bowman, S. D., Breckler, S. J., \ldots{} Yarkoni, T. (2015). Promoting an open research culture. \emph{Science}, \emph{348}(6242), 1422--1425. \url{https://doi.org/10.1126/science.aab2374}
 
 \leavevmode\vadjust pre{\hypertarget{ref-nosek2014method}{}}%
-Nosek, B. A., \& Lakens, D. (2014a). A method to increase the credibility of published results. \emph{Social Psychology}, \emph{45}(3), 137141.
+Nosek, Brian A., \& Lakens, D. (2014a). A method to increase the credibility of published results. \emph{Social Psychology}, \emph{45}(3), 137141.
 
 \leavevmode\vadjust pre{\hypertarget{ref-nosek2014}{}}%
-Nosek, B. A., \& Lakens, D. (2014b). Registered Reports: A Method to Increase the Credibility of Published Results. \emph{Social Psychology}, \emph{45}(3), 137--141. \url{https://doi.org/10.1027/1864-9335/a000192}
+Nosek, Brian A., \& Lakens, D. (2014b). Registered Reports: A Method to Increase the Credibility of Published Results. \emph{Social Psychology}, \emph{45}(3), 137--141. \url{https://doi.org/10.1027/1864-9335/a000192}
 
 \leavevmode\vadjust pre{\hypertarget{ref-nosek2012}{}}%
-Nosek, B. A., Spies, J. R., \& Motyl, M. (2012). Scientific Utopia: II. Restructuring Incentives and Practices to Promote Truth Over Publishability. \emph{Perspectives on Psychological Science}, \emph{7}(6), 615--631. \url{https://doi.org/10.1177/1745691612459058}
+Nosek, Brian A., Spies, J. R., \& Motyl, M. (2012). Scientific Utopia: II. Restructuring Incentives and Practices to Promote Truth Over Publishability. \emph{Perspectives on Psychological Science}, \emph{7}(6), 615--631. \url{https://doi.org/10.1177/1745691612459058}
 
 \leavevmode\vadjust pre{\hypertarget{ref-oed2016}{}}%
-OED. (2016). \emph{Collaboration} (Vol. 3). Oxford University.
+OED. (2016). \emph{Collaboration}. Oxford: Oxford University.
 
 \leavevmode\vadjust pre{\hypertarget{ref-opensciencecollaboration2015}{}}%
 Open Science Collaboration. (2015). Estimating the reproducibility of psychological science. \emph{Science}, \emph{349}(6251), aac4716--aac4716. \url{https://doi.org/10.1126/science.aac4716}
@@ -946,25 +711,25 @@ Open Science Collaboration. (2015). Estimating the reproducibility of psychologi
 Rad, M. S., Martingano, A. J., \& Ginges, J. (2018). Toward a psychology of homo sapiens: Making psychological science more representative of the human population. \emph{Proceedings of the National Academy of Sciences}, \emph{115}(45), 11401--11405. \url{https://doi.org/10.1073/pnas.1721165115}
 
 \leavevmode\vadjust pre{\hypertarget{ref-silberzahn2018many}{}}%
-Silberzahn, R., Uhlmann, E. L., Martin, D. P., Anselmi, P., Aust, F., Awtrey, E., Bahník, Š., Bai, F., Bannard, C., Bonnier, E., \& others. (2018). Many analysts, one data set: Making transparent how variations in analytic choices affect results. \emph{Advances in Methods and Practices in Psychological Science}, \emph{1}(3), 337356.
+Silberzahn, R., Uhlmann, E. L., Martin, D. P., Anselmi, P., Aust, F., Awtrey, E., \ldots{} others. (2018). Many analysts, one data set: Making transparent how variations in analytic choices affect results. \emph{Advances in Methods and Practices in Psychological Science}, \emph{1}(3), 337356.
 
 \leavevmode\vadjust pre{\hypertarget{ref-skorb2020}{}}%
-Skorb, L., Aczel, B., Bakos, B. E., Feinberg, L., Hałasa, E., Kauff, M., Kovacs, M., Krasuska, K., Kuchno, K., Manfredi, D., Montealegre, A., Pękala, E., Pieńkosz, D., Ravid, J., Rentzsch, K., Szaszi, B., Schulz-Hardt, S., Sioma, B., Szecsi, P., \ldots{} Hartshorne, J. K. (2020). Many Labs 5: Replication of van Dijk, van Kleef, Steinel, and van Beest (2008). \emph{Advances in Methods and Practices in Psychological Science}, \emph{3}(3), 418--428. \url{https://doi.org/10.1177/2515245920927643}
+Skorb, L., Aczel, B., Bakos, B. E., Feinberg, L., Hałasa, E., Kauff, M., \ldots{} Hartshorne, J. K. (2020). Many Labs 5: Replication of van Dijk, van Kleef, Steinel, and van Beest (2008). \emph{Advances in Methods and Practices in Psychological Science}, \emph{3}(3), 418--428. \url{https://doi.org/10.1177/2515245920927643}
 
 \leavevmode\vadjust pre{\hypertarget{ref-stewart2017}{}}%
 Stewart, N., Chandler, J., \& Paolacci, G. (2017). Crowdsourcing samples in cognitive science. \emph{Trends in Cognitive Sciences}, \emph{21}(10), 736--748. \url{https://doi.org/10.1016/j.tics.2017.06.007}
 
 \leavevmode\vadjust pre{\hypertarget{ref-stewart2020}{}}%
-Stewart, S., Rinke, E. M., McGarrigle, R., Lynott, D., Lunny, C., Lautarescu, A., Galizzi, M. M., Farran, E. K., \& Crook, Z. (2020). \emph{Pre-registration and registered reports: A primer from UKRN}. \url{https://doi.org/10.31219/osf.io/8v2n7}
+Stewart, S., Rinke, E. M., McGarrigle, R., Lynott, D., Lunny, C., Lautarescu, A., \ldots{} Crook, Z. (2020). \emph{Pre-registration and registered reports: A primer from UKRN}. \url{https://doi.org/10.31219/osf.io/8v2n7}
 
 \leavevmode\vadjust pre{\hypertarget{ref-vanbavel2022}{}}%
-Van Bavel, J. J., Cichocka, A., Capraro, V., Sjåstad, H., Nezlek, J. B., Pavlović, T., Alfano, M., Gelfand, M. J., Azevedo, F., Birtel, M. D., Cislak, A., Lockwood, P. L., Ross, R. M., Abts, K., Agadullina, E., Aruta, J. J. B., Besharati, S. N., Bor, A., Choma, B. L., \ldots{} Boggio, P. S. (2022). National identity predicts public health support during a global pandemic. \emph{Nature Communications}, \emph{13}(1), 517. \url{https://doi.org/10.1038/s41467-021-27668-9}
+Van Bavel, J. J., Cichocka, A., Capraro, V., Sjåstad, H., Nezlek, J. B., Pavlović, T., \ldots{} Boggio, P. S. (2022). National identity predicts public health support during a global pandemic. \emph{Nature Communications}, \emph{13}(1), 517. \url{https://doi.org/10.1038/s41467-021-27668-9}
 
 \leavevmode\vadjust pre{\hypertarget{ref-vazire2022}{}}%
 Vazire, S., Schiavone, S. R., \& Bottesini, J. G. (2022). Credibility Beyond Replicability: Improving the Four Validities in Psychological Science. \emph{Current Directions in Psychological Science}, \emph{31}(2), 162--168. \url{https://doi.org/10.1177/09637214211067779}
 
 \leavevmode\vadjust pre{\hypertarget{ref-wang2021}{}}%
-Wang, K., Goldenberg, A., Dorison, C. A., Miller, J. K., Uusberg, A., Lerner, J. S., Gross, J. J., Agesin, B. B., Bernardo, M., Campos, O., Eudave, L., Grzech, K., Ozery, D. H., Jackson, E. A., Garcia, E. O. L., Drexler, S. M., Jurković, A. P., Rana, K., Wilson, J. P., \ldots{} Moshontz, H. (2021). A multi-country test of brief reappraisal interventions on emotions during the COVID-19 pandemic. \emph{Nature Human Behaviour}, \emph{5}(8), 1089--1110. \url{https://doi.org/10.1038/s41562-021-01173-x}
+Wang, K., Goldenberg, A., Dorison, C. A., Miller, J. K., Uusberg, A., Lerner, J. S., \ldots{} Moshontz, H. (2021). A multi-country test of brief reappraisal interventions on emotions during the COVID-19 pandemic. \emph{Nature Human Behaviour}, \emph{5}(8), 1089--1110. \url{https://doi.org/10.1038/s41562-021-01173-x}
 
 \leavevmode\vadjust pre{\hypertarget{ref-zwaan2018}{}}%
 Zwaan, R. A., Etz, A., Lucas, R. E., \& Donnellan, M. B. (2018). Making replication mainstream. \emph{Behavioral and Brain Sciences}, \emph{41}, e120. \url{https://doi.org/10.1017/S0140525X17001972}
@@ -972,6 +737,97 @@ Zwaan, R. A., Etz, A., Lucas, R. E., \& Donnellan, M. B. (2018). Making replicat
 \end{CSLReferences}
 
 \endgroup
+
+\newpage
+
+\hypertarget{appendix-appendix}{%
+\appendix}
+
+
+\hypertarget{rq1-publisher-information.-2}{%
+\subsection{RQ1: Publisher Information.}\label{rq1-publisher-information.-2}}
+
+\textbf{Number of Journals}.
+
+Table \ref{tab:tab-snip} indicates the SNIP values for BTS publications, while Table \ref{tab:tab-snip-all}. The results from these tables indicate that impact values are slightly higher for BTS publications, while the overall median, minimum, and maximum are the same for each grouping.
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:tab-snip}Big-Team Science SNIP Values}
+
+\begin{tabular}{llllll}
+\toprule
+Subject Area & \multicolumn{1}{c}{M} & \multicolumn{1}{c}{SD} & \multicolumn{1}{c}{Minimum} & \multicolumn{1}{c}{Median} & \multicolumn{1}{c}{Maximum}\\
+\midrule
+Health Sciences & 2.36 & 3.59 & 0.00 & 1.58 & 173.93\\
+Physical Sciences & 1.57 & 1.17 & 0.00 & 1.27 & 30.40\\
+Social Sciences & 1.94 & 1.72 & 0.00 & 1.52 & 30.40\\
+Life Sciences & 2.02 & 1.60 & 0.00 & 1.51 & 19.07\\
+\bottomrule
+\end{tabular}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:tab-snip-all}All Journal Articles SNIP Values}
+
+\begin{tabular}{llllll}
+\toprule
+Subject Area & \multicolumn{1}{c}{M} & \multicolumn{1}{c}{SD} & \multicolumn{1}{c}{Minimum} & \multicolumn{1}{c}{Median} & \multicolumn{1}{c}{Maximum}\\
+\midrule
+Health Sciences & 1.45 & 2.87 & 0.00 & 1.15 & 173.93\\
+Physical Sciences & 1.08 & 0.77 & 0.00 & 0.97 & 30.40\\
+Social Sciences & 1.32 & 1.03 & 0.00 & 1.15 & 30.40\\
+Life Sciences & 1.19 & 0.86 & 0.00 & 1.06 & 19.07\\
+\bottomrule
+\end{tabular}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+\hypertarget{rq2-publication-information.-2}{%
+\subsection{RQ2: Publication Information.}\label{rq2-publication-information.-2}}
+
+\textbf{Keywords}. Figure \ref{fig:fig-keywords} indicates the most common keywords present for the BTS publications by subject area. The keywords were tokenized into single tokens. Keywords were then lowercased, and all stop words (for example, the, an, of, into, for) were removed. Finally, a frequency count of tokens was tabulated for each subject area, and this count is used to create the final word cloud presented.
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-keywords-1.pdf}
+\caption{\label{fig:fig-keywords}Keyword Analysis for Each of the Four Subject Areas.}
+\end{figure}
+
+\hypertarget{rq3-authors}{%
+\subsection{RQ3: Authors}\label{rq3-authors}}
+
+\textbf{Institution}.
+
+Institution was normalized by taking the total number of unique institutions and dividing by the total number of institution listings. The patterns are similar for each decade in that papers are often either half unique institutions or mostly unique institutions overall as show in Figure \ref{fig:fig-inst}.
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-inst-1.pdf}
+\caption{\label{fig:fig-inst}Number of unique institutions involved in big-team science papers across decades.}
+\end{figure}
+
+\textbf{\emph{Types of Publications}}.
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-pub-types-1.pdf}
+\caption{\label{fig:fig-pub-types}Types of publications for big-team science and all authors.}
+\end{figure}
 
 
 \end{document}
