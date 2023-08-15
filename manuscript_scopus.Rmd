@@ -63,7 +63,7 @@ bibliography: references.bib
 #       {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
 # csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja')`"
 # documentclass     : "apa7"
-output            : papaja::apa6_pdf
+output            : papaja::apa6_docx
 appendix          :
   - "appendix.Rmd"
 ---
@@ -281,15 +281,15 @@ the year of the first publication minus the current year listed for each author.
 ids and country to gather information about the places of education
 and/or employment for authors. Geopolitical region was created by binning these codes into United Nation Regions.
 
-***Education***. We collected degree information from the author table.
+***Education***. We collected degree information from the author table. Information on this variable is in the appendix.
 
 ***Types of Publications***. We took information from the
 publication type variable for each author's publications to present
-information about the types of papers BTS authors publish.
+information about the types of papers BTS authors publish. Information on this variable is in the appendix.
 
 ***Publication Metrics***. For each author, we calculated the total
 number of publications, and the h-index. The h-index represents the
-highest *h* number of publications that have at least *h* citations.
+highest *h* number of publications that have at least *h* citations. *h*-count was only used for descriptive statistics. 
 
 # Results
 
@@ -322,6 +322,8 @@ ggplot(DF$pub_time_count %>%
   ylab("Number of Articles Per Year") + 
   xlab("Publication Year") + 
   theme(legend.position = "bottom")
+
+ggsave(filename = "figure/figure_1_pub_time.png")
 ```
 
 ```{r total-journals}
@@ -423,6 +425,8 @@ social_cloud + ggtitle("Social Sciences") +
   theme(plot.title = element_text(hjust = 0.5)) +
   plot_layout(ncol = 2, 
               nrow = 2)
+
+ggsave(filename = "figure/figure_2_cloud.png")
 ```
 
 ## RQ3: Authors.
@@ -478,6 +482,8 @@ median_authors +
   mean_authors + 
   scale_color_brewer(palette = "Spectral", name = "Subject Area") + 
   plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+
+ggsave(filename = "figure/figure_3_num_authors.png")
 ```
 
 ***Career Length***.
@@ -491,7 +497,8 @@ All values for this analyses were different from zero. The slopes for the averag
 ```{r fig-career, include = TRUE, fig.cap = "Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year. The data has been filtered to at least 10 publications in a year for this graph."}
 ggplot(DF$career_time %>% 
          filter(SubjectArea != "Multidisciplinary") %>% 
-         filter(num_papers >= 10), 
+         filter(num_papers >= 10) %>% 
+         filter(Year < 2024), 
        aes(Year, avg_career, color = SubjectArea)) +
   theme_classic() + 
   geom_point(aes(size = sd_career)) +
@@ -503,6 +510,8 @@ ggplot(DF$career_time %>%
   scale_color_brewer(palette = "Spectral", name = "Subject Area") +
   guides(size = "none")  
   #scale_size_continuous(name = "Number Papers")
+
+ggsave(filename = "figure/figure_4_career.png")
 ```
 
 ```{r career-results, include = FALSE}
@@ -681,8 +690,6 @@ graph_overall <- graph_data %>%
   mutate(heat_label = ifelse(
     low < .00001 & high > .00001, "NS", ""
   ))
-
-
   
 heat_results <- ggplot(graph_overall, aes(label, type, fill = Estimate)) + 
   geom_tile(color = "white", lwd = 1.5, linetype = 1) +
@@ -753,6 +760,8 @@ BCD
 suppressWarnings(heat_results + 
   heat_results_1 + heat_results_2 + heat_results_3 + 
   plot_layout(design = layout))
+
+ggsave(filename = "figure/figure_5_heatmap.png", width = 10, height = 6, units = "in")
 ```
 
 ***Institution***.
@@ -765,12 +774,6 @@ affs <- 463876
 The total number of unique affiliation across all papers was `r affs`.
 
 ***Publication Metrics***.
-
--   We will report descriptive statistics on the total number of
-    publications and h-index for individuals overall.
-    -   Do this for each unique person and report averages
-    -   Do this for each publication and create an average for each
-        publication
 
 ```{r pub-hindex}
 avg_pub_count_author	<- apa_num(38.368910766896065)
@@ -810,28 +813,9 @@ average *h*-index for publications was *M* = `r avg_of_avg_HIndex` (*SD*
 manuscripts was $M_{SD}$ = `r avg_of_std_HIndex` ($SD_{SD}$ =
 `r std_of_std_HIndex`, $Med_{Med}$ = `r med_of_med_HIndex`).
 
--   Next, we will use the same analyses described in the career length
-    section to analyze trends over time. An increasing slope over time
-    indicates that individuals who are publishing more are more
-    represented in BTS over time (i.e., increasing numbers of scholars
-    with higher publication rates), while a negative slope indicates
-    more researchers with less publications.
--   A positive slope for standard deviation indicates increasing
-    variance over time (i.e., more diversity in the individual
-    publication rates), while a negative slope would indicate less
-    diversity in researchers over time. While publication rates do not
-    represent value as a researcher, they are often used in hiring and
-    promotion decisions, and we will use this variable as a proxy to
-    gauge the diversity in scholars represented in big teams.
--   We will separate these by each of the four subject areas.
-
+We used the same analyses described in the career length section to analyze trends over time. An increasing slope over time indicates that individuals who are publishing more are more represented in BTS over time (i.e., increasing numbers of scholars with higher publication rates), while a negative slope indicates more researchers with less publications. A positive slope for the standard deviation of publication metrics indicates increasing variance over time (i.e., more diversity in the individual publication rates), while a negative slope would indicate less diversity in researchers over time. While publication rates do not represent value as a researcher, they are often used in hiring and promotion decisions, and we used this variable as a proxy to gauge the diversity in scholars represented in big teams. As shown in Figure \@ref(fig:fig-heatmap) publication metrics were generally negative for the average publication metrics, indicating more scholars over time with lower numbers of citations with the strongest effects in health and social sciences. The variability of publication counts was not significant for the life sciences but was negative for the physical sciences (less variability over time) and positive for social and health sciences (more variability and over time). This result indicates that the physical sciences are trending toward scholars with less publications but also less diverse in number of publications, while the health and social sciences see more diversity in publication counts and less published scholars overall. 
 
 ***Geopolitical Regions***.
-
--   We will present visualizations of the country information listed for
-    authors, and we will discuss the areas of world in which authors
-    generally come from, as well as the lowest representation of
-    authors.
 
 ```{r geo-map}
 # serbia has changed codes
@@ -899,7 +883,7 @@ bin_country <- ggplot(DF$geo_country) +
   theme_void() + 
   # scale_fill_manual(name = "Sample Size",
   #                   values = c( "black", "#323232", "#646464","#969696","#c8c8c8")) 
-  scale_fill_brewer(name = "Sample Size", palette = "Spectral")
+  scale_fill_brewer(name = "Sample Size", palette = "Spectral", drop = FALSE)
 
 # Warning: Some values were not matched unambiguously: ANT, ATA, BUR, BUX, BYS, CAI, CSK, CZH, DDR, EUE, HVO, PCI, ROM, SUN, SUX, TWN, UNO, YMD, YUG, ZAR
 
@@ -947,7 +931,7 @@ tree <- ggplot(DF$geo_country, aes(area = count, fill = count_binned,
                     size = 15, grow = FALSE) +  
   # scale_fill_manual(name = "Sample Size",
   #                   values = c("#c8c8c8", "#969696", "#646464", "#323232", "black")) 
-  scale_fill_brewer(name = "Sample Size", palette = "Spectral")
+  scale_fill_brewer(name = "Sample Size", palette = "Spectral", drop = FALSE)
   # scale_fill_gradient(name = "Sample Size",
   #                     low = "#c8c8c8", 
   #                     high = "#323232") 
@@ -1000,7 +984,7 @@ bin_country_all <- ggplot(DF$geo_country) +
   theme_void() + 
   # scale_fill_manual(name = "Sample Size",
   #                   values = c( "black", "#323232", "#646464","#969696","#c8c8c8")) 
-  scale_fill_brewer(name = "Sample Size", palette = "Spectral")
+  scale_fill_brewer(name = "Sample Size", palette = "Spectral", drop = FALSE)
 
 tree_all <- ggplot(DF$geo_country, aes(area = count_all, fill = count_binned_all,
                label = affiliation_tag_country, subgroup = un_region_sub)) +
@@ -1013,7 +997,7 @@ tree_all <- ggplot(DF$geo_country, aes(area = count_all, fill = count_binned_all
                     size = 15, grow = FALSE) +  
   # scale_fill_manual(name = "Sample Size",
   #                   values = c("#c8c8c8", "#969696", "#646464", "#323232", "black")) 
-  scale_fill_brewer(name = "Sample Size", palette = "Spectral")
+  scale_fill_brewer(name = "Sample Size", palette = "Spectral", drop = FALSE)
   # scale_fill_gradient(name = "Sample Size",
   #                     low = "#c8c8c8", 
   #                     high = "#323232") 
@@ -1036,41 +1020,12 @@ tree_all + ggtitle("All Publications Mosiac Chart") +
               nrow = 2) + 
   plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 
-# need to do the legend 
+ggsave(filename = "figure/figure_6_map.png", width = 10, height = 6, units = "in")
 ```
 
+Author geopoligical region is displayed in Figure \@ref(fig:fig-map-both). Big team publications appear to be lead by North America and Western Europe, while all publications are lead by North America and East Asia. To understand the change in representation diversity, we examined if the number of regions in a publication is predicted by the year of publication. Increasing diversity would be represented by a positive slope, while decreasing diversity would be represented by a negative slope. As shown in Figure \@ref(fig:fig-heatmap), the physical sciences do not show a trend of change in representation, while all other sciences showed a positive effect increasing in the number of geopolitical regions authors represent on publications. 
 
--   To understand the change in representation diversity, we will
-    summarize the total number of geopolitical regions for each paper.
-    Using a linear model, we will examine if the number of regions
-    present is predicted by the year of publication. Increasing
-    diversity would be represented by a positive slope, while decreasing
-    diversity would be represented by a negative slope.
-
-
-
-
-
--   Last, we will examine the differences in representation for
-    corresponding author sets versus all other authors. For papers with
-    10 to 49 authors, we will use the three first authors and the last
-    author to compare against other authors. For 50 to 99 authors, five
-    first authors plus last will be used, and for all papers with more
-    than 100 authors, we will use ten first authors and the last author.
-    We will calculate the frequencies of each of the UN Sub-Regions for
-    first authors versus other authors, converting these values to
-    proportions. Given the expected small sample sizes of these
-    contingency tables, we will group together titles based on the year
-    of publication (assuming at least 5 publications per year, these may
-    be binned by 5-year or smaller increments to increase sample size).
-    For each grouping, we will calculate the effect size of the
-    differences in frequencies comparing first authors to all other
-    authors. Since this data is categorical, we will use Cramer's *V* to
-    represent the effect size. If the effect size includes zero in its
-    confidence interval, this result will imply that first and all other
-    authors represent the same pattern of UN Sub-Region diversity. Any
-    confidence interval that does include zero represents a difference
-    in diversity.
+Last, we examined the differences in representation for corresponding author sets versus all other authors. For papers with 10 to 49 authors, we used the three first authors and the last author to compare against other authors. For 50 to 99 authors, five first authors plus last were used, and for all papers with more than 100 authors, we used ten first authors and the last author as the corresponding author set. We then calculated the frequencies of each of the UN Sub-Regions for corresponding authors versus all other authors, converting these values to proportions. Given the expected small sample sizes of these contingency tables, we grouped together titles based on the year of publication. For each grouping, we then calculated the effect size of the differences in frequencies comparing corresponding authors to all other authors. Since this data is categorical, we used Cramer's *V* to represent the effect size. If the effect size includes zero in its confidence interval (to four decimal places), this result will imply that first and all other authors represent the same pattern of UN Sub-Region diversity. Any confidence interval that does include zero represents a difference in diversity.
 
 ```{r small-effects, warning = FALSE}
 DF$small_first_gp <- DF$small_first_gp %>% 
@@ -1148,7 +1103,7 @@ DF_decade <- DF$small_first_gp %>%
                                        ifelse(Year < 2020, "2010s", "2020s"))))) %>% 
   group_by(who, Decade) %>% 
   summarize_all(sum) %>% 
-  pivot_longer(cols = `Western Europe`:Mirconesia,
+  pivot_longer(cols = -c(who, Decade, Year),
                names_to = "Country", 
                values_to = "Count")
 
@@ -1161,6 +1116,12 @@ DF_decade$Country_2 <- gsub("South-Eastern Europe|Eastern Europe", "ESE Europe",
 DF_decade$Country_2 <- gsub("Central Asia|South-Eastern Asia|Southern Asia|Western Asia", "Asia", DF_decade$Country_2)
 DF_decade$Country_2 <- gsub("Melanesia|Mirconesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
 
+DF_decade$Country_2 <- factor(DF_decade$Country_2, 
+                              levels = c("Africa", "Asia", "Eastern Asia", 
+                                         "ESE Europe", 
+                                         "Latin America and the Caribbean",
+                                         "North America", 
+                                         "NWS Europe", "Other"))
 DF_decade_sm <- DF_decade %>% 
   group_by(Country_2, Decade, who) %>% 
   summarize(Count = sum(Count), .groups = "keep")
@@ -1171,7 +1132,7 @@ small_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
   facet_grid(~Decade) + 
   xlab("Author Type") + 
   ylab("Percent of Authors") + 
-  scale_fill_brewer(name = "Region", palette = "Spectral")
+  scale_fill_brewer(name = "Region", palette = "Spectral", drop = FALSE)
 ```
 
 ```{r medium-effects, warning = FALSE}
@@ -1248,8 +1209,7 @@ DF_decade <- DF$medium_first_gp %>%
                                        ifelse(Year < 2020, "2010s", "2020s"))))) %>% 
   group_by(who, Decade) %>% 
   summarize_all(sum) %>% 
-  pivot_longer(cols = `Western Europe`:Melanesia, 
-               #### check this later ####
+  pivot_longer(cols = -c(who, Decade, Year),
                names_to = "Country", 
                values_to = "Count")
 
@@ -1262,6 +1222,13 @@ DF_decade$Country_2 <- gsub("South-Eastern Europe|Eastern Europe", "ESE Europe",
 DF_decade$Country_2 <- gsub("Central Asia|South-Eastern Asia|Southern Asia|Western Asia", "Asia", DF_decade$Country_2)
 DF_decade$Country_2 <- gsub("Melanesia|Mirconesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
 
+DF_decade$Country_2 <- factor(DF_decade$Country_2, 
+                              levels = c("Africa", "Asia", "Eastern Asia", 
+                                         "ESE Europe", 
+                                         "Latin America and the Caribbean",
+                                         "North America", 
+                                         "NWS Europe", "Other"))
+
 DF_decade_sm <- DF_decade %>% 
   group_by(Country_2, Decade, who) %>% 
   summarize(Count = sum(Count), .groups = "keep")
@@ -1272,7 +1239,7 @@ medium_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
   facet_grid(~Decade) + 
   xlab("Author Type") + 
   ylab("Percent of Authors") + 
-  scale_fill_brewer(name = "Region", palette = "Spectral")
+  scale_fill_brewer(name = "Region", palette = "Spectral", drop = FALSE)
 ```
 
 ```{r large-effects, warning = FALSE}
@@ -1337,18 +1304,6 @@ large_dot <- ggplot(large_effect, aes(year,v)) +
   ylab(expression(phi)) + 
   scale_size_continuous(name = "Num Authors")
 
-ggplot(large_effect %>% 
-         arrange(v) %>% 
-         mutate(count = 1:nrow(large_effect)),
-       aes(count, v)) + 
-  geom_point(aes(size = people)) +
-  geom_linerange(aes(ymin = low, ymax = high), alpha = .5) +
-  theme_classic()  
-  #ylab(TeX("Raw Effect: $t$ Log RT")) + 
-  #xlab("Different Processing Scenarios") + 
-  # geom_hline(yintercept = 0) + 
-  #theme(text = element_text(size = 8))
-
 DF_decade <- DF$large_first_gp %>% 
   mutate(who = "F") %>% 
   bind_rows(
@@ -1361,8 +1316,7 @@ DF_decade <- DF$large_first_gp %>%
                                        ifelse(Year < 2020, "2010s", "2020s"))))) %>% 
   group_by(who, Decade) %>% 
   summarize_all(sum) %>% 
-  pivot_longer(cols = `Western Europe`:`Central Asia`, 
-               #### check this later ####
+  pivot_longer(cols = -c(who, Decade, Year),
                names_to = "Country", 
                values_to = "Count")
 
@@ -1375,6 +1329,13 @@ DF_decade$Country_2 <- gsub("South-Eastern Europe|Eastern Europe", "ESE Europe",
 DF_decade$Country_2 <- gsub("Central Asia|South-Eastern Asia|Southern Asia|Western Asia", "Asia", DF_decade$Country_2)
 DF_decade$Country_2 <- gsub("Melanesia|Mirconesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
 
+DF_decade$Country_2 <- factor(DF_decade$Country_2, 
+                              levels = c("Africa", "Asia", "Eastern Asia", 
+                                         "ESE Europe", 
+                                         "Latin America and the Caribbean",
+                                         "North America", 
+                                         "NWS Europe", "Other"))
+
 DF_decade_sm <- DF_decade %>% 
   group_by(Country_2, Decade, who) %>% 
   summarize(Count = sum(Count), .groups = "keep")
@@ -1385,10 +1346,10 @@ large_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
   facet_grid(~Decade) + 
   xlab("Author Type") + 
   ylab("Percent of Authors") + 
-  scale_fill_brewer(name = "Region", palette = "Spectral")
+  scale_fill_brewer(name = "Region", palette = "Spectral", drop = FALSE)
 ```
 
-```{r author-gpe-figure, include = TRUE, fig.cap="A comparison of author affiliation geopolitical region across decades. F stands for first authors and O stands for other authors."}
+```{r fig-author-gpe, include = TRUE, fig.cap="A comparison of author affiliation geopolitical region across decades. F stands for first authors and O stands for other authors."}
 small_author + ggtitle("10-49 Authors") + #theme(legend.position = "none") +
 medium_author + ggtitle("50-99 Authors") + #theme(legend.position = "none") + 
 large_author + ggtitle("100 + Authors") + #theme(legend.position = "none") + 
@@ -1398,34 +1359,58 @@ plot_layout(
   nrow = 2, 
   guides = "collect")
 
-ggsave("figure/author_country.png", width = 10, height = 7, 
-       units = "in")
-
-# fix the legend
+ggsave("figure/figure_7_author_gpe.png", width = 10, height = 6, units = "in")
 ```
 
-```{r effect-gpe-figure, include = TRUE, fig.cap = "Effect size of the differences in representation for UN Regions for author affiliations in big-team science papers by year."}
-small_dot + 
-  theme(legend.position = "none") + 
-  coord_cartesian(ylim = c(0,1), xlim = c(1980, 2025)) +
-  ggtitle("10-49 Authors") + 
-medium_dot + 
-  theme(legend.position = "none") + 
-  coord_cartesian(ylim = c(0,1), xlim = c(1980, 2025)) +
-  ggtitle("50-99 Authors") +
-large_dot + 
-  theme(legend.position = "none") + 
-  coord_cartesian(ylim = c(0,1), xlim = c(1980, 2025)) +
-  ggtitle("100 + Authors") + 
-guide_area() + 
-plot_layout(
-  ncol = 2,
-  nrow = 2, 
-  guides = "collect")
+```{r fig-effect-gpe, include = TRUE, fig.cap = "Effect size of the differences in representation for UN Regions for author affiliations in big-team science papers by year. Larger dots indicate more papers and authors represented in the calculation of effect size."}
+all_effects <- bind_rows(
+  small_effect %>% 
+    mutate(type = "Small"),
+  medium_effect %>% 
+    mutate(type = "Medium"), 
+  large_effect %>% 
+    mutate(type = "Large") 
+) %>% 
+  mutate(type = factor(type, levels = c("Small", "Medium", "Large"),
+                       labels = c("10-49 Authors", 
+                                  "50-99 Authors", 
+                                  "100+ Authors"))) %>% 
+  mutate(Decade = ifelse(year < 1990, "1980s", 
+                         ifelse(year < 2000, "1990s", 
+                                ifelse(year < 2010, "2000s", 
+                                       ifelse(year < 2020, "2010s", "2020s")))))
 
-ggsave("figure/effect_country.png", width = 10, height = 7, 
-       units = "in")
+ggplot(all_effects %>% 
+         arrange(v) %>% 
+         mutate(count = 1:nrow(all_effects)) %>% 
+         filter(year < 2024),
+       aes(year, v)) + 
+  facet_wrap(~type) + 
+  geom_point(aes(size = people)) +
+  geom_linerange(aes(ymin = low, ymax = high), alpha = .5) +
+  theme_classic() +
+  theme(legend.position = "none") + 
+  xlab("Year of Publication") + 
+  ylab("Cramer's V")
+
+ggsave("figure/figure_8_author_effect_gpe.png", width = 10, height = 6, units = "in")
 ```
+
+Figure \@ref(fig:fig-author-gpe) indicates the percent of authors in regions. In general, we found the same pattern as the overall analysis wherein most authors are from Europe and North America. The pattern of representation is roughly similar for the separation of small, medium, and large numbers of authors on papers. Across time, the representation does appear to diversify, with more representation in Asia, Latin American, and Africa. Figure \@ref(fig:fig-effect-gpe) represents the size of the differences in first/corresponding authors and other authors across time and number of authors. The differences in representation are larger for papers with more authors; however, the effects are non-zero for many of the comparisons. Encouragingly, over time these effects appear to diminish in size. One limitation with the calculation of effect sizes for count data is the sensitivity of the data to sample size (i.e., $\chi^2$ is upwardly biased by sample size, and $V$ is calculated based on this value). While we used the inclusion of zero as our boundary for "significance", the interpretation of the effects is that most are likely small: $V$ < .05: `r apa_num(sum(all_effects$v <.05)/nrow(all_effects)*100)`%, < .10: `r apa_num(sum(all_effects$v < .10)/nrow(all_effects)*100)`%, < .20: `r apa_num(sum(all_effects$v < .20)/nrow(all_effects)*100)`%.
+
+# Discussion 
+
+- number of publications increasing
+- research areas appear to be cancer, physics, and psychology
+- the number of authors is increasing as well 
+- career length is decreasing, number of publications necessary to be involved is decreasing
+- number of gpe increasing 
+- appears to be slowly diversifying, yet still not equal in first and other authors in diversity 
+
+limitations - based on the data we could get, we made up the definition of BTS, under-representation of articles in other languages/that they don't collect 
+
+future: incentives for bts and why people do it 
+
 
 \newpage
 
@@ -1443,7 +1428,6 @@ ggsave("figure/effect_country.png", width = 10, height = 7,
 ```{=tex}
 \endgroup
 ```
-
 
 \newpage
 

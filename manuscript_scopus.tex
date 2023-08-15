@@ -372,15 +372,15 @@ the year of the first publication minus the current year listed for each author.
 ids and country to gather information about the places of education
 and/or employment for authors. Geopolitical region was created by binning these codes into United Nation Regions.
 
-\textbf{\emph{Education}}. We collected degree information from the author table.
+\textbf{\emph{Education}}. We collected degree information from the author table. Information on this variable is in the appendix.
 
 \textbf{\emph{Types of Publications}}. We took information from the
 publication type variable for each author's publications to present
-information about the types of papers BTS authors publish.
+information about the types of papers BTS authors publish. Information on this variable is in the appendix.
 
 \textbf{\emph{Publication Metrics}}. For each author, we calculated the total
 number of publications, and the h-index. The h-index represents the
-highest \emph{h} number of publications that have at least \emph{h} citations.
+highest \emph{h} number of publications that have at least \emph{h} citations. \emph{h}-count was only used for descriptive statistics.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -411,7 +411,7 @@ per Paper is presented the supplemental materials with a comparison for all pape
 \hypertarget{rq2-publication-information.-1}{%
 \subsection{RQ2: Publication Information.}\label{rq2-publication-information.-1}}
 
-Publication interest area was summarized by the four large subject areas creating a word cloud plot of the total number of publications within the ASJCs. Figure @\ref(fig:fig-clouds) displays that the health sciences tends to publish within medicine and oncology, with a corresponding focus of cancer research and genetics for the life sciences. The physical sciences is mostly dominated by physics research, chemistry, and ecology. The BTS publications in the social sciences are mostly within psychology, education, and health.
+Publication interest area was summarized by the four large subject areas creating a word cloud plot of the total number of publications within the ASJCs. Figure \ref{fig:fig-clouds} displays that the health sciences tends to publish within medicine and oncology, with a corresponding focus of cancer research and genetics for the life sciences. The physical sciences is mostly dominated by physics research, chemistry, and ecology. The BTS publications in the social sciences are mostly within psychology, education, and health.
 
 \begin{figure}
 \centering
@@ -441,7 +441,7 @@ All values for this analyses were different from zero. The slopes for the averag
 \begin{figure}
 \centering
 \includegraphics{manuscript_scopus_files/figure-latex/fig-career-1.pdf}
-\caption{\label{fig:fig-career}Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year.}
+\caption{\label{fig:fig-career}Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year. The data has been filtered to at least 10 publications in a year for this graph.}
 \end{figure}
 
 \begin{verbatim}
@@ -455,27 +455,16 @@ All values for this analyses were different from zero. The slopes for the averag
 \caption{\label{fig:fig-heatmap}Heatmap results of regression analyses for career length, number of publications, and geopolitical diversity in region. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.}
 \end{figure}
 
+\begin{verbatim}
+## Warning in width_strings[fixed_areas[[i]]$cols] == "-1null" && length(w) == :
+## 'length(x) = 3 > 1' in coercion to 'logical(1)'
+\end{verbatim}
+
 \textbf{\emph{Institution}}.
 
 The total number of unique affiliation across all papers was 463876.
 
 \textbf{\emph{Publication Metrics}}.
-
-\begin{itemize}
-\tightlist
-\item
-  We will report descriptive statistics on the total number of
-  publications and h-index for individuals overall.
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Do this for each unique person and report averages
-  \item
-    Do this for each publication and create an average for each
-    publication
-  \end{itemize}
-\end{itemize}
 
 The average number of publications by authors on big team sciences
 papers is \emph{M} = 38.37 (\emph{SD} =
@@ -495,37 +484,9 @@ average \emph{h}-index for publications was \emph{M} = 198.87 (\emph{SD}
 manuscripts was \(M_{SD}\) = 211.80 (\(SD_{SD}\) =
 238.53, \(Med_{Med}\) = 68.00).
 
-\begin{itemize}
-\tightlist
-\item
-  Next, we will use the same analyses described in the career length
-  section to analyze trends over time. An increasing slope over time
-  indicates that individuals who are publishing more are more
-  represented in BTS over time (i.e., increasing numbers of scholars
-  with higher publication rates), while a negative slope indicates
-  more researchers with less publications.
-\item
-  A positive slope for standard deviation indicates increasing
-  variance over time (i.e., more diversity in the individual
-  publication rates), while a negative slope would indicate less
-  diversity in researchers over time. While publication rates do not
-  represent value as a researcher, they are often used in hiring and
-  promotion decisions, and we will use this variable as a proxy to
-  gauge the diversity in scholars represented in big teams.
-\item
-  We will separate these by each of the four subject areas.
-\end{itemize}
+We used the same analyses described in the career length section to analyze trends over time. An increasing slope over time indicates that individuals who are publishing more are more represented in BTS over time (i.e., increasing numbers of scholars with higher publication rates), while a negative slope indicates more researchers with less publications. A positive slope for the standard deviation of publication metrics indicates increasing variance over time (i.e., more diversity in the individual publication rates), while a negative slope would indicate less diversity in researchers over time. While publication rates do not represent value as a researcher, they are often used in hiring and promotion decisions, and we used this variable as a proxy to gauge the diversity in scholars represented in big teams. As shown in Figure \ref{fig:fig-heatmap} publication metrics were generally negative for the average publication metrics, indicating more scholars over time with lower numbers of citations with the strongest effects in health and social sciences. The variability of publication counts was not significant for the life sciences but was negative for the physical sciences (less variability over time) and positive for social and health sciences (more variability and over time). This result indicates that the physical sciences are trending toward scholars with less publications but also less diverse in number of publications, while the health and social sciences see more diversity in publication counts and less published scholars overall.
 
 \textbf{\emph{Geopolitical Regions}}.
-
-\begin{itemize}
-\tightlist
-\item
-  We will present visualizations of the country information listed for
-  authors, and we will discuss the areas of world in which authors
-  generally come from, as well as the lowest representation of
-  authors.
-\end{itemize}
 
 \begin{figure}
 \centering
@@ -533,48 +494,46 @@ manuscripts was \(M_{SD}\) = 211.80 (\(SD_{SD}\) =
 \caption{\label{fig:fig-map-both}Geopolitical regions represented in big-team science publications versus all publications.}
 \end{figure}
 
+Author geopoligical region is displayed in Figure \ref{fig:fig-map-both}. Big team publications appear to be lead by North America and Western Europe, while all publications are lead by North America and East Asia. To understand the change in representation diversity, we examined if the number of regions in a publication is predicted by the year of publication. Increasing diversity would be represented by a positive slope, while decreasing diversity would be represented by a negative slope. As shown in Figure \ref{fig:fig-heatmap}, the physical sciences do not show a trend of change in representation, while all other sciences showed a positive effect increasing in the number of geopolitical regions authors represent on publications.
+
+Last, we examined the differences in representation for corresponding author sets versus all other authors. For papers with 10 to 49 authors, we used the three first authors and the last author to compare against other authors. For 50 to 99 authors, five first authors plus last were used, and for all papers with more than 100 authors, we used ten first authors and the last author as the corresponding author set. We then calculated the frequencies of each of the UN Sub-Regions for corresponding authors versus all other authors, converting these values to proportions. Given the expected small sample sizes of these contingency tables, we grouped together titles based on the year of publication. For each grouping, we then calculated the effect size of the differences in frequencies comparing corresponding authors to all other authors. Since this data is categorical, we used Cramer's \emph{V} to represent the effect size. If the effect size includes zero in its confidence interval (to four decimal places), this result will imply that first and all other authors represent the same pattern of UN Sub-Region diversity. Any confidence interval that does include zero represents a difference in diversity.
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-author-gpe-1.pdf}
+\caption{\label{fig:fig-author-gpe}A comparison of author affiliation geopolitical region across decades. F stands for first authors and O stands for other authors.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_scopus_files/figure-latex/fig-effect-gpe-1.pdf}
+\caption{\label{fig:fig-effect-gpe}Effect size of the differences in representation for UN Regions for author affiliations in big-team science papers by year. Larger dots indicate more papers and authors represented in the calculation of effect size.}
+\end{figure}
+
+Figure \ref{fig:fig-author-gpe} indicates the percent of authors in regions. In general, we found the same pattern as the overall analysis wherein most authors are from Europe and North America. The pattern of representation is roughly similar for the separation of small, medium, and large numbers of authors on papers. Across time, the representation does appear to diversify, with more representation in Asia, Latin American, and Africa. Figure \ref{fig:fig-effect-gpe} represents the size of the differences in first/corresponding authors and other authors across time and number of authors. The differences in representation are larger for papers with more authors; however, the effects are non-zero for many of the comparisons. Encouragingly, over time these effects appear to diminish in size. One limitation with the calculation of effect sizes for count data is the sensitivity of the data to sample size (i.e., \(\chi^2\) is upwardly biased by sample size, and \(V\) is calculated based on this value). While we used the inclusion of zero as our boundary for ``significance'', the interpretation of the effects is that most are likely small: \(V\) \textless{} .05: 31.79\%, \textless{} .10: 70.20\%, \textless{} .20: 94.04\%.
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
 \begin{itemize}
+\tightlist
 \item
-  To understand the change in representation diversity, we will
-  summarize the total number of geopolitical regions for each paper.
-  Using a linear model, we will examine if the number of regions
-  present is predicted by the year of publication. Increasing
-  diversity would be represented by a positive slope, while decreasing
-  diversity would be represented by a negative slope.
+  number of publications increasing
 \item
-  Last, we will examine the differences in representation for
-  corresponding author sets versus all other authors. For papers with
-  10 to 49 authors, we will use the three first authors and the last
-  author to compare against other authors. For 50 to 99 authors, five
-  first authors plus last will be used, and for all papers with more
-  than 100 authors, we will use ten first authors and the last author.
-  We will calculate the frequencies of each of the UN Sub-Regions for
-  first authors versus other authors, converting these values to
-  proportions. Given the expected small sample sizes of these
-  contingency tables, we will group together titles based on the year
-  of publication (assuming at least 5 publications per year, these may
-  be binned by 5-year or smaller increments to increase sample size).
-  For each grouping, we will calculate the effect size of the
-  differences in frequencies comparing first authors to all other
-  authors. Since this data is categorical, we will use Cramer's \emph{V} to
-  represent the effect size. If the effect size includes zero in its
-  confidence interval, this result will imply that first and all other
-  authors represent the same pattern of UN Sub-Region diversity. Any
-  confidence interval that does include zero represents a difference
-  in diversity.
+  research areas appear to be cancer, physics, and psychology
+\item
+  the number of authors is increasing as well
+\item
+  career length is decreasing, number of publications necessary to be involved is decreasing
+\item
+  number of gpe increasing
+\item
+  appears to be slowly diversifying, yet still not equal in first and other authors in diversity
 \end{itemize}
 
-\begin{figure}
-\centering
-\includegraphics{manuscript_scopus_files/figure-latex/author-gpe-figure-1.pdf}
-\caption{\label{fig:author-gpe-figure}A comparison of author affiliation geopolitical region across decades. F stands for first authors and O stands for other authors.}
-\end{figure}
+limitations - based on the data we could get, we made up the definition of BTS, under-representation of articles in other languages/that they don't collect
 
-\begin{figure}
-\centering
-\includegraphics{manuscript_scopus_files/figure-latex/effect-gpe-figure-1.pdf}
-\caption{\label{fig:effect-gpe-figure}Effect size of the differences in representation for UN Regions for author affiliations in big-team science papers by year.}
-\end{figure}
+future: incentives for bts and why people do it
 
 \newpage
 
@@ -744,6 +703,9 @@ Zwaan, R. A., Etz, A., Lucas, R. E., \& Donnellan, M. B. (2018). Making replicat
 \appendix}
 
 
+\hypertarget{supplemental-materials}{%
+\section{Supplemental Materials}\label{supplemental-materials}}
+
 \hypertarget{rq1-publisher-information.-2}{%
 \subsection{RQ1: Publisher Information.}\label{rq1-publisher-information.-2}}
 
@@ -821,7 +783,11 @@ Institution was normalized by taking the total number of unique institutions and
 \caption{\label{fig:fig-inst}Number of unique institutions involved in big-team science papers across decades.}
 \end{figure}
 
+\textbf{\emph{Education}}. As noted in our pre-registration, we would only present this variable if we could obtain at least 50\% information on the authors who publish in big team science papers. 95.83\% of the data was not available.
+
 \textbf{\emph{Types of Publications}}.
+
+Types of publications are presented in Figure \ref{fig:fig-pub-types}. The patterns of publications are roughly similar for big team science authors and all authors. It appears that porportionally, big team members are more likely to post preprints in comparison to all authors.
 
 \begin{figure}
 \centering
