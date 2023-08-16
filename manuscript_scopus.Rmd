@@ -150,15 +150,16 @@ Framework), video chatting platforms (e.g., Zoom, Microsoft Teams), and
 messaging and project management platforms (e.g., Slack, Trello,
 when2meet, etc.). The credibility movement seems to suggest that by
 having both collaborations that span across the globe and subfields of
-research areas, age groups, and education levels should help to drive science in the path of better materials, reliability,
-generalizability and more robust sample sizes (when necessary) in a study
+research areas, age groups, and education levels should help to drive
+science in the path of better materials, reliability, generalizability
+and more robust sample sizes (when necessary) in a study
 [@auspurg2021has; @nosek2014method; @lebel2018].
 
 The credibility movement was originally defined by a focus on large
 scale replications using in collaborative environments [@vazire2022].
-Generally, the movement appears to have been driven by early career researchers
-(i.e., those who are within five years of their first appointment)
-[@maizey2019]; however, there are no large meta-scientific
+Generally, the movement appears to have been driven by early career
+researchers (i.e., those who are within five years of their first
+appointment) [@maizey2019]; however, there are no large meta-scientific
 investigations on this specific topic to date. Potentially, the lack of
 investigation is tied to the newness of the large-scale research in many
 fields, as it is only in recent years that publications like the Open
@@ -185,7 +186,9 @@ in participating in large-scale replication studies [@grahe2014;
 @kidwell2016; @nosek2015; @mayo-wilson2021]. For example, the support
 for Registered Reports, papers accepted before the data has been
 collected [@nosek2014; @stewart2020], and entire sub-sections of
-journals devoted to only replication studies (e.g., *Nature, Royal Society Open Science, Advances in Methods and Practices in Psychological Science*) has allowed researchers to invest in projects that they know
+journals devoted to only replication studies (e.g., *Nature, Royal
+Society Open Science, Advances in Methods and Practices in Psychological
+Science*) has allowed researchers to invest in projects that they know
 should be published when the project is complete. Further, the
 implementation of the Transparency and Openness Guidelines [@nosek2015]
 and the Contributor Role Taxonomy (CRediT) system [@allen2019] have
@@ -215,9 +218,10 @@ credibility movement. Publications on BTS generally explore challenges,
 lessons learned, and the need for BTS [@forscher2020; @coles2022].
 
 Therefore, the goal of this manuscript is to examine the *people*
-involved in BTS projects. We specifically examined the themes of inclusivity, research careers, and research globalization. We see an
-increasing interest and number of publications in BTS but we do not yet know if
-this uptick in large-scale projects has diversified the *people*
+involved in BTS projects. We specifically examined the themes of
+inclusivity, research careers, and research globalization. We see an
+increasing interest and number of publications in BTS but we do not yet
+know if this uptick in large-scale projects has diversified the *people*
 involved in BTS. While a few publications have noted that BTS appears to
 be early career researchers [@maizey2019], no one has systematically
 investigated this perception. Further, it is unclear if the focus of
@@ -239,7 +243,12 @@ representation present in authorship in BTS projects.
     published in big team science?
 -   Research Question 3: Who is involved in big team science?
 
-This manuscript was preregistered with the same conceptual ideas using Google Scholar and ORC-ID databases (https://osf.io/f2dtr) but then was updated with access to the Scopus database for a broader picture of BTS projects (https://osf.io/fheun). All materials and code can be found on our OSF page: https://osf.io/cgx6u/ or corresponding GitHub archive: https://github.com/doomlab/big_team_who. 
+This manuscript was preregistered with the same conceptual ideas using
+Google Scholar and ORC-ID databases (<https://osf.io/f2dtr>) but then
+was updated with access to the Scopus database for a broader picture of
+BTS projects (<https://osf.io/fheun>). All materials and code can be
+found on our OSF page: <https://osf.io/cgx6u/> or corresponding GitHub
+archive: <https://github.com/doomlab/big_team_who>.
 
 # Method
 
@@ -248,52 +257,68 @@ This manuscript was preregistered with the same conceptual ideas using Google Sc
 We have defined BTS publications as publications with at least ten
 authors at ten different institutions that were published in
 peer-reviewed journals or had posted a full paper pre-print. We used
-data from 1970 and forward in the Scopus database, as it
-is noted online that this time period includes cited references for
-calculation of several of our variables described below. We will analyze
-our results based on four subject areas present in the Scopus database: Physical Sciences,
-Health Sciences, Social Sciences, and Life Sciences. We filtered the
-database to include articles, articles in press, business articles,
-conference papers, data papers, preprints, and surveys using Elsevier's
-classification system. This project was supported by access to the Scopus database through the International Center for the Study of Research.
+data from 1970 and forward in the Scopus database, as it is noted online
+that this time period includes cited references for calculation of
+several of our variables described below. We will analyze our results
+based on four subject areas present in the Scopus database: Physical
+Sciences, Health Sciences, Social Sciences, and Life Sciences. We
+filtered the database to include articles, articles in press, business
+articles, conference papers, data papers, preprints, and surveys using
+Elsevier's classification system. This project was supported by access
+to the Scopus database through the International Center for the Study of
+Research.
 
 ## Data Curation
 
-### RQ1: Publisher Information.
+### RQ1: Publisher Information
 
-We extracted the following information for publication sources: the name of the publication (source title), subject area (both the large four subject areas and the smaller four digit all science journal classification [ASJC] code), and the journal
-impact using the Source Normalized Impact per Paper (SNIP).
+We extracted the following information for publication sources: the name
+of the publication (source title), subject area (both the large four
+subject areas and the smaller four digit all science journal
+classification [ASJC] code), and the journal impact using the Source
+Normalized Impact per Paper (SNIP).
 
-### RQ2: Publication Information.
+### RQ2: Publication Information
 
-For each publication of the identified BTS publications, we examined
-the full four digit ASJC subject areas codes for each of the larger four
+For each publication of the identified BTS publications, we examined the
+full four digit ASJC subject areas codes for each of the larger four
 subject areas and the keywords present for these publications.
 
-### RQ3: Author Information.
+### RQ3: Author Information
 
-The author list was extracted from each publication. Next, we used the author and affiliation arrays to curate a list of all publications and author information included in BTS papers to calculate the variables described below.
+The author list was extracted from each publication. Next, we used the
+author and affiliation arrays to curate a list of all publications and
+author information included in BTS papers to calculate the variables
+described below.
 
-***Career Length***. Career length for each author was defined as
-the year of the first publication minus the current year listed for each author.
+***Career Length***. Career length for each author was defined as the
+year of the first publication minus the current year listed for each
+author.
 
-***Institution and Geopolitical Region***. We used the affiliation
-ids and country to gather information about the places of education
-and/or employment for authors. Geopolitical region was created by binning these codes into United Nation Regions.
+***Institution and Geopolitical Region***. We used the affiliation ids
+and country to gather information about the places of education and/or
+employment for authors. Geopolitical region was created by binning these
+codes into United Nation Regions.
 
-***Education***. We collected degree information from the author table. Information on this variable is in the appendix.
+***Education***. We collected degree information from the author table.
+Information on this variable is in the appendix.
 
-***Types of Publications***. We took information from the
-publication type variable for each author's publications to present
-information about the types of papers BTS authors publish. Information on this variable is in the appendix.
+***Types of Publications***. We took information from the publication
+type variable for each author's publications to present information
+about the types of papers BTS authors publish. Information on this
+variable is in the appendix.
 
 ***Publication Metrics***. For each author, we calculated the total
 number of publications, and the h-index. The h-index represents the
-highest *h* number of publications that have at least *h* citations. *h*-count was only used for descriptive statistics. 
+highest *h* number of publications that have at least *h* citations.
+*h*-count was only used for descriptive statistics.
 
 # Results
 
-We used the 95% confidence interval to make decisions on predictor or effect size differences from zero. The confidence interval that does not include zero would be considered different from zero (to four decimal places). We made no directional predictions.
+We used the 95% confidence interval to make decisions on predictor or
+effect size differences from zero. The confidence interval that does not
+include zero would be considered different from zero (to four decimal
+places). We made no directional predictions.
 
 ## RQ1: Publisher Information.
 
@@ -306,10 +331,13 @@ social_num <- 26652
 life_num <- 307514
 ```
 
-*Number of articles*. The total number of articles included in this analysis was `r total_num` including `r health_num` Health Sciences articles, `r physical_num`
-Physical Sciences articles, `r social_num` Social Sciences articles, and
-`r life_num` Life Sciences articles. Articles could be classified into
-multiple categories. Figure \@ref(fig:fig-pub-time) shows the number of articles published across time for each of the four large subject areas. 
+*Number of articles*. The total number of articles included in this
+analysis was `r total_num` including `r health_num` Health Sciences
+articles, `r physical_num` Physical Sciences articles, `r social_num`
+Social Sciences articles, and `r life_num` Life Sciences articles.
+Articles could be classified into multiple categories. Figure
+\@ref(fig:fig-pub-time) shows the number of articles published across
+time for each of the four large subject areas.
 
 ```{r fig-pub-time, include = TRUE, fig.cap="Number of big-team science publications separated by four large subject areas across years."}
 ggplot(DF$pub_time_count %>% 
@@ -335,16 +363,24 @@ social_journal <- 2500
 life_journal <- 4187
 ```
 
-*Number of journals*. The number of distinct journals big team science articles were published
-in was `r journals` with `r health_journal` journals in Health Sciences,
-`r physical_journal` journals in Physical Sciences, `r social_journal`
-journals in Social Sciences, and `r life_journal` journals in Life
-Sciences. The descriptive statistics for the Source Normalized Impact
-per Paper is presented the supplemental materials with a comparison for all papers. 
+*Number of journals*. The number of distinct journals big team science
+articles were published in was `r journals` with `r health_journal`
+journals in Health Sciences, `r physical_journal` journals in Physical
+Sciences, `r social_journal` journals in Social Sciences, and
+`r life_journal` journals in Life Sciences. The descriptive statistics
+for the Source Normalized Impact per Paper is presented the supplemental
+materials with a comparison for all papers.
 
 ## RQ2: Publication Information.
 
-Publication interest area was summarized by the four large subject areas creating a word cloud plot of the total number of publications within the ASJCs. Figure \@ref(fig:fig-clouds) displays that the health sciences tends to publish within medicine and oncology, with a corresponding focus of cancer research and genetics for the life sciences. The physical sciences is mostly dominated by physics research, chemistry, and ecology. The BTS publications in the social sciences are mostly within psychology, education, and health. 
+Publication interest area was summarized by the four large subject areas
+creating a word cloud plot of the total number of publications within
+the ASJCs. Figure \@ref(fig:fig-clouds) displays that the health
+sciences tends to publish within medicine and oncology, with a
+corresponding focus of cancer research and genetics for the life
+sciences. The physical sciences is mostly dominated by physics research,
+chemistry, and ecology. The BTS publications in the social sciences are
+mostly within psychology, education, and health.
 
 ```{r make-clouds, eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
 ### NOTE YOU WILL NEED TO RUN THIS ###
@@ -441,7 +477,16 @@ med_authors <- 18
 max_authors <- 5568
 ```
 
-The total number of unique authors across all publications was `r total_authors`. The mean number of authors per publication was *M* = `r avg_authors` (*SD* = `r sd_authors`, *Med* = `r med_authors`) with a range of `r min_authors` to `r max_authors`. The median and average number of authors by subject area are displayed in Figure \@ref(fig:fig-author-year). In general, the average and median number of authors increased over time, with the exception of the skew in the physical sciences. Interestingly, the effect in the physical sciences appears to be declining toward the general trends seen in other areas in the last few decades.  
+The total number of unique authors across all publications was
+`r total_authors`. The mean number of authors per publication was *M* =
+`r avg_authors` (*SD* = `r sd_authors`, *Med* = `r med_authors`) with a
+range of `r min_authors` to `r max_authors`. The median and average
+number of authors by subject area are displayed in Figure
+\@ref(fig:fig-author-year). In general, the average and median number of
+authors increased over time, with the exception of the skew in the
+physical sciences. Interestingly, the effect in the physical sciences
+appears to be declining toward the general trends seen in other areas in
+the last few decades.
 
 ```{r fig-author-year, include = TRUE, fig.cap="Number of authors included on big-team science papers per year by subject area. Given the large skew in the data, the left panel presents the median number of authors per manuscript, and the right panel presents the average number of authors per manuscript by year."}
 avg_author_time <- 
@@ -488,11 +533,41 @@ ggsave(filename = "figure/figure_3_num_authors.png")
 
 ***Career Length***.
 
-Figure \@ref(fig:fig-career) portrays the average career length for authors involved in BTS publications across years. Career length was defined as the year of first publication minus the current year, and higher numbers mean longer careers. To analyze trends over time, we  calculated the average career length for each publication (i.e., average author career lengths to create one score for each paper) and analyzed a regression analysis using career length to predict year of publication. In order to show variance between individuals, we calculated the standard deviation of career length for each publication and used variance as an additional predictor.
+Figure \@ref(fig:fig-career) portrays the average career length for
+authors involved in BTS publications across years. Career length was
+defined as the year of first publication minus the current year, and
+higher numbers mean longer careers. To analyze trends over time, we
+calculated the average career length for each publication (i.e., average
+author career lengths to create one score for each paper) and analyzed a
+regression analysis using career length to predict year of publication.
+In order to show variance between individuals, we calculated the
+standard deviation of career length for each publication and used this
+variance as an additional predictor.
 
-Negative career length slopes would indicate more young scholars in later years (i.e., lower average career length as time increases). Positive career length slopes would indicate older scholars in later years (i.e., higher average career length as time increases). Negative career variance slopes imply that variability decreases over the years, so the average career length is more homogeneous. Positive career length slopes imply that variability increases over the years, so the average career length is varied across individuals (i.e., different stages of scholars). Figure \@ref(fig:fig-heatmap) displays the results for all regression analyses to compare coefficient strength across and within hypothesis. 
+Negative career length slopes would indicate more young scholars in
+later years (i.e., lower average career length as time increases).
+Positive career length slopes would indicate older scholars in later
+years (i.e., higher average career length as time increases). Negative
+career variance slopes imply that variability decreases over the years,
+so the average career length is more homogeneous. Positive career length
+slopes imply that variability increases over the years, so the average
+career length is varied across individuals (i.e., different stages of
+scholars). Figure \@ref(fig:fig-heatmap) displays the results for all
+regression analyses to compare coefficient strength across and within
+hypothesis.
 
-All values for this analyses were different from zero. The slopes for the average career length were negative for all four subject areas, indicating a trend toward younger scientist involvement over time for each area, with the strongest effect in the Physical sciences. The coefficient for variability in career length was also negative for each of the four subject areas with the highest in the Physical sciences and lowest in the Life Sciences. This result indicates a decrease in the variability of career lengths over time, likely from two sources: 1) more publications with more authors, thus, lowering variance estimations, and 2) more young scholars overall. The effect sizes for this analysis were surprisingly large ranging from $R^2$ to .25 to .47. All values and their confidence intervals can be found on our OSF page. 
+All values for this analyses were different from zero. The slopes for
+the average career length were negative for all four subject areas,
+indicating a trend toward younger scientist involvement over time for
+each area, with the strongest effect in the Physical sciences. The
+coefficient for variability in career length was also negative for each
+of the four subject areas with the highest in the Physical sciences and
+lowest in the Life Sciences. This result indicates a decrease in the
+variability of career lengths over time, likely from two sources: 1)
+more publications with more authors, thus, lowering variance
+estimations, and 2) more young scholars overall. The effect sizes for
+this analysis were surprisingly large ranging from $R^2$ to .25 to .47.
+All values and their confidence intervals can be found on our OSF page.
 
 ```{r fig-career, include = TRUE, fig.cap = "Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year. The data has been filtered to at least 10 publications in a year for this graph."}
 ggplot(DF$career_time %>% 
@@ -813,7 +888,29 @@ average *h*-index for publications was *M* = `r avg_of_avg_HIndex` (*SD*
 manuscripts was $M_{SD}$ = `r avg_of_std_HIndex` ($SD_{SD}$ =
 `r std_of_std_HIndex`, $Med_{Med}$ = `r med_of_med_HIndex`).
 
-We used the same analyses described in the career length section to analyze trends over time. An increasing slope over time indicates that individuals who are publishing more are more represented in BTS over time (i.e., increasing numbers of scholars with higher publication rates), while a negative slope indicates more researchers with less publications. A positive slope for the standard deviation of publication metrics indicates increasing variance over time (i.e., more diversity in the individual publication rates), while a negative slope would indicate less diversity in researchers over time. While publication rates do not represent value as a researcher, they are often used in hiring and promotion decisions, and we used this variable as a proxy to gauge the diversity in scholars represented in big teams. As shown in Figure \@ref(fig:fig-heatmap) publication metrics were generally negative for the average publication metrics, indicating more scholars over time with lower numbers of citations with the strongest effects in health and social sciences. The variability of publication counts was not significant for the life sciences but was negative for the physical sciences (less variability over time) and positive for social and health sciences (more variability and over time). This result indicates that the physical sciences are trending toward scholars with less publications but also less diverse in number of publications, while the health and social sciences see more diversity in publication counts and less published scholars overall. 
+We used the same analyses described in the career length section to
+analyze trends over time. An increasing slope over time indicates that
+individuals who are publishing more are more represented in BTS over
+time (i.e., increasing numbers of scholars with higher publication
+rates), while a negative slope indicates more researchers with less
+publications. A positive slope for the standard deviation of publication
+metrics indicates increasing variance over time (i.e., more diversity in
+the individual publication rates), while a negative slope would indicate
+less diversity in researchers over time. While publication rates do not
+represent value as a researcher, they are often used in hiring and
+promotion decisions, and we used this variable as a proxy to gauge the
+diversity in scholars represented in big teams. As shown in Figure
+\@ref(fig:fig-heatmap) publication metrics were generally negative for
+the average publication metrics, indicating more scholars over time with
+lower numbers of publications with the strongest effects in health and
+social sciences. The variability of publication counts was not
+significant for the life sciences but was negative for the physical
+sciences (less variability over time) and positive for social and health
+sciences (more variability and over time). This result indicates that
+the physical sciences are trending toward scholars with less
+publications but also less diverse in number of publications, while the
+health and social sciences see more diversity in publication counts and
+less published scholars overall.
 
 ***Geopolitical Regions***.
 
@@ -1023,9 +1120,37 @@ tree_all + ggtitle("All Publications Mosiac Chart") +
 ggsave(filename = "figure/figure_6_map.png", width = 10, height = 6, units = "in")
 ```
 
-Author geopoligical region is displayed in Figure \@ref(fig:fig-map-both). Big team publications appear to be lead by North America and Western Europe, while all publications are lead by North America and East Asia. To understand the change in representation diversity, we examined if the number of regions in a publication is predicted by the year of publication. Increasing diversity would be represented by a positive slope, while decreasing diversity would be represented by a negative slope. As shown in Figure \@ref(fig:fig-heatmap), the physical sciences do not show a trend of change in representation, while all other sciences showed a positive effect increasing in the number of geopolitical regions authors represent on publications. 
+Author geopolitical region is displayed in Figure
+\@ref(fig:fig-map-both). Big team publications appear to be lead by
+North America and Western Europe, while all publications are lead by
+North America and East Asia. To understand the change in representation
+diversity, we examined if the number of regions in a publication is
+predicted by the year of publication. Increasing diversity would be
+represented by a positive slope, while decreasing diversity would be
+represented by a negative slope. As shown in Figure
+\@ref(fig:fig-heatmap), the physical sciences do not show a trend of
+change in representation, while all other sciences showed a positive
+effect increasing in the number of geopolitical regions authors
+represent on publications.
 
-Last, we examined the differences in representation for corresponding author sets versus all other authors. For papers with 10 to 49 authors, we used the three first authors and the last author to compare against other authors. For 50 to 99 authors, five first authors plus last were used, and for all papers with more than 100 authors, we used ten first authors and the last author as the corresponding author set. We then calculated the frequencies of each of the UN Sub-Regions for corresponding authors versus all other authors, converting these values to proportions. Given the expected small sample sizes of these contingency tables, we grouped together titles based on the year of publication. For each grouping, we then calculated the effect size of the differences in frequencies comparing corresponding authors to all other authors. Since this data is categorical, we used Cramer's *V* to represent the effect size. If the effect size includes zero in its confidence interval (to four decimal places), this result will imply that first and all other authors represent the same pattern of UN Sub-Region diversity. Any confidence interval that does include zero represents a difference in diversity.
+Last, we examined the differences in representation for corresponding
+author sets versus all other authors. For papers with 10 to 49 authors,
+we used the three first authors and the last author to compare against
+other authors. For 50 to 99 authors, five first authors plus last were
+used, and for all papers with more than 100 authors, we used ten first
+authors and the last author as the corresponding author set. We then
+calculated the frequencies of each of the UN Sub-Regions for
+corresponding authors versus all other authors, converting these values
+to proportions. Given the expected small sample sizes of these
+contingency tables, we grouped together titles based on the year of
+publication. For each grouping, we then calculated the effect size of
+the differences in frequencies comparing corresponding authors to all
+other authors. Since this data is categorical, we used Cramer's *V* to
+represent the effect size. If the effect size includes zero in its
+confidence interval (to four decimal places), this result will imply
+that first and all other authors represent the same pattern of UN
+Sub-Region diversity. Any confidence interval that does include zero
+represents a difference in diversity.
 
 ```{r small-effects, warning = FALSE}
 DF$small_first_gp <- DF$small_first_gp %>% 
@@ -1396,21 +1521,146 @@ ggplot(all_effects %>%
 ggsave("figure/figure_8_author_effect_gpe.png", width = 10, height = 6, units = "in")
 ```
 
-Figure \@ref(fig:fig-author-gpe) indicates the percent of authors in regions. In general, we found the same pattern as the overall analysis wherein most authors are from Europe and North America. The pattern of representation is roughly similar for the separation of small, medium, and large numbers of authors on papers. Across time, the representation does appear to diversify, with more representation in Asia, Latin American, and Africa. Figure \@ref(fig:fig-effect-gpe) represents the size of the differences in first/corresponding authors and other authors across time and number of authors. The differences in representation are larger for papers with more authors; however, the effects are non-zero for many of the comparisons. Encouragingly, over time these effects appear to diminish in size. One limitation with the calculation of effect sizes for count data is the sensitivity of the data to sample size (i.e., $\chi^2$ is upwardly biased by sample size, and $V$ is calculated based on this value). While we used the inclusion of zero as our boundary for "significance", the interpretation of the effects is that most are likely small: $V$ < .05: `r apa_num(sum(all_effects$v <.05)/nrow(all_effects)*100)`%, < .10: `r apa_num(sum(all_effects$v < .10)/nrow(all_effects)*100)`%, < .20: `r apa_num(sum(all_effects$v < .20)/nrow(all_effects)*100)`%.
+Figure \@ref(fig:fig-author-gpe) indicates the percent of authors in
+regions. In general, we found the same pattern as the overall analysis
+wherein most authors are from Europe and North America. The pattern of
+representation is roughly similar for the separation of small, medium,
+and large numbers of authors on papers. Across time, the representation
+does appear to diversify, with more representation in Asia, Latin
+American, and Africa. Figure \@ref(fig:fig-effect-gpe) represents the
+size of the differences in first/corresponding authors and other authors
+across time and number of authors. The differences in representation are
+larger for papers with more authors; however, the effects are non-zero
+for many of the comparisons. Encouragingly, over time these effects
+appear to diminish in size. One limitation with the calculation of
+effect sizes for count data is the sensitivity of the data to sample
+size (i.e., $\chi^2$ is upwardly biased by sample size, and $V$ is
+calculated based on this value). While we used the inclusion of zero as
+our boundary for "significance", the interpretation of the effects is
+that most are likely small: $V$ \< .05:
+`r apa_num(sum(all_effects$v <.05)/nrow(all_effects)*100)`%, \< .10:
+`r apa_num(sum(all_effects$v < .10)/nrow(all_effects)*100)`%, \< .20:
+`r apa_num(sum(all_effects$v < .20)/nrow(all_effects)*100)`%.
 
-# Discussion 
+# Discussion
 
-- number of publications increasing
-- research areas appear to be cancer, physics, and psychology
-- the number of authors is increasing as well 
-- career length is decreasing, number of publications necessary to be involved is decreasing
-- number of gpe increasing 
-- appears to be slowly diversifying, yet still not equal in first and other authors in diversity 
+In this investigation, we explored the publication rates, areas, and
+researchers involved in big team science publications. Over a
+half-million articles were published in nearly 15,000 journals since
+1970 that qualified as big team science articles with at least ten
+authors and ten different affiliations. The areas of publication aligned
+to cancer and genetics research in medicine and oncology for medical and
+life sciences, physics and chemistry for the physical sciences, and
+psychology for the social sciences. All areas of research show an
+explosion in growth in the number of publications and the number of
+author included on manuscripts, replicating previous investigations into
+this topic area [@sinatra2015; @wuchty2007; @hunter2008].
 
-limitations - based on the data we could get, we made up the definition of BTS, under-representation of articles in other languages/that they don't collect 
+Our investigation expands into an exploration of the researchers who
+publish in big teams focusing on career length, publication metrics, and
+geopolitical affiliation. The number of earlier career scholars is
+increasing in publications across the years, indicating that big teams
+may be more accessible to different types of individuals, not just
+older, more established researchers. This result is especially
+interesting given the publish-or-perish model still present in most
+institutions, as it may seem that large-scale projects could be a risky
+choice for non-permanent researchers. In the authors' experience, big
+team projects are often quite slow to publication, incentives may be low
+for non corresponding authors if institutions do not value papers
+without lead authorship, and there is no guarantee for publication even
+with a large group. However, with a large team the distribution of work
+could imply less effort on individual non-leading members, and research
+has shown that larger-team publications do receive more citations and
+appear to have higher impact [@larivière2015].
 
-future: incentives for bts and why people do it 
+The results for number of publications by big team researchers mimics
+the findings from career length, with a smaller effect size. In general,
+it appears that there is a decrease in the average number of
+publications a researcher has when publishing on a big team science
+paper over time. This result is likely attributable to the number of
+early career scholars joining projects, but also may support increased
+accessibility for individuals to be involved in this type of research.
+Globalization, the internet, and the focus on interdisciplinary research
+are potentially driving forces behind our results, but, hopefully, the
+results also point to a decline in scientific gatekeeping [@siler2015;
+@lu2007].
 
+The variability in the types of researchers involved in publications
+also decreased across time in most areas of science with a decrease in
+variability for career length. As mention, an increase in early career
+researchers and numbers of publications could explain this effect
+mathematically, potentially with other social influences mentioned
+above. The variability in number of publications is decreasing in the
+physical sciences, mirroring the career length results, but the opposite
+effect was found in the health and social sciences. We see no clear
+reason why career variability would decrease while the variability in
+the number of publications would increase. The effect sizes for career
+length were much larger than the effects for number of publications. One
+speculation is the increasing requirements for a competitive faculty
+role application. Given the limited number of positions, one potential
+way to distinguish their application would be a larger number
+publications in their early career [@caplow2017; @kyvik2003].
+
+The number of geopolitical entities for researcher affiliation is
+increasing over time, showing the results of globalization and the
+ability to connect across time zones and cultures [@xie2014]. While our
+definition of big team science required at least ten different
+institutional affiliations, we did not filter papers by geopolitical
+region, and thus, a manuscript could rely solely on institutions within
+a single country. The physical sciences did not show an increase in
+diversity of regions represented, however, it could be argued that the
+development of large research centers like CERN forced earlier diversity
+than other sciences (i.e., because CERN specifically recruited
+scientists from sponsoring nations). The life, health, and social
+sciences saw an increase in the number of regions represented with the
+highest increase in the social science. This result likely corresponds
+with an increased interest in big team science publications in
+psychology [@coles2022; @forscher2020], and the desire to diversify the
+populations represented in psychological research [@henrich2010;
+@newson2021].
+
+While publications on the whole are diversifying, we did not yet find
+equality in the representation for first/corresponding author spots
+versus all other authors. In general, first authors appear to be less
+diverse, representing more European and North American authors, while
+other authors include more Asian and African authors. These effect sizes
+were often small, but the inequality still persists across years, even
+if they are slowly decreasing. Diverse teams are more likely to have
+papers with stronger "impact" [@jones2008; @hinnant2012; @yang2022;
+@freeman2015] with higher citation metrics for more diverse author
+lists. The introduction of contributorship models [e.g., CRediT;
+@allen2019] will hopefully continue to push these effects down, as they
+highlight each individual's contribution to a manuscript.
+
+The limitations for this research are tied to the availability and
+curation of the Scopus dataset. While the number of articles analyzed
+for this investigation was large, the criteria for inclusion requires
+the correct entry of author affiliations, the correct author linkages
+for career length and publication rates, and the correctly marked
+geopolitical entity. We had planned to analyze educational levels to
+determine if the number of student coauthors (i.e., non-terminal degree)
+had increased over time; however, this data was mostly blank within the
+Scopus archive. Scopus is a carefully curated dataset, but these
+limitations must be kept in mind when interpreting the results.
+Publication language diversity was not investigated, and a previous
+study indicates that the majority of publications in big databases are
+in English [@albarillo2014]. Certainly, publications in non-English
+languages would improve the statistics on diversity in scientific
+publishing - but the English language barrier likely exists regardless
+of inclusion in databases [@meneghini2007; @ramírez-castañeda2020].
+
+Big teams have the ability to provide high-impact, important research
+within scientific publishing, and this report suggests a promising trend
+of increasing numbers of publications that include earlier career and
+more diverse scholars. These partnerships introduce new challenges to
+collaboration from interpersonal conflict, infrastructure, incentives,
+to international political situations [@forscher2020]. Directed studies
+into ways to navigate these situations would be beneficial for policy
+makers at institutions, as well as lead teams who organize and complete
+these projects. The implications for retention and promotion processes
+across a broad span of regions should be explored to improve diversity
+with the understanding of the differential impact of incentives for
+participating in big team studies.
 
 \newpage
 
@@ -1421,18 +1671,15 @@ future: incentives for bts and why people do it
 \setlength{\parindent}{-0.5in}
 \setlength{\leftskip}{0.5in}
 ```
-
 ::: {#refs custom-style="Bibliography"}
 :::
 
 ```{=tex}
 \endgroup
 ```
-
 \newpage
 
-# (APPENDIX) Appendix {-}
+# (APPENDIX) Appendix {.unnumbered}
 
 ```{r child = "appendix.Rmd"}
 ```
-
