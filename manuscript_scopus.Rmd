@@ -52,15 +52,6 @@ editor_options:
   chunk_output_type: inline
 bibliography: references.bib
 # header-includes:
-#   - |
-#     \makeatletter
-#     \renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
-#       {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
-#       {-1em}%
-#       {\normalfont\normalsize\bfseries\typesectitle}}
-#       {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
-#       {-\z@\relax}%
-#       {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
 # csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja')`"
 # documentclass     : "apa7"
 output            : papaja::apa6_docx
@@ -339,7 +330,7 @@ Articles could be classified into multiple categories. Figure
 \@ref(fig:fig-pub-time) shows the number of articles published across
 time for each of the four large subject areas.
 
-```{r fig-pub-time, include = TRUE, fig.cap="Number of big-team science publications separated by four large subject areas across years."}
+```{r fig-pub-time, include = TRUE, fig.cap="Number of big-team science publications separated by four large subject areas across years.", fig.width=10, fig.height=6}
 ggplot(DF$pub_time_count %>% 
          filter(SubjectArea != "Multidisciplinary") %>% 
          filter(Year < 2023), 
@@ -351,7 +342,7 @@ ggplot(DF$pub_time_count %>%
   xlab("Publication Year") + 
   theme(legend.position = "bottom")
 
-ggsave(filename = "figure/figure_1_pub_time.png")
+ggsave(filename = "figure/figure_1_pub_time.png", width = 10, height = 6)
 ```
 
 ```{r total-journals}
@@ -444,7 +435,7 @@ ggsave("figure/social_cloud.png", dpi = 300, width = 8,
        height = 4, units = "in")
 ```
 
-```{r fig-clouds, include = TRUE, fig.cap = "Journal Areas for Big-Team Science Publications by Subject Area"}
+```{r fig-clouds, include = TRUE, fig.cap = "Journal Areas for Big-Team Science Publications by Subject Area", fig.width=10, fig.height=6}
 
 health_cloud <- fig("figure/health_cloud.png")
 physical_cloud <- fig("figure/physical_cloud.png") 
@@ -462,7 +453,7 @@ social_cloud + ggtitle("Social Sciences") +
   plot_layout(ncol = 2, 
               nrow = 2)
 
-ggsave(filename = "figure/figure_2_cloud.png")
+ggsave(filename = "figure/figure_2_cloud.png", width = 10, height = 6)
 ```
 
 ## RQ3: Authors.
@@ -488,7 +479,7 @@ physical sciences. Interestingly, the effect in the physical sciences
 appears to be declining toward the general trends seen in other areas in
 the last few decades.
 
-```{r fig-author-year, include = TRUE, fig.cap="Number of authors included on big-team science papers per year by subject area. Given the large skew in the data, the left panel presents the median number of authors per manuscript, and the right panel presents the average number of authors per manuscript by year."}
+```{r fig-author-year, include = TRUE, fig.cap="Number of authors included on big-team science papers per year by subject area. Given the large skew in the data, the left panel presents the median number of authors per manuscript, and the right panel presents the average number of authors per manuscript by year.", fig.width=10, fig.height=6}
 avg_author_time <- 
   DF$author_time %>% 
   filter(SubjectArea != "Multidisciplinary") %>% 
@@ -528,7 +519,7 @@ median_authors +
   scale_color_brewer(palette = "Spectral", name = "Subject Area") + 
   plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 
-ggsave(filename = "figure/figure_3_num_authors.png")
+ggsave(filename = "figure/figure_3_num_authors.png", width = 10, height = 6)
 ```
 
 ***Career Length***.
@@ -569,7 +560,7 @@ estimations, and 2) more young scholars overall. The effect sizes for
 this analysis were surprisingly large ranging from $R^2$ to .25 to .47.
 All values and their confidence intervals can be found on our OSF page.
 
-```{r fig-career, include = TRUE, fig.cap = "Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year. The data has been filtered to at least 10 publications in a year for this graph."}
+```{r fig-career, include = TRUE, fig.cap = "Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year. The data has been filtered to at least 10 publications in a year for this graph.", fig.width=10, fig.height=6}
 ggplot(DF$career_time %>% 
          filter(SubjectArea != "Multidisciplinary") %>% 
          filter(num_papers >= 10) %>% 
@@ -586,7 +577,7 @@ ggplot(DF$career_time %>%
   guides(size = "none")  
   #scale_size_continuous(name = "Number Papers")
 
-ggsave(filename = "figure/figure_4_career.png")
+ggsave(filename = "figure/figure_4_career.png", width = 10, height = 6)
 ```
 
 ```{r career-results, include = FALSE}
@@ -756,7 +747,7 @@ graph_data_3$analysis <- "Regions"
 #   ylab("")
 ```
 
-```{r fig-heatmap, include = TRUE, fig.cap="Heatmap results of regression analyses for career length, number of publications, and geopolitical diversity in region. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot."}
+```{r fig-heatmap, include = TRUE, fig.cap="Heatmap results of regression analyses for career length, number of publications, and geopolitical diversity in region. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.", fig.width=10, fig.height=6}
 graph_overall <- graph_data %>% 
   bind_rows(graph_data_2) %>% 
   bind_rows(graph_data_3) %>% 
@@ -1100,7 +1091,7 @@ tree_all <- ggplot(DF$geo_country, aes(area = count_all, fill = count_binned_all
   #                     high = "#323232") 
 ```
 
-```{r fig-map-both, include = TRUE, fig.cap="Geopolitical regions represented in big-team science publications versus all publications."}
+```{r fig-map-both, include = TRUE, fig.cap="Geopolitical regions represented in big-team science publications versus all publications.", fig.width=10, fig.height=6}
 bin_country + ggtitle("Big-Team Publication Map") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
   theme(legend.position = "none") + 
@@ -1474,7 +1465,7 @@ large_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
   scale_fill_brewer(name = "Region", palette = "Spectral", drop = FALSE)
 ```
 
-```{r fig-author-gpe, include = TRUE, fig.cap="A comparison of author affiliation geopolitical region across decades. F stands for first authors and O stands for other authors."}
+```{r fig-author-gpe, include = TRUE, fig.cap="A comparison of author affiliation geopolitical region across decades. F stands for first authors and O stands for other authors.", fig.width=10, fig.height=6}
 small_author + ggtitle("10-49 Authors") + #theme(legend.position = "none") +
 medium_author + ggtitle("50-99 Authors") + #theme(legend.position = "none") + 
 large_author + ggtitle("100 + Authors") + #theme(legend.position = "none") + 
@@ -1487,7 +1478,7 @@ plot_layout(
 ggsave("figure/figure_7_author_gpe.png", width = 10, height = 6, units = "in")
 ```
 
-```{r fig-effect-gpe, include = TRUE, fig.cap = "Effect size of the differences in representation for UN Regions for author affiliations in big-team science papers by year. Larger dots indicate more papers and authors represented in the calculation of effect size."}
+```{r fig-effect-gpe, include = TRUE, fig.cap = "Effect size of the differences in representation for UN Regions for author affiliations in big-team science papers by year. Larger dots indicate more papers and authors represented in the calculation of effect size.", fig.width=10, fig.height=6}
 all_effects <- bind_rows(
   small_effect %>% 
     mutate(type = "Small"),

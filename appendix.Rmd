@@ -177,7 +177,7 @@ ggsave("figure/figure_app_2.png")
 
 ***Types of Publications***.
 
-Types of publications are presented in Figure \@ref(fig:fig-pub-types). The patterns of publications are roughly similar for big team science authors and all authors. It appears that porportionally, big team members are more likely to post preprints in comparison to all authors. 
+Types of publications are presented in Figure \@ref(fig:fig-pub-types). The patterns of publications are roughly similar for big team science authors and all authors. It appears that proportionally, big team members are more likely to post preprints in comparison to all authors. 
 
 ```{r fig-pub-types, include = TRUE, fig.cap = "Types of publications for big-team science and all authors."}
 pub_levels <- c("ab", "ar", "ip", "bk", "bz", "ch", "cp", 
