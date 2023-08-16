@@ -121,7 +121,7 @@ ggsave("figure/social_key.png", dpi = 300, width = 8,
        height = 4, units = "in")
 ```
 
-```{r fig-keywords, include = TRUE, fig.cap="Keyword Analysis for Each of the Four Subject Areas."}
+```{r fig-keywords, include = TRUE, fig.cap="Keyword Analysis for Each of the Four Subject Areas.", fig.width=10, fig.height=6}
 health_key <- fig("figure/health_key.png")
 physical_key <- fig("figure/physical_key.png") 
 life_key <- fig("figure/life_key.png") 
@@ -138,7 +138,7 @@ social_key + ggtitle("Social Sciences") +
   plot_layout(ncol = 2, 
               nrow = 2)
 
-ggsave("figure/figure_app_1.png")
+ggsave("figure/figure_app_1.png", width = 10, height = 6)
 ```
 
 ## RQ3: Authors
@@ -147,7 +147,7 @@ ggsave("figure/figure_app_1.png")
 
 Institution was normalized by taking the total number of unique institutions and dividing by the total number of institution listings. The patterns are similar for each decade in that papers are often either half unique institutions or mostly unique institutions overall as show in Figure \@ref(fig:fig-inst).
 
-```{r fig-inst, include = TRUE, fig.cap="Number of unique institutions involved in big-team science papers across decades."}
+```{r fig-inst, include = TRUE, fig.cap="Number of unique institutions involved in big-team science papers across decades.", fig.width=10, fig.height=6}
 DF$inst_time$normalized <- DF$inst_time$unique / DF$inst_time$total * 100
 
 graph_data_inst <- DF$inst_time %>% 
@@ -179,7 +179,7 @@ ggsave("figure/figure_app_2.png")
 
 Types of publications are presented in Figure \@ref(fig:fig-pub-types). The patterns of publications are roughly similar for big team science authors and all authors. It appears that proportionally, big team members are more likely to post preprints in comparison to all authors. 
 
-```{r fig-pub-types, include = TRUE, fig.cap = "Types of publications for big-team science and all authors."}
+```{r fig-pub-types, include = TRUE, fig.cap = "Types of publications for big-team science and all authors.", fig.width=10, fig.height=6}
 pub_levels <- c("ab", "ar", "ip", "bk", "bz", "ch", "cp", 
                 "cr", "dp", "ed", "er", "le", "no", "pp", 
                 "pr", "rp", "re", "sh", "tb")
@@ -217,10 +217,10 @@ ggplot(pub_types, aes(area = count, fill = binned_count,
   facet_wrap(~type) + 
   geom_treemap_text(colour = "black", place = "centre",
                     size = 15, grow = FALSE) +  
-  # scale_fill_brewer(name = "Sample Size", palette = "Spectral") +
+  scale_fill_brewer(name = "Sample Size", palette = "Spectral") +
   theme_classic()
 
-ggsave("figure/figure_app_3.png")
+ggsave("figure/figure_app_3.png", width = 10, height = 6)
 # can probably figure out how to combine these feasibly to make it readable
 # ab Abstract Report, ar Article, ip Article in Press, bk Book, bz Business Article, ch Book Chapter, cp Conference Paper, cr Conference Review, dp Data paper, ed Editorial, er Erratum, le Letter, no Note, pp Preprint, pr Press Release, rp Report, re Review, sh Survey, tb Retracted.
 ```
