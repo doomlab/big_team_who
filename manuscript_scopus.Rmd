@@ -138,7 +138,7 @@ credibility movement seems to suggest that by having both collaborations
 that span across the globe and subfields of research areas, age groups,
 and education levels should help to drive science in the path of better
 materials, reliability, generalizability and more robust sample sizes
-(when necessary) in a study [@auspurg2021]; @nosek2014method;
+(when necessary) in a study [@auspurg2021; @nosek2014method;
 @lebel2018].
 
 The credibility movement was originally defined by a focus on large
