@@ -52,9 +52,9 @@ editor_options:
   chunk_output_type: inline
 bibliography: references.bib
 # header-includes:
-# csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja')`"
+csl               : "includes/nature.csl"
 # documentclass     : "apa7"
-output            : papaja::apa6_docx
+output            : papaja::apa6_pdf
 appendix          :
   - "appendix.Rmd"
 ---
@@ -98,9 +98,6 @@ label_expressions <- function(values) {
   }, default = identity)
 }
 
-```
-
-```{r data, include = FALSE}
 # things to import
 var_list <- c("author_time", "career_time", "geo_country", "inst_time", 
               "keywords", "large_first_gp", "large_other_gp", "medium_first_gp", 
@@ -122,39 +119,51 @@ advance knowledge in their chosen field. Collaboration can manifest
 uniquely in each project dependent on the skill sets, hypotheses, and
 perspectives of collaborators. While collaboration is not new in
 science, the current interest of "big team science" is increasing
-[@forscher2020; @stewart2017; @coles2022]. Big team science projects
+[@coles2022; @forscher2022a; @stewart2017]. Big team science projects
 and/or organizations utilize and run on large-scale collaboration to
 ensure that diverse populations and ideas are brought into research
 projects, which in turn allows for more reliability and generalizability
-in the results and method of the study. 
+in the results and method of the study.
 
 BTS appears to be expanding as a result of two sources: 1) increasing
 globalization and technology that allows for real-time interdisciplinary
-research, and 2) expanding interest in reproducibility, replication,
-and generalizability [@maxwell2015; @nelson2018; @zwaan2018].
-Technological advances have provided easier ways to collaborate with
-people who are from other universities and countries through document
-sharing platforms (e.g., Google, GitHub, and the Open Science
-Framework), video chatting platforms (e.g., Zoom, Microsoft Teams), and
-messaging and project management platforms (e.g., Slack, Trello,
-when2meet, etc.). The credibility movement seems to suggest that by having both collaborations that span across the globe and subfields of research areas, age groups, and education levels should help to drive science in the path of better materials, reliability, generalizability and more robust sample sizes (when necessary) in a study [@auspurg2021has; @nosek2014method; @lebel2018].
+research, and 2) expanding interest in reproducibility, replication, and
+generalizability [@maxwell2015; @nelson2018; @zwaan2018]. Technological
+advances have provided easier ways to collaborate with people who are
+from other universities and countries through document sharing platforms
+(e.g., Google, GitHub, and the Open Science Framework), video chatting
+platforms (e.g., Zoom, Microsoft Teams), and messaging and project
+management platforms (e.g., Slack, Trello, when2meet, etc.). The
+credibility movement seems to suggest that by having both collaborations
+that span across the globe and subfields of research areas, age groups,
+and education levels should help to drive science in the path of better
+materials, reliability, generalizability and more robust sample sizes
+(when necessary) in a study [@auspurg2021]; @nosek2014method;
+@lebel2018].
 
-The credibility movement was originally defined by a focus on large scale replications used in collaborative environments [@vazire2022]. Generally, the movement appears to have been driven by early career
+The credibility movement was originally defined by a focus on large
+scale replications used in collaborative environments [@vazire2022].
+Generally, the movement appears to have been driven by early career
 researchers (i.e., those who are within five years of their first
 appointment) [@maizey2019]; however, there are no large meta-scientific
 investigations on this specific topic to date. Potentially, the lack of
 investigation is tied to the newness of the large-scale research in many
 fields, as it is only in recent years that publications like the Open
 Science Collaboration [@opensciencecollaboration2015], Many Labs
-Collaborations [@klein2018; @ebersole2020; @ebersole2016;
-@klein2022; @mathur2020; @buttrick2020; @skorb2020] or the first papers
-from the Psychological Science Accelerator [@moshontz2018; @jones2021;
-@dorison2022; @wang2021; @legate2022; @bago2022]. Generally, the researcher incentive for replication was low for three reasons. First, journals often prioritize “novel” or new results which led to rejection of replication manuscripts and publication bias [@hubbard1997; @franco2014; @nosek2012]. Second, the
-"failure" to replicate was often placed on the replication team as "bad
-science" rather than a careful consideration of publication biases and
-(potential) questionable research practices [@ioannidis2015;
-@maxwell2015; @klein2022]. Last, why should someone want to spend time and
-resources on an answer we already "know" [@isager2021; @isager2021a]?
+Collaborations [@buttrick2020; @ebersole2016; @ebersole2020; @klein2018;
+@klein2022; @mathur2020; @skorb2020] or the first papers from the
+Psychological Science Accelerator [@bago2022; @buchanan2023;
+@dorison2022; @jones2021;
+@psychologicalscienceacceleratorself-determinationtheorycollaboration2022;
+@moshontz2018; @wang2021]. Generally, the researcher incentive for
+replication was low for three reasons. First, journals often prioritize
+"novel" or new results which led to rejection of replication manuscripts
+and publication bias [@franco2014; @hubbard1997; @nosek2012]. Second,
+the "failure" to replicate was often placed on the replication team as
+"bad science" rather than a careful consideration of publication biases
+and (potential) questionable research practices [@klein2022;
+@maxwell2015]. Last, why should someone want to spend time and resources
+on an answer we already "know" [@isager2021; @isager2021a]?
 
 However, the success and interest in the large-scale reproducibility
 projects [@opensciencecollaboration2015; @10.7554/eLife.71601], paired
@@ -188,13 +197,15 @@ DRAGNet (<https://dragnetglobal.weebly.com/>) can begin to tackle these
 issues by recruiting research labs from all over the globe to provide
 diversity in geographic, linguistic, and researcher representation.
 Publications have examined the global understanding of morality, face
-processing, COVID-19 information signaling, and more [@dorison2022;
-@wang2021; @legate2022; @bago2022; @jones2021; @vanbavel2022]. While
-these organizations and one-time groups for BTS studies have provided an
-incredible wealth of data for the scientific community, we do not yet
-know exactly *who* is involved with, and benefits from, the BTS and
-credibility movement. Publications on BTS generally explore challenges,
-lessons learned, and the need for BTS [@forscher2020; @coles2022].
+processing, COVID-19 information signaling, and more [@bago2022;
+@dorison2022; @jones2021;
+@psychologicalscienceacceleratorself-determinationtheorycollaboration2022;
+@vanbavel2022; @wang2021]. While these organizations and one-time groups
+for BTS studies have provided an incredible wealth of data for the
+scientific community, we do not yet know exactly *who* is involved with,
+and benefits from, the BTS and credibility movement. Publications on BTS
+generally explore challenges, lessons learned, and the need for BTS
+[@forscher2022a; @coles2022].
 
 Therefore, the goal of this manuscript is to examine the *people*
 involved in BTS projects. We specifically examined the themes of
@@ -347,8 +358,8 @@ articles were published in was `r journals` with `r health_journal`
 journals in Health Sciences, `r physical_journal` journals in Physical
 Sciences, `r social_journal` journals in Social Sciences, and
 `r life_journal` journals in Life Sciences. The descriptive statistics
-for the Source Normalized Impact per Paper is presented the supplemental
-materials with a comparison for all papers.
+for the Source Normalized Impact per Paper is presented in the
+supplemental materials with a comparison for all papers.
 
 ## RQ2: Publication Information.
 
@@ -357,9 +368,9 @@ creating a word cloud plot of the total number of publications within
 the ASJCs. Figure \@ref(fig:fig-clouds) displays that the Health
 Sciences tends to publish within medicine and oncology, with a
 corresponding focus of cancer research and genetics for the Life
-Sciences. The Physical Sciences is mostly dominated by physics research,
-chemistry, and ecology. The BTS publications in the Social Sciences are
-mostly within psychology, education, and health.
+Sciences. The Physical Sciences was mostly dominated by physics
+research, chemistry, and ecology. The BTS publications in the Social
+Sciences are mostly within psychology, education, and health.
 
 ```{r make-clouds, eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
 ### NOTE YOU WILL NEED TO RUN THIS ###
@@ -423,7 +434,7 @@ ggsave("figure/social_cloud.png", dpi = 300, width = 8,
        height = 4, units = "in")
 ```
 
-```{r fig-clouds, include = TRUE, fig.cap = "Journal Areas for Big-Team Science Publications by Subject Area", fig.width=10, fig.height=6}
+```{r fig-clouds, include = TRUE, fig.cap = "Journal Areas for Big-Team Science Publications by Subject Area. Larger words indicate more publications in those ASJC areas. ", fig.width=10, fig.height=6}
 
 health_cloud <- fig("figure/health_cloud.png")
 physical_cloud <- fig("figure/physical_cloud.png") 
@@ -489,14 +500,14 @@ avg_author_time <-
 
 median_authors <- 
   ggplot(avg_author_time, aes(Year, Med_Num_Authors, color = SubjectArea)) + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   geom_point() + 
     ylab("Median Number of Authors") + 
     xlab("Publication Year") 
 
 mean_authors <- 
   ggplot(avg_author_time, aes(Year, Average_Num_Authors, color = SubjectArea)) + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   geom_point() + 
     ylab("Average Number of Authors") + 
     xlab("Publication Year") 
@@ -533,9 +544,9 @@ slopes imply that variability increases over the years, so the average
 career length is varied across individuals (i.e., different stages of
 scholars). Figure \@ref(fig:fig-heatmap) displays the results for all
 regression analyses to compare coefficient strength across and within
-hypothesis.
+each hypothesis.
 
-All values for this analyses were different from zero. The slopes for
+All values for these analyses were different from zero. The slopes for
 the average career length were negative for all four subject areas,
 indicating a trend toward younger scientist involvement over time for
 each area, with the strongest effect in the Physical Sciences. The
@@ -545,16 +556,16 @@ lowest in the Life Sciences. This result indicates a decrease in the
 variability of career lengths over time, likely from two sources: 1)
 more publications with more authors, thus, lowering variance
 estimations, and 2) more young scholars overall. The effect sizes for
-this analysis were surprisingly large ranging from $R^2$ to .25 to .47.
+this analysis were surprisingly large ranging from $R^2$ = .25 to .47.
 All values and their confidence intervals can be found on our OSF page.
 
-```{r fig-career, include = TRUE, fig.cap = "Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year. The data has been filtered to at least 10 publications in a year for this graph.", fig.width=10, fig.height=6}
-ggplot(DF$career_time %>% 
+```{r fig-career, include = TRUE,  warning = FALSE, message = FALSE, fig.cap = "Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year. The data has been filtered to at least 10 publications in a year for this graph.", fig.width=10, fig.height=6}
+temp <- ggplot(DF$career_time %>% 
          filter(SubjectArea != "Multidisciplinary") %>% 
          filter(num_papers >= 10) %>% 
          filter(Year < 2024), 
        aes(Year, avg_career, color = SubjectArea)) +
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   geom_point(aes(size = sd_career)) +
   # geom_point() + 
   # facet_wrap(~SubjectArea) + 
@@ -564,6 +575,8 @@ ggplot(DF$career_time %>%
   scale_color_brewer(palette = "Spectral", name = "Subject Area") +
   guides(size = "none")  
   #scale_size_continuous(name = "Number Papers")
+
+suppressWarnings(suppressMessages(temp))
 
 ggsave(filename = "figure/figure_4_career.png", width = 10, height = 6)
 ```
@@ -735,7 +748,7 @@ graph_data_3$analysis <- "Regions"
 #   ylab("")
 ```
 
-```{r fig-heatmap, include = TRUE, fig.cap="Heatmap results of regression analyses for career length, number of publications, and geopolitical diversity in region. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.", fig.width=10, fig.height=6}
+```{r fig-heatmap, include = TRUE, fig.cap="Heatmap results of regression analyses for career length, number of publications, and geopolitical diversity within the region. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.", warning = FALSE, message = FALSE, fig.width=10, fig.height=6}
 graph_overall <- graph_data %>% 
   bind_rows(graph_data_2) %>% 
   bind_rows(graph_data_3) %>% 
@@ -752,7 +765,7 @@ heat_results <- ggplot(graph_overall, aes(label, type, fill = Estimate)) +
   ylab("") + 
   xlab("") + 
   facet_wrap(~analysis) + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   theme(axis.text.x = element_text(angle = 60, vjust = .5), 
         legend.position = "right", 
         legend.key.size = unit(.75, 'cm')) + 
@@ -770,7 +783,7 @@ heat_results_1 <- ggplot(graph_overall %>%
   scale_y_discrete(labels  = c(TeX("$R^2$"), TeX("$b_{SD}$"), TeX("$b_M$"))) + 
   ylab("") + 
   xlab("") + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   theme(axis.text.x = element_text(angle = 60, vjust = .5), 
         legend.position = "right") + 
   scale_fill_distiller(palette = "RdBu") + 
@@ -785,7 +798,7 @@ heat_results_2 <- ggplot(graph_overall %>%
   scale_y_discrete(labels  = c(TeX("$R^2$"), TeX("$b_{SD}$"), TeX("$b_M$"))) + 
   ylab("") + 
   xlab("") + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   theme(axis.text.x = element_text(angle = 60, vjust = .5), 
         legend.position = "right") + 
   scale_fill_distiller(palette = "PuOr") + 
@@ -800,7 +813,7 @@ heat_results_3 <- ggplot(graph_overall %>%
   scale_y_discrete(labels  = c(TeX("$R^2$"), TeX("$b$"))) + 
   ylab("") + 
   xlab("") + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   theme(axis.text.x = element_text(angle = 60, vjust = .5), 
         legend.position = "right") + 
   scale_fill_distiller(palette = "PiYG") +
@@ -811,9 +824,9 @@ layout <- "
 AAA
 BCD
 "
-suppressWarnings(heat_results + 
+suppressMessages(suppressWarnings(heat_results + 
   heat_results_1 + heat_results_2 + heat_results_3 + 
-  plot_layout(design = layout))
+  plot_layout(design = layout)))
 
 ggsave(filename = "figure/figure_5_heatmap.png", width = 10, height = 6, units = "in")
 ```
@@ -849,11 +862,11 @@ std_of_std_HIndex <- apa_num(238.53141146314053)
 med_of_med_HIndex <- apa_num(68.0)
 ```
 
-The average number of publications by authors on big team sciences
-papers is *M* = `r avg_pub_count_author` (*SD* =
-`r std_pub_count_author`). The publication counts were averaged across
-authors for each publication, and then these average publication counts
-were averaged across publications *M* = `r avg_pub_count_paper` (*SD* =
+The average number of publications by authors on big team science papers
+is *M* = `r avg_pub_count_author` (*SD* = `r std_pub_count_author`). The
+publication counts were averaged across authors for each publication,
+and then these average publication counts were averaged across
+publications *M* = `r avg_pub_count_paper` (*SD* =
 `r sd_pub_count_paper`). The average variability (i.e., the average
 standard deviation with authors of a manuscript) with publication counts
 of a paper was $M_{SD}$ = `r avg_SD_pub_count_paper` ($SD_{SD}$ =
@@ -956,7 +969,7 @@ bin_country <- ggplot(DF$geo_country) +
   geom_polygon(data = world_map, 
                aes(x = long, y = lat, group = group), 
                colour = 'black', fill = NA) + 
-  theme_void() + 
+  theme_void(base_size = 15) + 
   # scale_fill_manual(name = "Sample Size",
   #                   values = c( "black", "#323232", "#646464","#969696","#c8c8c8")) 
   scale_fill_brewer(name = "Sample Size", palette = "Spectral", drop = FALSE)
@@ -1057,7 +1070,7 @@ bin_country_all <- ggplot(DF$geo_country) +
   geom_polygon(data = world_map, 
                aes(x = long, y = lat, group = group), 
                colour = 'black', fill = NA) + 
-  theme_void() + 
+  theme_void(base_size = 15) + 
   # scale_fill_manual(name = "Sample Size",
   #                   values = c( "black", "#323232", "#646464","#969696","#c8c8c8")) 
   scale_fill_brewer(name = "Sample Size", palette = "Spectral", drop = FALSE)
@@ -1079,7 +1092,7 @@ tree_all <- ggplot(DF$geo_country, aes(area = count_all, fill = count_binned_all
   #                     high = "#323232") 
 ```
 
-```{r fig-map-both, include = TRUE, fig.cap="Geopolitical regions represented in big-team science publications versus all publications.", fig.width=10, fig.height=6}
+```{r fig-map-both, include = TRUE, fig.cap="Geopolitical regions represented in big-team science publications versus all publications. The mosaic plot is grouped by UN subregion with the largest number of publications on the left and smallest on the top right. ", fig.width=10, fig.height=6}
 bin_country + ggtitle("Big-Team Publication Map") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
   theme(legend.position = "none") + 
@@ -1100,9 +1113,9 @@ ggsave(filename = "figure/figure_6_map.png", width = 10, height = 6, units = "in
 ```
 
 Author geopolitical region is displayed in Figure
-\@ref(fig:fig-map-both). Big team publications appear to be lead by
-North America and Western Europe, while all publications are lead by
-North America and East Asia. To understand the change in representation
+\@ref(fig:fig-map-both). Big team publications appear to be led by North
+America and Western Europe, while all publications are led by North
+America and East Asia. To understand the change in representation
 diversity, we examined if the number of regions in a publication is
 predicted by the year of publication. Increasing diversity would be
 represented by a positive slope, while decreasing diversity would be
@@ -1189,7 +1202,7 @@ small_effect <-
 
 small_dot <- ggplot(small_effect, aes(year,v)) + 
   geom_point(aes(size = people)) + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   geom_pointrange(aes(ymin = low, ymax = high)) + 
   xlab("Year") + 
   ylab(expression(phi)) + 
@@ -1232,7 +1245,7 @@ DF_decade_sm <- DF_decade %>%
 
 small_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) + 
     geom_bar(position="fill", stat="identity", color = "black") + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   facet_grid(~Decade) + 
   xlab("Author Type") + 
   ylab("Percent of Authors") + 
@@ -1295,7 +1308,7 @@ medium_effect <-
 
 medium_dot <- ggplot(medium_effect, aes(year,v)) + 
   geom_point(aes(size = people)) + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   geom_pointrange(aes(ymin = low, ymax = high)) + 
   xlab("Year") + 
   ylab(expression(phi)) + 
@@ -1339,7 +1352,7 @@ DF_decade_sm <- DF_decade %>%
 
 medium_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) + 
     geom_bar(position="fill", stat="identity", color = "black") + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   facet_grid(~Decade) + 
   xlab("Author Type") + 
   ylab("Percent of Authors") + 
@@ -1402,7 +1415,7 @@ large_effect <-
 
 large_dot <- ggplot(large_effect, aes(year,v)) + 
   geom_point(aes(size = people)) + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   geom_pointrange(aes(ymin = low, ymax = high)) + 
   xlab("Year") + 
   ylab(expression(phi)) + 
@@ -1446,14 +1459,14 @@ DF_decade_sm <- DF_decade %>%
 
 large_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) + 
     geom_bar(position="fill", stat="identity", color = "black") + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   facet_grid(~Decade) + 
   xlab("Author Type") + 
   ylab("Percent of Authors") + 
   scale_fill_brewer(name = "Region", palette = "Spectral", drop = FALSE)
 ```
 
-```{r fig-author-gpe, include = TRUE, fig.cap="A comparison of author affiliation geopolitical region across decades. F stands for first authors and O stands for other authors.", fig.width=10, fig.height=6}
+```{r fig-author-gpe, include = TRUE, fig.cap="A comparison of author affiliation geopolitical regions across decades. F stands for first authors and O stands for other authors.", fig.width=10, fig.height=6}
 small_author + ggtitle("10-49 Authors") + #theme(legend.position = "none") +
 medium_author + ggtitle("50-99 Authors") + #theme(legend.position = "none") + 
 large_author + ggtitle("100 + Authors") + #theme(legend.position = "none") + 
@@ -1492,7 +1505,7 @@ ggplot(all_effects %>%
   facet_wrap(~type) + 
   geom_point(aes(size = people)) +
   geom_linerange(aes(ymin = low, ymax = high), alpha = .5) +
-  theme_classic() +
+  theme_classic(base_size = 15) +
   theme(legend.position = "none") + 
   xlab("Year of Publication") + 
   ylab("Cramer's V")
@@ -1517,23 +1530,23 @@ size (i.e., $\chi^2$ is upwardly biased by sample size, and $V$ is
 calculated based on this value). While we used the inclusion of zero as
 our boundary for "significance", the interpretation of the effects is
 that most are likely small: $V$ \< .05:
-`r apa_num(sum(all_effects$v <.05)/nrow(all_effects)*100)`%, \< .10:
-`r apa_num(sum(all_effects$v < .10)/nrow(all_effects)*100)`%, \< .20:
-`r apa_num(sum(all_effects$v < .20)/nrow(all_effects)*100)`%.
+`r apa_num(sum(all_effects$v <.05)/nrow(all_effects)*100)`%, $V$ \< .10:
+`r apa_num(sum(all_effects$v < .10)/nrow(all_effects)*100)`%, $V$ \<
+.20: `r apa_num(sum(all_effects$v < .20)/nrow(all_effects)*100)`%.
 
 # Discussion
 
 In this investigation, we explored the publication rates, areas, and
 researchers involved in big team science publications. Over a
 half-million articles were published in nearly 15,000 journals since
-1970 that qualified as big team science articles with at least ten
-authors and ten different affiliations. The areas of publication aligned
+1970 that qualified as big team science articles (at least ten authors
+and ten different affiliations). The areas of publication were aligned
 to cancer and genetics research in medicine and oncology for Health and
 Life Sciences, physics and chemistry for the Physical Sciences, and
 psychology for the Social Sciences All areas of research show an
 explosion in growth in the number of publications and the number of
-author included on manuscripts, replicating previous investigations into
-this topic area [@sinatra2015; @wuchty2007; @hunter2008].
+authors included on manuscripts, replicating previous investigations
+into this topic area [@sinatra2015; @wuchty2007; @hunter2008].
 
 Our investigation expands into an exploration of the researchers who
 publish in big teams focusing on career length, publication metrics, and
@@ -1552,33 +1565,34 @@ could imply less effort on individual non-leading members, and research
 has shown that larger-team publications do receive more citations and
 appear to have higher impact [@larivière2015].
 
-The results for number of publications by big team researchers mimics
-the findings from career length, with a smaller effect size. In general,
-it appears that there is a decrease in the average number of
+The results for the number of publications by big team researchers
+mimics the findings from career length, with a smaller effect size. In
+general, it appears that there is a decrease in the average number of
 publications a researcher has when publishing on a big team science
 paper over time. This result is likely attributable to the number of
 early career scholars joining projects, but also may support increased
 accessibility for individuals to be involved in this type of research.
 Globalization, the internet, and the focus on interdisciplinary research
 are potentially driving forces behind our results, but, hopefully, the
-results also point to a decline in scientific gatekeeping [@siler2015;
-@lu2007].
+results also point to a decline in scientific gatekeeping [@lu2007;
+@siler2015].
 
 The variability in the types of researchers involved in publications
 also decreased across time in most areas of science with a decrease in
-variability for career length. As mention, an increase in early career
+variability for career length. As mentioned, an increase in early career
 researchers and numbers of publications could explain this effect
 mathematically, potentially with other social influences mentioned
-above. The variability in number of publications is decreasing in the
-Physical Sciences, mirroring the career length results, but the opposite
-effect was found in the Health and Social Sciences. We see no clear
-reason why career variability would decrease while the variability in
-the number of publications would increase. The effect sizes for career
-length were much larger than the effects for number of publications. One
-speculation is the increasing requirements for a competitive faculty
-role application. Given the limited number of positions, one potential
-way to distinguish their application would be a larger number
-publications in their early career [@caplow2017; @kyvik2003].
+above. The variability in the number of publications is decreasing in
+the Physical Sciences, mirroring the career length results, but the
+opposite effect was found in the Health and Social Sciences. We see no
+clear reason why career variability would decrease while the variability
+in the number of publications would increase. The effect sizes for
+career length were much larger than the effects for number of
+publications. One speculation is the increasing requirements for a
+competitive faculty role application. Given the limited number of
+positions, one potential way to distinguish their application would be a
+larger number of publications in their early career [@caplow2017;
+@kyvik2003].
 
 The number of geopolitical entities for researcher affiliation is
 increasing over time, showing the results of globalization and the
@@ -1592,9 +1606,9 @@ development of large research centers like CERN forced earlier diversity
 than other sciences (i.e., because CERN specifically recruited
 scientists from sponsoring nations). The Life, Health, and Social
 Sciences saw an increase in the number of regions represented with the
-highest increase in the Social Science. This result likely corresponds
+highest increase in the Social Sciences. This result likely corresponds
 with an increased interest in big team science publications in
-psychology [@coles2022; @forscher2020], and the desire to diversify the
+psychology [@coles2022; @forscher2022a], and the desire to diversify the
 populations represented in psychological research [@henrich2010;
 @newson2021].
 
@@ -1605,11 +1619,11 @@ diverse, representing more European and North American authors, while
 other authors include more Asian and African authors. These effect sizes
 were often small, but the inequality still persists across years, even
 if they are slowly decreasing. Diverse teams are more likely to have
-papers with stronger "impact" [@jones2008; @hinnant2012; @yang2022;
-@freeman2015] with higher citation metrics for more diverse author
-lists. The introduction of contributorship models [e.g., CRediT;
-@allen2019] will hopefully continue to push these effects down, as they
-highlight each individual's contribution to a manuscript.
+papers with stronger "impact" [@freeman2015; @hinnant2012; @jones2008;
+@yang2022] with higher citation metrics for more diverse author lists.
+The introduction of contributorship models [e.g., CRediT @allen2019]
+will hopefully continue to push these effects down, as they highlight
+each individual's contribution to a manuscript.
 
 The limitations for this research are tied to the availability and
 curation of the Scopus dataset. While the number of articles analyzed
@@ -1633,7 +1647,7 @@ within scientific publishing, and this report suggests a promising trend
 of increasing numbers of publications that include earlier career and
 more diverse scholars. These partnerships introduce new challenges to
 collaboration from interpersonal conflict, infrastructure, incentives,
-to international political situations [@forscher2020]. Directed studies
+to international political situations [@forscher2022a]. Directed studies
 into ways to navigate these situations would be beneficial for policy
 makers at institutions, as well as lead teams who organize and complete
 these projects. The implications for retention and promotion processes

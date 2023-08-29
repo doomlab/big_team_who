@@ -145,7 +145,7 @@ ggsave("figure/figure_app_1.png", width = 10, height = 6)
 
 **Institution**.
 
-Institution was normalized by taking the total number of unique institutions and dividing by the total number of institution listings. The patterns are similar for each decade in that papers are often either half unique institutions or mostly unique institutions overall as show in Figure \@ref(fig:fig-inst).
+Institution was normalized by taking the total number of unique institutions and dividing by the total number of institution listings. The patterns are similar for each decade in that papers are often either half unique institutions or mostly unique institutions overall as shown in Figure \@ref(fig:fig-inst).
 
 ```{r fig-inst, include = TRUE, fig.cap="Number of unique institutions involved in big-team science papers across decades.", fig.width=10, fig.height=6}
 DF$inst_time$normalized <- DF$inst_time$unique / DF$inst_time$total * 100
@@ -161,7 +161,7 @@ graph_data_inst <- DF$inst_time %>%
 picture <- ggplot(graph_data_inst,
                   aes(y = Decade, x = normalized)) + 
   geom_density_ridges2() + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   facet_wrap(~SubjectArea) + 
   xlab("Percent of Unique Affiliations") + 
   ylab("Decade") +
@@ -218,7 +218,7 @@ ggplot(pub_types, aes(area = count, fill = binned_count,
   geom_treemap_text(colour = "black", place = "centre",
                     size = 15, grow = FALSE) +  
   scale_fill_brewer(name = "Sample Size", palette = "Spectral") +
-  theme_classic()
+  theme_classic(base_size = 15)
 
 ggsave("figure/figure_app_3.png", width = 10, height = 6)
 # can probably figure out how to combine these feasibly to make it readable
