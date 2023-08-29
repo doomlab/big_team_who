@@ -35,7 +35,7 @@ authornote: |
   
   Thank you to Dwayne Lieck for providing an extensive list of large scale projects for this manuscript. 
 abstract: |
-  This paper examined the nature of publications in Big Team Science (BTS) - large-scale collaborations between multiple researchers at multiple institutions. As interest in BTS increases, it is useful to explore who is currently involved in BTS projects to determine diversity in both research subject and researcher representation. The types of publication outlets, number of publications, and subject areas of publication are presented to summarize the publications in BTS. Information about authors included in BTS will be presented including career length, numbers of publications/impact variables, education, and affiliation. Last, we will explore the representation of geopolitical regions by examining affiliation location to explore the impact of BTS on the de-WEIRD movement to diversify researcher representation. REWRITE THIS 
+  This paper examined the nature of publications in Big Team Science (BTS): large-scale collaborations between multiple researchers at multiple institutions. These projects can improve research by initiating collaborations that span across the globe, age groups, education levels, and subfields of research. As the number of BTS publications increase, it is useful to explore who is currently involved in BTS projects to determine diversity in both research subject and researcher representation. We examined the diversity of BTS publications and authors across more than half a million articles to investigate where and what is currently published, and author characteristics including differences in career length, publication metrics, affiliation, and affiliation geopolitical regions. Interestingly, BTS publications are increasingly dominated by early career researchers from WEIRD geopolitical regions with Health and Physical Science accounting for the majority of BTS articles. However, the increase in preprints, BTS articles, and non-WEIRD authors across time demonstrate the efforts of the science community to diversify its researchers. 
   
 keywords          : "big team, science, authorship, credit"
 floatsintext      : yes
@@ -126,46 +126,34 @@ science, the current interest of "big team science" is increasing
 and/or organizations utilize and run on large-scale collaboration to
 ensure that diverse populations and ideas are brought into research
 projects, which in turn allows for more reliability and generalizability
-in the results and method of the study. For this study, Big Team Science
-(BTS) will be defined as a collaboration of ten or more authors from at
-least ten different institutions.
+in the results and method of the study. 
 
-BTS appears to be increasing as a result of two sources: 1) increasing
+BTS appears to be expanding as a result of two sources: 1) increasing
 globalization and technology that allows for real-time interdisciplinary
-research, and 2) increasing interest in reproducibility, replication,
+research, and 2) expanding interest in reproducibility, replication,
 and generalizability [@maxwell2015; @nelson2018; @zwaan2018].
 Technological advances have provided easier ways to collaborate with
 people who are from other universities and countries through document
 sharing platforms (e.g., Google, GitHub, and the Open Science
 Framework), video chatting platforms (e.g., Zoom, Microsoft Teams), and
 messaging and project management platforms (e.g., Slack, Trello,
-when2meet, etc.). The credibility movement seems to suggest that by
-having both collaborations that span across the globe and subfields of
-research areas, age groups, and education levels should help to drive
-science in the path of better materials, reliability, generalizability
-and more robust sample sizes (when necessary) in a study
-[@auspurg2021has; @nosek2014method; @lebel2018].
+when2meet, etc.). The credibility movement seems to suggest that by having both collaborations that span across the globe and subfields of research areas, age groups, and education levels should help to drive science in the path of better materials, reliability, generalizability and more robust sample sizes (when necessary) in a study [@auspurg2021has; @nosek2014method; @lebel2018].
 
-The credibility movement was originally defined by a focus on large
-scale replications using in collaborative environments [@vazire2022].
-Generally, the movement appears to have been driven by early career
+The credibility movement was originally defined by a focus on large scale replications used in collaborative environments [@vazire2022]. Generally, the movement appears to have been driven by early career
 researchers (i.e., those who are within five years of their first
 appointment) [@maizey2019]; however, there are no large meta-scientific
 investigations on this specific topic to date. Potentially, the lack of
 investigation is tied to the newness of the large-scale research in many
 fields, as it is only in recent years that publications like the Open
 Science Collaboration [@opensciencecollaboration2015], Many Labs
-Collaborations [for example, @klein2018; @ebersole2020; @ebersole2016;
+Collaborations [@klein2018; @ebersole2020; @ebersole2016;
 @klein2022; @mathur2020; @buttrick2020; @skorb2020] or the first papers
 from the Psychological Science Accelerator [@moshontz2018; @jones2021;
-@dorison2022; @wang2021; @legate2022; @bago2022]. Generally, the
-researcher incentive for replication was low: journals often prioritize
-"novel" or new results which led to rejection of replication manuscripts
-and publication bias [@hubbard1997; @franco2014; @nosek2012], the
+@dorison2022; @wang2021; @legate2022; @bago2022]. Generally, the researcher incentive for replication was low for three reasons. First, journals often prioritize “novel” or new results which led to rejection of replication manuscripts and publication bias [@hubbard1997; @franco2014; @nosek2012]. Second, the
 "failure" to replicate was often placed on the replication team as "bad
 science" rather than a careful consideration of publication biases and
 (potential) questionable research practices [@ioannidis2015;
-@maxwell2015; @klein2022], and why should someone want to spend time and
+@maxwell2015; @klein2022]. Last, why should someone want to spend time and
 resources on an answer we already "know" [@isager2021; @isager2021a]?
 
 However, the success and interest in the large-scale reproducibility
@@ -191,7 +179,7 @@ diversification or de-WEIRDing (e.g., Western, Educated, Industrialized,
 Rich, and Democratic) scientific research [@henrich2010; @newson2021;
 @rad2018] by improving representation in research samples. Like the
 large-scale studies in Physics [@aphilos2021; @castelnovo2018] and
-Biology [@collins2003], the social sciences struggle to represent the
+Biology [@collins2003], the Social Sciences struggle to represent the
 breadth of humanity across both researcher and population
 characteristics. Now, grassroots organizations, such as the
 Psychological Science Accelerator [@moshontz2018], ManyBabies
@@ -330,12 +318,12 @@ Articles could be classified into multiple categories. Figure
 \@ref(fig:fig-pub-time) shows the number of articles published across
 time for each of the four large subject areas.
 
-```{r fig-pub-time, include = TRUE, fig.cap="Number of big-team science publications separated by four large subject areas across years.", fig.width=10, fig.height=6}
+```{r fig-pub-time, include = TRUE, fig.cap="Number of big-team science publications separated by four large subject areas across years. All four subject areas show an exponential number of publications in the last decade. ", fig.width=10, fig.height=6}
 ggplot(DF$pub_time_count %>% 
          filter(SubjectArea != "Multidisciplinary") %>% 
          filter(Year < 2023), 
        aes(Year, count, color = SubjectArea)) + 
-  theme_classic() + 
+  theme_classic(base_size = 15) + 
   geom_point() + 
   scale_color_brewer(palette = "Spectral", name = "Subject Area") + 
   ylab("Number of Articles Per Year") + 
@@ -366,11 +354,11 @@ materials with a comparison for all papers.
 
 Publication interest area was summarized by the four large subject areas
 creating a word cloud plot of the total number of publications within
-the ASJCs. Figure \@ref(fig:fig-clouds) displays that the health
-sciences tends to publish within medicine and oncology, with a
-corresponding focus of cancer research and genetics for the life
-sciences. The physical sciences is mostly dominated by physics research,
-chemistry, and ecology. The BTS publications in the social sciences are
+the ASJCs. Figure \@ref(fig:fig-clouds) displays that the Health
+Sciences tends to publish within medicine and oncology, with a
+corresponding focus of cancer research and genetics for the Life
+Sciences. The Physical Sciences is mostly dominated by physics research,
+chemistry, and ecology. The BTS publications in the Social Sciences are
 mostly within psychology, education, and health.
 
 ```{r make-clouds, eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
@@ -475,7 +463,7 @@ range of `r min_authors` to `r max_authors`. The median and average
 number of authors by subject area are displayed in Figure
 \@ref(fig:fig-author-year). In general, the average and median number of
 authors increased over time, with the exception of the skew in the
-physical sciences. Interestingly, the effect in the physical sciences
+Physical Sciences. Interestingly, the effect in the Physical Sciences
 appears to be declining toward the general trends seen in other areas in
 the last few decades.
 
@@ -550,9 +538,9 @@ hypothesis.
 All values for this analyses were different from zero. The slopes for
 the average career length were negative for all four subject areas,
 indicating a trend toward younger scientist involvement over time for
-each area, with the strongest effect in the Physical sciences. The
+each area, with the strongest effect in the Physical Sciences. The
 coefficient for variability in career length was also negative for each
-of the four subject areas with the highest in the Physical sciences and
+of the four subject areas with the highest in the Physical Sciences and
 lowest in the Life Sciences. This result indicates a decrease in the
 variability of career lengths over time, likely from two sources: 1)
 more publications with more authors, thus, lowering variance
@@ -893,14 +881,14 @@ promotion decisions, and we used this variable as a proxy to gauge the
 diversity in scholars represented in big teams. As shown in Figure
 \@ref(fig:fig-heatmap) publication metrics were generally negative for
 the average publication metrics, indicating more scholars over time with
-lower numbers of publications with the strongest effects in health and
-social sciences. The variability of publication counts was not
-significant for the life sciences but was negative for the physical
-sciences (less variability over time) and positive for social and health
-sciences (more variability and over time). This result indicates that
-the physical sciences are trending toward scholars with less
+lower numbers of publications with the strongest effects in Health and
+Social Sciences. The variability of publication counts was not
+significant for the Life Sciences but was negative for the Physical
+Sciences (less variability over time) and positive for Social and Health
+Sciences (more variability and over time). This result indicates that
+the Physical Sciences are trending toward scholars with less
 publications but also less diverse in number of publications, while the
-health and social sciences see more diversity in publication counts and
+Health and Social Sciences see more diversity in publication counts and
 less published scholars overall.
 
 ***Geopolitical Regions***.
@@ -1119,7 +1107,7 @@ diversity, we examined if the number of regions in a publication is
 predicted by the year of publication. Increasing diversity would be
 represented by a positive slope, while decreasing diversity would be
 represented by a negative slope. As shown in Figure
-\@ref(fig:fig-heatmap), the physical sciences do not show a trend of
+\@ref(fig:fig-heatmap), the Physical Sciences do not show a trend of
 change in representation, while all other sciences showed a positive
 effect increasing in the number of geopolitical regions authors
 represent on publications.
@@ -1540,9 +1528,9 @@ researchers involved in big team science publications. Over a
 half-million articles were published in nearly 15,000 journals since
 1970 that qualified as big team science articles with at least ten
 authors and ten different affiliations. The areas of publication aligned
-to cancer and genetics research in medicine and oncology for medical and
-life sciences, physics and chemistry for the physical sciences, and
-psychology for the social sciences. All areas of research show an
+to cancer and genetics research in medicine and oncology for Health and
+Life Sciences, physics and chemistry for the Physical Sciences, and
+psychology for the Social Sciences All areas of research show an
 explosion in growth in the number of publications and the number of
 author included on manuscripts, replicating previous investigations into
 this topic area [@sinatra2015; @wuchty2007; @hunter2008].
@@ -1582,8 +1570,8 @@ variability for career length. As mention, an increase in early career
 researchers and numbers of publications could explain this effect
 mathematically, potentially with other social influences mentioned
 above. The variability in number of publications is decreasing in the
-physical sciences, mirroring the career length results, but the opposite
-effect was found in the health and social sciences. We see no clear
+Physical Sciences, mirroring the career length results, but the opposite
+effect was found in the Health and Social Sciences. We see no clear
 reason why career variability would decrease while the variability in
 the number of publications would increase. The effect sizes for career
 length were much larger than the effects for number of publications. One
@@ -1598,13 +1586,13 @@ ability to connect across time zones and cultures [@xie2014]. While our
 definition of big team science required at least ten different
 institutional affiliations, we did not filter papers by geopolitical
 region, and thus, a manuscript could rely solely on institutions within
-a single country. The physical sciences did not show an increase in
+a single country. The Physical Sciences did not show an increase in
 diversity of regions represented, however, it could be argued that the
 development of large research centers like CERN forced earlier diversity
 than other sciences (i.e., because CERN specifically recruited
-scientists from sponsoring nations). The life, health, and social
-sciences saw an increase in the number of regions represented with the
-highest increase in the social science. This result likely corresponds
+scientists from sponsoring nations). The Life, Health, and Social
+Sciences saw an increase in the number of regions represented with the
+highest increase in the Social Science. This result likely corresponds
 with an increased interest in big team science publications in
 psychology [@coles2022; @forscher2020], and the desire to diversify the
 populations represented in psychological research [@henrich2010;
