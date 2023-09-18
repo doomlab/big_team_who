@@ -60,7 +60,7 @@ apa_table(
 
 ## RQ2: Publication Information.
 
-**Keywords**. Figure \@ref(fig:fig-keywords) indicates the most common keywords present for the BTS publications by subject area. The keywords were tokenized into single tokens. Keywords were then lowercased, and all stop words (for example, the, an, of, into, for) were removed. Finally, a frequency count of tokens was tabulated for each subject area, and this count is used to create the final word cloud presented.  
+**Keywords**. Figure \@ref(fig:fig-keywords) indicates the most common keywords present for the BTS publications by subject area. The keywords were tokenized into single tokens. Keywords were then lower cased, and all stop words (for example, the, an, of, into, for) were removed. Finally, a frequency count of tokens was tabulated for each subject area, and this count is used to create the final word cloud presented.  
 
 ```{r make-clouds2, eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
 ### NOTE YOU WILL NEED TO RERUN THIS ###

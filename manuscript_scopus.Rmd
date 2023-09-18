@@ -459,7 +459,7 @@ ggsave(filename = "figure/figure_2_cloud.png", width = 10, height = 6)
 
 ```{r total-authors}
 # updated
-total_authors <- 510334
+total_authors <- 3047067
 avg_authors <- apa_num(49.30516877182394)
 sd_authors <- apa_num(212.9786134634032)
 min_authors <- 10
