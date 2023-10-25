@@ -158,7 +158,7 @@ Psychological Science Accelerator [@bago2022; @buchanan2023;
 @dorison2022; @jones2021;
 @psychologicalscienceacceleratorself-determinationtheorycollaboration2022;
 @moshontz2018; @wang2021]. Generally, the researcher incentive for
-replication was low for three reasons. First, journals often prioritize
+replication and/or involvement in big-team projects was low for three reasons. First, journals often prioritize
 "novel" or new results which led to rejection of replication manuscripts
 and publication bias [@franco2014; @hubbard1997; @nosek2012]. Second,
 the "failure" to replicate was often placed on the replication team as
@@ -173,19 +173,21 @@ with the meta-scientific publications focusing on researcher practices
 and incentive structures [@silberzahn2018many; @john2012] led to a
 change in journal guidelines and incentives for researchers interested
 in participating in large-scale replication studies [@grahe2014;
-@kidwell2016; @nosek2015; @mayo-wilson2021]. For example, the support
+@kidwell2016; @nosek2015; @mayo-wilson2021]. In some fields, the 
+replication movement demonstrated that large-scale teams were a 
+practical (and publishable) solution to answering research questions 
+in generalizable way. The support
 for Registered Reports, papers accepted before the data has been
-collected [@nosek2014; @stewart2020], and entire sub-sections of
-journals devoted to only replication studies (e.g., *Nature, Royal
-Society Open Science, Advances in Methods and Practices in Psychological
-Science*) has allowed researchers to invest in projects that they know
+collected [@nosek2014; @stewart2020], has allowed researchers to 
+invest in projects that they know
 should be published when the project is complete. Further, the
 implementation of the Transparency and Openness Guidelines [@nosek2015]
 and the Contributor Role Taxonomy (CRediT) system [@allen2019] have
 pushed journals and researchers to promote more open, inclusive
-publication practices.
+publication practices.  
 
-The credibility movement has been mirrored by the calls for
+Beyond the replication movement, the credibility movement has  
+mirrored calls for
 diversification or de-WEIRDing (e.g., Western, Educated, Industrialized,
 Rich, and Democratic) scientific research [@henrich2010; @newson2021;
 @rad2018] by improving representation in research samples. Like the
@@ -209,6 +211,7 @@ and benefits from, the BTS and credibility movement. Publications on BTS
 generally explore challenges, lessons learned, and the need for BTS
 [@forscher2022a; @coles2022].
 
+RELATE THIS MORE TO THE RQS ### 
 Therefore, the goal of this manuscript is to examine the *people*
 involved in BTS projects. We specifically examined the themes of
 inclusivity, research careers, and research globalization. We see an
@@ -248,7 +251,14 @@ archive: <https://github.com/doomlab/big_team_who>.
 
 We have defined BTS publications as publications with at least ten
 authors at ten different institutions that were published in
-peer-reviewed journals or had posted a full paper pre-print. We used
+peer-reviewed journals or had posted a full paper pre-print. While this 
+definition is a somewhat arbitrary choice, we separate this research 
+from research on team science that uses any multi-university collaboration 
+as a definition [@jones2008] to focus on larger sized teams rather 
+than teams of any size. With at least ten institutions, the complexities 
+of infrastructure, resources, tenure and promotion policies, ethics review, and more can occur [@forscher2022a]. Therefore, we believe this choice selects publications that would be "big" teams and those potential obstacles.  
+
+We used
 data from 1970 and forward in the Scopus database, as it is noted online
 that this time period includes cited references for calculation of
 several of our variables described below. We will analyze our results
@@ -304,6 +314,8 @@ variable is in the appendix.
 number of publications, and the h-index. The h-index represents the
 highest *h* number of publications that have at least *h* citations.
 *h*-count was only used for descriptive statistics.
+
+### SAV WHY H INDEX IS USEFUL HERE ###
 
 # Results
 
@@ -750,6 +762,8 @@ graph_data_3$analysis <- "Regions"
 #   ylab("")
 ```
 
+### MORE EXPLAIN HERE ####
+
 ```{r fig-heatmap, include = TRUE, fig.cap="Heatmap results of regression analyses for career length, number of publications, and geopolitical diversity within the region. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.", warning = FALSE, message = FALSE, fig.width=10, fig.height=6}
 graph_overall <- graph_data %>% 
   bind_rows(graph_data_2) %>% 
@@ -1093,6 +1107,8 @@ tree_all <- ggplot(DF$geo_country, aes(area = count_all, fill = count_binned_all
   #                     low = "#c8c8c8", 
   #                     high = "#323232") 
 ```
+
+### MORE EXPLAIN HERE ### 
 
 ```{r fig-map-both, include = TRUE, fig.cap="Geopolitical regions represented in big-team science publications versus all publications. The mosaic plot is grouped by UN subregion with the largest number of publications on the left and smallest on the top right. ", fig.width=10, fig.height=6}
 bin_country + ggtitle("Big-Team Publication Map") + 
