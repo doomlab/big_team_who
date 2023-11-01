@@ -211,11 +211,9 @@ and benefits from, the BTS and credibility movement. Publications on BTS
 generally explore challenges, lessons learned, and the need for BTS
 [@forscher2022a; @coles2022].
 
-RELATE THIS MORE TO THE RQS ### 
-Therefore, the goal of this manuscript is to examine the *people*
-involved in BTS projects. We specifically examined the themes of
-inclusivity, research careers, and research globalization. We see an
-increasing interest and number of publications in BTS but we do not yet
+Therefore, the goal of this manuscript is to examine both the *publications* and *people* involved in BTS projects. We present descriptive information about the publication sources and types of articles that we classified as BTS projects to demonstrate what areas of research show large-scale research. Next, we examine the individuals involved in those projects for descriptive and predictive purposes. To describe the people involved in BTS projects, we used education, types of publications (i.e., articles, preprints, books, etc.) from BTS individuals, and publication metrics. 
+
+For predictive statistics, we explored the change in diversity of authors over time. We see an increasing interest and number of publications in BTS but we do not yet
 know if this uptick in large-scale projects has diversified the *people*
 involved in BTS. While a few publications have noted that BTS appears to
 be early career researchers [@maizey2019], no one has systematically
@@ -237,6 +235,7 @@ representation present in authorship in BTS projects.
 -   Research Question 2: What are the types of articles that are being
     published in big team science?
 -   Research Question 3: Who is involved in big team science?
+-   Research Question 4: How has the diversity of those involved in big team science changed over time? 
 
 This manuscript was preregistered with the same conceptual ideas using
 Google Scholar and ORC-ID databases (<https://osf.io/f2dtr>) but then
@@ -286,22 +285,13 @@ For each publication of the identified BTS publications, we examined the
 full four digit ASJC subject areas codes for each of the larger four
 subject areas and the keywords present for these publications.
 
-### RQ3: Author Information
+### RQ3: Author Descriptive Statistics
 
 The author list was extracted from each publication. Next, we used the
 author and affiliation arrays to curate a list of all publications and
 author information included in BTS papers to calculate the variables
 described below.
-
-***Career Length***. Career length for each author was defined as the
-year of the first publication minus the current year listed for each
-author.
-
-***Institution and Geopolitical Region***. We used the affiliation ids
-and country to gather information about the places of education and/or
-employment for authors. Geopolitical region was created by binning these
-codes into United Nation Regions.
-
+  
 ***Education***. We collected degree information from the author table.
 Information on this variable is in the appendix.
 
@@ -310,12 +300,17 @@ type variable for each author's publications to present information
 about the types of papers BTS authors publish. Information on this
 variable is in the appendix.
 
-***Publication Metrics***. For each author, we calculated the total
-number of publications, and the h-index. The h-index represents the
-highest *h* number of publications that have at least *h* citations.
-*h*-count was only used for descriptive statistics.
+***Publication Metrics***. For each author, we calculated the number of publications and the h-index. The h-index represents the highest *h* number of publications that have at least *h* citations.
 
-### SAV WHY H INDEX IS USEFUL HERE ###
+***Institutions***. We report the number of institutions involved in big team science publications. 
+
+### RQ4: Author Diversity Statistics \ 
+
+***Seniority***. Career length for each author was defined as the
+year of the first publication minus the current year listed for each
+author. Number of publications included the number of unique entries an author was included in the database. Career length and number of publications was used as a proxy for the "age" or "seniority" of a scholar to assess if only senior scholars were 
+
+***Geopolitical Region***. Geopolitical region was created by binning country code identifiers into the 17 identified United Nation Regions.
 
 # Results
 
@@ -469,7 +464,7 @@ social_cloud + ggtitle("Social Sciences") +
 ggsave(filename = "figure/figure_2_cloud.png", width = 10, height = 6)
 ```
 
-## RQ3: Authors.
+## RQ3: Author Descriptive Statistics
 
 ```{r total-authors}
 # updated
@@ -535,9 +530,54 @@ median_authors +
 ggsave(filename = "figure/figure_3_num_authors.png", width = 10, height = 6)
 ```
 
-***Career Length***.
+```{r pub-hindex}
+avg_pub_count_author	<- apa_num(38.368910766896065)
+std_pub_count_author <- apa_num(102.53740454680472)
 
-Figure \@ref(fig:fig-career) portrays the average career length for
+avg_pub_count_paper <- apa_num(162.50184385336053)
+sd_pub_count_paper <- apa_num(155.1665533053519)
+avg_SD_pub_count_paper <- apa_num(164.27249797983876)
+SD_SD_pub_count_paper <- apa_num(127.20989934008757)
+
+avg_HIndex <- apa_num(33.64589690529209)
+std_HIndex <- apa_num(127.33565834550778)
+med_HIndex <- apa_num(8.0)
+
+avg_of_avg_HIndex <- apa_num(198.87318851400775)
+std_of_avg_HIndex <- apa_num(248.7847084313958)
+avg_of_std_HIndex <- apa_num(211.7985924228093)
+std_of_std_HIndex <- apa_num(238.53141146314053)
+med_of_med_HIndex <- apa_num(68.0)
+```
+
+***Publication Metrics***. The average number of publications by authors on big team science papers
+is *M* = `r avg_pub_count_author` (*SD* = `r std_pub_count_author`). The
+publication counts were averaged across authors for each publication,
+and then these average publication counts were averaged across
+publications *M* = `r avg_pub_count_paper` (*SD* =
+`r sd_pub_count_paper`). The average variability (i.e., the average
+standard deviation with authors of a manuscript) with publication counts
+of a paper was $M_{SD}$ = `r avg_SD_pub_count_paper` ($SD_{SD}$ =
+`r SD_SD_pub_count_paper`).
+
+The same process was completed with *h*-index for each author and
+publication. The average *h*-index for authors overall was *M* =
+`r avg_HIndex` (*SD* = `r std_HIndex`, *Med* = `r med_HIndex`). The
+average *h*-index for publications was *M* = `r avg_of_avg_HIndex` (*SD*
+= `r std_of_avg_HIndex`), and the variability of *h*-index across
+manuscripts was $M_{SD}$ = `r avg_of_std_HIndex` ($SD_{SD}$ =
+`r std_of_std_HIndex`, $Med_{Med}$ = `r med_of_med_HIndex`).
+
+```{r total-aff}
+# updated
+affs <- 463876
+```
+
+***Institutions***. The total number of unique affiliation across all papers was `r affs`.
+
+## RQ4: Author Diversity Statistics
+
+***Seniority***. Figure \@ref(fig:fig-career) portrays the average career length for
 authors involved in BTS publications across years. Career length was
 defined as the year of first publication minus the current year, and
 higher numbers mean longer careers. To analyze trends over time, we
@@ -762,9 +802,7 @@ graph_data_3$analysis <- "Regions"
 #   ylab("")
 ```
 
-### MORE EXPLAIN HERE ####
-
-```{r fig-heatmap, include = TRUE, fig.cap="Heatmap results of regression analyses for career length, number of publications, and geopolitical diversity within the region. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.", warning = FALSE, message = FALSE, fig.width=10, fig.height=6}
+```{r fig-heatmap, include = TRUE, fig.cap="Heatmap results of regression analyses for career length, number of publications, and geopolitical diversity within the region. Each square represents a *b* value or the slope of the predictor (x-axis) onto the dependent variable (each panel). Slopes included both the overall value of the predictor ($b$, $b_M$) and the standard deviation of the predictor over time ($b_{SD}$). The color of the square represents the strength of the predictor. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.", warning = FALSE, message = FALSE, fig.width=10, fig.height=6}
 graph_overall <- graph_data %>% 
   bind_rows(graph_data_2) %>% 
   bind_rows(graph_data_3) %>% 
@@ -847,57 +885,7 @@ suppressMessages(suppressWarnings(heat_results +
 ggsave(filename = "figure/figure_5_heatmap.png", width = 10, height = 6, units = "in")
 ```
 
-***Institution***.
-
-```{r total-aff}
-# updated
-affs <- 463876
-```
-
-The total number of unique affiliation across all papers was `r affs`.
-
-***Publication Metrics***.
-
-```{r pub-hindex}
-avg_pub_count_author	<- apa_num(38.368910766896065)
-std_pub_count_author <- apa_num(102.53740454680472)
-
-avg_pub_count_paper <- apa_num(162.50184385336053)
-sd_pub_count_paper <- apa_num(155.1665533053519)
-avg_SD_pub_count_paper <- apa_num(164.27249797983876)
-SD_SD_pub_count_paper <- apa_num(127.20989934008757)
-
-avg_HIndex <- apa_num(33.64589690529209)
-std_HIndex <- apa_num(127.33565834550778)
-med_HIndex <- apa_num(8.0)
-
-avg_of_avg_HIndex <- apa_num(198.87318851400775)
-std_of_avg_HIndex <- apa_num(248.7847084313958)
-avg_of_std_HIndex <- apa_num(211.7985924228093)
-std_of_std_HIndex <- apa_num(238.53141146314053)
-med_of_med_HIndex <- apa_num(68.0)
-```
-
-The average number of publications by authors on big team science papers
-is *M* = `r avg_pub_count_author` (*SD* = `r std_pub_count_author`). The
-publication counts were averaged across authors for each publication,
-and then these average publication counts were averaged across
-publications *M* = `r avg_pub_count_paper` (*SD* =
-`r sd_pub_count_paper`). The average variability (i.e., the average
-standard deviation with authors of a manuscript) with publication counts
-of a paper was $M_{SD}$ = `r avg_SD_pub_count_paper` ($SD_{SD}$ =
-`r SD_SD_pub_count_paper`).
-
-The same process was completed with *h*-index for each author and
-publication. The average *h*-index for authors overall was *M* =
-`r avg_HIndex` (*SD* = `r std_HIndex`, *Med* = `r med_HIndex`). The
-average *h*-index for publications was *M* = `r avg_of_avg_HIndex` (*SD*
-= `r std_of_avg_HIndex`), and the variability of *h*-index across
-manuscripts was $M_{SD}$ = `r avg_of_std_HIndex` ($SD_{SD}$ =
-`r std_of_std_HIndex`, $Med_{Med}$ = `r med_of_med_HIndex`).
-
-We used the same analyses described in the career length section to
-analyze trends over time. An increasing slope over time indicates that
+We used the same analyses using number of publications to represent diversity instead of career length. An increasing slope over time indicates that
 individuals who are publishing more are more represented in BTS over
 time (i.e., increasing numbers of scholars with higher publication
 rates), while a negative slope indicates more researchers with less
@@ -1108,9 +1096,7 @@ tree_all <- ggplot(DF$geo_country, aes(area = count_all, fill = count_binned_all
   #                     high = "#323232") 
 ```
 
-### MORE EXPLAIN HERE ### 
-
-```{r fig-map-both, include = TRUE, fig.cap="Geopolitical regions represented in big-team science publications versus all publications. The mosaic plot is grouped by UN subregion with the largest number of publications on the left and smallest on the top right. ", fig.width=10, fig.height=6}
+```{r fig-map-both, include = TRUE, fig.cap="Geopolitical regions represented in big-team science publications versus all publications. The mosaic plot is grouped by UN subregion with the largest number of publications starting on the bottom left and smallest on the top right. Therefore, North America represents the largest number of authors within BTS (i.e., bottom right, then separated into the geopolitical areas within that subregion), followed by Eastern Europe (top left), and so on.", fig.width=10, fig.height=6}
 bin_country + ggtitle("Big-Team Publication Map") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
   theme(legend.position = "none") + 

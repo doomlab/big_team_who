@@ -248,7 +248,7 @@ fields, as it is only in recent years that publications like the Open
 Science Collaboration\textsuperscript{13}, Many Labs
 Collaborations\textsuperscript{14--20} or the first papers from the
 Psychological Science Accelerator\textsuperscript{21--27}. Generally, the researcher incentive for
-replication was low for three reasons. First, journals often prioritize
+replication and/or involvement in big-team projects was low for three reasons. First, journals often prioritize
 ``novel'' or new results which led to rejection of replication manuscripts
 and publication bias\textsuperscript{28--30}. Second,
 the ``failure'' to replicate was often placed on the replication team as
@@ -261,19 +261,21 @@ projects\textsuperscript{13,33}, paired
 with the meta-scientific publications focusing on researcher practices
 and incentive structures\textsuperscript{34,35} led to a
 change in journal guidelines and incentives for researchers interested
-in participating in large-scale replication studies\textsuperscript{36--39}. For example, the support
+in participating in large-scale replication studies\textsuperscript{36--39}. In some fields, the
+replication movement demonstrated that large-scale teams were a
+practical (and publishable) solution to answering research questions
+in generalizable way. The support
 for Registered Reports, papers accepted before the data has been
-collected\textsuperscript{40,41}, and entire sub-sections of
-journals devoted to only replication studies (e.g., \emph{Nature, Royal
-Society Open Science, Advances in Methods and Practices in Psychological
-Science}) has allowed researchers to invest in projects that they know
+collected\textsuperscript{40,41}, has allowed researchers to
+invest in projects that they know
 should be published when the project is complete. Further, the
 implementation of the Transparency and Openness Guidelines\textsuperscript{38}
 and the Contributor Role Taxonomy (CRediT) system\textsuperscript{42} have
 pushed journals and researchers to promote more open, inclusive
 publication practices.
 
-The credibility movement has been mirrored by the calls for
+Beyond the replication movement, the credibility movement has\\
+mirrored calls for
 diversification or de-WEIRDing (e.g., Western, Educated, Industrialized,
 Rich, and Democratic) scientific research\textsuperscript{43--45} by improving representation in research samples. Like the
 large-scale studies in Physics\textsuperscript{46,47} and
@@ -292,10 +294,9 @@ scientific community, we do not yet know exactly \emph{who} is involved with,
 and benefits from, the BTS and credibility movement. Publications on BTS
 generally explore challenges, lessons learned, and the need for BTS\textsuperscript{2,3}.
 
-Therefore, the goal of this manuscript is to examine the \emph{people}
-involved in BTS projects. We specifically examined the themes of
-inclusivity, research careers, and research globalization. We see an
-increasing interest and number of publications in BTS but we do not yet
+Therefore, the goal of this manuscript is to examine both the \emph{publications} and \emph{people} involved in BTS projects. We present descriptive information about the publication sources and types of articles that we classified as BTS projects to demonstrate what areas of research show large-scale research. Next, we examine the individuals involved in those projects for descriptive and predictive purposes. To describe the people involved in BTS projects, we used education, types of publications (i.e., articles, preprints, books, etc.) from BTS individuals, and publication metrics.
+
+For predictive statistics, we explored the change in diversity of authors over time. We see an increasing interest and number of publications in BTS but we do not yet
 know if this uptick in large-scale projects has diversified the \emph{people}
 involved in BTS. While a few publications have noted that BTS appears to
 be early career researchers\textsuperscript{12}, no one has systematically
@@ -323,6 +324,8 @@ representation present in authorship in BTS projects.
   published in big team science?
 \item
   Research Question 3: Who is involved in big team science?
+\item
+  Research Question 4: How has the diversity of those involved in big team science changed over time?
 \end{itemize}
 
 This manuscript was preregistered with the same conceptual ideas using
@@ -340,7 +343,14 @@ archive: \url{https://github.com/doomlab/big_team_who}.
 
 We have defined BTS publications as publications with at least ten
 authors at ten different institutions that were published in
-peer-reviewed journals or had posted a full paper pre-print. We used
+peer-reviewed journals or had posted a full paper pre-print. While this
+definition is a somewhat arbitrary choice, we separate this research
+from research on team science that uses any multi-university collaboration
+as a definition\textsuperscript{50} to focus on larger sized teams rather
+than teams of any size. With at least ten institutions, the complexities
+of infrastructure, resources, tenure and promotion policies, ethics review, and more can occur\textsuperscript{3}. Therefore, we believe this choice selects publications that would be ``big'' teams and those potential obstacles.
+
+We used
 data from 1970 and forward in the Scopus database, as it is noted online
 that this time period includes cited references for calculation of
 several of our variables described below. We will analyze our results
@@ -371,22 +381,13 @@ For each publication of the identified BTS publications, we examined the
 full four digit ASJC subject areas codes for each of the larger four
 subject areas and the keywords present for these publications.
 
-\hypertarget{rq3-author-information}{%
-\subsubsection{RQ3: Author Information}\label{rq3-author-information}}
+\hypertarget{rq3-author-descriptive-statistics}{%
+\subsubsection{RQ3: Author Descriptive Statistics}\label{rq3-author-descriptive-statistics}}
 
 The author list was extracted from each publication. Next, we used the
 author and affiliation arrays to curate a list of all publications and
 author information included in BTS papers to calculate the variables
 described below.
-
-\textbf{\emph{Career Length}}. Career length for each author was defined as the
-year of the first publication minus the current year listed for each
-author.
-
-\textbf{\emph{Institution and Geopolitical Region}}. We used the affiliation ids
-and country to gather information about the places of education and/or
-employment for authors. Geopolitical region was created by binning these
-codes into United Nation Regions.
 
 \textbf{\emph{Education}}. We collected degree information from the author table.
 Information on this variable is in the appendix.
@@ -396,10 +397,18 @@ type variable for each author's publications to present information
 about the types of papers BTS authors publish. Information on this
 variable is in the appendix.
 
-\textbf{\emph{Publication Metrics}}. For each author, we calculated the total
-number of publications, and the h-index. The h-index represents the
-highest \emph{h} number of publications that have at least \emph{h} citations.
-\emph{h}-count was only used for descriptive statistics.
+\textbf{\emph{Publication Metrics}}. For each author, we calculated the number of publications and the h-index. The h-index represents the highest \emph{h} number of publications that have at least \emph{h} citations.
+
+\textbf{\emph{Institutions}}. We report the number of institutions involved in big team science publications.
+
+\hypertarget{rq4-author-diversity-statistics}{%
+\subsubsection{RQ4: Author Diversity Statistics ~}\label{rq4-author-diversity-statistics}}
+
+\textbf{\emph{Seniority}}. Career length for each author was defined as the
+year of the first publication minus the current year listed for each
+author. Number of publications included the number of unique entries an author was included in the database. Career length and number of publications was used as a proxy for the ``age'' or ``seniority'' of a scholar to assess if only senior scholars were
+
+\textbf{\emph{Geopolitical Region}}. Geopolitical region was created by binning country code identifiers into the 17 identified United Nation Regions.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -452,8 +461,8 @@ Sciences are mostly within psychology, education, and health.
 \caption{\label{fig:fig-clouds}Journal Areas for Big-Team Science Publications by Subject Area. Larger words indicate more publications in those ASJC areas.}
 \end{figure}
 
-\hypertarget{rq3-authors.}{%
-\subsection{RQ3: Authors.}\label{rq3-authors.}}
+\hypertarget{rq3-author-descriptive-statistics-1}{%
+\subsection{RQ3: Author Descriptive Statistics}\label{rq3-author-descriptive-statistics-1}}
 
 The total number of unique authors across all publications was
 3047067. The mean number of authors per publication was \emph{M} =
@@ -472,9 +481,30 @@ the last few decades.
 \caption{\label{fig:fig-author-year}Number of authors included on big-team science papers per year by subject area. Given the large skew in the data, the left panel presents the median number of authors per manuscript, and the right panel presents the average number of authors per manuscript by year.}
 \end{figure}
 
-\textbf{\emph{Career Length}}.
+\textbf{\emph{Publication Metrics}}. The average number of publications by authors on big team science papers
+is \emph{M} = 38.37 (\emph{SD} = 102.54). The
+publication counts were averaged across authors for each publication,
+and then these average publication counts were averaged across
+publications \emph{M} = 162.50 (\emph{SD} =
+155.17). The average variability (i.e., the average
+standard deviation with authors of a manuscript) with publication counts
+of a paper was \(M_{SD}\) = 164.27 (\(SD_{SD}\) =
+127.21).
 
-Figure \ref{fig:fig-career} portrays the average career length for
+The same process was completed with \emph{h}-index for each author and
+publication. The average \emph{h}-index for authors overall was \emph{M} =
+33.65 (\emph{SD} = 127.34, \emph{Med} = 8.00). The
+average \emph{h}-index for publications was \emph{M} = 198.87 (\emph{SD}
+= 248.78), and the variability of \emph{h}-index across
+manuscripts was \(M_{SD}\) = 211.80 (\(SD_{SD}\) =
+238.53, \(Med_{Med}\) = 68.00).
+
+\textbf{\emph{Institutions}}. The total number of unique affiliation across all papers was 463876.
+
+\hypertarget{rq4-author-diversity-statistics-1}{%
+\subsection{RQ4: Author Diversity Statistics}\label{rq4-author-diversity-statistics-1}}
+
+\textbf{\emph{Seniority}}. Figure \ref{fig:fig-career} portrays the average career length for
 authors involved in BTS publications across years. Career length was
 defined as the year of first publication minus the current year, and
 higher numbers mean longer careers. To analyze trends over time, we
@@ -519,35 +549,10 @@ All values and their confidence intervals can be found on our OSF page.
 \begin{figure}
 \centering
 \includegraphics{manuscript_scopus_files/figure-latex/fig-heatmap-1.pdf}
-\caption{\label{fig:fig-heatmap}Heatmap results of regression analyses for career length, number of publications, and geopolitical diversity within the region. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.}
+\caption{\label{fig:fig-heatmap}Heatmap results of regression analyses for career length, number of publications, and geopolitical diversity within the region. Each square represents a \emph{b} value or the slope of the predictor (x-axis) onto the dependent variable (each panel). Slopes included both the overall value of the predictor (\(b\), \(b_M\)) and the standard deviation of the predictor over time (\(b_{SD}\)). The color of the square represents the strength of the predictor. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.}
 \end{figure}
 
-\textbf{\emph{Institution}}.
-
-The total number of unique affiliation across all papers was 463876.
-
-\textbf{\emph{Publication Metrics}}.
-
-The average number of publications by authors on big team science papers
-is \emph{M} = 38.37 (\emph{SD} = 102.54). The
-publication counts were averaged across authors for each publication,
-and then these average publication counts were averaged across
-publications \emph{M} = 162.50 (\emph{SD} =
-155.17). The average variability (i.e., the average
-standard deviation with authors of a manuscript) with publication counts
-of a paper was \(M_{SD}\) = 164.27 (\(SD_{SD}\) =
-127.21).
-
-The same process was completed with \emph{h}-index for each author and
-publication. The average \emph{h}-index for authors overall was \emph{M} =
-33.65 (\emph{SD} = 127.34, \emph{Med} = 8.00). The
-average \emph{h}-index for publications was \emph{M} = 198.87 (\emph{SD}
-= 248.78), and the variability of \emph{h}-index across
-manuscripts was \(M_{SD}\) = 211.80 (\(SD_{SD}\) =
-238.53, \(Med_{Med}\) = 68.00).
-
-We used the same analyses described in the career length section to
-analyze trends over time. An increasing slope over time indicates that
+We used the same analyses using number of publications to represent diversity instead of career length. An increasing slope over time indicates that
 individuals who are publishing more are more represented in BTS over
 time (i.e., increasing numbers of scholars with higher publication
 rates), while a negative slope indicates more researchers with less
@@ -575,7 +580,7 @@ less published scholars overall.
 \begin{figure}
 \centering
 \includegraphics{manuscript_scopus_files/figure-latex/fig-map-both-1.pdf}
-\caption{\label{fig:fig-map-both}Geopolitical regions represented in big-team science publications versus all publications. The mosaic plot is grouped by UN subregion with the largest number of publications on the left and smallest on the top right.}
+\caption{\label{fig:fig-map-both}Geopolitical regions represented in big-team science publications versus all publications. The mosaic plot is grouped by UN subregion with the largest number of publications starting on the bottom left and smallest on the top right. Therefore, North America represents the largest number of authors within BTS (i.e., bottom right, then separated into the geopolitical areas within that subregion), followed by Eastern Europe (top left), and so on.}
 \end{figure}
 
 Author geopolitical region is displayed in Figure
@@ -656,7 +661,7 @@ Life Sciences, physics and chemistry for the Physical Sciences, and
 psychology for the Social Sciences All areas of research show an
 explosion in growth in the number of publications and the number of
 authors included on manuscripts, replicating previous investigations
-into this topic area\textsuperscript{50--52}.
+into this topic area\textsuperscript{51--53}.
 
 Our investigation expands into an exploration of the researchers who
 publish in big teams focusing on career length, publication metrics, and
@@ -673,7 +678,7 @@ without lead authorship, and there is no guarantee for publication even
 with a large group. However, with a large team the distribution of work
 could imply less effort on individual non-leading members, and research
 has shown that larger-team publications do receive more citations and
-appear to have higher impact\textsuperscript{53}.
+appear to have higher impact\textsuperscript{54}.
 
 The results for the number of publications by big team researchers
 mimics the findings from career length, with a smaller effect size. In
@@ -684,7 +689,7 @@ early career scholars joining projects, but also may support increased
 accessibility for individuals to be involved in this type of research.
 Globalization, the internet, and the focus on interdisciplinary research
 are potentially driving forces behind our results, but, hopefully, the
-results also point to a decline in scientific gatekeeping\textsuperscript{54,55}.
+results also point to a decline in scientific gatekeeping\textsuperscript{55,56}.
 
 The variability in the types of researchers involved in publications
 also decreased across time in most areas of science with a decrease in
@@ -700,11 +705,11 @@ career length were much larger than the effects for number of
 publications. One speculation is the increasing requirements for a
 competitive faculty role application. Given the limited number of
 positions, one potential way to distinguish their application would be a
-larger number of publications in their early career\textsuperscript{56,57}.
+larger number of publications in their early career\textsuperscript{57,58}.
 
 The number of geopolitical entities for researcher affiliation is
 increasing over time, showing the results of globalization and the
-ability to connect across time zones and cultures\textsuperscript{58}. While our
+ability to connect across time zones and cultures\textsuperscript{59}. While our
 definition of big team science required at least ten different
 institutional affiliations, we did not filter papers by geopolitical
 region, and thus, a manuscript could rely solely on institutions within
@@ -726,7 +731,7 @@ diverse, representing more European and North American authors, while
 other authors include more Asian and African authors. These effect sizes
 were often small, but the inequality still persists across years, even
 if they are slowly decreasing. Diverse teams are more likely to have
-papers with stronger ``impact''\textsuperscript{59--62} with higher citation metrics for more diverse author lists.
+papers with stronger ``impact''\textsuperscript{50,60--62} with higher citation metrics for more diverse author lists.
 The introduction of contributorship models (e.g., CRediT\textsuperscript{42})
 will hopefully continue to push these effects down, as they highlight
 each individual's contribution to a manuscript.
@@ -968,53 +973,53 @@ participating in big team studies.
 \CSLLeftMargin{49. }%
 \CSLRightInline{Van Bavel, J. J. \emph{et al.} \href{https://doi.org/10.1038/s41467-021-27668-9}{National identity predicts public health support during a global pandemic}. \emph{Nature Communications} \textbf{13}, 517 (2022).}
 
-\leavevmode\vadjust pre{\hypertarget{ref-sinatra2015}{}}%
+\leavevmode\vadjust pre{\hypertarget{ref-jones2008}{}}%
 \CSLLeftMargin{50. }%
+\CSLRightInline{Jones, B. F., Wuchty, S. \& Uzzi, B. \href{https://doi.org/10.1126/science.1158357}{Multi-university research teams: Shifting impact, geography, and stratification in science}. \emph{Science} \textbf{322}, 1259--1262 (2008).}
+
+\leavevmode\vadjust pre{\hypertarget{ref-sinatra2015}{}}%
+\CSLLeftMargin{51. }%
 \CSLRightInline{Sinatra, R., Deville, P., Szell, M., Wang, D. \& Barabási, A.-L. \href{https://doi.org/10.1038/nphys3494}{A century of physics}. \emph{Nature Physics} \textbf{11}, 791--796 (2015).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-wuchty2007}{}}%
-\CSLLeftMargin{51. }%
+\CSLLeftMargin{52. }%
 \CSLRightInline{Wuchty, S., Jones, B. F. \& Uzzi, B. \href{https://doi.org/10.1126/science.1136099}{The increasing dominance of teams in production of knowledge}. \emph{Science} \textbf{316}, 1036--1039 (2007).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-hunter2008}{}}%
-\CSLLeftMargin{52. }%
+\CSLLeftMargin{53. }%
 \CSLRightInline{Hunter, L. \& Leahey, E. \href{https://doi.org/10.1007/s12108-008-9042-1}{Collaborative Research in Sociology: Trends and Contributing Factors}. \emph{The American Sociologist} \textbf{39}, 290--306 (2008).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-lariviuxe8re2015}{}}%
-\CSLLeftMargin{53. }%
+\CSLLeftMargin{54. }%
 \CSLRightInline{Larivière, V., Gingras, Y., Sugimoto, C. R. \& Tsou, A. \href{https://doi.org/10.1002/asi.23266}{Team size matters: Collaboration and scientific impact since 1900}. \emph{Journal of the Association for Information Science and Technology} \textbf{66}, 1323--1332 (2015).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-lu2007}{}}%
-\CSLLeftMargin{54. }%
+\CSLLeftMargin{55. }%
 \CSLRightInline{Lu, Y. \href{https://doi.org/10.1016/j.lisr.2006.10.007}{The human in human information acquisition: Understanding gatekeeping and proposing new directions in scholarship}. \emph{Library \& Information Science Research} \textbf{29}, 103--123 (2007).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-siler2015}{}}%
-\CSLLeftMargin{55. }%
+\CSLLeftMargin{56. }%
 \CSLRightInline{Siler, K., Lee, K. \& Bero, L. \href{https://doi.org/10.1073/pnas.1418218112}{Measuring the effectiveness of scientific gatekeeping}. \emph{Proceedings of the National Academy of Sciences} \textbf{112}, 360--365 (2015).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-caplow2017}{}}%
-\CSLLeftMargin{56. }%
+\CSLLeftMargin{57. }%
 \CSLRightInline{Caplow, T. \emph{The academic marketplace}. (Routledge, 2017). doi:\href{https://doi.org/10.4324/9781351305969}{10.4324/9781351305969}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-kyvik2003}{}}%
-\CSLLeftMargin{57. }%
+\CSLLeftMargin{58. }%
 \CSLRightInline{Kyvik, S. \href{https://doi.org/10.1023/A:1025475423482}{Changing trends in publishing behaviour among university faculty, 1980-2000}. \emph{Scientometrics} \textbf{58}, 35--48 (2003).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-xie2014}{}}%
-\CSLLeftMargin{58. }%
+\CSLLeftMargin{59. }%
 \CSLRightInline{Xie, Y. \href{https://doi.org/10.1126/science.1252743}{{``}Undemocracy{''}: Inequalities in science}. \emph{Science} \textbf{344}, 809--810 (2014).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-freeman2015}{}}%
-\CSLLeftMargin{59. }%
+\CSLLeftMargin{60. }%
 \CSLRightInline{Freeman, R. B. \& Huang, W. \href{https://doi.org/10.1086/678973}{Collaborating with People Like Me: Ethnic Coauthorship within the United States}. \emph{Journal of Labor Economics} \textbf{33}, S289--S318 (2015).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-hinnant2012}{}}%
-\CSLLeftMargin{60. }%
-\CSLRightInline{Hinnant, C. C. \emph{et al.} \href{https://doi.org/10.1016/j.lisr.2012.03.001}{Author-team diversity and the impact of scientific publications: Evidence from physics research at a national science lab}. \emph{Library \& Information Science Research} \textbf{34}, 249--257 (2012).}
-
-\leavevmode\vadjust pre{\hypertarget{ref-jones2008}{}}%
 \CSLLeftMargin{61. }%
-\CSLRightInline{Jones, B. F., Wuchty, S. \& Uzzi, B. \href{https://doi.org/10.1126/science.1158357}{Multi-university research teams: Shifting impact, geography, and stratification in science}. \emph{Science} \textbf{322}, 1259--1262 (2008).}
+\CSLRightInline{Hinnant, C. C. \emph{et al.} \href{https://doi.org/10.1016/j.lisr.2012.03.001}{Author-team diversity and the impact of scientific publications: Evidence from physics research at a national science lab}. \emph{Library \& Information Science Research} \textbf{34}, 249--257 (2012).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-yang2022}{}}%
 \CSLLeftMargin{62. }%
