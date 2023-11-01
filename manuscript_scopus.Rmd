@@ -36,6 +36,8 @@ authornote: |
   Thank you to Dwayne Lieck for providing an extensive list of large scale projects for this manuscript. 
   
   Significance statement: This work is the first to examine big team science authorship (i.e., 10+ authors) across millions of published works. Big teams can provide high-impact, important research within scientific publishing, and this report suggests a promising trend of increasing numbers of publications that increasingly represent earlier career and varied scholars. The number of geopolitical entities for researcher affiliation is increasing over time, showing the results of globalization and the ability to connect across time zones and cultures. While publications are generally diversifying, we did not yet find equality in the representation for first or corresponding authors. First authors appear to be less diverse, representing more European and North American authors, while other authors include more Asian and African authors. 
+  
+  Preprint: https://osf.io/hqta4/
 abstract: |
   This paper examined the nature of publications in Big Team Science (BTS): large-scale collaborations between multiple researchers at multiple institutions. These projects can improve research by initiating collaborations that span across the globe, age groups, education levels, and subfields of research. As the number of BTS publications increase, it is useful to explore who is currently involved in BTS projects to determine diversity in both research subject and researcher representation. We examined the diversity of BTS publications and authors across more than half a million articles to investigate where and what is currently published, and author characteristics including differences in career length, publication metrics, affiliation, and affiliation geopolitical regions. Interestingly, BTS publications are increasingly dominated by early career researchers from WEIRD geopolitical regions with Health and Physical Science accounting for the majority of BTS articles. However, the increase in preprints, BTS articles, and non-WEIRD authors across time demonstrate the efforts of the science community to diversify its researchers. 
   
@@ -45,7 +47,7 @@ figurelist        : no
 tablelist         : no
 footnotelist      : no
 linenumbers       : yes
-mask              : no
+mask              : yes
 draft             : no
 classoption       : "man"
 editor_options: 
@@ -250,11 +252,11 @@ representation present in authorship in BTS projects.
 -   Research Question 4: How has the diversity of those involved in big team science changed over time? 
 
 This manuscript was preregistered with the same conceptual ideas using
-Google Scholar and ORC-ID databases (<https://osf.io/f2dtr>) but then
+Google Scholar and ORC-ID databases (<https://osf.io/f2dtr/?view_only=66e5608437994f288d03a7c8163c0c8c>) but then
 was updated with access to the Scopus database for a broader picture of
-BTS projects (<https://osf.io/fheun>). All materials and code can be
-found on our OSF page: <https://osf.io/cgx6u/> or corresponding GitHub
-archive: <https://github.com/doomlab/big_team_who>.
+BTS projects (<https://osf.io/fheun/?view_only=f563879af9e942f7bc49bac937fd3048>). All materials and code can be
+found on our OSF page: <https://osf.io/cgx6u/?view_only=7ea2adf9ea7c4995af0d60dde795db6d> or corresponding GitHub
+archive: ANONYMIZED.
 
 # Method
 
