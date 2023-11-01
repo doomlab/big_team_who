@@ -53,12 +53,26 @@ editor_options:
     wrap: 72
   chunk_output_type: inline
 bibliography: references.bib
-# header-includes:
-csl               : "includes/nature.csl"
-# documentclass     : "apa7"
-output            : papaja::apa6_pdf
 appendix          :
   - "appendix.Rmd"
+  
+header-includes:
+  - |
+    \makeatletter
+    \renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+      {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+      {-1em}%
+      {\normalfont\normalsize\bfseries\typesectitle}}
+    
+    \renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+      {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+      {-\z@\relax}%
+      {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+    \makeatother
+
+csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja')`"
+documentclass     : "apa7"
+output            : papaja::apa6_pdf
 ---
 
 ```{r setup, include = FALSE}
@@ -186,9 +200,7 @@ and the Contributor Role Taxonomy (CRediT) system [@allen2019] have
 pushed journals and researchers to promote more open, inclusive
 publication practices.  
 
-Beyond the replication movement, the credibility movement has  
-mirrored calls for
-diversification or de-WEIRDing (e.g., Western, Educated, Industrialized,
+Beyond the replication movement, the credibility movement has mirrored calls for diversification or de-WEIRDing (e.g., Western, Educated, Industrialized,
 Rich, and Democratic) scientific research [@henrich2010; @newson2021;
 @rad2018] by improving representation in research samples. Like the
 large-scale studies in Physics [@aphilos2021; @castelnovo2018] and
@@ -292,25 +304,37 @@ author and affiliation arrays to curate a list of all publications and
 author information included in BTS papers to calculate the variables
 described below.
   
-***Education***. We collected degree information from the author table.
+#### Education
+
+We collected degree information from the author table.
 Information on this variable is in the appendix.
 
-***Types of Publications***. We took information from the publication
+#### Types of Publications 
+
+We took information from the publication
 type variable for each author's publications to present information
 about the types of papers BTS authors publish. Information on this
 variable is in the appendix.
 
-***Publication Metrics***. For each author, we calculated the number of publications and the h-index. The h-index represents the highest *h* number of publications that have at least *h* citations.
+#### Publication Metrics
 
-***Institutions***. We report the number of institutions involved in big team science publications. 
+For each author, we calculated the number of publications and the h-index. The h-index represents the highest *h* number of publications that have at least *h* citations.
 
-### RQ4: Author Diversity Statistics \ 
+#### Institutions
 
-***Seniority***. Career length for each author was defined as the
+We report the number of institutions involved in big team science publications. 
+
+### RQ4: Author Diversity Statistics 
+
+#### Seniority
+
+Career length for each author was defined as the
 year of the first publication minus the current year listed for each
-author. Number of publications included the number of unique entries an author was included in the database. Career length and number of publications was used as a proxy for the "age" or "seniority" of a scholar to assess if only senior scholars were 
+author. Number of publications included the number of unique entries an author was included in the database. Career length and number of publications was used as a proxy for the "age" or "seniority" of a scholar. 
 
-***Geopolitical Region***. Geopolitical region was created by binning country code identifiers into the 17 identified United Nation Regions.
+#### Geopolitical Region
+
+Geopolitical region was created by binning country code identifiers into the 17 identified United Nation subregions.
 
 # Results
 
@@ -330,7 +354,9 @@ social_num <- 26652
 life_num <- 307514
 ```
 
-*Number of articles*. The total number of articles included in this
+### Number of articles
+
+The total number of articles included in this
 analysis was `r total_num` including `r health_num` Health Sciences
 articles, `r physical_num` Physical Sciences articles, `r social_num`
 Social Sciences articles, and `r life_num` Life Sciences articles.
@@ -362,7 +388,9 @@ social_journal <- 2500
 life_journal <- 4187
 ```
 
-*Number of journals*. The number of distinct journals big team science
+### Number of journals
+
+The number of distinct journals big team science
 articles were published in was `r journals` with `r health_journal`
 journals in Health Sciences, `r physical_journal` journals in Physical
 Sciences, `r social_journal` journals in Social Sciences, and
@@ -550,7 +578,9 @@ std_of_std_HIndex <- apa_num(238.53141146314053)
 med_of_med_HIndex <- apa_num(68.0)
 ```
 
-***Publication Metrics***. The average number of publications by authors on big team science papers
+### Publication Metrics 
+
+The average number of publications by authors on big team science papers
 is *M* = `r avg_pub_count_author` (*SD* = `r std_pub_count_author`). The
 publication counts were averaged across authors for each publication,
 and then these average publication counts were averaged across
@@ -573,11 +603,15 @@ manuscripts was $M_{SD}$ = `r avg_of_std_HIndex` ($SD_{SD}$ =
 affs <- 463876
 ```
 
-***Institutions***. The total number of unique affiliation across all papers was `r affs`.
+### Institutions 
+
+The total number of unique affiliation across all papers was `r affs`.
 
 ## RQ4: Author Diversity Statistics
 
-***Seniority***. Figure \@ref(fig:fig-career) portrays the average career length for
+### Seniority 
+
+Figure \@ref(fig:fig-career) portrays the average career length for
 authors involved in BTS publications across years. Career length was
 defined as the year of first publication minus the current year, and
 higher numbers mean longer careers. To analyze trends over time, we
@@ -908,8 +942,6 @@ publications but also less diverse in number of publications, while the
 Health and Social Sciences see more diversity in publication counts and
 less published scholars overall.
 
-***Geopolitical Regions***.
-
 ```{r geo-map}
 # serbia has changed codes
 # updated but needs work
@@ -1115,6 +1147,8 @@ tree_all + ggtitle("All Publications Mosiac Chart") +
 
 ggsave(filename = "figure/figure_6_map.png", width = 10, height = 6, units = "in")
 ```
+
+### Geopolitical Regions 
 
 Author geopolitical region is displayed in Figure
 \@ref(fig:fig-map-both). Big team publications appear to be led by North
@@ -1553,7 +1587,7 @@ authors included on manuscripts, replicating previous investigations
 into this topic area [@sinatra2015; @wuchty2007; @hunter2008].
 
 Our investigation expands into an exploration of the researchers who
-publish in big teams focusing on career length, publication metrics, and
+publish in big teams focusing on diversity in seniority of authors and
 geopolitical affiliation. The number of earlier career scholars is
 increasing in publications across the years, indicating that big teams
 may be more accessible to different types of individuals, not just
