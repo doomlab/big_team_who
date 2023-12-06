@@ -252,11 +252,11 @@ representation present in authorship in BTS projects.
 -   Research Question 4: How has the diversity of those involved in big team science changed over time? 
 
 This manuscript was preregistered with the same conceptual ideas using
-Google Scholar and ORC-ID databases (<https://osf.io/f2dtr/?view_only=66e5608437994f288d03a7c8163c0c8c>) but then
+Google Scholar and ORC-ID databases (MASKED FOR REVIEW^[Unfortunately, the way we created these pre-registrations did not allow for complete anonymization required by the journal]) but then
 was updated with access to the Scopus database for a broader picture of
-BTS projects (<https://osf.io/fheun/?view_only=f563879af9e942f7bc49bac937fd3048>). All materials and code can be
-found on our OSF page: <https://osf.io/cgx6u/?view_only=7ea2adf9ea7c4995af0d60dde795db6d> or corresponding GitHub
-archive: ANONYMIZED.
+BTS projects (MASKED FOR REVIEW). All materials and code can be
+found on our OSF page: MASKED FOR REVIEW or corresponding GitHub
+archive: MASKED FOR REVIEW.
 
 # Method
 
