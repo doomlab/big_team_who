@@ -1,5 +1,6 @@
 manuscript_scopus_files
 /docs
+/submitted*
 
 # History files
 .Rhistory
