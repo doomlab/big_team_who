@@ -32,6 +32,8 @@ library(ggridges)
 
 Table \@ref(tab:tab-snip) indicates the SNIP values for BTS publications, while Table \@ref(tab:tab-snip-all). The results from these tables indicate that impact values are slightly higher for BTS publications, while the overall median, minimum, and maximum are the same for each grouping. 
 
+\newpage
+
 ```{r tab-snip, results = 'asis', include = TRUE}
 # updated
 apa_table(

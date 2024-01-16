@@ -201,8 +201,6 @@ Erin M. Buchanan is a Professor of Cognitive Analytics at Harrisburg University 
 
 Thank you to Dwayne Lieck for providing an extensive list of large scale projects for this manuscript.
 
-Significance statement: This work is the first to examine big team science authorship (i.e., 10+ authors) across millions of published works. Big teams can provide high-impact, important research within scientific publishing, and this report suggests a promising trend of increasing numbers of publications that increasingly represent earlier career and varied scholars. The number of geopolitical entities for researcher affiliation is increasing over time, showing the results of globalization and the ability to connect across time zones and cultures. While publications are generally diversifying, we did not yet find equality in the representation for first or corresponding authors. First authors appear to be less diverse, representing more European and North American authors, while other authors include more Asian and African authors.
-
 Preprint: \url{https://osf.io/hqta4/}
 
 The authors made the following contributions. Erin M. Buchanan: Conceptualization, Data curation, Formal Analysis, Methodology, Project administration, Visualization, Writing -- original draft, Writing -- review \& editing; Savannah C. Lewis: Conceptualization, Data curation, Methodology, Project administration, Writing -- original draft, Writing -- review \& editing.
@@ -215,6 +213,29 @@ Correspondence concerning this article should be addressed to Erin M. Buchanan, 
 
 \abstract{%
 This paper examined the nature of publications in Big Team Science (BTS): large-scale collaborations between multiple researchers at multiple institutions. These projects can improve research by initiating collaborations that span across the globe, age groups, education levels, and subfields of research. As the number of BTS publications increase, it is useful to explore who is currently involved in BTS projects to determine diversity in both research subject and researcher representation. We examined the diversity of BTS publications and authors across more than half a million articles to investigate where and what is currently published, and author characteristics including differences in career length, publication metrics, affiliation, and affiliation geopolitical regions. Interestingly, BTS publications are increasingly dominated by early career researchers from WEIRD geopolitical regions with Health and Physical Science accounting for the majority of BTS articles. However, the increase in preprints, BTS articles, and non-WEIRD authors across time demonstrate the efforts of the science community to diversify its researchers.
+
+Significance statement: This work is the first to examine big team science authorship (i.e., 10+ authors) across millions of published works. Big teams can provide high-impact, important research within scientific publishing, and this report suggests a promising trend of increasing numbers of publications that increasingly represent earlier career and varied scholars. The number of geopolitical entities for researcher affiliation is increasing over time, showing the results of globalization and the ability to connect across time zones and cultures. While publications are generally diversifying, we did not yet find equality in the representation for first or corresponding authors. First authors appear to be less diverse, representing more European and North American authors, while other authors include more Asian and African authors.
+
+\hypertarget{general-disclosures}{%
+\section{General Disclosures}\label{general-disclosures}}
+
+Conflicts of interest: Both authors declare no conflicts of interest.
+
+Funding: No funding was obtained for this project.
+
+Artificial intelligence: No AI resources were used for this manuscript.
+
+Ethics: No ethics review was necessary for this project.
+
+Computational reproducibility: All materials and code can be found on our OSF page: MASKED FOR REVIEW or corresponding GitHub archive: MASKED FOR REVIEW. Elsevier has agreed to provide access to determine reproducibility of the code for accessing and summarizing articles, and the reproducible manuscript has been provided for review.
+
+Pre-registration: This manuscript was preregistered with the same conceptual ideas using Google Scholar and ORC-ID databases (MASKED FOR REVIEW\footnote{Unfortunately, the way we created these pre-registrations did not allow for complete anonymization required by the journal, this work has been uploaded a deidentified zip file}) but then was updated with access to the Scopus database for a broader picture of BTS projects (MASKED FOR REVIEW).
+
+Materials: MASKED FOR REVIEW (see uploaded zip file).
+
+Data: MASKED FOR REVIEW (see uploaded zip file).
+
+Analysis scripts: MASKED FOR REVIEW (see uploaded zip file).
 }
 
 
@@ -222,24 +243,22 @@ This paper examined the nature of publications in Big Team Science (BTS): large-
 \begin{document}
 \maketitle
 
-According to the Oxford English dictionary, collaboration is two or more
-people working together to achieve a certain goal (OED, 2016).
 Collaboration in scientific endeavors involves multiple researchers at
 (potentially) multiple institutions to communicate and work together to
 advance knowledge in their chosen field. Collaboration can manifest
 uniquely in each project dependent on the skill sets, hypotheses, and
 perspectives of collaborators. While collaboration is not new in
-science, the current interest of ``big team science'' is increasing
-(Coles et al., 2022; Forscher et al., 2022; N. Stewart et al., 2017). Big team science projects
-and/or organizations utilize and run on large-scale collaboration to
-ensure that diverse populations and ideas are brought into research
+science, the interest in ``big team science'' is increasing
+(Coles et al., 2022; Forscher et al., 2022; N. Stewart et al., 2017). Big team science (BTS) projects
+and/or organizations utilize and run large-scale collaborations to
+ensure that diverse populations and ideas manifest in research
 projects, which in turn allows for more reliability and generalizability
-in the results and method of the study.
+in the results and methods of the study.
 
-BTS appears to be expanding as a result of two sources: 1) increasing
+BTS appears to be expanding because of two sources: 1) increasing
 globalization and technology that allows for real-time interdisciplinary
 research, and 2) expanding interest in reproducibility, replication, and
-generalizability (Maxwell et al., 2015; Nelson et al., 2018; Zwaan et al., 2018). Technological
+generalizability (i.e., the credibility movement, Maxwell et al., 2015; Nelson et al., 2018; Vazire et al., 2022; Zwaan et al., 2018). Technological
 advances have provided easier ways to collaborate with people who are
 from other universities and countries through document sharing platforms
 (e.g., Google, GitHub, and the Open Science Framework), video chatting
@@ -248,17 +267,13 @@ management platforms (e.g., Slack, Trello, when2meet, etc.). The
 credibility movement seems to suggest that by having both collaborations
 that span across the globe and subfields of research areas, age groups,
 and education levels should help to drive science in the path of better
-materials, reliability, generalizability and more robust sample sizes
+materials, reliability, generalizability, and more robust sample sizes
 (when necessary) in a study (Auspurg \& Brüderl, 2021; LeBel et al., 2018; Nosek \& Lakens, 2014a).
 
-The credibility movement was originally defined by a focus on large
-scale replications used in collaborative environments (Vazire et al., 2022).
-Generally, the movement appears to have been driven by early career
+Generally, the credibility movement appears to have been driven by early career
 researchers (i.e., those who are within five years of their first
-appointment) (Maizey \& Tzavella, 2019); however, there are no large meta-scientific
-investigations on this specific topic to date. Potentially, the lack of
-investigation is tied to the newness of the large-scale research in many
-fields, as it is only in recent years that publications like the Open
+appointment, Maizey \& Tzavella, 2019); however, there are no large meta-scientific
+investigations on this specific topic to date. The newness of large-scale research in many fields could be the culprit for the lack of investigation into this area. For example, psychology has had an increase in BTS publications like the Open
 Science Collaboration (Open Science Collaboration, 2015), Many Labs
 Collaborations (Buttrick et al., 2020; Ebersole et al., 2016, 2020; Klein et al., 2018; Klein et al., 2022; Mathur et al., 2020; Skorb et al., 2020) or the first papers from the
 Psychological Science Accelerator (Bago et al., 2022; Buchanan et al., 2023; Dorison et al., 2022; B. C. Jones et al., 2021; Moshontz et al., 2018; Psychological Science Accelerator Self-Determination Theory Collaboration, 2022; Wang et al., 2021). Generally, the researcher incentive for
@@ -288,7 +303,7 @@ and the Contributor Role Taxonomy (CRediT) system (Allen et al., 2019) have
 pushed journals and researchers to promote more open, inclusive
 publication practices.
 
-Beyond the replication movement, the credibility movement has mirrored calls for diversification or de-WEIRDing (e.g., Western, Educated, Industrialized,
+Beyond replication concerns, the credibility movement has mirrored calls for diversification or de-WEIRDing (e.g., Western, Educated, Industrialized,
 Rich, and Democratic) scientific research (Henrich et al., 2010; Newson et al., 2021; Rad et al., 2018) by improving representation in research samples. Like the
 large-scale studies in Physics ({``A Philosophical Case for Big Physics,''} 2021; Castelnovo et al., 2018) and
 Biology (Collins et al., 2003), the Social Sciences struggle to represent the
@@ -307,22 +322,9 @@ and benefits from, the BTS and credibility movement. Publications on BTS
 generally explore challenges, lessons learned, and the need for BTS
 (Coles et al., 2022; Forscher et al., 2022).
 
-Therefore, the goal of this manuscript is to examine both the \emph{publications} and \emph{people} involved in BTS projects. We present descriptive information about the publication sources and types of articles that we classified as BTS projects to demonstrate what areas of research show large-scale research. Next, we examine the individuals involved in those projects for descriptive and predictive purposes. To describe the people involved in BTS projects, we used education, types of publications (i.e., articles, preprints, books, etc.) from BTS individuals, and publication metrics.
-
-For predictive statistics, we explored the change in diversity of authors over time. We see an increasing interest and number of publications in BTS but we do not yet
-know if this uptick in large-scale projects has diversified the \emph{people}
-involved in BTS. While a few publications have noted that BTS appears to
-be early career researchers (Maizey \& Tzavella, 2019), no one has systematically
-investigated this perception. Further, it is unclear if the focus of
-de-WEIRDing science has only focused on the representation of the
+Therefore, the goal of this manuscript is to examine both the \emph{publications} and \emph{people} involved in BTS projects. We present descriptive information about the publication sources and types of articles to demonstrate large-scale research. Next, we examine the individuals involved in BTS for descriptive and predictive purposes. To describe the people involved in BTS projects, we planned to use education, types of publications from BTS individuals, and publication metrics. For predictive statistics, we explored the change in diversity of authors over time. It is unclear if the focus of de-WEIRDing science has only focused on the representation of the
 research participants or if it has also improved the representation of
-researchers outside of North America and Europe. Last, who runs these
-BTS projects? Do we see an increase in diversity for the authors who
-generally receive the most credit for these projects (i.e., first
-several author(s) and last author)? As hiring and promoting practices
-often place a heavy weight on publications and especially ``influential''
-publications, it becomes necessary to critically examine the
-representation present in authorship in BTS projects.
+researchers outside of North America and Europe. Last, we examined for a change in diversity within first author(s) and the last author across time. As hiring and promoting practices often place a heavy weight on publications and especially ``influential'' publications, it becomes necessary to critically examine the representation present in authorship in BTS projects.
 
 \hypertarget{research-questions}{%
 \section{Research Questions}\label{research-questions}}
@@ -340,13 +342,6 @@ representation present in authorship in BTS projects.
 \item
   Research Question 4: How has the diversity of those involved in big team science changed over time?
 \end{itemize}
-
-This manuscript was preregistered with the same conceptual ideas using
-Google Scholar and ORC-ID databases (MASKED FOR REVIEW\footnote{Unfortunately, the way we created these pre-registrations did not allow for complete anonymization required by the journal}) but then
-was updated with access to the Scopus database for a broader picture of
-BTS projects (MASKED FOR REVIEW). All materials and code can be
-found on our OSF page: MASKED FOR REVIEW or corresponding GitHub
-archive: MASKED FOR REVIEW.
 
 \hypertarget{method}{%
 \section{Method}\label{method}}
@@ -453,7 +448,7 @@ places). We made no directional predictions.
 \subsection{RQ1: Publisher Information.}\label{rq1-publisher-information.}}
 
 \hypertarget{number-of-articles}{%
-\subsubsection{Number of articles}\label{number-of-articles}}
+\subsubsection{Number of Articles}\label{number-of-articles}}
 
 The total number of articles included in this
 analysis was 510334 including 445301 Health Sciences
@@ -470,7 +465,7 @@ time for each of the four large subject areas.
 \end{figure}
 
 \hypertarget{number-of-journals}{%
-\subsubsection{Number of journals}\label{number-of-journals}}
+\subsubsection{Number of Journals}\label{number-of-journals}}
 
 The number of distinct journals big team science
 articles were published in was 14924 with 6559
@@ -695,48 +690,16 @@ that most are likely small: \(V\) \textless{} .05:
 70.20\%, \(V\) \textless{}
 .20: 94.04\%.
 
+\newpage
+
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
-In this investigation, we explored the publication rates, areas, and
-researchers involved in big team science publications. Over a
-half-million articles were published in nearly 15,000 journals since
-1970 that qualified as big team science articles (at least ten authors
-and ten different affiliations). The areas of publication were aligned
-to cancer and genetics research in medicine and oncology for Health and
-Life Sciences, physics and chemistry for the Physical Sciences, and
-psychology for the Social Sciences All areas of research show an
-explosion in growth in the number of publications and the number of
-authors included on manuscripts, replicating previous investigations
-into this topic area (Hunter \& Leahey, 2008; Sinatra et al., 2015; Wuchty et al., 2007).
+In this investigation, we explored the publication rates, areas, and researchers involved in BTS publications. Over a half-million articles were published in nearly 15,000 journals since 1970 that qualified as BTS articles. The areas of publication were aligned to cancer and genetics research in medicine and oncology for Health and Life Sciences, physics and chemistry for the Physical Sciences, and psychology for the Social Sciences. All areas of research show growth in the number of publications and authors included on manuscripts, replicating previous investigations (Hunter \& Leahey, 2008; Sinatra et al., 2015; Wuchty et al., 2007).
 
-Our investigation expands into an exploration of the researchers who
-publish in big teams focusing on diversity in seniority of authors and
-geopolitical affiliation. The number of earlier career scholars is
-increasing in publications across the years, indicating that big teams
-may be more accessible to different types of individuals, not just
-older, more established researchers. This result is especially
-interesting given the publish-or-perish model still present in most
-institutions, as it may seem that large-scale projects could be a risky
-choice for non-permanent researchers. In the authors' experience, big
-team projects are often quite slow to publication, incentives may be low
-for non corresponding authors if institutions do not value papers
-without lead authorship, and there is no guarantee for publication even
-with a large group. However, with a large team the distribution of work
-could imply less effort on individual non-leading members, and research
-has shown that larger-team publications do receive more citations and
-appear to have higher impact (Larivière et al., 2015).
+Our investigation expands previous research by additionally focusing on diversity in seniority of authors and geopolitical affiliation. The number of earlier career scholars increased across years, indicating that big teams may be accessible to different types of individuals, not just older, established researchers. This result is especially interesting given the publish-or-perish model still present in most institutions, as it may seem that large-scale projects could be a risky choice for non-permanent researchers. BTS projects are often slow to publish, there is no guarantee for publication, and incentives are often lower for non-corresponding authors. However, with a large team, the distribution of work could imply less effort on individual non-leading members, and research has shown that larger-team publications do receive more citations and appear to have higher impact (Larivière et al., 2015).
 
-The results for the number of publications by big team researchers
-mimics the findings from career length, with a smaller effect size. In
-general, it appears that there is a decrease in the average number of
-publications a researcher has when publishing on a big team science
-paper over time. This result is likely attributable to the number of
-early career scholars joining projects, but also may support increased
-accessibility for individuals to be involved in this type of research.
-Globalization, the internet, and the focus on interdisciplinary research
-are potentially driving forces behind our results, but, hopefully, the
-results also point to a decline in scientific gatekeeping (Lu, 2007; Siler et al., 2015).
+In general, it appears that there is a decrease in the average number of publications a researcher has when publishing in a BTS paper over time, mirroring career length results. This result is likely attributable to the number of early career scholars joining projects, but also may support increased accessibility for individuals to be involved. Globalization, the internet, and the focus on interdisciplinary research are potentially driving forces behind our results, but, hopefully, the results also point to a decline in scientific gatekeeping (Lu, 2007; Siler et al., 2015).
 
 The variability in the types of researchers involved in publications
 also decreased across time in most areas of science with a decrease in
@@ -757,7 +720,7 @@ larger number of publications in their early career (Caplow, 2017; Kyvik, 2003).
 The number of geopolitical entities for researcher affiliation is
 increasing over time, showing the results of globalization and the
 ability to connect across time zones and cultures (Xie, 2014). While our
-definition of big team science required at least ten different
+definition of BTS required at least ten different
 institutional affiliations, we did not filter papers by geopolitical
 region, and thus, a manuscript could rely solely on institutions within
 a single country. The Physical Sciences did not show an increase in
@@ -771,47 +734,17 @@ with an increased interest in big team science publications in
 psychology (Coles et al., 2022; Forscher et al., 2022), and the desire to diversify the
 populations represented in psychological research (Henrich et al., 2010; Newson et al., 2021).
 
-While publications on the whole are diversifying, we did not yet find
-equality in the representation for first/corresponding author spots
-versus all other authors. In general, first authors appear to be less
-diverse, representing more European and North American authors, while
-other authors include more Asian and African authors. These effect sizes
-were often small, but the inequality still persists across years, even
-if they are slowly decreasing. Diverse teams are more likely to have
-papers with stronger ``impact'' (Freeman \& Huang, 2015; Hinnant et al., 2012; B. F. Jones et al., 2008; Yang et al., 2022) with higher citation metrics for more diverse author lists.
-The introduction of contributorship models (e.g., CRediT(Allen et al., 2019))
+While publications overall are diversifying, we found differences in the representation for first/corresponding authors versus all other authors. In general, first authors appear to be less diverse, representing European and North American authors, while other authors include more Asian and African authors. These effect sizes were often small, but the inequality persists across years. Diverse teams are more likely to have papers with stronger ``impact'' (Freeman \& Huang, 2015; Hinnant et al., 2012; B. F. Jones et al., 2008; Yang et al., 2022) with higher citation metrics for more diverse author lists.
+The introduction of contributorship models (e.g., CRediT, Allen et al., 2019)
 will hopefully continue to push these effects down, as they highlight
 each individual's contribution to a manuscript.
 
-The limitations for this research are tied to the availability and
-curation of the Scopus dataset. While the number of articles analyzed
-for this investigation was large, the criteria for inclusion requires
-the correct entry of author affiliations, the correct author linkages
-for career length and publication rates, and the correctly marked
-geopolitical entity. We had planned to analyze educational levels to
-determine if the number of student coauthors (i.e., non-terminal degree)
-had increased over time; however, this data was mostly blank within the
-Scopus archive. Scopus is a carefully curated dataset, but these
-limitations must be kept in mind when interpreting the results.
-Publication language diversity was not investigated, and a previous
-study indicates that the majority of publications in big databases are
-in English (Albarillo, 2014). Certainly, publications in non-English
+The limitations for this research are tied to the curation of the Scopus dataset: the correct author affiliations, the correct author publication information, and the correctly marked geopolitical entity. We had planned to analyze educational levels change over time; however, this data was mostly blank within the Scopus archive. Scopus is a carefully curated and large dataset, but these limitations must be kept in mind when interpreting the results. Publication language diversity was not investigated, and a previous study indicates that most publications in big databases are in English (Albarillo, 2014). Certainly, publications in non-English
 languages would improve the statistics on diversity in scientific
 publishing - but the English language barrier likely exists regardless
 of inclusion in databases (Meneghini \& Packer, 2007; Ramírez-Castañeda, 2020).
 
-Big teams have the ability to provide high-impact, important research
-within scientific publishing, and this report suggests a promising trend
-of increasing numbers of publications that include earlier career and
-more diverse scholars. These partnerships introduce new challenges to
-collaboration from interpersonal conflict, infrastructure, incentives,
-to international political situations (Forscher et al., 2022). Directed studies
-into ways to navigate these situations would be beneficial for policy
-makers at institutions, as well as lead teams who organize and complete
-these projects. The implications for retention and promotion processes
-across a broad span of regions should be explored to improve diversity
-with the understanding of the differential impact of incentives for
-participating in big team studies.
+Big teams can provide high-impact, important research within scientific publishing, and this report suggests a promising trend of increasing publications that include earlier career and more diverse scholars. These partnerships introduce new challenges to collaboration from interpersonal conflict, infrastructure, incentives, to international political situations (Forscher et al., 2022). The implications for retention and promotion processes across a broad span of regions should be explored to improve diversity with the understanding of the differential impact of incentives for participating in big team studies.
 
 \newpage
 
@@ -820,7 +753,6 @@ participating in big team studies.
 
 \begingroup
 \setlength{\parindent}{-0.5in}
-\setlength{\leftskip}{0.5in}
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
@@ -965,9 +897,6 @@ Nosek, B. A., \& Lakens, D. (2014b). Registered Reports: A Method to Increase th
 \leavevmode\vadjust pre{\hypertarget{ref-nosek2012}{}}%
 Nosek, B. A., Spies, J. R., \& Motyl, M. (2012). Scientific Utopia: II. Restructuring Incentives and Practices to Promote Truth Over Publishability. \emph{Perspectives on Psychological Science}, \emph{7}(6), 615--631. \url{https://doi.org/10.1177/1745691612459058}
 
-\leavevmode\vadjust pre{\hypertarget{ref-oed2016}{}}%
-OED. (2016). \emph{Collaboration} (Vol. 3). Oxford University.
-
 \leavevmode\vadjust pre{\hypertarget{ref-opensciencecollaboration2015}{}}%
 Open Science Collaboration. (2015). Estimating the reproducibility of psychological science. \emph{Science}, \emph{349}(6251), aac4716--aac4716. \url{https://doi.org/10.1126/science.aac4716}
 
@@ -1039,6 +968,8 @@ Zwaan, R. A., Etz, A., Lucas, R. E., \& Donnellan, M. B. (2018). Making replicat
 \subsubsection{Number of Journals}\label{number-of-journals-1}}
 
 Table \ref{tab:tab-snip} indicates the SNIP values for BTS publications, while Table \ref{tab:tab-snip-all}. The results from these tables indicate that impact values are slightly higher for BTS publications, while the overall median, minimum, and maximum are the same for each grouping.
+
+\newpage
 
 \begin{table}[tbp]
 
