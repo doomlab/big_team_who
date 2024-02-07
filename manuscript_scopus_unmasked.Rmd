@@ -51,15 +51,11 @@ abstract: |
   
   Ethics: No ethics review was necessary for this project. 
   
-  Computational reproducibility: All materials and code can be found on our OSF page: MASKED FOR REVIEW or corresponding GitHub archive: MASKED FOR REVIEW. Elsevier has agreed to provide access to determine reproducibility of the code for accessing and summarizing articles, and the reproducible manuscript has been provided for review.
+  Computational reproducibility: All materials and code can be found on our OSF page: https://osf.io/cgx6u/ or corresponding GitHub archive: https://github.com/doomlab/big_team_who. Elsevier has agreed to provide access to determine reproducibility of the code for accessing and summarizing articles, and the reproducible manuscript has been provided for review.
   
-  Pre-registration: This manuscript was preregistered with the same conceptual ideas using Google Scholar and ORC-ID databases (MASKED FOR REVIEW^[Unfortunately, the way we created these pre-registrations did not allow for complete anonymization required by the journal, this work has been uploaded a deidentified zip file]) but then was updated with access to the Scopus database for a broader picture of BTS projects (MASKED FOR REVIEW). 
+  Pre-registration: This manuscript was preregistered with the same conceptual ideas using Google Scholar and ORC-ID databases (https://osf.io/f2dtr) but then was updated with access to the Scopus database for a broader picture of BTS projects (https://osf.io/fheun). 
   
-  Materials: MASKED FOR REVIEW (see uploaded zip file).
-  
-  Data: MASKED FOR REVIEW (see uploaded zip file).
-  
-  Analysis scripts: MASKED FOR REVIEW (see uploaded zip file).
+  Materials, Data, Analysis Scripts: All materials and code can be found on our OSF page: https://osf.io/cgx6u/ or corresponding GitHub archive: https://github.com/doomlab/big_team_who.
   
 keywords          : "big team, science, authorship, credit"
 floatsintext      : yes
