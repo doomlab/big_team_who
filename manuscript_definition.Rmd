@@ -242,10 +242,8 @@ researchers outside of North America and Europe. Last, we examined for a change 
 
 # Research Questions
 
--   Research Question 1: What should define big team science versus team science? 
--   Research Question 2: What are differences in big team science compared to team science? 
--   Research Question 3: Who is involved in big team science?
--   Research Question 4: How has the diversity of those involved in big team science changed over time? 
+-   Research Question 1: Using current publication values, what should define big team science versus team science? (and change across time)
+-   Research Question 2: How has the diversity of those involved in big team science versus team science changed over time? 
 
 # Method
 
@@ -334,156 +332,7 @@ effect size differences from zero. The confidence interval that does not
 include zero would be considered different from zero (to four decimal
 places). We made no directional predictions.
 
-## RQ1: Publisher Information.
-
-```{r total-articles}
-# updated 
-total_num <- 510334
-health_num <- 445301
-physical_num <- 228194
-social_num <- 26652
-life_num <- 307514
-```
-
-### Number of Articles
-
-The total number of articles included in this
-analysis was `r total_num` including `r health_num` Health Sciences
-articles, `r physical_num` Physical Sciences articles, `r social_num`
-Social Sciences articles, and `r life_num` Life Sciences articles.
-Articles could be classified into multiple categories. Figure
-\@ref(fig:fig-pub-time) shows the number of articles published across
-time for each of the four large subject areas.
-
-```{r fig-pub-time, include = TRUE, fig.cap="Number of big-team science publications separated by four large subject areas across years. All four subject areas show an exponential number of publications in the last decade. ", fig.width=10, fig.height=6}
-ggplot(DF$pub_time_count %>% 
-         filter(SubjectArea != "Multidisciplinary") %>% 
-         filter(Year < 2023), 
-       aes(Year, count, color = SubjectArea)) + 
-  theme_classic(base_size = 15) + 
-  geom_point() + 
-  scale_color_brewer(palette = "Spectral", name = "Subject Area") + 
-  ylab("Number of Articles Per Year") + 
-  xlab("Publication Year") + 
-  theme(legend.position = "bottom")
-
-ggsave(filename = "figure/figure_1_pub_time.png", width = 10, height = 6)
-```
-
-```{r total-journals}
-# updated
-journals <- 14924
-health_journal <- 6559
-physical_journal <- 5787
-social_journal <- 2500
-life_journal <- 4187
-```
-
-### Number of Journals
-
-The number of distinct journals big team science
-articles were published in was `r journals` with `r health_journal`
-journals in Health Sciences, `r physical_journal` journals in Physical
-Sciences, `r social_journal` journals in Social Sciences, and
-`r life_journal` journals in Life Sciences. The descriptive statistics
-for the Source Normalized Impact per Paper is presented in the
-supplemental materials with a comparison for all papers.
-
-## RQ2: Publication Information.
-
-Publication interest area was summarized by the four large subject areas
-creating a word cloud plot of the total number of publications within
-the ASJCs. Figure \@ref(fig:fig-clouds) displays that the Health
-Sciences tends to publish within medicine and oncology, with a
-corresponding focus of cancer research and genetics for the Life
-Sciences. The Physical Sciences was mostly dominated by physics
-research, chemistry, and ecology. The BTS publications in the Social
-Sciences are mostly within psychology, education, and health.
-
-```{r make-clouds, eval = FALSE, warning = FALSE, echo = FALSE, message = FALSE}
-### NOTE YOU WILL NEED TO RUN THIS ###
-#DF$pub_time_subject$ASJC <- factor(DF$pub_time_subject$ASJC)
-pub_total <- DF$pub_time_subject %>% 
-  group_by(SubjectArea, ASJC) %>% 
-  summarize(Count_Size = sum(count), .groups = "keep") %>% 
-  filter(SubjectArea != "Multidisciplinary") %>% 
-  left_join(DF$ASJC_codes %>% select(Name, Code), by = c("ASJC" = "Code"))
-
-# health
-health_cloud <- pub_total %>% 
-  filter(SubjectArea == "Health Sciences") %>% 
-  ungroup() %>%
-  arrange(desc(Count_Size)) %>% 
-  ggplot() + 
-  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
-  theme_minimal() + 
-  scale_size_area(max_size = 15)
-
-ggsave("figure/health_cloud.png", dpi = 300, width = 8,
-       height = 4, units = "in")
-
-# physical
-physical_cloud <- pub_total %>% 
-  filter(SubjectArea == "Physical Sciences") %>% 
-  ungroup() %>%
-  arrange(desc(Count_Size)) %>% 
-  ggplot() + 
-  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
-  theme_minimal() + 
-  scale_size_area(max_size = 15)
-
-ggsave("figure/physical_cloud.png", dpi = 300, width = 8,
-       height = 4, units = "in")
-
-# life
-life_cloud <- pub_total %>% 
-  filter(SubjectArea == "Life Sciences") %>% 
-  ungroup() %>%
-  arrange(desc(Count_Size)) %>% 
-  ggplot() + 
-  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
-  theme_minimal() + 
-  scale_size_area(max_size = 15)
-
-ggsave("figure/life_cloud.png", dpi = 300, width = 8,
-       height = 4, units = "in")
-
-# social
-social_cloud <- pub_total %>% 
-  filter(SubjectArea == "Social Sciences") %>% 
-  ungroup() %>%
-  arrange(desc(Count_Size)) %>% 
-  ggplot() + 
-  geom_text_wordcloud_area(aes(label = Name, size = Count_Size), area_corr_power = TRUE, rm_outside = TRUE, shape = "square", perc_step = .001, grid_margin = .01) + 
-  theme_minimal() + 
-  scale_size_area(max_size = 15)
-
-ggsave("figure/social_cloud.png", dpi = 300, width = 8,
-       height = 4, units = "in")
-```
-
-```{r fig-clouds, include = TRUE, fig.cap = "Journal Areas for Big-Team Science Publications by Subject Area. Larger words indicate more publications in those ASJC areas. ", fig.width=10, fig.height=6}
-
-health_cloud <- fig("figure/health_cloud.png")
-physical_cloud <- fig("figure/physical_cloud.png") 
-life_cloud <- fig("figure/life_cloud.png") 
-social_cloud <- fig("figure/social_cloud.png") 
-
-health_cloud + ggtitle("Health Sciences") + 
-  theme(plot.title = element_text(hjust = 0.5)) + 
-physical_cloud + ggtitle("Physical Sciences") + 
-  theme(plot.title = element_text(hjust = 0.5)) + 
-life_cloud + ggtitle("Life Sciences") + 
-  theme(plot.title = element_text(hjust = 0.5)) + 
-social_cloud + ggtitle("Social Sciences") + 
-  theme(plot.title = element_text(hjust = 0.5)) +
-  plot_layout(ncol = 2, 
-              nrow = 2)
-
-ggsave(filename = "figure/figure_2_cloud.png", width = 10, height = 6)
-```
-
-## RQ3: Author Descriptive Statistics
+## RQ1: definition shit 
 
 ```{r total-authors}
 # updated
@@ -505,6 +354,17 @@ authors increased over time, with the exception of the skew in the
 Physical Sciences. Interestingly, the effect in the Physical Sciences
 appears to be declining toward the general trends seen in other areas in
 the last few decades.
+
+## data split
+
+- "teams": 2-10 authors, 2-4 inst
+- "big ass": 11+, 5+
+
+## RQ1
+
+pattern of author numbers over time --> just the median because of the data split 
+four panel figure one for each area --> with two sets of dots for teams, "team", and BAT 
+since there's a restriction of range, do we need to calculate based on the proportion of the data or proportion of the range that it could increase 
 
 ```{r fig-author-year, include = TRUE, fig.cap="Number of authors included on big-team science papers per year by subject area. Given the large skew in the data, the left panel presents the median number of authors per manuscript, and the right panel presents the average number of authors per manuscript by year.", fig.width=10, fig.height=6}
 avg_author_time <- 
@@ -549,55 +409,6 @@ median_authors +
 ggsave(filename = "figure/figure_3_num_authors.png", width = 10, height = 6)
 ```
 
-```{r pub-hindex}
-avg_pub_count_author	<- apa_num(38.368910766896065)
-std_pub_count_author <- apa_num(102.53740454680472)
-
-avg_pub_count_paper <- apa_num(162.50184385336053)
-sd_pub_count_paper <- apa_num(155.1665533053519)
-avg_SD_pub_count_paper <- apa_num(164.27249797983876)
-SD_SD_pub_count_paper <- apa_num(127.20989934008757)
-
-avg_HIndex <- apa_num(33.64589690529209)
-std_HIndex <- apa_num(127.33565834550778)
-med_HIndex <- apa_num(8.0)
-
-avg_of_avg_HIndex <- apa_num(198.87318851400775)
-std_of_avg_HIndex <- apa_num(248.7847084313958)
-avg_of_std_HIndex <- apa_num(211.7985924228093)
-std_of_std_HIndex <- apa_num(238.53141146314053)
-med_of_med_HIndex <- apa_num(68.0)
-```
-
-### Publication Metrics 
-
-The average number of publications by authors on big team science papers
-is *M* = `r avg_pub_count_author` (*SD* = `r std_pub_count_author`). The
-publication counts were averaged across authors for each publication,
-and then these average publication counts were averaged across
-publications *M* = `r avg_pub_count_paper` (*SD* =
-`r sd_pub_count_paper`). The average variability (i.e., the average
-standard deviation with authors of a manuscript) with publication counts
-of a paper was $M_{SD}$ = `r avg_SD_pub_count_paper` ($SD_{SD}$ =
-`r SD_SD_pub_count_paper`).
-
-The same process was completed with *h*-index for each author and
-publication. The average *h*-index for authors overall was *M* =
-`r avg_HIndex` (*SD* = `r std_HIndex`, *Med* = `r med_HIndex`). The
-average *h*-index for publications was *M* = `r avg_of_avg_HIndex` (*SD*
-= `r std_of_avg_HIndex`), and the variability of *h*-index across
-manuscripts was $M_{SD}$ = `r avg_of_std_HIndex` ($SD_{SD}$ =
-`r std_of_std_HIndex`, $Med_{Med}$ = `r med_of_med_HIndex`).
-
-```{r total-aff}
-# updated
-affs <- 463876
-```
-
-### Institutions 
-
-The total number of unique affiliation across all papers was `r affs`.
-
 ## RQ4: Author Diversity Statistics
 
 ### Seniority 
@@ -637,6 +448,9 @@ more publications with more authors, thus, lowering variance
 estimations, and 2) more young scholars overall. The effect sizes for
 this analysis were surprisingly large ranging from $R^2$ = .25 to .47.
 All values and their confidence intervals can be found on our OSF page.
+
+- four panel figure for subject area by total team, "team", BAT 
+- just in general people are having to publish much younger than we used to so here's how to view that 
 
 ```{r fig-career, include = TRUE,  warning = FALSE, message = FALSE, fig.cap = "Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year. The data has been filtered to at least 10 publications in a year for this graph.", fig.width=10, fig.height=6}
 temp <- ggplot(DF$career_time %>% 
