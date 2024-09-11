@@ -145,6 +145,15 @@ DF <- lapply(var_list_import, import)
 names(DF) <- var_list
 ```
 
+outline:
+
+- what is team science / collaboration 
+- research on how it's grown / changed over time? 
+- Any research diversification?
+  - on who is publishing 
+  - on where is represented 
+- "big" teams - unanswered question ... people are now using term "big team" but it's not defined - can we define it and see if it's any different or just a product of growth/internet over time? 
+
 Collaboration in scientific endeavors involves multiple researchers at
 (potentially) multiple institutions to communicate and work together to
 advance knowledge in their chosen field. Collaboration can manifest
@@ -360,7 +369,7 @@ the last few decades.
 - "teams": 2-10 authors, 2-4 inst
 - "big ass": 11+, 5+
 
-## RQ1
+## RQ1 change over time
 
 pattern of author numbers over time --> just the median because of the data split 
 four panel figure one for each area --> with two sets of dots for teams, "team", and BAT 
@@ -986,6 +995,22 @@ confidence interval (to four decimal places), this result will imply
 that first and all other authors represent the same pattern of UN
 Sub-Region diversity. Any confidence interval that does include zero
 represents a difference in diversity.
+
+updated binning:
+
+- teams: 2-10 authors, 2-5 inst
+  - first and last author only versus everyone else
+- big ass teams: 6+ affs
+  - small: 11-49
+    - first three plus last versus everyone else
+  - medium: 50-99
+    - first five plus last versus everyone else
+  - large: 100+
+    - first 10 plus last versus everyone else
+    
+for time:
+ teams versus big teams combining results
+ separate panel of the big teams separated (not by time)
 
 ```{r small-effects, warning = FALSE}
 DF$small_first_gp <- DF$small_first_gp %>% 
