@@ -139,7 +139,7 @@ var_list <- c("author_time", "career_time", "geo_country", "inst_time",
               "pub_time_subject", "pub_types", "small_first_gp", "small_other_gp",
               "snip", "ASJC_codes", "snip_all")
 
-var_list_import <- paste0("data/scopus_outputs/", var_list, ".xlsx")
+var_list_import <- paste0("../data/scopus_outputs/", var_list, ".xlsx")
 
 DF <- lapply(var_list_import, import)
 names(DF) <- var_list
