@@ -159,12 +159,9 @@ Collaboration in scientific endeavors involves multiple researchers at
 advance knowledge in their chosen field. Collaboration can manifest
 uniquely in each project dependent on the skill sets, hypotheses, and
 perspectives of collaborators. While collaboration is not new in
-science, the interest in "big team science" is increasing
-[@coles2022; @forscher2022a; @stewart2017]. Big team science (BTS) projects
-and/or organizations utilize and run large-scale collaborations to
-ensure that diverse populations and ideas manifest in research
-projects, which in turn allows for more reliability and generalizability
-in the results and methods of the study.
+science, interest in "team science is growing as individual researcher seek a interdisciplinary approach to research or bring on more students to their project. Team science leverages a more organized structure between the collaborator to divide the workload to more complex questions. 
+
+"Big team science" (BTS) builds on team science by scaling efforts to include larger, often globally diverse teams, which requires significant coordination and infrastructure [@coles2022; @forscher2022a; @stewart2017]. BTS projects and organizations organize extensive collaborations, intentionally incorporating diverse populations and perspectives into research. This large-scale approach enhances the reliability and generalizability of findings by integrating varied methodologies and viewpoints, leading to more robust and inclusive scientific outcomes. BTS organizations often pool extensive networks of researchers and resources, aiming to tackle grand scientific challenges that would be difficult to address within smaller or less coordinated collaborations.
 
 BTS appears to be expanding because of two sources: 1) increasing
 globalization and technology that allows for real-time interdisciplinary
