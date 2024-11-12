@@ -112,6 +112,7 @@ library(ggwordcloud)
 library(figpatch)
 library(RColorBrewer)
 library(latex2exp)
+library(patchwork)
 
 strip_labels <- expression(
   "M Coefficient " = b[M],
@@ -133,13 +134,9 @@ label_expressions <- function(values) {
 }
 
 # things to import
-var_list <- c("author_time", "career_time", "geo_country", "inst_time", 
-              "keywords", "large_first_gp", "large_other_gp", "medium_first_gp", 
-              "medium_other_gp", "normal_pub_type", "pub_time_count", 
-              "pub_time_subject", "pub_types", "small_first_gp", "small_other_gp",
-              "snip", "ASJC_codes", "snip_all")
+var_list <- c("author_stats", "paper_stats")
 
-var_list_import <- paste0("data/scopus_outputs/", var_list, ".xlsx")
+var_list_import <- paste0("data/scopus_outputs_2/", var_list, ".xlsx")
 
 DF <- lapply(var_list_import, import)
 names(DF) <- var_list
@@ -246,15 +243,6 @@ Therefore, the goal of this manuscript is to examine both the *publications* and
 research participants or if it has also improved the representation of
 researchers outside of North America and Europe. Last, we examined for a change in diversity within first author(s) and the last author across time. As hiring and promoting practices often place a heavy weight on publications and especially “influential” publications, it becomes necessary to critically examine the representation present in authorship in BTS projects.
 
-# Research Questions
-
--   Research Question 1: Using current publication values, what should define big team science versus team science? (and change across time)
--   Research Question 2: How has the diversity of those involved in big team science versus team science changed over time? 
-
-# Method
-
-## Publications
-
 We have defined BTS publications as publications with at least ten
 authors at ten different institutions that were published in
 peer-reviewed journals or had posted a full paper pre-print. While this 
@@ -262,12 +250,25 @@ definition is a somewhat arbitrary choice, we separate this research
 from research on team science that uses any multi-university collaboration 
 as a definition [@jones2008] to focus on larger sized teams rather 
 than teams of any size. With at least ten institutions, the complexities 
-of infrastructure, resources, tenure and promotion policies, ethics review, and more can occur [@forscher2022a]. Therefore, we believe this choice selects publications that would be "big" teams and those potential obstacles.  
+of infrastructure, resources, tenure and promotion policies, ethics review, and more can occur [@forscher2022a]. Therefore, we believe this choice selects publications that would be "big" teams and those potential obstacles. 
 
-We used
-data from 1970 and forward in the Scopus database, as it is noted online
+# Research Questions
+
+-   Research Question 1: Using current publication values, what should define big team science versus team science? 
+  - Question 1A: What number of authors and institutional affiliations should designate the differences between team science and big team science?
+  - Question 1B: Using the definition from 1A, are there changes in the number of publications over time? 
+  
+  
+  ### come back to this ###
+-   Research Question 2: How has the diversity of those involved in big team science versus team science changed over time? 
+
+# Method
+
+## Publications
+
+We used data from 1970 and forward in the Scopus database, as it is noted online
 that this time period includes cited references for calculation of
-several of our variables described below. We will analyze our results
+several of our variables described below. We analyzed our results
 based on four subject areas present in the Scopus database: Physical
 Sciences, Health Sciences, Social Sciences, and Life Sciences. We
 filtered the database to include articles, articles in press, business
@@ -278,48 +279,11 @@ Research.
 
 ## Data Curation
 
-### RQ1: Publisher Information
+### RQ1: Defining BTS
 
-We extracted the following information for publication sources: the name
-of the publication (source title), subject area (both the large four
-subject areas and the smaller four digit all science journal
-classification [ASJC] code), and the journal impact using the Source
-Normalized Impact per Paper (SNIP).
+For each of the publications in Scopus, we calculated the number of distinct authors and institutions. If an author had multiple affiliations, we used the first affiliation listed. Each publication was classified into the four subject areas based on the All Journal Subject Codes present in the database. Publications can be included in multiple subject codes. For example, a medical paper may be listed in both life sciences and health sciences.  
 
-### RQ2: Publication Information
-
-For each publication of the identified BTS publications, we examined the
-full four digit ASJC subject areas codes for each of the larger four
-subject areas and the keywords present for these publications.
-
-### RQ3: Author Descriptive Statistics
-
-The author list was extracted from each publication. Next, we used the
-author and affiliation arrays to curate a list of all publications and
-author information included in BTS papers to calculate the variables
-described below.
-  
-#### Education
-
-We collected degree information from the author table.
-Information on this variable is in the appendix.
-
-#### Types of Publications 
-
-We took information from the publication
-type variable for each author's publications to present information
-about the types of papers BTS authors publish. Information on this
-variable is in the appendix.
-
-#### Publication Metrics
-
-For each author, we calculated the number of publications and the h-index. The h-index represents the highest *h* number of publications that have at least *h* citations.
-
-#### Institutions
-
-We report the number of institutions involved in big team science publications. 
-
-### RQ4: Author Diversity Statistics 
+### RQ2: Author Diversity Statistics 
 
 #### Seniority
 
@@ -338,7 +302,91 @@ effect size differences from zero. The confidence interval that does not
 include zero would be considered different from zero (to four decimal
 places). We made no directional predictions.
 
-## RQ1: definition shit 
+## RQ1: Defining BTS
+
+```{r total-papers}
+total_papers <- 97532104 # the entire database
+total_papers_past1970 <- 62966549 # past 1970, in our article types
+distinct_authors_past1970 <- 53622443 # all authors 
+
+# one row per author per paper with all authors with at least two  
+team_author_aff_combo <- 196835398
+team_author_aff_papers <- 32454393
+team_author_aff_author <- 28353445
+team_author_aff_subject_noNA <- 241269297
+team_author_aff_papers_noNA <- 32448373
+team_author_aff_author_noNA <- 28350468
+```
+
+WRITE THE THING --> mention max in the text because too crazy for the graph 
+
+```{r stats-authors}
+temp_graph <- DF$author_stats %>% 
+  filter(SubjectArea != "Multidisciplinary")
+
+auth_plot <- 
+  ggplot(temp_graph, aes(x = SubjectArea)) + 
+  geom_boxplot(
+    aes(
+      ymin = Min_Num_Authors,
+      lower = lower_IQR,
+      middle = Med_Num_Authors,
+      upper = upper_IQR,
+      ymax = very_high_90
+    ),
+    stat = "identity"
+  ) + 
+  theme_bw() + 
+  xlab("Subject Area") + 
+  ylab("Number of Authors") +
+  coord_cartesian(ylim = c(0,12)) + 
+  scale_y_continuous(breaks = c(0,2,4,6,8,10,12)) +
+  geom_point(aes(x = SubjectArea, y = Average_Num_Authors, 
+                 size = SD_Num_Authors)) +
+  theme(legend.position = "none")
+
+aff_plot <- 
+  ggplot(temp_graph, aes(x = SubjectArea)) + 
+  geom_boxplot(
+    aes(
+      ymin = Min_Num_Aff,
+      lower = lower_IQR_Aff,
+      middle = Med_Num_Aff,
+      upper = upper_IQR_Aff,
+      ymax = very_high_90_Aff
+    ),
+    stat = "identity"
+  ) + 
+  theme_bw() + 
+  xlab("Subject Area") + 
+  ylab("Number of First Affiliations") +
+  coord_cartesian(ylim = c(0,12)) + 
+  scale_y_continuous(breaks = c(0,2,4,6,8,10,12)) +
+  geom_point(aes(x = SubjectArea, y = Average_Num_Aff, 
+               size = SD_Num_Authors)) +
+  theme(legend.position = "none")
+
+
+auth_plot | aff_plot
+```
+
+WRITE THE THING --> make this a table to import 
+
+NEED TO RUN ALL TEAMS SUBJECT AREA GRAPH
+
+```{r big-teams, results = 'asis'}
+big_teams_papers <- 968765
+big_teams_authors <- 4541369
+
+kable(DF$paper_stats %>% 
+        arrange(Statistic))
+```
+
+##rq1b
+
+
+
+
 
 ```{r total-authors}
 # updated
