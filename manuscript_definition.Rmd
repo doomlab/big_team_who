@@ -113,6 +113,10 @@ library(figpatch)
 library(RColorBrewer)
 library(latex2exp)
 library(patchwork)
+library(broom)
+library(minpack.lm)
+
+options(scipen = 99)
 
 strip_labels <- expression(
   "M Coefficient " = b[M],
@@ -134,7 +138,7 @@ label_expressions <- function(values) {
 }
 
 # things to import
-var_list <- c("author_stats", "paper_stats")
+var_list <- c("author_stats", "paper_stats", "author_paper_year")
 
 var_list_import <- paste0("data/scopus_outputs_2/", var_list, ".xlsx")
 
@@ -302,7 +306,7 @@ effect size differences from zero. The confidence interval that does not
 include zero would be considered different from zero (to four decimal
 places). We made no directional predictions.
 
-## RQ1: Defining BTS
+## RQ1A: Defining BTS
 
 ```{r total-papers}
 total_papers <- 97532104 # the entire database
@@ -382,10 +386,84 @@ kable(DF$paper_stats %>%
         arrange(Statistic))
 ```
 
-##rq1b
+## RQ1B: Changes over Time
+
+SEE IF YOU CAN GET ALL THE NUMBERS SOME ARE MISSING
+
+```{r}
+temp <- DF$author_paper_year %>% 
+  filter(SubjectArea != "Multidisciplinary") %>% 
+  filter(Year < 2024)
+
+# temp %>% 
+#   group_by(SubjectArea, Year, group) %>% 
+#   summarize(n = n())
+
+p1 <- ggplot(temp %>% 
+         filter(group == "regular"), aes(x = Year, y = Number_Papers, colour = SubjectArea)) + 
+  geom_point() + 
+  theme_minimal() + 
+  theme(legend.position = "none")
+
+p2 <- ggplot(temp %>% 
+         filter(group == "big"), aes(x = Year, y = Number_Papers, colour = SubjectArea)) + 
+  geom_point() + 
+  theme_minimal() + 
+  theme(legend.position = "bottom")
+
+p1 | p2
+```
+
+```{r}
+group <- unique(temp$group)
+subjarea <- unique(temp$SubjectArea)
+corr.results <- list()
+
+for (group_label in group){
+  for (SA in subjarea){
+    stuff <- temp %>% 
+      filter(group == group_label) %>% 
+      filter(SubjectArea == SA) 
+    # Attempt with nlsLM for more robust optimization
+    fit <- nlsLM(Number_Papers ~ a * exp(r * Year), 
+             start = list(a = 0.2, r = 0.05), 
+             data = stuff)
+    corr.results[[paste0(group_label, "_", SA)]] <- tidy(fit) 
+      
+  }
+}
+
+corr.DF <- bind_rows(corr.results) %>% 
+  mutate(group = rep(group, each = 8)) %>% 
+  mutate(SubjectArea = c(
+    rep(subjarea, each = 2),
+    rep(subjarea, each = 2)
+    ))
+
+ggplot(corr.DF, aes(x = SubjectArea, y = estimate, color = group)) + 
+  geom_point() +
+  theme_minimal() + 
+  geom_linerange(aes(ymin = conf.low, ymax = conf.high))
+```
 
 
+In the exponential model ￼, the parameters ￼ and ￼ have specific interpretations:
+	1.	Parameter ￼ (Initial Value or Scale):
+	•	￼ represents the initial value or the scaling factor of the exponential function. It indicates the starting level of the dependent variable (in this case, Number_Papers) when the Year is at its baseline (e.g., the first year in your dataset or zero if Year is centered).
+	•	A larger value of ￼ would mean a higher starting point for the number of papers.
+	2.	Parameter ￼ (Growth Rate):
+	•	￼ is the growth rate parameter. It indicates how quickly the number of papers grows over time.
+	•	If ￼ is positive, the model shows exponential growth, meaning the number of papers increases over time at an accelerating rate.
+	•	If ￼ is negative, the model would represent exponential decay, suggesting that the number of papers decreases over time.
+	•	The magnitude of ￼ affects the steepness of the growth or decay curve, with larger values (in absolute terms) indicating a more rapid change.
 
+Interpretation Example:
+	•	If ￼ and ￼, then:
+	•	The starting number of papers is about 2 (when Year is zero or the baseline year).
+	•	The number of papers grows by about ￼ per unit of Year, as ￼ implies a growth rate of ￼ per year.
+	•	If ￼, the model would predict a constant number of papers over time, as the exponential term ￼ becomes 1.
+
+Let me know if you’d like help with the interpretation for specific values in your fitted model.
 
 
 ```{r total-authors}
