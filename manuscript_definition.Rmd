@@ -155,106 +155,36 @@ outline:
   - on where is represented 
 - "big" teams - unanswered question ... people are now using term "big team" but it's not defined - can we define it and see if it's any different or just a product of growth/internet over time? 
 
-Collaboration in scientific endeavors involves multiple researchers at
-(potentially) multiple institutions to communicate and work together to
-advance knowledge in their chosen field. Collaboration can manifest
-uniquely in each project dependent on the skill sets, hypotheses, and
-perspectives of collaborators. While collaboration is not new in
-science, interest in "team science is growing as individual researcher seek a interdisciplinary approach to research or bring on more students to their project. Team science leverages a more organized structure between the collaborator to divide the workload to more complex questions. 
+SAVS NEW VERSION! 
 
-"Big team science" (BTS) builds on team science by scaling efforts to include larger, often globally diverse teams, which requires significant coordination and infrastructure [@coles2022; @forscher2022a; @stewart2017]. BTS projects and organizations organize extensive collaborations, intentionally incorporating diverse populations and perspectives into research. This large-scale approach enhances the reliability and generalizability of findings by integrating varied methodologies and viewpoints, leading to more robust and inclusive scientific outcomes. BTS organizations often pool extensive networks of researchers and resources, aiming to tackle grand scientific challenges that would be difficult to address within smaller or less coordinated collaborations.
+Collaboration in scientific endeavors involves multiple researchers at (potentially) multiple institutions to communicate and work together to advance knowledge in their chosen field. Collaboration can manifest uniquely in each project dependent on the skill sets, hypotheses, and perspectives of collaborators. One key aspect of collaboration is the flexibility allotted as it is shaped by the needs of the project and the participants involved.
 
-BTS appears to be expanding because of two sources: 1) increasing
-globalization and technology that allows for real-time interdisciplinary
-research, and 2) expanding interest in reproducibility, replication, and
-generalizability [i.e., the credibility movement, 
-@maxwell2015; @nelson2018; @zwaan2018; @vazire2022]. Technological
-advances have provided easier ways to collaborate with people who are
-from other universities and countries through document sharing platforms
-(e.g., Google, GitHub, and the Open Science Framework), video chatting
-platforms (e.g., Zoom, Microsoft Teams), and messaging and project
-management platforms (e.g., Slack, Trello, when2meet, etc.). The
-credibility movement seems to suggest that by having both collaborations
-that span across the globe and subfields of research areas, age groups,
-and education levels should help to drive science in the path of better
-materials, reliability, generalizability, and more robust sample sizes
-(when necessary) in a study [@auspurg2021; @nosek2014method;
-@lebel2018].
+While collaboration is not new in science, interest in "team science" is growing as individual researchers seek an interdisciplinary approach to research or bring on more students to their project. Unlike general collaboration, team science involves structured roles, coordinated workflows, and shared resources to address challenges that would be difficult for individual researchers or one small team to solve independently. Team science often brings in some aspect of diversity but likely is still very homogenous in several aspects. 
 
-Generally, the credibility movement appears to have been driven by early career
-researchers [i.e., those who are within five years of their first
-appointment, @maizey2019]; however, there are no large meta-scientific
-investigations on this specific topic to date. The newness of large-scale research in many fields could be the culprit for the lack of investigation into this area. For example, psychology has had an increase in BTS publications like the Open
-Science Collaboration [@opensciencecollaboration2015], Many Labs
-Collaborations [@buttrick2020; @ebersole2016; @ebersole2020; @klein2018;
-@klein2022; @mathur2020; @skorb2020] or the first papers from the
-Psychological Science Accelerator [@bago2022; @buchanan2023;
-@dorison2022; @jones2021;
-@psychologicalscienceacceleratorself-determinationtheorycollaboration2022;
-@moshontz2018; @wang2021]. Generally, the researcher incentive for
-replication and/or involvement in big-team projects was low for three reasons. First, journals often prioritize
-"novel" or new results which led to rejection of replication manuscripts
-and publication bias [@franco2014; @hubbard1997; @nosek2012]. Second,
-the "failure" to replicate was often placed on the replication team as
-"bad science" rather than a careful consideration of publication biases
-and (potential) questionable research practices [@klein2022;
-@maxwell2015]. Last, why should someone want to spend time and resources
-on an answer we already "know" [@isager2021; @isager2021a]?
+The evolution of team science reflects broader shifts in research practices, driven by two sources: 1) increasing globalization and technology that allows for real-time interdisciplinary research, and 2) expanding interest in reproducibility, replication, and generalizability [i.e., the credibility movement, @maxwell2015; @nelson2018; @zwaan2018; @vazire2022]. Technological advances have provided easier ways to collaborate with people who are from other universities and countries through document sharing platforms (e.g., Google, GitHub, and the Open Science Framework), video chatting platforms (e.g., Zoom, Microsoft Teams), and messaging and project management platforms (e.g., Slack, Trello, when2meet, etc.). 
 
-However, the success and interest in the large-scale reproducibility
-projects [@opensciencecollaboration2015; @10.7554/eLife.71601], paired
-with the meta-scientific publications focusing on researcher practices
-and incentive structures [@silberzahn2018many; @john2012] led to a
-change in journal guidelines and incentives for researchers interested
-in participating in large-scale replication studies [@grahe2014;
-@kidwell2016; @nosek2015; @mayo-wilson2021]. In some fields, the 
-replication movement demonstrated that large-scale teams were a 
-practical (and publishable) solution to answering research questions 
-in generalizable way. The support
-for Registered Reports, papers accepted before the data has been
-collected [@nosek2014; @stewart2020], has allowed researchers to 
-invest in projects that they know
-should be published when the project is complete. Further, the
-implementation of the Transparency and Openness Guidelines [@nosek2015]
-and the Contributor Role Taxonomy (CRediT) system [@allen2019] have
-pushed journals and researchers to promote more open, inclusive
-publication practices.  
+The credibility movement has been the main catalyst for the increased interest and broader shift of research practices. The movement emphasizes reproducibility and transparency in science, encouraging researchers to form new ways to increase the rigor in scientific endeavors. As the movement has adapted throughout the last decade, the idea to form larger, more diverse teams and to include participants from varied backgrounds has become even more a goal to not only increase the credibility but the generalizability and reliability of scientific findings. This form of collaboration has been coined “Big Team Science.” 
 
-Beyond replication concerns, the credibility movement has mirrored calls for diversification or de-WEIRDing (e.g., Western, Educated, Industrialized,
-Rich, and Democratic) scientific research [@henrich2010; @newson2021;
-@rad2018] by improving representation in research samples. Like the
-large-scale studies in Physics [@aphilos2021; @castelnovo2018] and
-Biology [@collins2003], the Social Sciences struggle to represent the
-breadth of humanity across both researcher and population
-characteristics. Now, grassroots organizations, such as the
-Psychological Science Accelerator [@moshontz2018], ManyBabies
-(<https://manybabies.github.io/>), NutNet (<https://nutnet.org/>), and
-DRAGNet (<https://dragnetglobal.weebly.com/>) can begin to tackle these
-issues by recruiting research labs from all over the globe to provide
-diversity in geographic, linguistic, and researcher representation.
-Publications have examined the global understanding of morality, face
-processing, COVID-19 information signaling, and more [@bago2022;
-@dorison2022; @jones2021;
-@psychologicalscienceacceleratorself-determinationtheorycollaboration2022;
-@vanbavel2022; @wang2021]. While these organizations and one-time groups
-for BTS studies have provided an incredible wealth of data for the
-scientific community, we do not yet know exactly *who* is involved with,
-and benefits from, the BTS and credibility movement. Publications on BTS
-generally explore challenges, lessons learned, and the need for BTS
+“Big Team Science” builds on team science by scaling efforts to include larger, often globally diverse teams, which requires significant coordination and infrastructure [@coles2022; @forscher2022a; @stewart2017]. BTS projects and organizations organize extensive collaborations, intentionally incorporating diverse populations and perspectives into research. This large-scale approach enhances the reliability and generalizability of findings by integrating varied methodologies and viewpoints, leading to more robust and inclusive scientific outcomes. BTS organizations often pool extensive networks of researchers and resources, aiming to tackle grand scientific challenges that would be difficult to address within smaller or less coordinated collaborations. By having both collaborations that span across the globe and subfields of research areas, age groups, and education levels should help to drive science in the path of better materials, reliability, generalizability, and more robust sample sizes (when necessary) in a study [@auspurg2021; @nosek2014method; @lebel2018]. 
+
+Generally, the credibility movement appears to have been driven by early career researchers [i.e., those who are within five years of their first appointment, @maizey2019]; however, there are no large meta-scientific investigations on this specific topic to date. The newness of large-scale research in many fields could be the culprit for the lack of investigation into this area. For example, psychology has had an increase in BTS publications like the Open Science Collaboration [@opensciencecollaboration2015], Many Labs Collaborations [@buttrick2020; @ebersole2016; @ebersole2020; @klein2018; @klein2022; @mathur2020; @skorb2020] or the first papers from the Psychological Science Accelerator [@bago2022; @buchanan2023;
+@dorison2022; @jones2021; @psychologicalscienceacceleratorself-determinationtheorycollaboration2022; @moshontz2018; @wang2021]. Generally, the researcher incentive for replication and/or involvement in big-team projects was low for three reasons. First, journals often prioritize "novel" or new results which led to rejection of replication manuscripts and publication bias [@franco2014; @hubbard1997; @nosek2012]. Second, the "failure" to replicate was often placed on the replication team as "bad science" rather than a careful consideration of publication biases and (potential) questionable research practices [@klein2022; @maxwell2015]. Last, why should someone want to spend time and resources on an answer we already "know" [@isager2021; @isager2021a]?
+
+
+However, the success and interest in the large-scale reproducibility projects [@opensciencecollaboration2015; @10.7554/eLife.71601], paired with the meta-scientific publications focusing on researcher practices  and incentive structures [@silberzahn2018many; @john2012] led to a change in journal guidelines and incentives for researchers interested in participating in large-scale replication studies [@grahe2014; @kidwell2016; @nosek2015; @mayo-wilson2021]. In some fields, the replication movement demonstrated that large-scale teams were a practical (and publishable) solution to answering research questions in generalizable way. The support for Registered Reports, papers accepted before the data has been collected [@nosek2014; @stewart2020], has allowed researchers to  invest in projects that they know should be published when the project is complete. Further, the implementation of the Transparency and Openness Guidelines [@nosek2015] and the Contributor Role Taxonomy (CRediT) system [@allen2019] have pushed journals and researchers to promote more open, inclusive publication practices.  
+
+
+Beyond replication concerns, the credibility movement has mirrored calls for diversification or  de-WEIRDing (e.g., Western, Educated, Industrialized, Rich, and Democratic) scientific research [@henrich2010; @newson2021; @rad2018] by improving representation in research samples. Like the large-scale studies in Physics [@aphilos2021; @castelnovo2018] and Biology [@collins2003], the Social Sciences struggle to represent the breadth of humanity across both researcher and population characteristics. Now, grassroots organizations, such as the Psychological Science Accelerator [@moshontz2018], ManyBabies (<https://manybabies.github.io/>), NutNet (<https://nutnet.org/>), and DRAGNet (<https://dragnetglobal.weebly.com/>) can begin to tackle these issues by recruiting research labs from all over the globe to provide diversity in geographic, linguistic, and researcher representation. Publications have examined the global understanding of morality, face
+processing, COVID-19 information signaling, and more [@bago2022; @dorison2022; @jones2021; @psychologicalscienceacceleratorself-determinationtheorycollaboration2022;
+@vanbavel2022; @wang2021]. While these organizations and one-time groups for BTS studies have provided an incredible wealth of data for the scientific community, we do not yet know exactly *who* is involved with, and benefits from, the BTS and credibility movement. Publications on BTS generally explore challenges, lessons learned, and the need for BTS
 [@forscher2022a; @coles2022].
 
-Therefore, the goal of this manuscript is to examine both the *publications* and *people* involved in BTS projects. We present descriptive information about the publication sources and types of articles to demonstrate large-scale research. Next, we examine the individuals involved in BTS for descriptive and predictive purposes. To describe the people involved in BTS projects, we planned to use education, types of publications from BTS individuals, and publication metrics. For predictive statistics, we explored the change in diversity of authors over time. It is unclear if the focus of de-WEIRDing science has only focused on the representation of the
-research participants or if it has also improved the representation of
-researchers outside of North America and Europe. Last, we examined for a change in diversity within first author(s) and the last author across time. As hiring and promoting practices often place a heavy weight on publications and especially “influential” publications, it becomes necessary to critically examine the representation present in authorship in BTS projects.
+There is no universally agreed-upon definition of BTS, raising questions about whether it represents a distinct phenomenon or simply a natural extension of team science. Therefore, we originally arbitrarily chose a definition for BTS publication which we had decided to be publications with at least ten authors at ten different institutions that were published in peer-reviewed journals or had posted a full paper pre-print. While this definition is a somewhat arbitrary choice, we separate this research from research on team science that uses any multi-university collaboration as a definition [@jones2008] to focus on larger sized teams rather than teams of any size. With at least ten institutions, the complexities of infrastructure, resources, tenure and promotion policies, ethics review, and more can occur [@forscher2022a]. Therefore, we believe this choice selects publications that would be "big" teams and those potential obstacles. 
 
-We have defined BTS publications as publications with at least ten
-authors at ten different institutions that were published in
-peer-reviewed journals or had posted a full paper pre-print. While this 
-definition is a somewhat arbitrary choice, we separate this research 
-from research on team science that uses any multi-university collaboration 
-as a definition [@jones2008] to focus on larger sized teams rather 
-than teams of any size. With at least ten institutions, the complexities 
-of infrastructure, resources, tenure and promotion policies, ethics review, and more can occur [@forscher2022a]. Therefore, we believe this choice selects publications that would be "big" teams and those potential obstacles. 
+This manuscript seeks not only to evaluate whether this definition is an appropriate fit for BTS but also to explore whether the criteria for defining BTS should vary by subject area or evolve over time. Understanding these nuances will help clarify whether BTS represents a fundamentally new approach to collaboration or a natural progression of team science in response to global and technological trends. 
+
+We then will examine if there is a true difference between “Team Science” and "Big Team Science”. Therefore, the goal of this manuscript is to examine both the *publications* and *people* involved in BTS projects and “Team Science.” We present descriptive information about the publication sources and types of articles to demonstrate large-scale research. Next, we examine the individuals involved in BTS and “Team Science” for descriptive and predictive purposes. To describe the people involved in BTS projects vs “Team Science”, we planned to use types of publications from individuals. For predictive statistics, we explored the change in diversity of authors over time. It is unclear if the focus of de-WEIRDing science has only focused on the representation of the research participants or if it has also improved the representation of researchers outside of North America and Europe. Last, we examined for a change in diversity within first author(s) and the last author across time. As hiring and promoting practices often place a heavy weight on publications and especially “influential” publications, it becomes necessary to critically examine the representation present in authorship in BTS and Team Science” projects.
+
 
 # Research Questions
 
