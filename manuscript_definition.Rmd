@@ -138,7 +138,8 @@ label_expressions <- function(values) {
 }
 
 # things to import
-var_list <- c("author_stats", "paper_stats", "author_paper_year")
+var_list <- c("author_stats", "paper_stats", "author_paper_year",
+              "career_time")
 
 var_list_import <- paste0("data/scopus_outputs_2/", var_list, ".xlsx")
 
@@ -148,61 +149,198 @@ names(DF) <- var_list
 
 outline:
 
-- what is team science / collaboration 
-- research on how it's grown / changed over time? 
-- Any research diversification?
-  - on who is publishing 
-  - on where is represented 
-- "big" teams - unanswered question ... people are now using term "big team" but it's not defined - can we define it and see if it's any different or just a product of growth/internet over time? 
+-   what is team science / collaboration
+-   research on how it's grown / changed over time?
+-   Any research diversification?
+    -   on who is publishing
+    -   on where is represented
+-   "big" teams - unanswered question ... people are now using term "big
+    team" but it's not defined - can we define it and see if it's any
+    different or just a product of growth/internet over time?
 
-SAVS NEW VERSION! 
+SAVS NEW VERSION!
 
-Collaboration in scientific endeavors involves multiple researchers at (potentially) multiple institutions to communicate and work together to advance knowledge in their chosen field. Collaboration can manifest uniquely in each project dependent on the skill sets, hypotheses, and perspectives of collaborators. One key aspect of collaboration is the flexibility allotted as it is shaped by the needs of the project and the participants involved.
+Collaboration in scientific endeavors involves multiple researchers at
+(potentially) multiple institutions to communicate and work together to
+advance knowledge in their chosen field. Collaboration can manifest
+uniquely in each project dependent on the skill sets, hypotheses, and
+perspectives of collaborators. One key aspect of collaboration is the
+flexibility allotted as it is shaped by the needs of the project and the
+participants involved.
 
-While collaboration is not new in science, interest in "team science" is growing as individual researchers seek an interdisciplinary approach to research or bring on more students to their project. Unlike general collaboration, team science involves structured roles, coordinated workflows, and shared resources to address challenges that would be difficult for individual researchers or one small team to solve independently. Team science often brings in some aspect of diversity but likely is still very homogenous in several aspects. 
+While collaboration is not new in science, interest in "team science" is
+growing as individual researchers seek an interdisciplinary approach to
+research or bring on more students to their project. Unlike general
+collaboration, team science involves structured roles, coordinated
+workflows, and shared resources to address challenges that would be
+difficult for individual researchers or one small team to solve
+independently. Team science often brings in some aspect of diversity but
+likely is still very homogenous in several aspects.
 
-The evolution of team science reflects broader shifts in research practices, driven by two sources: 1) increasing globalization and technology that allows for real-time interdisciplinary research, and 2) expanding interest in reproducibility, replication, and generalizability [i.e., the credibility movement, @maxwell2015; @nelson2018; @zwaan2018; @vazire2022]. Technological advances have provided easier ways to collaborate with people who are from other universities and countries through document sharing platforms (e.g., Google, GitHub, and the Open Science Framework), video chatting platforms (e.g., Zoom, Microsoft Teams), and messaging and project management platforms (e.g., Slack, Trello, when2meet, etc.). 
+The evolution of team science reflects broader shifts in research
+practices, driven by two sources: 1) increasing globalization and
+technology that allows for real-time interdisciplinary research, and 2)
+expanding interest in reproducibility, replication, and generalizability
+[i.e., the credibility movement, @maxwell2015; @nelson2018; @zwaan2018;
+@vazire2022]. Technological advances have provided easier ways to
+collaborate with people who are from other universities and countries
+through document sharing platforms (e.g., Google, GitHub, and the Open
+Science Framework), video chatting platforms (e.g., Zoom, Microsoft
+Teams), and messaging and project management platforms (e.g., Slack,
+Trello, when2meet, etc.).
 
-The credibility movement has been the main catalyst for the increased interest and broader shift of research practices. The movement emphasizes reproducibility and transparency in science, encouraging researchers to form new ways to increase the rigor in scientific endeavors. As the movement has adapted throughout the last decade, the idea to form larger, more diverse teams and to include participants from varied backgrounds has become even more a goal to not only increase the credibility but the generalizability and reliability of scientific findings. This form of collaboration has been coined “Big Team Science.” 
+The credibility movement has been the main catalyst for the increased
+interest and broader shift of research practices. The movement
+emphasizes reproducibility and transparency in science, encouraging
+researchers to form new ways to increase the rigor in scientific
+endeavors. As the movement has adapted throughout the last decade, the
+idea to form larger, more diverse teams and to include participants from
+varied backgrounds has become even more a goal to not only increase the
+credibility but the generalizability and reliability of scientific
+findings. This form of collaboration has been coined “Big Team Science.”
 
-“Big Team Science” builds on team science by scaling efforts to include larger, often globally diverse teams, which requires significant coordination and infrastructure [@coles2022; @forscher2022a; @stewart2017]. BTS projects and organizations organize extensive collaborations, intentionally incorporating diverse populations and perspectives into research. This large-scale approach enhances the reliability and generalizability of findings by integrating varied methodologies and viewpoints, leading to more robust and inclusive scientific outcomes. BTS organizations often pool extensive networks of researchers and resources, aiming to tackle grand scientific challenges that would be difficult to address within smaller or less coordinated collaborations. By having both collaborations that span across the globe and subfields of research areas, age groups, and education levels should help to drive science in the path of better materials, reliability, generalizability, and more robust sample sizes (when necessary) in a study [@auspurg2021; @nosek2014method; @lebel2018]. 
+“Big Team Science” builds on team science by scaling efforts to include
+larger, often globally diverse teams, which requires significant
+coordination and infrastructure [@coles2022; @forscher2022a;
+@stewart2017]. BTS projects and organizations organize extensive
+collaborations, intentionally incorporating diverse populations and
+perspectives into research. This large-scale approach enhances the
+reliability and generalizability of findings by integrating varied
+methodologies and viewpoints, leading to more robust and inclusive
+scientific outcomes. BTS organizations often pool extensive networks of
+researchers and resources, aiming to tackle grand scientific challenges
+that would be difficult to address within smaller or less coordinated
+collaborations. By having both collaborations that span across the globe
+and subfields of research areas, age groups, and education levels should
+help to drive science in the path of better materials, reliability,
+generalizability, and more robust sample sizes (when necessary) in a
+study [@auspurg2021; @nosek2014method; @lebel2018].
 
-Generally, the credibility movement appears to have been driven by early career researchers [i.e., those who are within five years of their first appointment, @maizey2019]; however, there are no large meta-scientific investigations on this specific topic to date. The newness of large-scale research in many fields could be the culprit for the lack of investigation into this area. For example, psychology has had an increase in BTS publications like the Open Science Collaboration [@opensciencecollaboration2015], Many Labs Collaborations [@buttrick2020; @ebersole2016; @ebersole2020; @klein2018; @klein2022; @mathur2020; @skorb2020] or the first papers from the Psychological Science Accelerator [@bago2022; @buchanan2023;
-@dorison2022; @jones2021; @psychologicalscienceacceleratorself-determinationtheorycollaboration2022; @moshontz2018; @wang2021]. Generally, the researcher incentive for replication and/or involvement in big-team projects was low for three reasons. First, journals often prioritize "novel" or new results which led to rejection of replication manuscripts and publication bias [@franco2014; @hubbard1997; @nosek2012]. Second, the "failure" to replicate was often placed on the replication team as "bad science" rather than a careful consideration of publication biases and (potential) questionable research practices [@klein2022; @maxwell2015]. Last, why should someone want to spend time and resources on an answer we already "know" [@isager2021; @isager2021a]?
+Generally, the credibility movement appears to have been driven by early
+career researchers [i.e., those who are within five years of their first
+appointment, @maizey2019]; however, there are no large meta-scientific
+investigations on this specific topic to date. The newness of
+large-scale research in many fields could be the culprit for the lack of
+investigation into this area. For example, psychology has had an
+increase in BTS publications like the Open Science Collaboration
+[@opensciencecollaboration2015], Many Labs Collaborations
+[@buttrick2020; @ebersole2016; @ebersole2020; @klein2018; @klein2022;
+@mathur2020; @skorb2020] or the first papers from the Psychological
+Science Accelerator [@bago2022; @buchanan2023; @dorison2022; @jones2021;
+@psychologicalscienceacceleratorself-determinationtheorycollaboration2022;
+@moshontz2018; @wang2021]. Generally, the researcher incentive for
+replication and/or involvement in big-team projects was low for three
+reasons. First, journals often prioritize "novel" or new results which
+led to rejection of replication manuscripts and publication bias
+[@franco2014; @hubbard1997; @nosek2012]. Second, the "failure" to
+replicate was often placed on the replication team as "bad science"
+rather than a careful consideration of publication biases and
+(potential) questionable research practices [@klein2022; @maxwell2015].
+Last, why should someone want to spend time and resources on an answer
+we already "know" [@isager2021; @isager2021a]?
 
+However, the success and interest in the large-scale reproducibility
+projects [@opensciencecollaboration2015; @10.7554/eLife.71601], paired
+with the meta-scientific publications focusing on researcher practices
+and incentive structures [@silberzahn2018many; @john2012] led to a
+change in journal guidelines and incentives for researchers interested
+in participating in large-scale replication studies [@grahe2014;
+@kidwell2016; @nosek2015; @mayo-wilson2021]. In some fields, the
+replication movement demonstrated that large-scale teams were a
+practical (and publishable) solution to answering research questions in
+generalizable way. The support for Registered Reports, papers accepted
+before the data has been collected [@nosek2014; @stewart2020], has
+allowed researchers to invest in projects that they know should be
+published when the project is complete. Further, the implementation of
+the Transparency and Openness Guidelines [@nosek2015] and the
+Contributor Role Taxonomy (CRediT) system [@allen2019] have pushed
+journals and researchers to promote more open, inclusive publication
+practices.
 
-However, the success and interest in the large-scale reproducibility projects [@opensciencecollaboration2015; @10.7554/eLife.71601], paired with the meta-scientific publications focusing on researcher practices  and incentive structures [@silberzahn2018many; @john2012] led to a change in journal guidelines and incentives for researchers interested in participating in large-scale replication studies [@grahe2014; @kidwell2016; @nosek2015; @mayo-wilson2021]. In some fields, the replication movement demonstrated that large-scale teams were a practical (and publishable) solution to answering research questions in generalizable way. The support for Registered Reports, papers accepted before the data has been collected [@nosek2014; @stewart2020], has allowed researchers to  invest in projects that they know should be published when the project is complete. Further, the implementation of the Transparency and Openness Guidelines [@nosek2015] and the Contributor Role Taxonomy (CRediT) system [@allen2019] have pushed journals and researchers to promote more open, inclusive publication practices.  
-
-
-Beyond replication concerns, the credibility movement has mirrored calls for diversification or  de-WEIRDing (e.g., Western, Educated, Industrialized, Rich, and Democratic) scientific research [@henrich2010; @newson2021; @rad2018] by improving representation in research samples. Like the large-scale studies in Physics [@aphilos2021; @castelnovo2018] and Biology [@collins2003], the Social Sciences struggle to represent the breadth of humanity across both researcher and population characteristics. Now, grassroots organizations, such as the Psychological Science Accelerator [@moshontz2018], ManyBabies (<https://manybabies.github.io/>), NutNet (<https://nutnet.org/>), and DRAGNet (<https://dragnetglobal.weebly.com/>) can begin to tackle these issues by recruiting research labs from all over the globe to provide diversity in geographic, linguistic, and researcher representation. Publications have examined the global understanding of morality, face
-processing, COVID-19 information signaling, and more [@bago2022; @dorison2022; @jones2021; @psychologicalscienceacceleratorself-determinationtheorycollaboration2022;
-@vanbavel2022; @wang2021]. While these organizations and one-time groups for BTS studies have provided an incredible wealth of data for the scientific community, we do not yet know exactly *who* is involved with, and benefits from, the BTS and credibility movement. Publications on BTS generally explore challenges, lessons learned, and the need for BTS
+Beyond replication concerns, the credibility movement has mirrored calls
+for diversification or de-WEIRDing (e.g., Western, Educated,
+Industrialized, Rich, and Democratic) scientific research [@henrich2010;
+@newson2021; @rad2018] by improving representation in research samples.
+Like the large-scale studies in Physics [@aphilos2021; @castelnovo2018]
+and Biology [@collins2003], the Social Sciences struggle to represent
+the breadth of humanity across both researcher and population
+characteristics. Now, grassroots organizations, such as the
+Psychological Science Accelerator [@moshontz2018], ManyBabies
+(<https://manybabies.github.io/>), NutNet (<https://nutnet.org/>), and
+DRAGNet (<https://dragnetglobal.weebly.com/>) can begin to tackle these
+issues by recruiting research labs from all over the globe to provide
+diversity in geographic, linguistic, and researcher representation.
+Publications have examined the global understanding of morality, face
+processing, COVID-19 information signaling, and more [@bago2022;
+@dorison2022; @jones2021;
+@psychologicalscienceacceleratorself-determinationtheorycollaboration2022;
+@vanbavel2022; @wang2021]. While these organizations and one-time groups
+for BTS studies have provided an incredible wealth of data for the
+scientific community, we do not yet know exactly *who* is involved with,
+and benefits from, the BTS and credibility movement. Publications on BTS
+generally explore challenges, lessons learned, and the need for BTS
 [@forscher2022a; @coles2022].
 
-There is no universally agreed-upon definition of BTS, raising questions about whether it represents a distinct phenomenon or simply a natural extension of team science. Therefore, we originally arbitrarily chose a definition for BTS publication which we had decided to be publications with at least ten authors at ten different institutions that were published in peer-reviewed journals or had posted a full paper pre-print. While this definition is a somewhat arbitrary choice, we separate this research from research on team science that uses any multi-university collaboration as a definition [@jones2008] to focus on larger sized teams rather than teams of any size. With at least ten institutions, the complexities of infrastructure, resources, tenure and promotion policies, ethics review, and more can occur [@forscher2022a]. Therefore, we believe this choice selects publications that would be "big" teams and those potential obstacles. 
+There is no universally agreed-upon definition of BTS, raising questions
+about whether it represents a distinct phenomenon or simply a natural
+extension of team science. Therefore, we originally arbitrarily chose a
+definition for BTS publication which we had decided to be publications
+with at least ten authors at ten different institutions that were
+published in peer-reviewed journals or had posted a full paper
+pre-print. While this definition is a somewhat arbitrary choice, we
+separate this research from research on team science that uses any
+multi-university collaboration as a definition [@jones2008] to focus on
+larger sized teams rather than teams of any size. With at least ten
+institutions, the complexities of infrastructure, resources, tenure and
+promotion policies, ethics review, and more can occur [@forscher2022a].
+Therefore, we believe this choice selects publications that would be
+"big" teams and those potential obstacles.
 
-This manuscript seeks not only to evaluate whether this definition is an appropriate fit for BTS but also to explore whether the criteria for defining BTS should vary by subject area or evolve over time. Understanding these nuances will help clarify whether BTS represents a fundamentally new approach to collaboration or a natural progression of team science in response to global and technological trends. 
+This manuscript seeks not only to evaluate whether this definition is an
+appropriate fit for BTS but also to explore whether the criteria for
+defining BTS should vary by subject area or evolve over time.
+Understanding these nuances will help clarify whether BTS represents a
+fundamentally new approach to collaboration or a natural progression of
+team science in response to global and technological trends.
 
-We then will examine if there is a true difference between “Team Science” and "Big Team Science”. Therefore, the goal of this manuscript is to examine both the *publications* and *people* involved in BTS projects and “Team Science.” We present descriptive information about the publication sources and types of articles to demonstrate large-scale research. Next, we examine the individuals involved in BTS and “Team Science” for descriptive and predictive purposes. To describe the people involved in BTS projects vs “Team Science”, we planned to use types of publications from individuals. For predictive statistics, we explored the change in diversity of authors over time. It is unclear if the focus of de-WEIRDing science has only focused on the representation of the research participants or if it has also improved the representation of researchers outside of North America and Europe. Last, we examined for a change in diversity within first author(s) and the last author across time. As hiring and promoting practices often place a heavy weight on publications and especially “influential” publications, it becomes necessary to critically examine the representation present in authorship in BTS and Team Science” projects.
-
+We then will examine if there is a true difference between “Team
+Science” and "Big Team Science”. Therefore, the goal of this manuscript
+is to examine both the *publications* and *people* involved in BTS
+projects and “Team Science.” We present descriptive information about
+the publication sources and types of articles to demonstrate large-scale
+research. Next, we examine the individuals involved in BTS and “Team
+Science” for descriptive and predictive purposes. To describe the people
+involved in BTS projects vs “Team Science”, we planned to use types of
+publications from individuals. For predictive statistics, we explored
+the change in diversity of authors over time. It is unclear if the focus
+of de-WEIRDing science has only focused on the representation of the
+research participants or if it has also improved the representation of
+researchers outside of North America and Europe. Last, we examined for a
+change in diversity within first author(s) and the last author across
+time. As hiring and promoting practices often place a heavy weight on
+publications and especially “influential” publications, it becomes
+necessary to critically examine the representation present in authorship
+in BTS and Team Science” projects.
 
 # Research Questions
 
--   Research Question 1: Using current publication values, what should define big team science versus team science? 
-  - Question 1A: What number of authors and institutional affiliations should designate the differences between team science and big team science?
-  - Question 1B: Using the definition from 1A, are there changes in the number of publications over time? 
-  
-  
-  ### come back to this ###
--   Research Question 2: How has the diversity of those involved in big team science versus team science changed over time? 
+- Research Question 1: Exploring historical and current publication
+    values, what should define big team science versus team science?
+  - Question 1A: What number of authors and institutional affiliations
+    should designate the differences between team science and big team
+    science?
+  - Question 1B: Using the definition from 1A, are there changes in the
+    number of publications over time?
+- Research Question 2: How has the diversity of those involved in big
+    team science versus team science changed over time?
 
 # Method
 
 ## Publications
 
-We used data from 1970 and forward in the Scopus database, as it is noted online
-that this time period includes cited references for calculation of
-several of our variables described below. We analyzed our results
+We used data from 1970-2024 in the Scopus database, as it is noted
+online that 1970 and forward includes cited references for calculation
+of several of our variables described below. We analyzed our results
 based on four subject areas present in the Scopus database: Physical
 Sciences, Health Sciences, Social Sciences, and Life Sciences. We
 filtered the database to include articles, articles in press, business
@@ -215,19 +353,28 @@ Research.
 
 ### RQ1: Defining BTS
 
-For each of the publications in Scopus, we calculated the number of distinct authors and institutions. If an author had multiple affiliations, we used the first affiliation listed. Each publication was classified into the four subject areas based on the All Journal Subject Codes present in the database. Publications can be included in multiple subject codes. For example, a medical paper may be listed in both life sciences and health sciences.  
+For each of the publications in Scopus, we calculated the number of
+distinct authors and institutions. If an author had multiple
+affiliations, we used the first affiliation listed. Each publication was
+classified into the four subject areas based on the All Journal Subject
+Codes present in the database. Publications can be included in multiple
+subject codes. For example, a medical paper may be listed in both life
+sciences and health sciences.
 
-### RQ2: Author Diversity Statistics 
+### RQ2: Author Diversity Statistics
 
 #### Seniority
 
-Career length for each author was defined as the
-year of the first publication minus the current year listed for each
-author. Number of publications included the number of unique entries an author was included in the database. Career length and number of publications was used as a proxy for the "age" or "seniority" of a scholar. 
+Career length for each author was defined as the year of the first
+publication minus the current year listed for each author. Number of
+publications included the number of unique entries an author was
+included in the database. Career length and number of publications was
+used as a proxy for the "age" or "seniority" of a scholar.
 
 #### Geopolitical Region
 
-Geopolitical region was created by binning country code identifiers into the 17 identified United Nation subregions.
+Geopolitical region was created by binning country code identifiers into
+the 17 identified United Nation subregions.
 
 # Results
 
@@ -247,14 +394,27 @@ distinct_authors_past1970 <- 53622443 # all authors
 team_author_aff_combo <- 196835398
 team_author_aff_papers <- 32454393
 team_author_aff_author <- 28353445
+
 team_author_aff_subject_noNA <- 241269297
 team_author_aff_papers_noNA <- 32448373
 team_author_aff_author_noNA <- 28350468
 ```
 
-WRITE THE THING --> mention max in the text because too crazy for the graph 
+The total number of papers included in the Scopus database at the time
+of this analysis was `r total_papers`. `r total_papers_past1970`
+articles were included past 1970 in the defined article types, which
+included `r distinct_authors_past1970` distinct authors. We then
+filtered the data to include only teams, which was defined as two
+authors from at least two institutions. The total number of papers for
+team projects was `r team_author_aff_papers` and
+`r team_author_aff_author` distinct authors. The data was then
+classified into subject areas by paper, which lead to missing data. The
+final number of papers included was `r team_author_aff_papers_noNA` with
+`r team_author_aff_author_noNA` distinct authors. The dataset was
+curated to include one row per author, paper, and subject area (i.e.,
+long format [@wickham2007]) which included `r team_author_aff_subject_noNA` total rows of data. For analyses and descriptive statistics below, we include sample sizes for clarity. 
 
-```{r stats-authors}
+```{r stats-authors-fig, include = F, fig.cap="The left panel depicts the number of authors included on a paper by subject area, and the right panel demonstrates the number of affiliations by subject area. The boxplot shows the median (bold line), the interquartile range (the box), and the minimum to the 90th percentile of the number of authors/affiliations as the range line. Normally these plots include the entire range of the data, but these extreme range made the boxplot information unreadable. The dots indicate the average number of authors/affiliations for each area with the size of the dot indicating the standard deviation of the statistic. Therefore, larger dots indicate more variability in the number of authors and affiliations. "}
 temp_graph <- DF$author_stats %>% 
   filter(SubjectArea != "Multidisciplinary")
 
@@ -304,62 +464,106 @@ aff_plot <-
 auth_plot | aff_plot
 ```
 
-WRITE THE THING --> make this a table to import 
+\@ref(fig:stats-authors-fig) displays the number of authors and affiliations by subject area. The figure demonstrates that the median number of authors is largest for health sciences, followed by life science, physical sciences, and then social sciences. The general pattern of team authorship includes about 2-8 authors, from about 2-4 institutions. We used the maximum (i.e., across all subject areas) 90th percentile as our exploratory definition for big team papers after examining the results from this analysis. We selected this percentile to have the high of the distribution, but also to be able to include enough papers for analysis across time. Therefore, big teams were defined as 11 authors from at least 6 different institutions[^In a previous version of this manuscript, we defined big teams as 10 authors from at least 10 institutions based on our own experiences working with research consortium. All definitions are likely subjective, but the definition in this manuscript represents the top 10% of author and affiliations in a large body of papers].
 
 NEED TO RUN ALL TEAMS SUBJECT AREA GRAPH
 
-```{r big-teams, results = 'asis'}
+```{r big-teams-table, results = 'asis'}
 big_teams_papers <- 968765
 big_teams_authors <- 4541369
 
-kable(DF$paper_stats %>% 
-        arrange(Statistic))
+apa_table(DF$paper_stats %>% 
+        arrange(Statistic), 
+        caption = "Number of Authors and Papers by Subject Area",
+        note = "Papers can be classified into multiple categories.", 
+        align = c("l", rep("c", 5)), 
+        digits = 0)
 ```
+
+\@ref(tab:big-teams-table) includes the number of distinct authors and papers for each subject area by overall teams and big teams using our 90th percentile definition. The total number of distinct authors for big team papers was `r big_teams_papers` with `r big_teams_authors` distinct authors. In RQ2, we split the big team data into small (6-10), medium, and large big team grouping for convenience to display/analyze geopolitical regions. The table shows the number of authors and papers for those analyses. 
 
 ## RQ1B: Changes over Time
 
 SEE IF YOU CAN GET ALL THE NUMBERS SOME ARE MISSING
 
-```{r}
+For analyzing changes across time, we split the data into regular teams (2-10 authors, 2-5 affiliations) and big teams (as defined above, 11+ authors, 6+ affiliations). The number of papers found in Scopus across time for each subject area are displayed in Figure \@ref(paper-time-fig). The visual results indicated that the number of regular team papers was increasing the most in physical sciences for all manuscripts, followed by life and health sciences, and the last is social sciences. Examining only big teams shows that the rate is also increasing across time. All teams appear to start increasing in the 1990s, while big teams do not start increasing off floor effects until past 2000. The health and life sciences show the largest increases across time in big teams with the smallest trend in the social sciences. 
+
+```{r paper-time-fig, include = F, fig.cap = "The number of manuscripts across time for all team science papers (left) and big team science papers (right)."}
 temp <- DF$author_paper_year %>% 
   filter(SubjectArea != "Multidisciplinary") %>% 
-  filter(Year < 2024)
+  filter(Year < 2024) %>% 
+  mutate(SubjectArea = gsub("Sciences", "", SubjectArea))
 
 # temp %>% 
 #   group_by(SubjectArea, Year, group) %>% 
 #   summarize(n = n())
 
 p1 <- ggplot(temp %>% 
-         filter(group == "regular"), aes(x = Year, y = Number_Papers, colour = SubjectArea)) + 
+         filter(group == "regular"), 
+         aes(x = Year, y = Number_Papers, 
+             colour = SubjectArea)) + 
   geom_point() + 
   theme_minimal() + 
-  theme(legend.position = "none")
+  scale_color_discrete(name = "Subject Area") + 
+  theme(legend.position = "bottom",
+        axis.text.y = element_text(angle = 45, hjust = 1)) + # Angles the y-axis text
+  ylab("Number of Papers") + 
+  ggtitle("Regular Teams")
 
 p2 <- ggplot(temp %>% 
-         filter(group == "big"), aes(x = Year, y = Number_Papers, colour = SubjectArea)) + 
+         filter(group == "big"), 
+         aes(x = Year, y = Number_Papers, 
+             colour = SubjectArea)) + 
   geom_point() + 
   theme_minimal() + 
-  theme(legend.position = "bottom")
+  scale_color_discrete(name = "Subject Area") + 
+  theme(legend.position = "bottom",
+        axis.text.y = element_text(angle = 45, hjust = 1)) + # Angles the y-axis text
+  ylab(NULL) +  # Removes the y-axis label
+  ggtitle("Big Teams")
 
-p1 | p2
+combined_plot <- p1 + p2 +
+  plot_layout(guides = "collect") & # Collect shared legend
+  theme(legend.position = "bottom")  # Center the legend at the bottom
+
+combined_plot
 ```
 
-```{r}
-group <- unique(temp$group)
-subjarea <- unique(temp$SubjectArea)
+```{r rate-estimates-fig, include = F, fig.cap = "Exponential growth rate estimates with 95% confidence intervals."}
+# Initialize the results list
 corr.results <- list()
 
-for (group_label in group){
-  for (SA in subjarea){
-    stuff <- temp %>% 
-      filter(group == group_label) %>% 
-      filter(SubjectArea == SA) 
-    # Attempt with nlsLM for more robust optimization
-    fit <- nlsLM(Number_Papers ~ a * exp(r * Year), 
-             start = list(a = 0.2, r = 0.05), 
-             data = stuff)
-    corr.results[[paste0(group_label, "_", SA)]] <- tidy(fit) 
-      
+# Ensure 'group' and 'subjarea' are defined
+group <- unique(temp$group)
+subjarea <- unique(temp$SubjectArea)
+
+# Loop through groups and subject areas
+for (group_label in group) {
+  for (SA in subjarea) {
+    stuff <- temp %>%
+      filter(group == group_label) %>%
+      filter(SubjectArea == SA)
+    
+    if (nrow(stuff) < 3 || any(stuff$Number_Papers <= 0)) {
+      message("Skipping ", group_label, " - ", SA, ": insufficient or invalid data")
+      next
+    }
+    
+    # Calculate starting values
+    a_start <- mean(stuff$Number_Papers, na.rm = TRUE)
+    log_y <- log(stuff$Number_Papers)
+    b_start <- coef(lm(log_y ~ stuff$Year))[2]
+    
+    tryCatch({
+      fit <- nlsLM(
+        Number_Papers ~ a * exp(b * Year), 
+        data = stuff, 
+        start = list(a = a_start, b = b_start)
+      )
+      corr.results[[paste0(group_label, "_", SA)]] <- tidy(fit)
+    }, error = function(e) {
+      message("Fit failed for ", group_label, " - ", SA, ": ", e$message)
+    })
   }
 }
 
@@ -368,119 +572,35 @@ corr.DF <- bind_rows(corr.results) %>%
   mutate(SubjectArea = c(
     rep(subjarea, each = 2),
     rep(subjarea, each = 2)
-    ))
+    )) %>% 
+  filter(term != "a") %>% 
+  mutate(conf.low = estimate-2*std.error,
+         conf.high = estimate+2*std.error)
 
 ggplot(corr.DF, aes(x = SubjectArea, y = estimate, color = group)) + 
   geom_point() +
   theme_minimal() + 
-  geom_linerange(aes(ymin = conf.low, ymax = conf.high))
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high),
+                width = .2) + 
+  ylab("Rate Estimate") + 
+  xlab("Subject Area") + 
+  scale_color_discrete(name = "Team Size", 
+                       labels = c("Big", "Regular")) + 
+  theme(legend.position = "bottom") + 
+  geom_hline(yintercept = 0)
 ```
 
+Using the `minpack.lm` library [CITE ME], we calculated the exponential rate of growth for regular teams and big teams, and these results are shown in \@ref(fig:rate-estimates-fig). All growth rate confidence intervals excluded zero, indicating an exponential increase in the number of team papers over time. Big team growth rates were always higher than their regular team counterparts, but the 95% confidence intervals for the growth estimate overlapped for all statistics. Therefore, the growth trends, while visually appearing to be different, were likely similar for each subject area and team size when examined by estimating exponential growth statistics. 
 
-In the exponential model ￼, the parameters ￼ and ￼ have specific interpretations:
-	1.	Parameter ￼ (Initial Value or Scale):
-	•	￼ represents the initial value or the scaling factor of the exponential function. It indicates the starting level of the dependent variable (in this case, Number_Papers) when the Year is at its baseline (e.g., the first year in your dataset or zero if Year is centered).
-	•	A larger value of ￼ would mean a higher starting point for the number of papers.
-	2.	Parameter ￼ (Growth Rate):
-	•	￼ is the growth rate parameter. It indicates how quickly the number of papers grows over time.
-	•	If ￼ is positive, the model shows exponential growth, meaning the number of papers increases over time at an accelerating rate.
-	•	If ￼ is negative, the model would represent exponential decay, suggesting that the number of papers decreases over time.
-	•	The magnitude of ￼ affects the steepness of the growth or decay curve, with larger values (in absolute terms) indicating a more rapid change.
+## RQ2: Diversity Statistics
 
-Interpretation Example:
-	•	If ￼ and ￼, then:
-	•	The starting number of papers is about 2 (when Year is zero or the baseline year).
-	•	The number of papers grows by about ￼ per unit of Year, as ￼ implies a growth rate of ￼ per year.
-	•	If ￼, the model would predict a constant number of papers over time, as the exponential term ￼ becomes 1.
-
-Let me know if you’d like help with the interpretation for specific values in your fitted model.
-
-
-```{r total-authors}
-# updated
-total_authors <- 3047067
-avg_authors <- apa_num(49.30516877182394)
-sd_authors <- apa_num(212.9786134634032)
-min_authors <- 10
-med_authors <- 18
-max_authors <- 5568
-```
-
-The total number of unique authors across all publications was
-`r total_authors`. The mean number of authors per publication was *M* =
-`r avg_authors` (*SD* = `r sd_authors`, *Med* = `r med_authors`) with a
-range of `r min_authors` to `r max_authors`. The median and average
-number of authors by subject area are displayed in Figure
-\@ref(fig:fig-author-year). In general, the average and median number of
-authors increased over time, with the exception of the skew in the
-Physical Sciences. Interestingly, the effect in the Physical Sciences
-appears to be declining toward the general trends seen in other areas in
-the last few decades.
-
-## data split
-
-- "teams": 2-10 authors, 2-4 inst
-- "big ass": 11+, 5+
-
-## RQ1 change over time
-
-pattern of author numbers over time --> just the median because of the data split 
-four panel figure one for each area --> with two sets of dots for teams, "team", and BAT 
-since there's a restriction of range, do we need to calculate based on the proportion of the data or proportion of the range that it could increase 
-
-```{r fig-author-year, include = TRUE, fig.cap="Number of authors included on big-team science papers per year by subject area. Given the large skew in the data, the left panel presents the median number of authors per manuscript, and the right panel presents the average number of authors per manuscript by year.", fig.width=10, fig.height=6}
-avg_author_time <- 
-  DF$author_time %>% 
-  filter(SubjectArea != "Multidisciplinary") %>% 
-  # filter(Number_Papers >= 3) %>% 
-  mutate(low = (Average_Num_Authors - as.numeric(SD_Num_Authors)), 
-         high = (Average_Num_Authors + as.numeric(SD_Num_Authors)))
-  
-# ggplot(avg_author_time, aes(Year, Med_Num_Authors)) + 
-#   theme_classic() + 
-#   geom_point(aes(size = Number_Papers)) + 
-#   geom_point(aes(Year, Average_Num_Authors, color = "red")) + 
-#   #geom_pointrange(aes(ymin = low, ymax = high)) + 
-#   facet_wrap(~SubjectArea) + 
-#   ylab("Average Number of Authors") + 
-#   xlab("Publication Year") + 
-#   theme(legend.position = "bottom") + 
-#   guides(color = "none") + 
-#   scale_size_continuous(name = "Number Papers")
-
-median_authors <- 
-  ggplot(avg_author_time, aes(Year, Med_Num_Authors, color = SubjectArea)) + 
-  theme_classic(base_size = 15) + 
-  geom_point() + 
-    ylab("Median Number of Authors") + 
-    xlab("Publication Year") 
-
-mean_authors <- 
-  ggplot(avg_author_time, aes(Year, Average_Num_Authors, color = SubjectArea)) + 
-  theme_classic(base_size = 15) + 
-  geom_point() + 
-    ylab("Average Number of Authors") + 
-    xlab("Publication Year") 
-
-median_authors + 
-  scale_color_brewer(palette = "Spectral", name = "Subject Area") + 
-  mean_authors + 
-  scale_color_brewer(palette = "Spectral", name = "Subject Area") + 
-  plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-
-ggsave(filename = "figure/figure_3_num_authors.png", width = 10, height = 6)
-```
-
-## RQ4: Author Diversity Statistics
-
-### Seniority 
+### Seniority
 
 Figure \@ref(fig:fig-career) portrays the average career length for
 authors involved in BTS publications across years. Career length was
 defined as the year of first publication minus the current year, and
 higher numbers mean longer careers. To analyze trends over time, we
-calculated the average career length for each publication (i.e., average
-author career lengths to create one score for each paper) and analyzed a
+calculated the average career length for each publication (i.e., averaging author career lengths to create one score for each paper) and analyzed a
 regression analysis using career length to predict year of publication.
 In order to show variance between individuals, we calculated the
 standard deviation of career length for each publication and used this
@@ -498,6 +618,8 @@ scholars). Figure \@ref(fig:fig-heatmap) displays the results for all
 regression analyses to compare coefficient strength across and within
 each hypothesis.
 
+### Edit me
+
 All values for these analyses were different from zero. The slopes for
 the average career length were negative for all four subject areas,
 indicating a trend toward younger scientist involvement over time for
@@ -511,27 +633,28 @@ estimations, and 2) more young scholars overall. The effect sizes for
 this analysis were surprisingly large ranging from $R^2$ = .25 to .47.
 All values and their confidence intervals can be found on our OSF page.
 
-- four panel figure for subject area by total team, "team", BAT 
-- just in general people are having to publish much younger than we used to so here's how to view that 
+-   four panel figure for subject area by total team, "team", BAT
+-   just in general people are having to publish much younger than we
+    used to so here's how to view that
 
 ```{r fig-career, include = TRUE,  warning = FALSE, message = FALSE, fig.cap = "Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year. The data has been filtered to at least 10 publications in a year for this graph.", fig.width=10, fig.height=6}
-temp <- ggplot(DF$career_time %>% 
+ggplot(DF$career_time %>% 
          filter(SubjectArea != "Multidisciplinary") %>% 
          filter(num_papers >= 10) %>% 
-         filter(Year < 2024), 
-       aes(Year, avg_career, color = SubjectArea)) +
+         filter(Year < 2024) %>% 
+         mutate(Team = factor(Team, 
+                              levels = c("Regular", "Big"))), 
+       aes(Year, avg_career, color = Team)) +
   theme_classic(base_size = 15) + 
   geom_point(aes(size = sd_career)) +
   # geom_point() + 
-  # facet_wrap(~SubjectArea) + 
+  facet_wrap(~SubjectArea) + 
   theme(legend.position = "bottom") + 
   ylab("Average Career Length") +
   xlab("Year of Publication") + 
-  scale_color_brewer(palette = "Spectral", name = "Subject Area") +
+  scale_color_brewer(palette = "Dark2", name = "Subject Area") +
   guides(size = "none")  
   #scale_size_continuous(name = "Number Papers")
-
-suppressWarnings(suppressMessages(temp))
 
 ggsave(filename = "figure/figure_4_career.png", width = 10, height = 6)
 ```
@@ -786,28 +909,29 @@ suppressMessages(suppressWarnings(heat_results +
 ggsave(filename = "figure/figure_5_heatmap.png", width = 10, height = 6, units = "in")
 ```
 
-We used the same analyses using number of publications to represent diversity instead of career length. An increasing slope over time indicates that
-individuals who are publishing more are more represented in BTS over
-time (i.e., increasing numbers of scholars with higher publication
-rates), while a negative slope indicates more researchers with less
-publications. A positive slope for the standard deviation of publication
-metrics indicates increasing variance over time (i.e., more diversity in
-the individual publication rates), while a negative slope would indicate
-less diversity in researchers over time. While publication rates do not
-represent value as a researcher, they are often used in hiring and
-promotion decisions, and we used this variable as a proxy to gauge the
-diversity in scholars represented in big teams. As shown in Figure
-\@ref(fig:fig-heatmap) publication metrics were generally negative for
-the average publication metrics, indicating more scholars over time with
-lower numbers of publications with the strongest effects in Health and
-Social Sciences. The variability of publication counts was not
-significant for the Life Sciences but was negative for the Physical
-Sciences (less variability over time) and positive for Social and Health
-Sciences (more variability and over time). This result indicates that
-the Physical Sciences are trending toward scholars with less
-publications but also less diverse in number of publications, while the
-Health and Social Sciences see more diversity in publication counts and
-less published scholars overall.
+We used the same analyses using number of publications to represent
+diversity instead of career length. An increasing slope over time
+indicates that individuals who are publishing more are more represented
+in BTS over time (i.e., increasing numbers of scholars with higher
+publication rates), while a negative slope indicates more researchers
+with less publications. A positive slope for the standard deviation of
+publication metrics indicates increasing variance over time (i.e., more
+diversity in the individual publication rates), while a negative slope
+would indicate less diversity in researchers over time. While
+publication rates do not represent value as a researcher, they are often
+used in hiring and promotion decisions, and we used this variable as a
+proxy to gauge the diversity in scholars represented in big teams. As
+shown in Figure \@ref(fig:fig-heatmap) publication metrics were
+generally negative for the average publication metrics, indicating more
+scholars over time with lower numbers of publications with the strongest
+effects in Health and Social Sciences. The variability of publication
+counts was not significant for the Life Sciences but was negative for
+the Physical Sciences (less variability over time) and positive for
+Social and Health Sciences (more variability and over time). This result
+indicates that the Physical Sciences are trending toward scholars with
+less publications but also less diverse in number of publications, while
+the Health and Social Sciences see more diversity in publication counts
+and less published scholars overall.
 
 ```{r geo-map}
 # serbia has changed codes
@@ -1015,7 +1139,7 @@ tree_all + ggtitle("All Publications Mosiac Chart") +
 ggsave(filename = "figure/figure_6_map.png", width = 10, height = 6, units = "in")
 ```
 
-### Geopolitical Regions 
+### Geopolitical Regions
 
 Author geopolitical region is displayed in Figure
 \@ref(fig:fig-map-both). Big team publications appear to be led by North
@@ -1051,19 +1175,18 @@ represents a difference in diversity.
 
 updated binning:
 
-- teams: 2-10 authors, 2-5 inst
-  - first and last author only versus everyone else
-- big ass teams: 6+ affs
-  - small: 11-49
-    - first three plus last versus everyone else
-  - medium: 50-99
-    - first five plus last versus everyone else
-  - large: 100+
-    - first 10 plus last versus everyone else
-    
-for time:
- teams versus big teams combining results
- separate panel of the big teams separated (not by time)
+-   teams: 2-10 authors, 2-5 inst
+    -   first and last author only versus everyone else
+-   big ass teams: 6+ affs
+    -   small: 11-49
+        -   first three plus last versus everyone else
+    -   medium: 50-99
+        -   first five plus last versus everyone else
+    -   large: 100+
+        -   first 10 plus last versus everyone else
+
+for time: teams versus big teams combining results separate panel of the
+big teams separated (not by time)
 
 ```{r small-effects, warning = FALSE}
 DF$small_first_gp <- DF$small_first_gp %>% 
@@ -1459,11 +1582,39 @@ that most are likely small: $V$ \< .05:
 
 # Discussion
 
-In this investigation, we explored the publication rates, areas, and researchers involved in BTS publications. Over a half-million articles were published in nearly 15,000 journals since 1970 that qualified as BTS articles. The areas of publication were aligned to cancer and genetics research in medicine and oncology for Health and Life Sciences, physics and chemistry for the Physical Sciences, and psychology for the Social Sciences. All areas of research show growth in the number of publications and authors included on manuscripts, replicating previous investigations [@sinatra2015; @wuchty2007; @hunter2008].
+In this investigation, we explored the publication rates, areas, and
+researchers involved in BTS publications. Over a half-million articles
+were published in nearly 15,000 journals since 1970 that qualified as
+BTS articles. The areas of publication were aligned to cancer and
+genetics research in medicine and oncology for Health and Life Sciences,
+physics and chemistry for the Physical Sciences, and psychology for the
+Social Sciences. All areas of research show growth in the number of
+publications and authors included on manuscripts, replicating previous
+investigations [@sinatra2015; @wuchty2007; @hunter2008].
 
-Our investigation expands previous research by additionally focusing on diversity in seniority of authors and geopolitical affiliation. The number of earlier career scholars increased across years, indicating that big teams may be accessible to different types of individuals, not just older, established researchers. This result is especially interesting given the publish-or-perish model still present in most institutions, as it may seem that large-scale projects could be a risky choice for non-permanent researchers. BTS projects are often slow to publish, there is no guarantee for publication, and incentives are often lower for non-corresponding authors. However, with a large team, the distribution of work could imply less effort on individual non-leading members, and research has shown that larger-team publications do receive more citations and appear to have higher impact  [@larivière2015].
+Our investigation expands previous research by additionally focusing on
+diversity in seniority of authors and geopolitical affiliation. The
+number of earlier career scholars increased across years, indicating
+that big teams may be accessible to different types of individuals, not
+just older, established researchers. This result is especially
+interesting given the publish-or-perish model still present in most
+institutions, as it may seem that large-scale projects could be a risky
+choice for non-permanent researchers. BTS projects are often slow to
+publish, there is no guarantee for publication, and incentives are often
+lower for non-corresponding authors. However, with a large team, the
+distribution of work could imply less effort on individual non-leading
+members, and research has shown that larger-team publications do receive
+more citations and appear to have higher impact [@larivière2015].
 
-In general, it appears that there is a decrease in the average number of publications a researcher has when publishing in a BTS paper over time, mirroring career length results. This result is likely attributable to the number of early career scholars joining projects, but also may support increased accessibility for individuals to be involved. Globalization, the internet, and the focus on interdisciplinary research are potentially driving forces behind our results, but, hopefully, the results also point to a decline in scientific gatekeeping [@lu2007; @siler2015].
+In general, it appears that there is a decrease in the average number of
+publications a researcher has when publishing in a BTS paper over time,
+mirroring career length results. This result is likely attributable to
+the number of early career scholars joining projects, but also may
+support increased accessibility for individuals to be involved.
+Globalization, the internet, and the focus on interdisciplinary research
+are potentially driving forces behind our results, but, hopefully, the
+results also point to a decline in scientific gatekeeping [@lu2007;
+@siler2015].
 
 The variability in the types of researchers involved in publications
 also decreased across time in most areas of science with a decrease in
@@ -1485,49 +1636,68 @@ larger number of publications in their early career [@caplow2017;
 The number of geopolitical entities for researcher affiliation is
 increasing over time, showing the results of globalization and the
 ability to connect across time zones and cultures [@xie2014]. While our
-definition of BTS required at least ten different
-institutional affiliations, we did not filter papers by geopolitical
-region, and thus, a manuscript could rely solely on institutions within
-a single country. The Physical Sciences did not show an increase in
-diversity of regions represented, however, it could be argued that the
-development of large research centers like CERN forced earlier diversity
-than other sciences (i.e., because CERN specifically recruited
-scientists from sponsoring nations). The Life, Health, and Social
-Sciences saw an increase in the number of regions represented with the
-highest increase in the Social Sciences. This result likely corresponds
-with an increased interest in big team science publications in
-psychology [@coles2022; @forscher2022a], and the desire to diversify the
-populations represented in psychological research [@henrich2010;
-@newson2021].
+definition of BTS required at least ten different institutional
+affiliations, we did not filter papers by geopolitical region, and thus,
+a manuscript could rely solely on institutions within a single country.
+The Physical Sciences did not show an increase in diversity of regions
+represented, however, it could be argued that the development of large
+research centers like CERN forced earlier diversity than other sciences
+(i.e., because CERN specifically recruited scientists from sponsoring
+nations). The Life, Health, and Social Sciences saw an increase in the
+number of regions represented with the highest increase in the Social
+Sciences. This result likely corresponds with an increased interest in
+big team science publications in psychology [@coles2022;
+@forscher2022a], and the desire to diversify the populations represented
+in psychological research [@henrich2010; @newson2021].
 
-While publications overall are diversifying, we found differences in the representation for first/corresponding authors versus all other authors. In general, first authors appear to be less diverse, representing European and North American authors, while other authors include more Asian and African authors. These effect sizes were often small, but the inequality persists across years. Diverse teams are more likely to have papers with stronger “impact” [@freeman2015; @hinnant2012; @jones2008;
+While publications overall are diversifying, we found differences in the
+representation for first/corresponding authors versus all other authors.
+In general, first authors appear to be less diverse, representing
+European and North American authors, while other authors include more
+Asian and African authors. These effect sizes were often small, but the
+inequality persists across years. Diverse teams are more likely to have
+papers with stronger “impact” [@freeman2015; @hinnant2012; @jones2008;
 @yang2022] with higher citation metrics for more diverse author lists.
 The introduction of contributorship models [e.g., CRediT, @allen2019]
 will hopefully continue to push these effects down, as they highlight
 each individual's contribution to a manuscript.
 
-The limitations for this research are tied to the curation of the Scopus dataset: the correct author affiliations, the correct author publication information, and the correctly marked geopolitical entity. We had planned to analyze educational levels change over time; however, this data was mostly blank within the Scopus archive. Scopus is a carefully curated and large dataset, but these limitations must be kept in mind when interpreting the results. Publication language diversity was not investigated, and a previous study indicates that most publications in big databases are in English [@albarillo2014]. Certainly, publications in non-English
-languages would improve the statistics on diversity in scientific
-publishing - but the English language barrier likely exists regardless
-of inclusion in databases [@meneghini2007; @ramírez-castañeda2020].
+The limitations for this research are tied to the curation of the Scopus
+dataset: the correct author affiliations, the correct author publication
+information, and the correctly marked geopolitical entity. We had
+planned to analyze educational levels change over time; however, this
+data was mostly blank within the Scopus archive. Scopus is a carefully
+curated and large dataset, but these limitations must be kept in mind
+when interpreting the results. Publication language diversity was not
+investigated, and a previous study indicates that most publications in
+big databases are in English [@albarillo2014]. Certainly, publications
+in non-English languages would improve the statistics on diversity in
+scientific publishing - but the English language barrier likely exists
+regardless of inclusion in databases [@meneghini2007;
+@ramírez-castañeda2020].
 
-Big teams can provide high-impact, important research within scientific publishing, and this report suggests a promising trend of increasing publications that include earlier career and more diverse scholars. These partnerships introduce new challenges to collaboration from interpersonal conflict, infrastructure, incentives, to international political situations [@forscher2022a]. The implications for retention and promotion processes across a broad span of regions should be explored to improve diversity with the understanding of the differential impact of incentives for participating in big team studies.
+Big teams can provide high-impact, important research within scientific
+publishing, and this report suggests a promising trend of increasing
+publications that include earlier career and more diverse scholars.
+These partnerships introduce new challenges to collaboration from
+interpersonal conflict, infrastructure, incentives, to international
+political situations [@forscher2022a]. The implications for retention
+and promotion processes across a broad span of regions should be
+explored to improve diversity with the understanding of the differential
+impact of incentives for participating in big team studies.
 
 \newpage
 
 # References
 
-```{=tex}
 \begingroup
 \setlength{\parindent}{-0.5in}
 
-```
 ::: {#refs custom-style="Bibliography"}
 :::
 
-```{=tex}
 \endgroup
-```
+
 \newpage
 
 # (APPENDIX) Appendix {.unnumbered}
