@@ -296,12 +296,18 @@ promotion policies, ethics review, and more can occur [@forscher2022a].
 Therefore, we believe this choice selects publications that would be
 "big" teams and those potential obstacles.
 
+<<<<<<< Updated upstream
 This manuscript seeks not only to evaluate whether this definition is an
 appropriate fit for BTS but also to explore whether the criteria for
 defining BTS should vary by subject area or evolve over time.
 Understanding these nuances will help clarify whether BTS represents a
 fundamentally new approach to collaboration or a natural progression of
 team science in response to global and technological trends.
+=======
+This manuscript seeks not only to evaluate whether this definition is an appropriate fit for BTS but also to explore whether the criteria for defining BTS should vary by subject area or evolve over time. Understanding these nuances will help clarify whether BTS represents a fundamentally new approach to collaboration or a natural progression of team science in response to global and technological trends. 
+
+We then will examine if there is a true difference between “Team Science” and "Big Team Science”. Therefore, the goal of this manuscript is to examine both the *publications* and *people* involved in BTS projects and “Team Science.” We present descriptive information about the publication sources and types of articles to demonstrate large-scale research. Next, we examine the individuals involved in BTS and “Team Science” for descriptive and predictive purposes. To describe the people involved in BTS projects vs “Team Science”, we planned to use types of publications from individuals. For predictive statistics, we explored the change in diversity of authors over time. It is unclear if the focus of de-WEIRDing science has only focused on the representation of the research participants or if it has also improved the representation of researchers outside of North America and Europe. Last, we examined for a change in diversity within first author(s) and the last author across time. As hiring and promoting practices often place a heavy weight on publications and especially “influential” publications, it becomes necessary to critically examine the representation present in authorship in BTS and Team Science” projects. 
+>>>>>>> Stashed changes
 
 We then will examine if there is a true difference between “Team
 Science” and "Big Team Science”. Therefore, the goal of this manuscript
