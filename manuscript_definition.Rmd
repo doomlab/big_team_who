@@ -1,5 +1,5 @@
 ---
-title             : "Who does big team science?"
+title             : "What defines big team science?"
 shorttitle        : "Big Team Science"
 author: 
   - name          : "Erin M. Buchanan"
@@ -112,7 +112,6 @@ library(ggwordcloud)
 library(figpatch)
 library(RColorBrewer)
 library(latex2exp)
-library(patchwork)
 library(broom)
 library(minpack.lm)
 
@@ -120,9 +119,16 @@ options(scipen = 99)
 
 strip_labels <- expression(
   "M Coefficient " = b[M],
+  "Coefficient" = b,
   "SD Coefficient" = b[SD],
-  "Effect Size" = R^2,
-  "Coefficient" = b
+  "Effect Size" = R^2
+)
+
+strip_labels <- c(
+  "M Coefficient" = "b[M]",
+  "SD Coefficient" = "b[SD]",
+  "Effect Size" = "R^2",
+  "Coefficient" = "b"
 )
 
 label_expressions <- function(values) {
@@ -139,7 +145,7 @@ label_expressions <- function(values) {
 
 # things to import
 var_list <- c("author_stats", "paper_stats", "author_paper_year",
-              "career_time", "lm_coefficients")
+              "career_time", "lm_coefficients", "geo_country")
 
 var_list_import <- paste0("data/scopus_outputs_2/", var_list, ".xlsx")
 
@@ -155,7 +161,7 @@ communicate and work together to advance knowledge in their chosen
 field(s). Collaboration can manifest uniquely in each project dependent
 on the skill sets, hypotheses, and perspectives of collaborators. One
 key aspect of collaboration is the flexibility allotted as it is shaped
-by the needs of the project and the researcher involved. While
+by the needs of the project and the researchers involved. While
 collaboration is not new in science, interest in "team science" is
 growing as individual researchers seek an interdisciplinary approach to
 research or bring on more students to their project. Team science is
@@ -167,7 +173,7 @@ difficult for individual researchers or one small team to solve
 independently.
 
 The movement toward team science reflects demands of modern research to
-answer increasingly complex questions, meet funder and university desire
+answer increasingly complex questions, meet funder and university desires
 for interdisciplinary research, and the desire to increase diversity of
 scientific representation [@council2015]. Further, the evolution of team
 science reflects broader shifts in research practices, driven by two
@@ -186,11 +192,7 @@ The credibility movement has been the main catalyst for the increased
 interest and broader shift of research practices. The movement
 emphasizes reproducibility and transparency in science, encouraging
 researchers to form new ways to increase the rigor in scientific
-endeavors. As the movement has adapted throughout the last decade, the
-idea to form larger, more diverse teams and to include participants from
-varied backgrounds has become even more a goal to not only increase the
-credibility but the generalizability and reliability of scientific
-findings. This form of collaboration has been coined “Big Team Science.”
+endeavors. Throughout the last decade, the credibility movement has pushed for larger, more diverse teams and the involvement of participants from varied backgrounds. This shift in teams and participants focuses on increasing credibility, generalizability, and reliability of scientific findings. This form of collaboration has been coined “Big Team Science.”
 Big Team Science (BTS) builds on team science by scaling efforts to
 include larger, often globally diverse teams, which requires significant
 coordination and infrastructure [@coles2022; @forscher2022a;
@@ -208,7 +210,7 @@ help to drive science in the path of better materials, reliability,
 generalizability, and more robust sample sizes (when necessary) in a
 study [@auspurg2021; @nosek2014method; @lebel2018].
 
-For example, psychology has had an increase in BTS publications like the
+For example, psychology has seen an increase in BTS publications like the
 Open Science Collaboration [@opensciencecollaboration2015], Many Labs
 Collaborations [@buttrick2020; @ebersole2016; @ebersole2020; @klein2018;
 @klein2022; @mathur2020; @skorb2020] or the first papers from the
@@ -438,7 +440,7 @@ consortium. All definitions are likely subjective, but the definition in
 this manuscript represents the top 10% of author and affiliations in a
 large body of papers].
 
-NEED TO RUN ALL TEAMS SUBJECT AREA
+--NEED TO RUN ALL TEAMS SUBJECT AREA----> set up in chunk 14
 
 ```{r big-teams-table, results = 'asis'}
 big_teams_papers <- 968765
@@ -483,10 +485,6 @@ temp <- DF$author_paper_year %>%
   filter(SubjectArea != "Multidisciplinary") %>% 
   filter(Year < 2024) %>% 
   mutate(SubjectArea = gsub("Sciences", "", SubjectArea))
-
-# temp %>% 
-#   group_by(SubjectArea, Year, group) %>% 
-#   summarize(n = n())
 
 p1 <- ggplot(temp %>% 
          filter(group == "regular"), 
@@ -610,7 +608,7 @@ ggplot(DF$career_time %>%
   theme(legend.position = "bottom") + 
   ylab("Average Career Length") +
   xlab("Year of Publication") + 
-  scale_color_manual(values = c("#CA0020", "#0571B0"), name = "Team Size") + # Red and Blue from RdBu ends
+  scale_color_manual(values = c("#D55E00", "#0072B2"), name = "Team Size") + # Red and Blue from RdBu ends
   guides(size = "none")
   #scale_size_continuous(name = "Number Papers")
 
@@ -632,8 +630,7 @@ so the average career length is more homogeneous. Positive career length
 slopes imply that variability increases over the years, so the average
 career length is varied across individuals (i.e., different stages of
 scholars). Figure \@ref(fig:fig-heatmap) displays the results for all
-regression analyses to compare coefficient strength across and within
-each hypothesis.
+regression analyses.
 
 ```{r lm-coefficients}
 sample_size <- 1000000
@@ -655,13 +652,117 @@ DF$lm_coefficients <- DF$lm_coefficients %>%
 
 ```
 
+```{r fig-heatmap, include = TRUE, fig.cap="Heatmap results of regression analyses for career length, number of publications, and geopoliticalwithin the region. Each square represents a *b* value or the slope of the predictor (x-axis) onto the dependent variable (each panel), with the exception of the bottom row which is the effect size of each regression analysis $R^2$. Slopes included both the overall value of the predictor ($b$, $b_M$) and the standard deviation of the predictor over time ($b_{SD}$). The color of the square represents the strength of the predictor. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.", warning = FALSE, message = FALSE, fig.width=10, fig.height=6}
 
-### Edit me starting here ### 
+graphDF <- DF$lm_coefficients %>% 
+  select(Discipline, b_avg_effect, b_std_effect, type, rsquared, coefficient) %>% 
+  pivot_longer(cols = c(b_avg_effect, b_std_effect, rsquared)) %>% 
+    left_join(
+    DF$lm_coefficients %>% 
+  select(Discipline, type, coefficient, r2_high:b_std_high) %>% 
+  pivot_longer(cols = c(-Discipline, -type, -coefficient)) %>% 
+  mutate(ci_name = ifelse(
+    grepl("low", name), "low", "high"
+  ),
+  name = gsub("r2_low|r2_high", "rsquared", name),
+  name = gsub("b_avg_low|b_avg_high", "b_avg_effect", name),
+  name = gsub("b_std_low|b_std_high", "b_std_effect", name)),
+  by = c("Discipline", "type", "coefficient", "name")
+  ) %>% 
+  mutate(name = ifelse(
+    coefficient == "diversity" & name != "rsquared", "b_effect", name
+  )) %>% 
+  mutate(name = factor(name, 
+                levels = c("b_avg_effect", "b_effect", 
+                           "b_std_effect", "rsquared"),
+                labels = c("M Coefficient", "Coefficient", 
+                           "SD Coefficient", "Effect Size"))) %>%
+  rename(Estimate = value.x,
+         Regression = coefficient,
+         CI = value.y,
+         Size = type,
+         Coefficient = name) %>% 
+  mutate(Discipline = gsub(" Sciences", "", Discipline)) %>% 
+  pivot_wider(
+    id_cols = c(Discipline, Size, Regression, Coefficient, Estimate),
+    names_from = ci_name,
+    values_from = CI
+  ) %>%
+  mutate(heat_label = ifelse(
+    low < .00001 & high > .00001, "NS", ""
+  )) %>% 
+  mutate(Size = factor(Size, 
+                       levels = c("regular", "big"),
+                       labels = c("Regular", "Big")))
 
-All values for these analyses were different from zero. The slopes for
+career_heat <- ggplot(graphDF %>% 
+                        filter(Regression == "career"), 
+       aes(x = Discipline, y = Size, fill = Estimate)) + 
+  geom_tile(color = "white") +  
+  geom_text(aes(label = format(round(Estimate, 4), digits = 4))) +  
+  facet_grid(~ Coefficient, labeller = labeller(Coefficient = as_labeller(strip_labels, label_parsed))) +
+  theme_minimal(base_size = 15) +
+  scale_fill_distiller(palette = "RdBu", direction = 1) + 
+  theme(
+    # axis.text.x = element_text(angle = 45, hjust = 1),  # Rotate x-axis labels for readability
+    panel.border = element_rect(color = "black", fill = NA, size = 0.5)  # Add borders between facets
+  ) + 
+  xlab(NULL) +
+  ylab("Career Length")
+
+pub_heat <- ggplot(graphDF %>% 
+                        filter(Regression == "pub_count"), 
+       aes(x = Discipline, y = Size, fill = Estimate)) + 
+  geom_tile(color = "white") +  
+  geom_text(aes(label = format(round(Estimate, 4), digits = 4))) +  
+  facet_grid(~ Coefficient, labeller = labeller(Coefficient = as_labeller(strip_labels, label_parsed))) + 
+  theme_minimal(base_size = 15) +
+  scale_fill_distiller(palette = "PuOr", direction = 1) + 
+  theme(
+    # axis.text.x = element_text(angle = 45, hjust = 1),  # Rotate x-axis labels for readability
+    panel.border = element_rect(color = "black", fill = NA, size = 0.5)  # Add borders between facets
+  ) +
+  xlab(NULL) + 
+  ylab("Pub Count")
+
+diversity_heat <- ggplot(graphDF %>% 
+                        filter(Regression == "diversity") %>% 
+                          filter(!is.na(Estimate)) %>% 
+                          mutate(Coefficient = droplevels(Coefficient)), 
+       aes(x = Discipline, y = Size, fill = Estimate)) + 
+  geom_tile(color = "white") +  
+  geom_text(aes(label = format(round(Estimate, 4), digits = 4))) +  
+  facet_grid(~ Coefficient, labeller = labeller(Coefficient = as_labeller(strip_labels, label_parsed))) +
+  theme_minimal(base_size = 15) +
+  scale_fill_distiller(palette = "BrBG", direction = 1) + 
+  theme(
+    # axis.text.x = element_text(angle = 15, hjust = 1),  # Rotate x-axis labels for readability
+    panel.border = element_rect(color = "black", fill = NA, size = 0.5)  # Add borders between facets
+  ) +
+  ylab("Geopolitical Diversity")
+
+career_heat / pub_heat / diversity_heat
+
+ggsave(filename = "figure/figure_5_heatmap.png", width = 12, height = 10, units = "in")
+```
+
+The average career length of authors on a manuscript was negatively related to time, indicating that career lengths are decreasing over time (i.e., more earlier career individuals included on manuscripts). The standard deviation of career length was also negatively related to publication year suggesting that the variability of authors is similarly decreasing toward authors who are less senior. These patterns were consistent across regular sized and big teams, and all coefficients were different from zero. 
+
+- overall coefficients not zero 
+- big versus regular are not different
+- pattern across disciplines - differences within them 
+
+
+
+
+All values for career length were different from our defined confidence interval zero cut off (i.e., .00001). The slopes for
 the average career length were negative for all four subject areas,
 indicating a trend toward younger scientist involvement over time for
-each area, with the strongest effect in the Physical Sciences. The
+each area in both regular and big teams. The confidence intervals for 
+
+, with the strongest effect in the Physical Sciences. 
+
+The
 coefficient for variability in career length was also negative for each
 of the four subject areas with the highest in the Physical Sciences and
 lowest in the Life Sciences. This result indicates a decrease in the
@@ -675,296 +776,7 @@ All values and their confidence intervals can be found on our OSF page.
 -   just in general people are having to publish much younger than we
     used to so here's how to view that
 
-```{r career-results-teams, include = FALSE}
-label <- c("Physical", "Social", "Health", "Life")
-avg_b_values <- c(-0.692014, -0.365357, -0.451827, -0.508350)
-avg_se_values <- c(0.002727, 0.005525, 0.001348, 0.001786)
-sd_b_values <- c(-0.265538, -0.097108, -0.096730, -0.013958)
-sd_se_values <- c(0.007018, 0.013409, 0.003451, 0.004523)
-r2_values <- c(0.465446, 0.254312, 0.303781, 0.350923)
-sample_size <- total_num <- 10000000
-
-r2_low <- 1:length(r2_values)
-r2_high <- 1:length(r2_values)
-for (i in 1:length(r2_values)){
-  temp <- ci.R2(R2 = r2_values[i], 1, sample_size)
-  r2_low[i] <- temp$Lower.Conf.Limit.R2
-  r2_high[i] <- temp$Upper.Conf.Limit.R2
-}
-
-graph_data <- data.frame(
-  "label" = label,
-  "estimate" = avg_b_values,
-  "type" = "Coefficient",
-  "low" = avg_b_values - qt(.025, sample_size, lower.tail = F)*avg_se_values,
-  "high" = avg_b_values + qt(.025, sample_size, lower.tail = F)*avg_se_values) %>% 
-    bind_rows(
-    data.frame(
-    "label" = label,
-    "estimate" = sd_b_values,
-    "type" = "SD Coefficient",
-    "low" = sd_b_values - qt(.025, sample_size, lower.tail = F)*sd_se_values,
-    "high" = sd_b_values + qt(.025, sample_size, lower.tail = F)*sd_se_values) 
-    ) %>% 
-  bind_rows(
-    data.frame(  
-      "label" = label, 
-      "estimate" = r2_values,
-      "type" = "Effect Size",
-      "low" = r2_low,
-      "high" = r2_high)
-  )
-
-graph_data$type <- factor(
-  graph_data$type, 
-  levels = c("Coefficient", "SD Coefficient", "Effect Size")
-)
-
-graph_data$analysis <- "Career"
-```
-
-```{r career-results-bts, include = FALSE}
-label <- c("Physical", "Social", "Health", "Life")
-avg_b_values <- c(-0.692014, -0.365357, -0.451827, -0.508350)
-avg_se_values <- c(0.002727, 0.005525, 0.001348, 0.001786)
-sd_b_values <- c(-0.265538, -0.097108, -0.096730, -0.013958)
-sd_se_values <- c(0.007018, 0.013409, 0.003451, 0.004523)
-r2_values <- c(0.465446, 0.254312, 0.303781, 0.350923)
-sample_size <- total_num
-
-r2_low <- 1:length(r2_values)
-r2_high <- 1:length(r2_values)
-for (i in 1:length(r2_values)){
-  temp <- ci.R2(R2 = r2_values[i], 1, sample_size)
-  r2_low[i] <- temp$Lower.Conf.Limit.R2
-  r2_high[i] <- temp$Upper.Conf.Limit.R2
-}
-
-graph_data_bts <- data.frame(
-  "label" = label,
-  "estimate" = avg_b_values,
-  "type" = "Coefficient",
-  "low" = avg_b_values - qt(.025, sample_size, lower.tail = F)*avg_se_values,
-  "high" = avg_b_values + qt(.025, sample_size, lower.tail = F)*avg_se_values) %>% 
-    bind_rows(
-    data.frame(
-    "label" = label,
-    "estimate" = sd_b_values,
-    "type" = "SD Coefficient",
-    "low" = sd_b_values - qt(.025, sample_size, lower.tail = F)*sd_se_values,
-    "high" = sd_b_values + qt(.025, sample_size, lower.tail = F)*sd_se_values) 
-    ) %>% 
-  bind_rows(
-    data.frame(  
-      "label" = label, 
-      "estimate" = r2_values,
-      "type" = "Effect Size",
-      "low" = r2_low,
-      "high" = r2_high)
-  )
-
-graph_data_bts$type <- factor(
-  graph_data_bts$type, 
-  levels = c("Coefficient", "SD Coefficient", "Effect Size")
-)
-
-graph_data_bts$analysis <- "Career"
-```
-
-```{r pub-results, include = FALSE}
-
-label <- c("Physical", "Social", "Health", "Life")
-avg_b_values <- c(0.004248, -0.027315, -0.021713, -0.009466)
-avg_se_values <- c(0.000179, 0.001073, 0.000211, 0.000213)
-sd_b_values <- c(-0.021552, 0.016810, 0.010139, -0.000378)
-sd_se_values <- c(0.000241, 0.000921, 0.000198, 0.000235)
-r2_values <- c(0.135965, 0.035968, 0.048999, 0.030748)
-sample_size <- total_num
-
-r2_low <- 1:length(r2_values)
-r2_high <- 1:length(r2_values)
-for (i in 1:length(r2_values)){
-  temp <- ci.R2(R2 = r2_values[i], 1, sample_size)
-  r2_low[i] <- temp$Lower.Conf.Limit.R2
-  r2_high[i] <- temp$Upper.Conf.Limit.R2
-}
-
-graph_data_2 <- data.frame(
-  "label" = label,
-  "estimate" = avg_b_values,
-  "type" = "Coefficient",
-  "low" = avg_b_values - qt(.025, sample_size, lower.tail = F)*avg_se_values,
-  "high" = avg_b_values + qt(.025, sample_size, lower.tail = F)*avg_se_values) %>% 
-    bind_rows(
-    data.frame(
-    "label" = label,
-    "estimate" = sd_b_values,
-    "type" = "SD Coefficient",
-    "low" = sd_b_values - qt(.025, sample_size, lower.tail = F)*sd_se_values,
-    "high" = sd_b_values + qt(.025, sample_size, lower.tail = F)*sd_se_values) 
-    ) %>% 
-  bind_rows(
-    data.frame(  
-      "label" = label, 
-      "estimate" = r2_values,
-      "type" = "Effect Size",
-      "low" = r2_low,
-      "high" = r2_high)
-  )
-
-graph_data_2$type <- factor(
-  graph_data_2$type, 
-  levels = c("Coefficient", "SD Coefficient", "Effect Size")
-)
-
-graph_data_2$analysis <- "Publication"
-
-# ggplot(graph_data, aes(label, estimate)) + 
-#   geom_point() +
-#   geom_pointrange(aes(ymin = low, ymax = high)) +
-#   theme_classic() + 
-#   facet_wrap(~type, labeller  = labeller(type = label_expressions(strip_labels))) + 
-#   geom_hline(yintercept = 0) + 
-#   coord_flip() + 
-#   xlab("Subject Area") + 
-#   ylab("")
-```
-
-```{r diversity-results, include = FALSE}
-
-label <- c("Physical", "Social", "Health", "Life")
-b_values <- c(0.002175, 0.033175, 0.016824, 0.008029)
-se_values <- c(0.002578, 0.006039, 0.001150, 0.001476)
-r2_values <- c(0.000006, 0.001542, 0.000708, 0.000170)
-sample_size <- total_num
-
-r2_low <- 1:length(r2_values)
-r2_high <- 1:length(r2_values)
-for (i in 1:length(r2_values)){
-  temp <- ci.R2(R2 = r2_values[i], 1, sample_size)
-  r2_low[i] <- temp$Lower.Conf.Limit.R2
-  r2_high[i] <- temp$Upper.Conf.Limit.R2
-}
-
-graph_data_3 <- data.frame(
-  "label" = label,
-  "estimate" = b_values,
-  "type" = "Coefficient",
-  "low" = b_values - qt(.025, sample_size, lower.tail = F)*se_values,
-  "high" = b_values + qt(.025, sample_size, lower.tail = F)*se_values) %>% 
-  bind_rows(
-    data.frame(  
-      "label" = label, 
-      "estimate" = r2_values,
-      "type" = "Effect Size",
-      "low" = r2_low,
-      "high" = r2_high)
-  )
-
-graph_data_3$type <- factor(
-  graph_data_3$type,
-  levels = c("Coefficient", "Effect Size")
-)
-
-graph_data_3$analysis <- "Regions"
-
-# ggplot(graph_data, aes(label, estimate)) + 
-#   geom_point() +
-#   geom_pointrange(aes(ymin = low, ymax = high)) +
-#   theme_classic() + 
-#   facet_wrap(~type, labeller  = labeller(type = label_expressions(strip_labels_2))) + 
-#   geom_hline(yintercept = 0) + 
-#   coord_flip() + 
-#   xlab("Subject Area") + 
-#   ylab("")
-```
-
-```{r fig-heatmap}
-
-, include = TRUE, fig.cap="Heatmap results of regression analyses for career length, number of publications, and geopolitical 
-within the region. Each square represents a *b* value or the slope of the predictor (x-axis) onto the dependent variable (each panel), with the exception of the bottom row which is the effect size of each regression analysis $R^2$. Slopes included both the overall value of the predictor ($b$, $b_M$) and the standard deviation of the predictor over time ($b_{SD}$). The color of the square represents the strength of the predictor. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.", warning = FALSE, message = FALSE, fig.width=10, fig.height=6
-
-graph_overall <- graph_data %>% 
-  bind_rows(graph_data_2) %>% 
-  bind_rows(graph_data_3) %>% 
-  mutate(type = factor(type, levels = c("Effect Size", "SD Coefficient", "Coefficient"))) %>% 
-  mutate(Estimate = estimate) %>% 
-  mutate(heat_label = ifelse(
-    low < .00001 & high > .00001, "NS", ""
-  ))
-  
-heat_results <- ggplot(graph_overall, aes(label, type, fill = Estimate)) + 
-  geom_tile(color = "white", lwd = 1.5, linetype = 1) +
-  coord_fixed() + 
-  scale_y_discrete(labels  = c(TeX("$R^2$"), TeX("$b_{SD}$"), TeX("$b$"))) + 
-  ylab("") + 
-  xlab("") + 
-  facet_wrap(~analysis) + 
-  theme_classic(base_size = 15) + 
-  theme(axis.text.x = element_text(angle = 60, vjust = .5), 
-        legend.position = "right", 
-        legend.key.size = unit(.75, 'cm')) + 
-  scale_fill_distiller(palette = "Spectral") + 
-  geom_text(aes(label=heat_label))
-
-
-# heat_results
-
-heat_results_1 <- ggplot(graph_overall %>% 
-                           filter(analysis == "Career"), 
-                         aes(label, type, fill = Estimate)) + 
-  geom_tile(color = "white", lwd = 1.5, linetype = 1) +
-  coord_fixed() + 
-  scale_y_discrete(labels  = c(TeX("$R^2$"), TeX("$b_{SD}$"), TeX("$b_M$"))) + 
-  ylab("") + 
-  xlab("") + 
-  theme_classic(base_size = 15) + 
-  theme(axis.text.x = element_text(angle = 60, vjust = .5), 
-        legend.position = "right") + 
-  scale_fill_distiller(palette = "RdBu") + 
-  ggtitle("Career")  + 
-  geom_text(aes(label=heat_label))
-
-heat_results_2 <- ggplot(graph_overall %>% 
-                           filter(analysis == "Publication"), 
-                         aes(label, type, fill = Estimate)) + 
-  geom_tile(color = "white", lwd = 1.5, linetype = 1) +
-  coord_fixed() + 
-  scale_y_discrete(labels  = c(TeX("$R^2$"), TeX("$b_{SD}$"), TeX("$b_M$"))) + 
-  ylab("") + 
-  xlab("") + 
-  theme_classic(base_size = 15) + 
-  theme(axis.text.x = element_text(angle = 60, vjust = .5), 
-        legend.position = "right") + 
-  scale_fill_distiller(palette = "PuOr") + 
-  ggtitle("Publication") + 
-  geom_text(aes(label=heat_label))
-
-heat_results_3 <- ggplot(graph_overall %>% 
-                           filter(analysis == "Regions"), 
-                         aes(label, type, fill = Estimate)) + 
-  geom_tile(color = "white", lwd = 1.5, linetype = 1) +
-  coord_fixed() + 
-  scale_y_discrete(labels  = c(TeX("$R^2$"), TeX("$b$"))) + 
-  ylab("") + 
-  xlab("") + 
-  theme_classic(base_size = 15) + 
-  theme(axis.text.x = element_text(angle = 60, vjust = .5), 
-        legend.position = "right") + 
-  scale_fill_distiller(palette = "PiYG") +
-  ggtitle("Regions") + 
-  geom_text(aes(label=heat_label))
-
-layout <- "
-AAA
-BCD
-"
-suppressMessages(suppressWarnings(heat_results + 
-  heat_results_1 + heat_results_2 + heat_results_3 + 
-  plot_layout(design = layout)))
-
-ggsave(filename = "figure/figure_5_heatmap.png", width = 10, height = 6, units = "in")
-```
+### Edit me starting here ### 
 
 We used the same analyses using number of publications to represent
 diversity instead of career length. An increasing slope over time
@@ -999,8 +811,8 @@ DF$geo_country$affiliation_tag_country[DF$geo_country$affiliation_tag_country ==
 
 DF$geo_country <- DF$geo_country %>% 
   group_by(affiliation_tag_country) %>% 
-  summarize(count = sum(count),
-            count_all = sum(all_count))
+  summarize(count = sum(big),
+            count_all = sum(regular))
 
 # convert country code to region code
 # this will warn you about the ones that have multiple countries 
@@ -1179,16 +991,16 @@ tree_all <- ggplot(DF$geo_country, aes(area = count_all, fill = count_binned_all
 ```{r fig-map-both, include = TRUE, fig.cap="Geopolitical regions represented in big-team science publications versus all publications. The mosaic plot is grouped by UN subregion with the largest number of publications starting on the bottom left and smallest on the top right. Therefore, North America represents the largest number of authors within BTS (i.e., bottom right, then separated into the geopolitical areas within that subregion), followed by Eastern Europe (top left), and so on.", fig.width=10, fig.height=6}
 bin_country + ggtitle("Big-Team Publication Map") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-  theme(legend.position = "none") + 
+  guides(fill = "none") +
 tree + ggtitle("Big-Team Publication Mosiac Chart") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
   guides(fill = "none") + 
-bin_country_all + ggtitle("All Publications Map") + 
+bin_country_all + ggtitle("Regular Teams Publications Map") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
   guides(fill = "none") + 
-tree_all + ggtitle("All Publications Mosiac Chart") + 
+tree_all + ggtitle("Regular Teams Publications Mosiac Chart") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-  guides(fill = "none") + 
+  theme(legend.position = "none") +  
   plot_layout(ncol = 2, 
               nrow = 2) + 
   plot_layout(guides = "collect") & theme(legend.position = 'bottom')
