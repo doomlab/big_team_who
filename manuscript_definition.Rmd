@@ -440,8 +440,6 @@ consortium. All definitions are likely subjective, but the definition in
 this manuscript represents the top 10% of author and affiliations in a
 large body of papers].
 
---NEED TO RUN ALL TEAMS SUBJECT AREA----> set up in chunk 14
-
 ```{r big-teams-table, results = 'asis'}
 big_teams_papers <- 968765
 big_teams_authors <- 4541369
@@ -487,7 +485,7 @@ temp <- DF$author_paper_year %>%
   mutate(SubjectArea = gsub("Sciences", "", SubjectArea))
 
 p1 <- ggplot(temp %>% 
-         filter(group == "regular"), 
+         filter(team_size == "regular"), 
          aes(x = Year, y = Number_Papers, 
              colour = SubjectArea)) + 
   geom_point() + 
@@ -499,7 +497,7 @@ p1 <- ggplot(temp %>%
   ggtitle("Team Science Projects")
 
 p2 <- ggplot(temp %>% 
-         filter(group == "big"), 
+         filter(team_size == "big"), 
          aes(x = Year, y = Number_Papers, 
              colour = SubjectArea)) + 
   geom_point() + 
@@ -522,14 +520,14 @@ combined_plot
 corr.results <- list()
 
 # Ensure 'group' and 'subjarea' are defined
-group <- unique(temp$group)
+group <- unique(temp$team_size)
 subjarea <- unique(temp$SubjectArea)
 
 # Loop through groups and subject areas
 for (group_label in group) {
   for (SA in subjarea) {
     stuff <- temp %>%
-      filter(group == group_label) %>%
+      filter(team_size == group_label) %>%
       filter(SubjectArea == SA)
     
     if (nrow(stuff) < 3 || any(stuff$Number_Papers <= 0)) {
