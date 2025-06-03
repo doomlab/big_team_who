@@ -39,7 +39,7 @@ authornote: |
 abstract: |
   This paper examined the nature of publications in Big Team Science (BTS): large-scale collaborations between multiple researchers at multiple institutions. These projects can improve research by initiating collaborations that span across the globe, age groups, education levels, and subfields of research. As the number of BTS publications increase, it is useful to explore who is currently involved in BTS projects to determine diversity in both research subject and researcher representation. We examined the diversity of BTS publications and authors across more than half a million articles to investigate where and what is currently published, and author characteristics including differences in career length, publication metrics, affiliation, and affiliation geopolitical regions. Interestingly, BTS publications are increasingly dominated by early career researchers from WEIRD geopolitical regions with Health and Physical Science accounting for the majority of BTS articles. However, the increase in preprints, BTS articles, and non-WEIRD authors across time demonstrate the efforts of the science community to diversify its researchers. 
   
-    Significance statement: This work is the first to examine big team science authorship (i.e., 10+ authors) across millions of published works. Big teams can provide high-impact, important research within scientific publishing, and this report suggests a promising trend of increasing numbers of publications that increasingly represent earlier career and varied scholars. The number of geopolitical entities for researcher affiliation is increasing over time, showing the results of globalization and the ability to connect across time zones and cultures. While publications are generally diversifying, we did not yet find equality in the representation for first or corresponding authors. First authors appear to be less diverse, representing more European and North American authors, while other authors include more Asian and African authors. 
+    Significance statement: This study is the first large-scale, data-driven analysis of authorship in Big Team Science (BTS), defined here as collaborations with 11 or more authors across six or more institutions. Drawing on millions of published works across four scientific domains, we show that BTS has grown rapidly in recent years and increasingly includes early-career researchers and contributors from a broader range of geopolitical regions. However, inclusion in BTS is not equally distributed. While author lists are becoming more globally diverse overall, leadership roles—particularly first and corresponding authorships, remain disproportionately concentrated in high-income countries, especially in Europe and North America. These findings highlight both the promise and limitations of BTS as a vehicle for global, inclusive science, underscoring the need for structural reforms to ensure equity in recognition and participation.
   
   # General Disclosures
   
@@ -53,7 +53,7 @@ abstract: |
   
   Computational reproducibility: All materials and code can be found on our OSF page: https://osf.io/cgx6u/ or corresponding GitHub archive: https://github.com/doomlab/big_team_who. Elsevier has agreed to provide access to determine reproducibility of the code for accessing and summarizing articles, and the reproducible manuscript has been provided for review.
   
-  Pre-registration: This manuscript was preregistered with the same conceptual ideas using Google Scholar and ORC-ID databases (https://osf.io/f2dtr) but then was updated with access to the Scopus database for a broader picture of BTS projects (https://osf.io/fheun). 
+  Pre-registration: This manuscript was preregistered with the same conceptual ideas using Google Scholar and ORC-ID databases (https://osf.io/f2dtr) but then was updated with access to the Scopus database for a broader picture of BTS projects (https://osf.io/fheun). After review, we updated the manuscript to reflect that the definition of big team science is unclear, and focused on a data-driven definition to explore our research questions. 
   
   Materials, Data, Analysis Scripts: All materials and code can be found on our OSF page: https://osf.io/cgx6u/ or corresponding GitHub archive: https://github.com/doomlab/big_team_who.
   
@@ -71,9 +71,7 @@ editor_options:
     wrap: 72
   chunk_output_type: inline
 bibliography: references.bib
-appendix          :
-  - "appendix.Rmd"
-  
+
 header-includes:
   - |
     \makeatletter
@@ -145,7 +143,8 @@ label_expressions <- function(values) {
 
 # things to import
 var_list <- c("author_stats", "paper_stats", "author_paper_year",
-              "career_time", "lm_coefficients", "geo_country")
+              "career_time", "lm_coefficients", "geo_country",
+              "effect_size_gp")
 
 var_list_import <- paste0("data/scopus_outputs_2/", var_list, ".xlsx")
 
@@ -173,8 +172,8 @@ difficult for individual researchers or one small team to solve
 independently.
 
 The movement toward team science reflects demands of modern research to
-answer increasingly complex questions, meet funder and university desires
-for interdisciplinary research, and the desire to increase diversity of
+answer complex questions, meet funder and university desires for
+interdisciplinary research, and the desire to increase diversity of
 scientific representation [@council2015]. Further, the evolution of team
 science reflects broader shifts in research practices, driven by two
 sources: 1) increasing globalization and technology that allows for
@@ -192,29 +191,33 @@ The credibility movement has been the main catalyst for the increased
 interest and broader shift of research practices. The movement
 emphasizes reproducibility and transparency in science, encouraging
 researchers to form new ways to increase the rigor in scientific
-endeavors. Throughout the last decade, the credibility movement has pushed for larger, more diverse teams and the involvement of participants from varied backgrounds. This shift in teams and participants focuses on increasing credibility, generalizability, and reliability of scientific findings. This form of collaboration has been coined “Big Team Science.”
-Big Team Science (BTS) builds on team science by scaling efforts to
-include larger, often globally diverse teams, which requires significant
-coordination and infrastructure [@coles2022; @forscher2022a;
-@stewart2017]. BTS projects and organizations organize extensive
-collaborations, intentionally incorporating diverse populations and
-perspectives into research. This large-scale approach enhances the
-reliability and generalizability of findings by integrating varied
-methodologies and viewpoints, leading to more robust and inclusive
-scientific outcomes. BTS organizations often pool extensive networks of
-researchers and resources, aiming to tackle grand scientific challenges
-that would be difficult to address within smaller or less coordinated
-collaborations. By having both collaborations that span across the globe
-and subfields of research areas, age groups, and education levels should
-help to drive science in the path of better materials, reliability,
-generalizability, and more robust sample sizes (when necessary) in a
-study [@auspurg2021; @nosek2014method; @lebel2018].
+endeavors. Throughout the last decade, the credibility movement has
+pushed for larger, more diverse teams and the involvement of
+participants from varied backgrounds. This shift in teams and
+participants focuses on increasing credibility, generalizability, and
+reliability of scientific findings. This form of collaboration has been
+coined "Big Team Science." Big Team Science (BTS) builds on team science
+by scaling efforts to include larger, often globally diverse teams,
+which requires significant coordination and infrastructure [@coles2022;
+@forscher2022a; @stewart2017]. BTS projects and organizations organize
+extensive collaborations, intentionally incorporating diverse
+populations and perspectives into research. This large-scale approach
+enhances the reliability and generalizability of findings by integrating
+varied methodologies and viewpoints, leading to more robust and
+inclusive scientific outcomes. BTS organizations often pool extensive
+networks of researchers and resources, aiming to tackle grand scientific
+challenges that would be difficult to address within smaller or less
+coordinated collaborations. By having both collaborations that span
+across the globe and subfields of research areas, age groups, and
+education levels should help to drive science in the path of better
+materials, reliability, generalizability, and more robust sample sizes
+in a study [@auspurg2021; @nosek2014method; @lebel2018].
 
-For example, psychology has seen an increase in BTS publications like the
-Open Science Collaboration [@opensciencecollaboration2015], Many Labs
-Collaborations [@buttrick2020; @ebersole2016; @ebersole2020; @klein2018;
-@klein2022; @mathur2020; @skorb2020] or the first papers from the
-Psychological Science Accelerator [@bago2022; @buchanan2023;
+For example, psychology has seen an increase in BTS publications like
+the Open Science Collaboration [@opensciencecollaboration2015], Many
+Labs Collaborations [@buttrick2020; @ebersole2016; @ebersole2020;
+@klein2018; @klein2022; @mathur2020; @skorb2020] or the first papers
+from the Psychological Science Accelerator [@bago2022; @buchanan2023;
 @dorison2022; @jones2021;
 @psychologicalscienceacceleratorself-determinationtheorycollaboration2022;
 @moshontz2018; @wang2021]. The success and interest in the large-scale
@@ -244,13 +247,13 @@ and Biology [@collins2003], the Social Sciences struggle to represent
 the breadth of humanity across both researcher and population
 characteristics. Now, grassroots organizations, such as the
 Psychological Science Accelerator [@moshontz2018], ManyBabies
-(<https://manybabies.github.io/>), NutNet (<https://nutnet.org/>), and
-DRAGNet (<https://dragnetglobal.weebly.com/>) can begin to tackle these
-issues by recruiting research labs from all over the globe to provide
-diversity in geographic, linguistic, and researcher representation.
-Publications have examined the global understanding of morality, face
-processing, COVID-19 information signaling, and more [@bago2022;
-@dorison2022; @jones2021;
+(<https://manybabies.github.io/>), NutNet (<https://nutnet.org/>),
+DRAGNet (<https://dragnetglobal.weebly.com/>), and IceCube
+(<https://icecube.wisc.edu/>) can begin to tackle these issues by
+recruiting research labs from all over the globe to provide diversity in
+geographic, linguistic, and researcher representation. Publications have
+examined the global understanding of morality, face processing, COVID-19
+information signaling, and more [@bago2022; @dorison2022; @jones2021;
 @psychologicalscienceacceleratorself-determinationtheorycollaboration2022;
 @vanbavel2022; @wang2021]. While these organizations and one-time groups
 for BTS studies have provided an incredible wealth of data for the
@@ -271,8 +274,8 @@ quantitative distinction in place, we analyze publication trends over
 time to assess the trajectories of both traditional team science and
 BTS. Furthermore, we investigate the diversity of authors involved in
 these collaborations to explore whether shifts in the scientific
-landscape—such as efforts to de-WEIRD science and the expansion of
-collaborative opportunities—have influenced who participates in team
+landscape, such as efforts to de-WEIRD science and the expansion of
+collaborative opportunities, have influenced who participates in team
 science and BTS. By synthesizing insights from the growth and
 diversification of team science, this paper seeks to critically examine
 the emergence of big teams. Specifically, it aims to explore whether big
@@ -288,8 +291,8 @@ with the following research questions.
         science and big team science?
     -   Question 1B: Using the definition from 1A, are there changes in
         the number of publications over time?
--   Research Question 2: How has the diversity of those involved in big
-    team science versus team science changed over time?
+-   Research Question 2: How has the diversity of those involved in team
+    science and big team science changed over time?
 
 # Method
 
@@ -299,12 +302,14 @@ We used data from 1970-2024 in the Scopus database, as it is noted
 online that 1970 and forward includes cited references for calculation
 of several of our variables described below. We analyzed our results
 based on four subject areas present in the Scopus database: Physical
-Sciences, Health Sciences, Social Sciences, and Life Sciences. We
-filtered the database to include articles, articles in press, business
-articles, conference papers, data papers, preprints, and surveys using
-Elsevier's classification system. This project was supported by access
-to the Scopus database through the International Center for the Study of
-Research.
+Sciences, Health Sciences, Social Sciences, and Life Sciences. We used
+the subject area split to ensure one field did not dominate BTS
+definitions and determine differences in trends across sub-areas of
+science. We filtered the database to include articles, articles in
+press, business articles, conference papers, data papers, preprints, and
+surveys using Elsevier's classification system. This project was
+supported by access to the Scopus database through the International
+Center for the Study of Research.
 
 ## Data Curation
 
@@ -318,9 +323,7 @@ Codes present in the database. Publications can be included in multiple
 subject codes. For example, a medical paper may be listed in both life
 sciences and health sciences.
 
-### RQ2: Author Diversity Statistics
-
-#### Seniority
+### RQ2: Seniority
 
 Career length for each author was defined as the year of the first
 publication minus the current year listed for each author. Number of
@@ -328,7 +331,7 @@ publications included the number of unique entries an author was
 included in the database. Career length and number of publications was
 used as a proxy for the "age" or "seniority" of a scholar.
 
-#### Geopolitical Region
+### RQ2: Geopolitical Region
 
 Geopolitical region was created by binning country code identifiers into
 the 17 identified United Nation subregions.
@@ -370,10 +373,9 @@ final number of papers included was `r team_author_aff_papers_noNA` with
 `r team_author_aff_author_noNA` distinct authors. The dataset was
 curated to include one row per author, paper, and subject area (i.e.,
 long format [@wickham2007]) which included
-`r team_author_aff_subject_noNA` total rows of data. For analyses and
-descriptive statistics below, we include sample sizes for clarity.
+`r team_author_aff_subject_noNA` total rows of data.
 
-```{r stats-authors-fig, include = F, fig.cap="The left panel depicts the number of authors included on a paper by subject area, and the right panel demonstrates the number of affiliations by subject area. The boxplot shows the median (bold line), the interquartile range (the box), and the minimum to the 90th percentile of the number of authors/affiliations as the range line. Normally these plots include the entire range of the data, but these extreme range made the boxplot information unreadable. The dots indicate the average number of authors/affiliations for each area with the size of the dot indicating the standard deviation of the statistic. Therefore, larger dots indicate more variability in the number of authors and affiliations."}
+```{r fig-stats-authors, include = TRUE, fig.cap="The left panel depicts the number of authors included on a paper by subject area, and the right panel demonstrates the number of affiliations by subject area. The boxplot shows the median (bold line), the interquartile range (the box), and the minimum to the 90th percentile of the number of authors/affiliations as the range line. Normally these plots include the entire range of the data, but these extreme range made the boxplot information unreadable. The dots indicate the average number of authors/affiliations for each area with the size of the dot indicating the standard deviation of the statistic. Therefore, larger dots indicate more variability in the number of authors and affiliations.", fig.width = 10, fig.height = 6}
 temp_graph <- DF$author_stats %>% 
   filter(SubjectArea != "Multidisciplinary")
 
@@ -421,67 +423,62 @@ aff_plot <-
 
 
 auth_plot | aff_plot
+
+ggsave(filename = "figure/figure_1_number.png", width = 10, height = 6)
 ```
 
-\@ref(fig:stats-authors-fig) displays the number of authors and
+Figure \@ref(fig:fig-stats-authors) displays the number of authors and
 affiliations by subject area. The figure demonstrates that the median
 number of authors is largest for health sciences, followed by life
 science, physical sciences, and then social sciences. The general
 pattern of team authorship includes about 2-8 authors, from about 2-4
-institutions. We used the maximum (i.e., across all subject areas) 90th
-percentile as our exploratory definition for big team papers after
-examining the results from this analysis. We selected this percentile to
-have the high of the distribution, but also to be able to include enough
-papers for analysis across time. Therefore, big teams were defined as 11
-authors from at least 6 different institutions[\^In a previous version
-of this manuscript, we defined big teams as 10 authors from at least 10
-institutions based on our own experiences working with research
-consortium. All definitions are likely subjective, but the definition in
-this manuscript represents the top 10% of author and affiliations in a
-large body of papers].
+institutions. We used the maximum value (i.e., across all subject areas)
+for the 90th percentile as our exploratory definition for big team
+papers after examining the results from this analysis. We selected this
+percentile to have the high of the distribution, but also to be able to
+include enough papers for analysis across time. Therefore, big teams
+were defined as 11 authors from at least 6 different institutions.[^1]
 
-```{r big-teams-table, results = 'asis'}
+[^1]: In a previous version of this manuscript, we defined big teams as
+    10 authors from at least 10 institutions based on our own
+    experiences working within a research consortium. All definitions
+    are likely subjective, but the definition in this manuscript
+    represents the top 10% of author and affiliations in a large body of
+    papers.
+
+```{r echo = FALSE}
 big_teams_papers <- 968765
 big_teams_authors <- 4541369
-
-apa_table(DF$paper_stats %>% 
-        arrange(Statistic), 
-        caption = "Number of Authors and Papers by Subject Area",
-        note = "Papers can be classified into multiple categories.", 
-        align = c("l", rep("c", 5)), 
-        digits = 0)
 ```
 
-\@ref(tab:big-teams-table) includes the number of distinct authors and
-papers for each subject area by overall teams and big teams using our
-90th percentile definition. The total number of distinct authors for big
-team papers was `r big_teams_papers` with `r big_teams_authors` distinct
-authors. In RQ2, we split the big team data into small (11-49), medium
-(50-99), and large big team (100+) groupings for convenience to
-display/analyze geopolitical regions. The table shows the number of
-authors and papers for those analyses.
+Supplemental Table \@ref(tab:big-teams-table) includes the number of
+distinct authors and papers for each subject area by overall teams and
+big teams using our 90th percentile definition. The total number of
+distinct authors for big team papers was `r big_teams_papers` with
+`r big_teams_authors` distinct authors. In RQ2, we split the big team
+data into small (11-49), medium (50-99), and large big team (100+)
+groupings for convenience to display/analyze geopolitical regions. The
+table shows the number of authors and papers for those analyses.
 
 ## RQ1B: Changes over Time
-
-SEE IF YOU CAN GET ALL THE NUMBERS SOME ARE MISSING
 
 For analyzing changes across time, we split the data into team science
 projects (2-10 authors, 2-5 affiliations) and BTS projects (as defined
 above, 11+ authors, 6+ affiliations). The number of papers found in
 Scopus across time for each subject area are displayed in Figure
-\@ref(paper-time-fig). The visual results indicated that the number of
-team science papers was increasing the most in physical sciences for all
-manuscripts, followed by life and health sciences, and the last is
+\@ref(fig:fig-paper-time). The visual results indicated that the number
+of team science papers was increasing the most in physical sciences for
+all manuscripts, followed by life and health sciences, and the last is
 social sciences. Examining only BTS projects shows that the rate is also
 increasing across time. All teams appear to start increasing in the
 1990s, while BTS projects do not start increasing off floor effects
 until past 2000. The health and life sciences show the largest increases
 across time in big teams with the smallest trend in the social sciences.
 
-```{r paper-time-fig, include = F, fig.cap = "The number of manuscripts across time for all team science papers (left) and big team science papers (right)."}
+```{r fig-paper-time, include = TRUE, fig.cap = "The number of manuscripts across time for all team science papers (left) and big team science papers (right).", fig.width = 10, fig.height = 6}
 temp <- DF$author_paper_year %>% 
   filter(SubjectArea != "Multidisciplinary") %>% 
-  filter(Year < 2024) %>% 
+  filter(Year < 2025) %>% 
   mutate(SubjectArea = gsub("Sciences", "", SubjectArea))
 
 p1 <- ggplot(temp %>% 
@@ -494,7 +491,9 @@ p1 <- ggplot(temp %>%
   theme(legend.position = "bottom",
         axis.text.y = element_text(angle = 45, hjust = 1)) + # Angles the y-axis text
   ylab("Number of Papers") + 
-  ggtitle("Team Science Projects")
+  ggtitle("Team Science Projects") +
+  theme(legend.title = element_text(size = 15),
+    legend.text = element_text(size = 12))
 
 p2 <- ggplot(temp %>% 
          filter(team_size == "big"), 
@@ -506,16 +505,31 @@ p2 <- ggplot(temp %>%
   theme(legend.position = "bottom",
         axis.text.y = element_text(angle = 45, hjust = 1)) + # Angles the y-axis text
   ylab(NULL) +  # Removes the y-axis label
-  ggtitle("BTS Projects")
+  ggtitle("BTS Projects") + 
+  theme(legend.title = element_text(size = 15),
+    legend.text = element_text(size = 15))
 
 combined_plot <- p1 + p2 +
   plot_layout(guides = "collect") & # Collect shared legend
   theme(legend.position = "bottom")  # Center the legend at the bottom
 
 combined_plot
+
+ggsave(filename = "figure/figure_2_acrosstime.png", width = 10, height = 6)
 ```
 
-```{r rate-estimates-fig, include = F, fig.cap = "Exponential growth rate estimates with 95% confidence intervals."}
+Using the `minpack.lm` library [@elzhov2023], we calculated the
+exponential rate of growth for team science and BTS projects, and these
+results are shown in Supplemental Figure \@ref(fig:rate-estimates-fig). All growth rate
+confidence intervals excluded zero, indicating an exponential increase
+in the number of team papers over time. BTS growth rates were always
+higher than their team science counterparts, but the 95% confidence
+intervals for the growth estimate overlapped for all statistics.
+Therefore, the growth trends, while visually appearing to be different,
+were likely similar for each subject area and team size when examined by
+estimating exponential growth statistics.
+
+```{r echo = FALSE, include=FALSE}
 # Initialize the results list
 corr.results <- list()
 
@@ -561,7 +575,11 @@ corr.DF <- bind_rows(corr.results) %>%
     )) %>% 
   filter(term != "a") %>% 
   mutate(conf.low = estimate-2*std.error,
-         conf.high = estimate+2*std.error)
+         conf.high = estimate+2*std.error) %>% 
+  mutate(group = factor(group, 
+                        levels = c("regular", "big"),
+                        labels = c("Team Science", "BTS")))
+  
 
 ggplot(corr.DF, aes(x = SubjectArea, y = estimate, color = group)) + 
   geom_point() +
@@ -570,32 +588,20 @@ ggplot(corr.DF, aes(x = SubjectArea, y = estimate, color = group)) +
                 width = .2) + 
   ylab("Rate Estimate") + 
   xlab("Subject Area") + 
-  scale_color_discrete(name = "Team Size", 
-                       labels = c("BTS", "Team Science")) + 
+  scale_color_manual(values = c("#D55E00", "#0072B2"), name = "Team Size") + 
   theme(legend.position = "bottom") + 
   geom_hline(yintercept = 0)
+
+ggsave(filename = "figure/figure_3_growth.png", width = 10, height = 6)
 ```
 
-Using the `minpack.lm` library [@elzhov2023], we calculated the
-exponential rate of growth for team science and BTS projects, and these
-results are shown in \@ref(fig:rate-estimates-fig). All growth rate
-confidence intervals excluded zero, indicating an exponential increase
-in the number of team papers over time. BTS growth rates were
-always higher than their team science counterparts, but the 95%
-confidence intervals for the growth estimate overlapped for all
-statistics. Therefore, the growth trends, while visually appearing to be
-different, were likely similar for each subject area and team size when
-examined by estimating exponential growth statistics.
-
-## RQ2: Diversity Statistics
-
-### Seniority
+## RQ2: Seniority
 
 ```{r fig-career, include = TRUE,  warning = FALSE, message = FALSE, fig.cap = "Average career length for big-team science authors. Larger dots indicate more variability in career length for authors by averaging the standard deviation in career length for each manuscript within a year. The data has been filtered to at least 10 publications in a year for this graph.", fig.width=10, fig.height=6}
 ggplot(DF$career_time %>% 
          filter(SubjectArea != "Multidisciplinary") %>% 
          filter(num_papers >= 10) %>% 
-         filter(Year < 2024) %>% 
+         filter(Year < 2025) %>% 
          mutate(Team = factor(Team, 
                               levels = c("Regular", "Big"),
                               labels = c("Team Science", "BTS"))), 
@@ -614,21 +620,33 @@ ggsave(filename = "figure/figure_4_career.png", width = 10, height = 6)
 ```
 
 Figure \@ref(fig:fig-career) portrays the average career length for
-authors involved in team science and BTS projects over time. Career length was defined as the year of first publication minus the current year, and higher numbers mean longer careers. The general pattern for team science and BTS projects is a decrease in average career length over time. However, it appears that, in at least the last two decades, BTS projects average a longer career length than team science projects. This trend is visually consistent across all four subject areas examined. 
+authors involved in team science and BTS projects over time. Career
+length was defined as the year of first publication minus the current
+year, and higher numbers mean longer careers. The general pattern for
+team science and BTS projects is a decrease in average career length
+over time. However, it appears that, in at least the last two decades,
+BTS projects average a longer career length than team science projects.
+This trend is visually consistent across all four subject areas
+examined.
 
-To analyze these trends over time, we calculated the average career length for each publication (i.e., averaging author career lengths to create one score for each paper) and analyzed a regression analysis using career length to predict year of
-publication. In order to show variance between individuals, we
-calculated the standard deviation of career length for each publication
-and used this variance as an additional predictor. Negative career length slopes would indicate more young scholars in
-later years (i.e., lower average career length as time increases).
-Positive career length slopes would indicate older scholars in later
-years (i.e., higher average career length as time increases). Negative
-career variance slopes imply that variability decreases over the years,
-so the average career length is more homogeneous. Positive career length
-slopes imply that variability increases over the years, so the average
-career length is varied across individuals (i.e., different stages of
-scholars). Figure \@ref(fig:fig-heatmap) displays the results for all
-regression analyses.
+### Career Length
+
+To analyze these trends over time, we calculated the average career
+length for each publication (i.e., averaging author career lengths to
+create one score for each paper) and analyzed a regression analysis
+using career length to predict year of publication. In order to show
+variance between individuals, we calculated the standard deviation of
+career length for each publication and used this variance as an
+additional predictor. Negative career length slopes would indicate more
+young scholars in later years (i.e., lower average career length as time
+increases). Positive career length slopes would indicate older scholars
+in later years (i.e., higher average career length as time increases).
+Negative career variance slopes imply that variability decreases over
+the years, so the average career length is more homogeneous. Positive
+career length slopes imply that variability increases over the years, so
+the average career length is varied across individuals (i.e., different
+stages of scholars). Figure \@ref(fig:fig-heatmap) displays the results
+for all regression analyses.
 
 ```{r lm-coefficients}
 sample_size <- 1000000
@@ -646,11 +664,11 @@ DF$lm_coefficients <- DF$lm_coefficients %>%
   mutate(b_avg_low = b_avg_effect - qt(.025, sample_size, lower.tail = F)*se_avg_effect,
          b_avg_high = b_avg_effect + qt(.025, sample_size, lower.tail = F)*se_avg_effect,
          b_std_low = b_std_effect - qt(.025, sample_size, lower.tail = F)*se_std_effect,
-         b_std_high = b_std_effect - qt(.025, sample_size, lower.tail = F)*se_std_effect)
+         b_std_high = b_std_effect + qt(.025, sample_size, lower.tail = F)*se_std_effect)
 
 ```
 
-```{r fig-heatmap, include = TRUE, fig.cap="Heatmap results of regression analyses for career length, number of publications, and geopoliticalwithin the region. Each square represents a *b* value or the slope of the predictor (x-axis) onto the dependent variable (each panel), with the exception of the bottom row which is the effect size of each regression analysis $R^2$. Slopes included both the overall value of the predictor ($b$, $b_M$) and the standard deviation of the predictor over time ($b_{SD}$). The color of the square represents the strength of the predictor. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions. Non-significant results are indicated with NS on the plot.", warning = FALSE, message = FALSE, fig.width=10, fig.height=6}
+```{r fig-heatmap, include = TRUE, fig.cap="Heatmap results of regression analyses for career length, number of publications, and geopoliticalwithin the region. Each square represents a *b* value or the slope of the predictor (x-axis) onto the dependent variable (each panel), with the exception of the bottom row which is the effect size of each regression analysis $R^2$. Slopes included both the overall value of the predictor ($b$, $b_M$) and the standard deviation of the predictor over time ($b_{SD}$). The color of the square represents the strength of the predictor. The top figure represents all results together for comparison across analyses. The bottom row represents individual heatmaps for each hypothesis to distinguish small differences between subject areas for those research questions.", warning = FALSE, message = FALSE, fig.width=10, fig.height=6}
 
 graphDF <- DF$lm_coefficients %>% 
   select(Discipline, b_avg_effect, b_std_effect, type, rsquared, coefficient) %>% 
@@ -690,8 +708,8 @@ graphDF <- DF$lm_coefficients %>%
     low < .00001 & high > .00001, "NS", ""
   )) %>% 
   mutate(Size = factor(Size, 
-                       levels = c("regular", "big"),
-                       labels = c("Regular", "Big")))
+                       levels = c("big", "regular"),
+                       labels = c("BTS", "TS")))
 
 career_heat <- ggplot(graphDF %>% 
                         filter(Regression == "career"), 
@@ -744,37 +762,43 @@ career_heat / pub_heat / diversity_heat
 ggsave(filename = "figure/figure_5_heatmap.png", width = 12, height = 10, units = "in")
 ```
 
-The average career length of authors on a manuscript was negatively related to time, indicating that career lengths are decreasing over time (i.e., more earlier career individuals included on manuscripts). The standard deviation of career length was also negatively related to publication year suggesting that the variability of authors is similarly decreasing toward authors who are less senior. These patterns were consistent across regular sized and big teams, and all coefficients were different from zero. 
+As shown in Figure \@ref(fig:fig-heatmap), all estimated slopes were
+negative, indicating that author teams are, on average, composed of
+younger scholars over time. The slope of the mean career length ($b_M$)
+and variability in career length ($b_{SD}$) was consistently negative
+across disciplines and team sizes, with all estimates falling outside
+the defined null threshold (i.e., $|b| > 0.00001$). Most subject areas
+showed significantly different slopes within their respective team size,
+as evidenced by non-overlapping 95% confidence intervals for both $b_M$
+and $b_{SD}$. The Physical Sciences exhibited the steepest declines in
+both average career length and its variability (e.g., $b_M$ = -0.7134,
+$b_{SD}$ = -0.2202 for big teams), suggesting a sharp shift toward
+younger and more uniformly early-career author teams. In comparison,
+life sciences showed a slightly smaller shift toward earlier career
+scholars with less variability, followed by health and social sciences.
+The only non-significant difference was found between life and social
+sciences in big teams for author career variability.
 
-- overall coefficients not zero 
-- big versus regular are not different
-- pattern across disciplines - differences within them 
+These findings suggest a widespread trend toward younger, less-senior
+authorship over time. However, this trend was more pronounced in team
+science-sized teams than in BTS teams. In all four subject areas, team
+science teams showed steeper declines in both the average and
+variability of author career length, as reflected by significantly
+different slopes with no overlapping confidence intervals. This finding
+indicates that regular teams are more strongly influenced by the
+increasing participation of earlier-career researchers, whereas big
+teams exhibit the same general trend but to a lesser extent. Effect
+sizes were substantial across all models, with $R^2$ values ranging from
+.2818 to .4910. The largest effect was observed in the Physical Sciences
+for big teams ($R^2$ = .4910), reflecting the strongest association
+between author career stage and publication timing. Together, these
+results indicate that the shift toward younger, more early-career author
+teams is widespread but not uniform across disciplines, and that team
+size plays a meaningful role in moderating the strength of these
+temporal trends. Full model estimates and confidence intervals are
+available on the OSF repository.
 
-
-
-
-All values for career length were different from our defined confidence interval zero cut off (i.e., .00001). The slopes for
-the average career length were negative for all four subject areas,
-indicating a trend toward younger scientist involvement over time for
-each area in both regular and big teams. The confidence intervals for 
-
-, with the strongest effect in the Physical Sciences. 
-
-The
-coefficient for variability in career length was also negative for each
-of the four subject areas with the highest in the Physical Sciences and
-lowest in the Life Sciences. This result indicates a decrease in the
-variability of career lengths over time, likely from two sources: 1)
-more publications with more authors, thus, lowering variance
-estimations, and 2) more young scholars overall. The effect sizes for
-this analysis were surprisingly large ranging from $R^2$ = .25 to .47.
-All values and their confidence intervals can be found on our OSF page.
-
--   four panel figure for subject area by total team, "team", BAT
--   just in general people are having to publish much younger than we
-    used to so here's how to view that
-
-### Edit me starting here ### 
+### Publication Count
 
 We used the same analyses using number of publications to represent
 diversity instead of career length. An increasing slope over time
@@ -787,18 +811,40 @@ diversity in the individual publication rates), while a negative slope
 would indicate less diversity in researchers over time. While
 publication rates do not represent value as a researcher, they are often
 used in hiring and promotion decisions, and we used this variable as a
-proxy to gauge the diversity in scholars represented in big teams. As
-shown in Figure \@ref(fig:fig-heatmap) publication metrics were
-generally negative for the average publication metrics, indicating more
-scholars over time with lower numbers of publications with the strongest
-effects in Health and Social Sciences. The variability of publication
-counts was not significant for the Life Sciences but was negative for
-the Physical Sciences (less variability over time) and positive for
-Social and Health Sciences (more variability and over time). This result
-indicates that the Physical Sciences are trending toward scholars with
-less publications but also less diverse in number of publications, while
-the Health and Social Sciences see more diversity in publication counts
-and less published scholars overall.
+proxy to gauge the diversity in scholars represented in BTS teams.
+
+All slopes for both the average ($b_M$) and standard deviation
+($b_{SD}$) of publication count were significantly different from zero,
+indicating meaningful change over time in the types of researchers
+contributing to publications across subject areas and team sizes (see
+Figure \@ref(fig:fig-heatmap)). Most subject areas differed
+significantly from one another within their team size, with the
+exception of Health Sciences and Physical Sciences for team science
+teams, whose $b_M$ values overlapped in their confidence intervals.
+Across the remaining comparisons, Life Sciences showed the steepest
+decline in average publication count over time for regular teams ($b_M$
+= -0.0588), suggesting a shift toward including authors with fewer
+publications. In contrast, the smallest change in publication count was
+observed in Physical Sciences for big teams ($b_M$ = -0.0005),
+indicating some stability scholar publication count when examining
+diversity. Standard deviation slopes ($b_{SD}$) were generally low in
+magnitude, with both positive and negative values depending on subject
+area. This suggests some variation in the diversity of publication rates
+across disciplines, with no uniform pattern of increasing or decreasing
+diversity.
+
+All subject areas showed significant differences between BTS and team
+science teams in both $b_M$ and $b_{SD}$, as indicated by
+non-overlapping confidence intervals. Team science teams consistently
+exhibited stronger negative slopes for average publication count than
+BTS teams, reflecting a more pronounced trend toward authors with fewer
+publications appearing over time. This suggests that smaller teams are
+increasingly composed of researchers with lower overall publication
+counts, whereas BTS teams show a more muted shift. Effect sizes for
+these models were smaller than those observed for career length, with
+$R^2$ values ranging from .0335 to .0977. The strongest association was
+observed in the Physical Sciences for big teams ($R^2$ = .0977), though
+all models showed low-to-moderate predictive ability.
 
 ```{r geo-map}
 # serbia has changed codes
@@ -986,7 +1032,7 @@ tree_all <- ggplot(DF$geo_country, aes(area = count_all, fill = count_binned_all
   #                     high = "#323232") 
 ```
 
-```{r fig-map-both, include = TRUE, fig.cap="Geopolitical regions represented in big-team science publications versus all publications. The mosaic plot is grouped by UN subregion with the largest number of publications starting on the bottom left and smallest on the top right. Therefore, North America represents the largest number of authors within BTS (i.e., bottom right, then separated into the geopolitical areas within that subregion), followed by Eastern Europe (top left), and so on.", fig.width=10, fig.height=6}
+```{r fig-map-both-calc, include = FALSE, fig.cap="Geopolitical regions represented in big-team science publications versus all publications. The mosaic plot is grouped by UN subregion with the largest number of publications starting on the bottom left and smallest on the top right. Therefore, North America represents the largest number of authors within BTS (i.e., bottom right, then separated into the geopolitical areas within that subregion), followed by Eastern Europe (top left), and so on.", fig.width=10, fig.height=6}
 bin_country + ggtitle("Big-Team Publication Map") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
   guides(fill = "none") +
@@ -1008,18 +1054,46 @@ ggsave(filename = "figure/figure_6_map.png", width = 10, height = 6, units = "in
 
 ### Geopolitical Regions
 
-Author geopolitical region is displayed in Figure
-\@ref(fig:fig-map-both). Big team publications appear to be led by North
-America and Western Europe, while all publications are led by North
-America and East Asia. To understand the change in representation
-diversity, we examined if the number of regions in a publication is
-predicted by the year of publication. Increasing diversity would be
-represented by a positive slope, while decreasing diversity would be
-represented by a negative slope. As shown in Figure
-\@ref(fig:fig-heatmap), the Physical Sciences do not show a trend of
-change in representation, while all other sciences showed a positive
-effect increasing in the number of geopolitical regions authors
-represent on publications.
+Geographic patterns in authorship differed notably between BTS and team
+science publications, as shown in the publication maps and mosaic charts
+(Supplemental Figure \@ref(fig:fig-map-both)). BTS publications were overwhelmingly
+concentrated in high-income countries, particularly the United States,
+Western European nations (e.g., Germany, the United Kingdom, France, and
+the Netherlands), and East Asian countries (e.g., China, Japan, and
+South Korea). In contrast, team science publications showed broader
+geographic distribution, with relatively higher representation from
+Latin America (e.g., Brazil, Mexico), South and Southeast Asia (e.g.,
+India, Pakistan, Indonesia), and parts of Africa and the Middle East.
+While both team types were led by traditionally defined Global North
+institutions, the mosaic charts revealed that team science teams
+included a more diverse range of countries contributing at moderate
+levels. These patterns suggest that although BTS involves international
+collaborations, it remains more centralized in historically dominant
+research regions, whereas team science may offer relatively greater
+global inclusivity at a smaller scale.
+
+To understand the change in representation diversity, we examined if the
+number of regions in a publication is predicted by the year of
+publication. Increasing diversity would be represented by a positive
+slope, while decreasing diversity would be represented by a negative
+slope. All slopes predicting geopolitical diversity over time were
+significantly different from zero, indicating small but non-zero changes
+in the number of regions represented on publications across disciplines
+and team types. Additionally, all slopes differed significantly between
+BTS and team science publications, suggesting distinct patterns in the
+evolution of international collaboration. Within BTS publications, Life
+Sciences and Social Sciences showed statistically indistinguishable
+trends in regional diversity over time, as did Social Sciences and
+Health Sciences. In contrast, all other within-BTS comparisons differed
+significantly. For team science publications, all four disciplines
+showed significantly different slopes, although the magnitudes of these
+differences were relatively small. Overall, the results suggest modest
+increases in geopolitical diversity in most disciplines, with a small
+decline observed only in Physical Sciences within BTS publications ($b$
+= -0.0129). Despite small effect sizes (all $R^2 < .012$), the
+consistent differences between BTS and team science teams point to
+structural differences in how global participation is evolving across
+large-scale versus more traditional collaborations.
 
 Last, we examined the differences in representation for corresponding
 author sets versus all other authors. For papers with 10 to 49 authors,
@@ -1040,47 +1114,148 @@ that first and all other authors represent the same pattern of UN
 Sub-Region diversity. Any confidence interval that does include zero
 represents a difference in diversity.
 
-updated binning:
+```{r xsmall-effects, warning = FALSE}
+DF$effect_size_gp <- DF$effect_size_gp %>% 
+  mutate(aff_un = gsub("Mirconesia", "Micronesia", aff_un)) %>% 
+  filter(Year < 2025)
 
--   teams: 2-10 authors, 2-5 inst
-    -   first and last author only versus everyone else
--   big ass teams: 6+ affs
-    -   small: 11-49
-        -   first three plus last versus everyone else
-    -   medium: 50-99
-        -   first five plus last versus everyone else
-    -   large: 100+
-        -   first 10 plus last versus everyone else
-
-for time: teams versus big teams combining results separate panel of the
-big teams separated (not by time)
-
-```{r small-effects, warning = FALSE}
-DF$small_first_gp <- DF$small_first_gp %>% 
-  filter(aff_un != "other") %>% 
+DF$effect_size_gp_xsmall_first <- DF$effect_size_gp %>% 
+  filter(tolower(aff_un) != "other") %>% 
+  filter(source_file == "xsmall_first") %>% 
   pivot_wider(id_cols = Year, 
               names_from = aff_un, 
               values_from = count,
               values_fill = 0)
 
-DF$small_other_gp <- DF$small_other_gp %>% 
-  filter(aff_un != "other") %>% 
+DF$effect_size_gp_xsmall_other <- DF$effect_size_gp %>% 
+  filter(tolower(aff_un) != "other") %>% 
+  filter(source_file == "xsmall_other") %>% 
   pivot_wider(id_cols = Year, 
               names_from = aff_un, 
               values_from = count,
               values_fill = 0) %>% 
-  select(colnames(DF$small_first_gp))
+  select(colnames(DF$effect_size_gp_xsmall_first))
 
-small_effect <- data.frame(
-  year = 1:length(unique(DF$small_first_gp$Year)),
-  v = 1:length(unique(DF$small_first_gp$Year)),
-  low = 1:length(unique(DF$small_first_gp$Year)),
-  high = 1:length(unique(DF$small_first_gp$Year))
+xsmall_effect <- data.frame(
+  year = 1:length(unique(DF$effect_size_gp_xsmall_first$Year)),
+  v = 1:length(unique(DF$effect_size_gp_xsmall_first$Year)),
+  low = 1:length(unique(DF$effect_size_gp_xsmall_first$Year)),
+  high = 1:length(unique(DF$effect_size_gp_xsmall_first$Year))
 )
 i <- 1
-for (year in unique(DF$small_first_gp$Year)){
-  temp_table <- DF$small_first_gp %>% filter(Year == year) %>% select(-Year) %>% 
-    bind_rows(DF$small_other_gp %>% filter(Year == year) %>% select(-Year))
+for (year in unique(DF$effect_size_gp_xsmall_first$Year)){
+  temp_table <- DF$effect_size_gp_xsmall_first %>% filter(Year == year) %>% select(-Year) %>% 
+    bind_rows(DF$effect_size_gp_xsmall_other %>% filter(Year == year) %>% select(-Year))
+  
+  col_total <- colSums(temp_table)
+  temp_table <- temp_table %>% 
+    select(names(col_total)[col_total > 0])
+  temp <- suppressWarnings(chisq.test(as.matrix(temp_table)))
+  
+  tryCatch(mote_temp <- v.chi.sq(x2 = temp$statistic, n = sum(temp_table), 
+                        r = nrow(temp_table), c = ncol(temp_table), 
+                        a = .05), 
+       warning = function(w) { 
+         mote_temp <<- v.chi.sq(x2 = temp$statistic, n = sum(temp_table), 
+                        r = nrow(temp_table), c = ncol(temp_table), 
+                        a = .05)
+         mote_temp$vlow <<- 0
+  }
+  )
+  
+  xsmall_effect$year[i] <- year
+  xsmall_effect$v[i] <- mote_temp$v
+  xsmall_effect$low[i] <- mote_temp$vlow
+  xsmall_effect$high[i] <- mote_temp$vhigh
+  xsmall_effect$people[i] <- mote_temp$n
+  i <- i + 1
+}
+
+xsmall_effect$high[is.na(xsmall_effect$high)] <- 0
+xsmall_effect <- 
+  xsmall_effect %>% 
+  filter(v != Inf)
+
+xsmall_dot <- ggplot(xsmall_effect, aes(year,v)) + 
+  geom_point(aes(size = people)) + 
+  theme_classic(base_size = 15) + 
+  geom_pointrange(aes(ymin = low, ymax = high)) + 
+  xlab("Year") + 
+  ylab(expression(phi)) + 
+  scale_size_continuous(name = "Num Authors")
+
+DF_decade <- DF$effect_size_gp_xsmall_first %>% 
+  mutate(who = "F") %>% 
+  bind_rows(
+    DF$effect_size_gp_xsmall_other %>% 
+      mutate(who = "O")
+  ) %>% 
+  mutate(Decade = ifelse(Year < 1990, "1980s", 
+                         ifelse(Year < 2000, "1990s", 
+                                ifelse(Year < 2010, "2000s", 
+                                       ifelse(Year < 2020, "2010s", "2020s"))))) %>% 
+  group_by(who, Decade) %>% 
+  summarize_all(sum) %>% 
+  pivot_longer(cols = -c(who, Decade, Year),
+               names_to = "Country", 
+               values_to = "Count")
+
+# North America, Africa (combine), NWS Europe, Eastern Asia, Latin America, Rest of Europe, Rest of Asia, Everything Else 
+
+DF_decade$Country_2 <- DF_decade$Country
+DF_decade$Country_2 <- gsub(".*Africa.*", "Africa", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Northern Europe|Southern Europe|Western Europe", "NWS Europe", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("South-Eastern Europe|Eastern Europe", "ESE Europe", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Central Asia|South-Eastern Asia|Southern Asia|Western Asia", "Asia", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Melanesia|Micronesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
+
+DF_decade$Country_2 <- factor(DF_decade$Country_2, 
+                              levels = c("Africa", "Asia", "Eastern Asia", 
+                                         "ESE Europe", 
+                                         "Latin America and the Caribbean",
+                                         "North America", 
+                                         "NWS Europe", "Other"))
+DF_decade_xsm <- DF_decade %>% 
+  group_by(Country_2, Decade, who) %>% 
+  summarize(Count = sum(Count), .groups = "keep")
+
+xsmall_author <- ggplot(DF_decade_xsm, aes(who, Count, fill = Country_2)) + 
+    geom_bar(position="fill", stat="identity", color = "black") + 
+  theme_classic(base_size = 15) + 
+  facet_grid(~Decade) + 
+  xlab("Author Type") + 
+  ylab("Percent of Authors") + 
+  scale_fill_brewer(name = "Region", palette = "Spectral", drop = FALSE)
+```
+
+```{r small-effects, warning = FALSE}
+DF$effect_size_gp_small_first <- DF$effect_size_gp %>% 
+  filter(tolower(aff_un) != "other") %>% 
+  filter(source_file == "small_first") %>% 
+  pivot_wider(id_cols = Year, 
+              names_from = aff_un, 
+              values_from = count,
+              values_fill = 0)
+
+DF$effect_size_gp_small_other <- DF$effect_size_gp %>% 
+  filter(tolower(aff_un) != "other") %>% 
+  filter(source_file == "small_other") %>% 
+  pivot_wider(id_cols = Year, 
+              names_from = aff_un, 
+              values_from = count,
+              values_fill = 0) %>% 
+  select(colnames(DF$effect_size_gp_small_first))
+
+small_effect <- data.frame(
+  year = 1:length(unique(DF$effect_size_gp_small_first$Year)),
+  v = 1:length(unique(DF$effect_size_gp_small_first$Year)),
+  low = 1:length(unique(DF$effect_size_gp_small_first$Year)),
+  high = 1:length(unique(DF$effect_size_gp_small_first$Year))
+)
+i <- 1
+for (year in unique(DF$effect_size_gp_small_first$Year)){
+  temp_table <- DF$effect_size_gp_small_first %>% filter(Year == year) %>% select(-Year) %>% 
+    bind_rows(DF$effect_size_gp_small_other %>% filter(Year == year) %>% select(-Year))
   
   col_total <- colSums(temp_table)
   temp_table <- temp_table %>% 
@@ -1119,10 +1294,10 @@ small_dot <- ggplot(small_effect, aes(year,v)) +
   ylab(expression(phi)) + 
   scale_size_continuous(name = "Num Authors")
 
-DF_decade <- DF$small_first_gp %>% 
+DF_decade <- DF$effect_size_gp_small_first %>% 
   mutate(who = "F") %>% 
   bind_rows(
-    DF$small_other_gp %>% 
+    DF$effect_size_gp_small_other %>% 
       mutate(who = "O")
   ) %>% 
   mutate(Decade = ifelse(Year < 1990, "1980s", 
@@ -1142,7 +1317,7 @@ DF_decade$Country_2 <- gsub(".*Africa.*", "Africa", DF_decade$Country_2)
 DF_decade$Country_2 <- gsub("Northern Europe|Southern Europe|Western Europe", "NWS Europe", DF_decade$Country_2)
 DF_decade$Country_2 <- gsub("South-Eastern Europe|Eastern Europe", "ESE Europe", DF_decade$Country_2)
 DF_decade$Country_2 <- gsub("Central Asia|South-Eastern Asia|Southern Asia|Western Asia", "Asia", DF_decade$Country_2)
-DF_decade$Country_2 <- gsub("Melanesia|Mirconesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Melanesia|Micronesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
 
 DF_decade$Country_2 <- factor(DF_decade$Country_2, 
                               levels = c("Africa", "Asia", "Eastern Asia", 
@@ -1164,36 +1339,39 @@ small_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
 ```
 
 ```{r medium-effects, warning = FALSE}
-DF$medium_first_gp <- DF$medium_first_gp %>% 
-  filter(aff_un != "other") %>% 
+DF$effect_size_gp_medium_first <- DF$effect_size_gp %>% 
+  filter(tolower(aff_un) != "other") %>% 
+  filter(source_file == "medium_first") %>% 
   pivot_wider(id_cols = Year, 
               names_from = aff_un, 
               values_from = count,
               values_fill = 0)
 
-DF$medium_other_gp <- DF$medium_other_gp %>% 
-  filter(aff_un != "other") %>% 
+DF$effect_size_gp_medium_other <- DF$effect_size_gp %>% 
+  filter(tolower(aff_un) != "other") %>% 
+  filter(source_file == "medium_other") %>% 
   pivot_wider(id_cols = Year, 
               names_from = aff_un, 
               values_from = count,
               values_fill = 0) %>% 
-  select(colnames(DF$medium_first_gp))
+  select(colnames(DF$effect_size_gp_medium_first))
 
 medium_effect <- data.frame(
-  year = 1:length(unique(DF$medium_first_gp$Year)),
-  v = 1:length(unique(DF$medium_first_gp$Year)),
-  low = 1:length(unique(DF$medium_first_gp$Year)),
-  high = 1:length(unique(DF$medium_first_gp$Year))
+  year = 1:length(unique(DF$effect_size_gp_medium_first$Year)),
+  v = 1:length(unique(DF$effect_size_gp_medium_first$Year)),
+  low = 1:length(unique(DF$effect_size_gp_medium_first$Year)),
+  high = 1:length(unique(DF$effect_size_gp_medium_first$Year))
 )
 i <- 1
-for (year in unique(DF$medium_first_gp$Year)){
-  temp_table <- DF$medium_first_gp %>% filter(Year == year) %>% select(-Year) %>% 
-    bind_rows(DF$medium_other_gp %>% filter(Year == year) %>% select(-Year))
+for (year in unique(DF$effect_size_gp_medium_first$Year)){
+  temp_table <- DF$effect_size_gp_medium_first %>% filter(Year == year) %>% select(-Year) %>% 
+    bind_rows(DF$effect_size_gp_medium_other %>% filter(Year == year) %>% select(-Year))
   
   col_total <- colSums(temp_table)
   temp_table <- temp_table %>% 
     select(names(col_total)[col_total > 0])
   temp <- suppressWarnings(chisq.test(as.matrix(temp_table)))
+  
   tryCatch(mote_temp <- v.chi.sq(x2 = temp$statistic, n = sum(temp_table), 
                         r = nrow(temp_table), c = ncol(temp_table), 
                         a = .05), 
@@ -1204,6 +1382,7 @@ for (year in unique(DF$medium_first_gp$Year)){
          mote_temp$vlow <<- 0
   }
   )
+  
   medium_effect$year[i] <- year
   medium_effect$v[i] <- mote_temp$v
   medium_effect$low[i] <- mote_temp$vlow
@@ -1225,10 +1404,10 @@ medium_dot <- ggplot(medium_effect, aes(year,v)) +
   ylab(expression(phi)) + 
   scale_size_continuous(name = "Num Authors")
 
-DF_decade <- DF$medium_first_gp %>% 
+DF_decade <- DF$effect_size_gp_medium_first %>% 
   mutate(who = "F") %>% 
   bind_rows(
-    DF$medium_other_gp %>% 
+    DF$effect_size_gp_medium_other %>% 
       mutate(who = "O")
   ) %>% 
   mutate(Decade = ifelse(Year < 1990, "1980s", 
@@ -1248,7 +1427,7 @@ DF_decade$Country_2 <- gsub(".*Africa.*", "Africa", DF_decade$Country_2)
 DF_decade$Country_2 <- gsub("Northern Europe|Southern Europe|Western Europe", "NWS Europe", DF_decade$Country_2)
 DF_decade$Country_2 <- gsub("South-Eastern Europe|Eastern Europe", "ESE Europe", DF_decade$Country_2)
 DF_decade$Country_2 <- gsub("Central Asia|South-Eastern Asia|Southern Asia|Western Asia", "Asia", DF_decade$Country_2)
-DF_decade$Country_2 <- gsub("Melanesia|Mirconesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Melanesia|Micronesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
 
 DF_decade$Country_2 <- factor(DF_decade$Country_2, 
                               levels = c("Africa", "Asia", "Eastern Asia", 
@@ -1256,12 +1435,11 @@ DF_decade$Country_2 <- factor(DF_decade$Country_2,
                                          "Latin America and the Caribbean",
                                          "North America", 
                                          "NWS Europe", "Other"))
-
-DF_decade_sm <- DF_decade %>% 
+DF_decade_md <- DF_decade %>% 
   group_by(Country_2, Decade, who) %>% 
   summarize(Count = sum(Count), .groups = "keep")
 
-medium_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) + 
+medium_author <- ggplot(DF_decade_md, aes(who, Count, fill = Country_2)) + 
     geom_bar(position="fill", stat="identity", color = "black") + 
   theme_classic(base_size = 15) + 
   facet_grid(~Decade) + 
@@ -1271,36 +1449,39 @@ medium_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
 ```
 
 ```{r large-effects, warning = FALSE}
-DF$large_first_gp <- DF$large_first_gp %>% 
-  filter(aff_un != "other") %>% 
+DF$effect_size_gp_large_first <- DF$effect_size_gp %>% 
+  filter(tolower(aff_un) != "other") %>% 
+  filter(source_file == "large_first") %>% 
   pivot_wider(id_cols = Year, 
               names_from = aff_un, 
               values_from = count,
               values_fill = 0)
 
-DF$large_other_gp <- DF$large_other_gp %>% 
-  filter(aff_un != "other") %>% 
+DF$effect_size_gp_large_other <- DF$effect_size_gp %>% 
+  filter(tolower(aff_un) != "other") %>% 
+  filter(source_file == "large_other") %>% 
   pivot_wider(id_cols = Year, 
               names_from = aff_un, 
               values_from = count,
               values_fill = 0) %>% 
-  select(colnames(DF$large_first_gp))
+  select(colnames(DF$effect_size_gp_large_first))
 
 large_effect <- data.frame(
-  year = 1:length(unique(DF$large_first_gp$Year)),
-  v = 1:length(unique(DF$large_first_gp$Year)),
-  low = 1:length(unique(DF$large_first_gp$Year)),
-  high = 1:length(unique(DF$large_first_gp$Year))
+  year = 1:length(unique(DF$effect_size_gp_large_first$Year)),
+  v = 1:length(unique(DF$effect_size_gp_large_first$Year)),
+  low = 1:length(unique(DF$effect_size_gp_large_first$Year)),
+  high = 1:length(unique(DF$effect_size_gp_large_first$Year))
 )
 i <- 1
-for (year in unique(DF$large_first_gp$Year)){
-  temp_table <- DF$large_first_gp %>% filter(Year == year) %>% select(-Year) %>% 
-    bind_rows(DF$large_other_gp %>% filter(Year == year) %>% select(-Year))
+for (year in unique(DF$effect_size_gp_large_first$Year)){
+  temp_table <- DF$effect_size_gp_large_first %>% filter(Year == year) %>% select(-Year) %>% 
+    bind_rows(DF$effect_size_gp_large_other %>% filter(Year == year) %>% select(-Year))
   
   col_total <- colSums(temp_table)
   temp_table <- temp_table %>% 
     select(names(col_total)[col_total > 0])
   temp <- suppressWarnings(chisq.test(as.matrix(temp_table)))
+  
   tryCatch(mote_temp <- v.chi.sq(x2 = temp$statistic, n = sum(temp_table), 
                         r = nrow(temp_table), c = ncol(temp_table), 
                         a = .05), 
@@ -1311,6 +1492,7 @@ for (year in unique(DF$large_first_gp$Year)){
          mote_temp$vlow <<- 0
   }
   )
+  
   large_effect$year[i] <- year
   large_effect$v[i] <- mote_temp$v
   large_effect$low[i] <- mote_temp$vlow
@@ -1332,10 +1514,10 @@ large_dot <- ggplot(large_effect, aes(year,v)) +
   ylab(expression(phi)) + 
   scale_size_continuous(name = "Num Authors")
 
-DF_decade <- DF$large_first_gp %>% 
+DF_decade <- DF$effect_size_gp_large_first %>% 
   mutate(who = "F") %>% 
   bind_rows(
-    DF$large_other_gp %>% 
+    DF$effect_size_gp_large_other %>% 
       mutate(who = "O")
   ) %>% 
   mutate(Decade = ifelse(Year < 1990, "1980s", 
@@ -1355,7 +1537,7 @@ DF_decade$Country_2 <- gsub(".*Africa.*", "Africa", DF_decade$Country_2)
 DF_decade$Country_2 <- gsub("Northern Europe|Southern Europe|Western Europe", "NWS Europe", DF_decade$Country_2)
 DF_decade$Country_2 <- gsub("South-Eastern Europe|Eastern Europe", "ESE Europe", DF_decade$Country_2)
 DF_decade$Country_2 <- gsub("Central Asia|South-Eastern Asia|Southern Asia|Western Asia", "Asia", DF_decade$Country_2)
-DF_decade$Country_2 <- gsub("Melanesia|Mirconesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
+DF_decade$Country_2 <- gsub("Melanesia|Micronesia|New zealand and Australia|Polynesia", "Other", DF_decade$Country_2)
 
 DF_decade$Country_2 <- factor(DF_decade$Country_2, 
                               levels = c("Africa", "Asia", "Eastern Asia", 
@@ -1363,12 +1545,11 @@ DF_decade$Country_2 <- factor(DF_decade$Country_2,
                                          "Latin America and the Caribbean",
                                          "North America", 
                                          "NWS Europe", "Other"))
-
-DF_decade_sm <- DF_decade %>% 
+DF_decade_lg <- DF_decade %>% 
   group_by(Country_2, Decade, who) %>% 
   summarize(Count = sum(Count), .groups = "keep")
 
-large_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) + 
+large_author <- ggplot(DF_decade_lg, aes(who, Count, fill = Country_2)) + 
     geom_bar(position="fill", stat="identity", color = "black") + 
   theme_classic(base_size = 15) + 
   facet_grid(~Decade) + 
@@ -1377,31 +1558,41 @@ large_author <- ggplot(DF_decade_sm, aes(who, Count, fill = Country_2)) +
   scale_fill_brewer(name = "Region", palette = "Spectral", drop = FALSE)
 ```
 
-```{r fig-author-gpe, include = TRUE, fig.cap="A comparison of author affiliation geopolitical regions across decades. F stands for first authors and O stands for other authors.", fig.width=10, fig.height=6}
-small_author + ggtitle("10-49 Authors") + #theme(legend.position = "none") +
-medium_author + ggtitle("50-99 Authors") + #theme(legend.position = "none") + 
-large_author + ggtitle("100 + Authors") + #theme(legend.position = "none") + 
-guide_area() + 
-plot_layout(
-  ncol = 2,
-  nrow = 2, 
-  guides = "collect")
+```{r fig-author-gpe, include = TRUE, fig.cap="A comparison of author affiliation geopolitical regions across decades. F stands for first authors and O stands for other authors.", fig.width=10, fig.height=8}
+plot1 <- xsmall_author + ggtitle("2-10 Authors") + xlab(NULL)
+plot2 <- small_author + ggtitle("11-49 Authors") + xlab(NULL)
+plot3 <- medium_author + ggtitle("50-99 Authors") + xlab(NULL)
+plot4 <- large_author + ggtitle("100+ Authors") + xlab(NULL)
 
-ggsave("figure/figure_7_author_gpe.png", width = 10, height = 6, units = "in")
+# Combine plots in a 2x2 grid with a third row for the shared legend
+layout_plot <- (
+  (plot1 + plot2) /
+  (plot3 + plot4) /
+  guide_area()
+) + 
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")  # or "right", depending on your preference
+
+layout_plot
+
+ggsave("figure/figure_7_author_gpe.png", width = 10, height = 8, units = "in")
 ```
 
-```{r fig-effect-gpe, include = TRUE, fig.cap = "Effect size of the differences in representation for UN Regions for author affiliations in big-team science papers by year. Larger dots indicate more papers and authors represented in the calculation of effect size.", fig.width=10, fig.height=6}
+```{r fig-effect-gpe-calc, include = FALSE, fig.cap = "Effect size of the differences in representation for UN Regions for author affiliations in big-team science papers by year. Larger dots indicate more papers and authors represented in the calculation of effect size.", fig.width=10, fig.height=6}
 all_effects <- bind_rows(
+  xsmall_effect %>% 
+    mutate(type = "2-10 Authors"),
   small_effect %>% 
-    mutate(type = "Small"),
+    mutate(type = "11-49 Authors"),
   medium_effect %>% 
-    mutate(type = "Medium"), 
+    mutate(type = "50-99 Authors"), 
   large_effect %>% 
-    mutate(type = "Large") 
+    mutate(type = "100+ Authors") 
 ) %>% 
-  mutate(type = factor(type, levels = c("Small", "Medium", "Large"),
-                       labels = c("10-49 Authors", 
-                                  "50-99 Authors", 
+  mutate(type = factor(type, 
+                       levels = c("2-10 Authors",
+                                  "11-49 Authors",
+                                  "50-99 Authors",
                                   "100+ Authors"))) %>% 
   mutate(Decade = ifelse(year < 1990, "1980s", 
                          ifelse(year < 2000, "1990s", 
@@ -1411,7 +1602,7 @@ all_effects <- bind_rows(
 ggplot(all_effects %>% 
          arrange(v) %>% 
          mutate(count = 1:nrow(all_effects)) %>% 
-         filter(year < 2024),
+         filter(year < 2025),
        aes(year, v)) + 
   facet_wrap(~type) + 
   geom_point(aes(size = people)) +
@@ -1419,155 +1610,204 @@ ggplot(all_effects %>%
   theme_classic(base_size = 15) +
   theme(legend.position = "none") + 
   xlab("Year of Publication") + 
-  ylab("Cramer's V")
+  ylab("Cramer's V") + 
+  coord_cartesian(ylim = c(0,.45))
 
 ggsave("figure/figure_8_author_effect_gpe.png", width = 10, height = 6, units = "in")
 ```
 
-Figure \@ref(fig:fig-author-gpe) indicates the percent of authors in
-regions. In general, we found the same pattern as the overall analysis
-wherein most authors are from Europe and North America. The pattern of
-representation is roughly similar for the separation of small, medium,
-and large numbers of authors on papers. Across time, the representation
-does appear to diversify, with more representation in Asia, Latin
-American, and Africa. Figure \@ref(fig:fig-effect-gpe) represents the
-size of the differences in first/corresponding authors and other authors
-across time and number of authors. The differences in representation are
-larger for papers with more authors; however, the effects are non-zero
-for many of the comparisons. Encouragingly, over time these effects
-appear to diminish in size. One limitation with the calculation of
-effect sizes for count data is the sensitivity of the data to sample
-size (i.e., $\chi^2$ is upwardly biased by sample size, and $V$ is
-calculated based on this value). While we used the inclusion of zero as
-our boundary for "significance", the interpretation of the effects is
-that most are likely small: $V$ \< .05:
-`r apa_num(sum(all_effects$v <.05)/nrow(all_effects)*100)`%, $V$ \< .10:
-`r apa_num(sum(all_effects$v < .10)/nrow(all_effects)*100)`%, $V$ \<
-.20: `r apa_num(sum(all_effects$v < .20)/nrow(all_effects)*100)`%.
+Across all decades and team sizes, North America and Northwestern Europe
+consistently made up the majority of corresponding authors, as shown in
+Figure \@ref(fig:fig-author-gpe). This pattern held even as total
+team size increased, though the proportion of corresponding authors from
+other regions (e.g., Asia, Latin America and the Caribbean, and Africa)
+showed gradual increases over time. For team science teams (2–10
+authors), the dominance of North America and Western Europe in
+corresponding author roles was particularly pronounced. In contrast, for
+very large teams (100+ authors), regional diversity appeared somewhat
+more balanced, with more visible contributions from Asia and other
+regions among both corresponding and non-corresponding authors. However,
+visual inspection suggests that corresponding author sets remained less
+regionally diverse than the rest of the author team, particularly in
+earlier decades. While representation from regions like Africa and Latin
+America grew slightly among non-corresponding authors, they remained
+minimally represented in lead authorship positions. Notably, Eastern
+Asia’s representation increased more substantially over time, especially
+in teams with 50 or more authors. These visual trends suggest persistent
+regional disparities in leadership roles within scientific publications,
+despite increasing global collaboration. Quantitative effect sizes
+(Cramer’s *V*) and confidence intervals are reported in the following
+section to determine the importance of these observed differences.
 
-\newpage
+Supplemental Figure \@ref(fig:fig-effect-gpe) shows the magnitude of the difference in
+regional representation between corresponding authors and all other
+authors over time. A value of zero would indicate perfectly balanced
+regional diversity between the two groups, whereas larger values reflect
+increasing skew toward certain regions being more prominent in lead
+authorship positions. Effect sizes were often non-zero across much of
+the time span, particularly in publications with larger team sizes.
+Papers with 50–99 authors and 100+ authors showed the highest effect
+sizes in the 1970s through the 1990s, with *V* values frequently
+exceeding .20. This suggests that early large-team collaborations were
+especially likely to concentrate lead authorship within a narrow set of
+regions. However, across all team sizes, there was a clear downward
+trend in effect sizes over time, indicating that the regional
+composition of corresponding authors has become more similar to the rest
+of the author team. In recent decades, effect sizes for team science and
+mid-sized BTS teams (11–49 authors) have generally remained below 0.05,
+suggesting relatively balanced representation. For larger teams, effect
+sizes have also decreased, although they remain slightly elevated in
+more recent years compared to smaller teams. As a reference for
+interpretation, the vast majority of observed effects were small:
+`r apa_num(sum(all_effects$v <.05)/nrow(all_effects)*100)`% of
+comparisons had $V$ \< .05,
+`r apa_num(sum(all_effects$v < .10)/nrow(all_effects)*100)`% had $V$ \<
+.10, and `r apa_num(sum(all_effects$v < .20)/nrow(all_effects)*100)`%
+had $V$ \< .20. These results suggest that while regional imbalances in
+leadership authorship persist, they have gradually diminished in
+magnitude over time.
 
 # Discussion
 
-In this investigation, we explored the publication rates, areas, and
-researchers involved in BTS publications. Over a half-million articles
-were published in nearly 15,000 journals since 1970 that qualified as
-BTS articles. The areas of publication were aligned to cancer and
-genetics research in medicine and oncology for Health and Life Sciences,
-physics and chemistry for the Physical Sciences, and psychology for the
-Social Sciences. All areas of research show growth in the number of
+This study expands on prior efforts to characterize Big Team Science
+(BTS) by providing a systematic, field-wide analysis of authorship
+composition across time, team size, and geography. While BTS efforts
+have been increasingly promoted as vehicles for collaboration, scale,
+and rigor [@adams2012; @uhlmann2019], questions remain about who gets
+included, who leads, and how equitably credit is distributed. A key
+contribution of our study is that it is the first to propose a
+data-driven operationalization of "big" teams: defined here as
+publications with 11 or more authors and contributions from at least 6
+institutions, grounded in the empirical distribution of team sizes and
+affiliations across millions of papers. By comparing BTS publications
+with Team Science publications across four major scientific domains, we
+clarify how BTS compares with traditional team science and how it is
+evolving. All areas of research show growth in the number of
 publications and authors included on manuscripts, replicating previous
 investigations [@sinatra2015; @wuchty2007; @hunter2008].
 
-Our investigation expands previous research by additionally focusing on
-diversity in seniority of authors and geopolitical affiliation. The
-number of earlier career scholars increased across years, indicating
-that big teams may be accessible to different types of individuals, not
-just older, established researchers. This result is especially
-interesting given the publish-or-perish model still present in most
-institutions, as it may seem that large-scale projects could be a risky
-choice for non-permanent researchers. BTS projects are often slow to
-publish, there is no guarantee for publication, and incentives are often
-lower for non-corresponding authors. However, with a large team, the
-distribution of work could imply less effort on individual non-leading
-members, and research has shown that larger-team publications do receive
-more citations and appear to have higher impact [@larivière2015].
+Next, we find that early-career researchers are increasingly represented
+in both BTS and smaller teams. Across all disciplines, the average
+career length of authors decreased significantly over time. Team Science
+teams exhibited even steeper declines in both average and variability of
+career length than big teams, suggesting that smaller teams may be an
+especially important entry point for early-career researchers. These
+trends echo broader shifts in academia’s incentive structures, where
+publishing early and often is increasingly required for career
+advancement [@milojevic2014; @larivière2015]. Publication counts showed
+similar but smaller effects. The average number of publications per
+author declined over time in both big and small teams, with smaller
+teams again showing more pronounced shifts. These findings support
+claims that collaborative science is no longer dominated exclusively by
+elite or high-output researchers [@milojevic2014], but may instead be
+expanding to include contributors with more varied publication
+histories.
 
-In general, it appears that there is a decrease in the average number of
-publications a researcher has when publishing in a BTS paper over time,
-mirroring career length results. This result is likely attributable to
-the number of early career scholars joining projects, but also may
-support increased accessibility for individuals to be involved.
-Globalization, the internet, and the focus on interdisciplinary research
-are potentially driving forces behind our results, but, hopefully, the
-results also point to a decline in scientific gatekeeping [@lu2007;
-@siler2015].
+Our findings build on previous research by also examining diversity in
+author seniority and geopolitical affiliation. The growing participation
+of early-career scholars over time suggests that big team science may be
+increasingly accessible to a broader range of researchers, not just
+senior or established scientists. This trend is interesting given the
+challenges BTS projects can pose for non-permanent researchers: slow
+publication timelines, uncertain publication outcomes, and fewer
+incentives for non-corresponding authors. Yet, large teams may allow for
+more distributed workloads and reduced individual time investment, which
+could make them appealing even for early-career researchers. Moreover,
+prior work has shown that publications from larger teams tend to receive
+more citations and have broader impact [[@larivière2015], which may
+further incentivize early-career involvement despite the structural
+risks. Globalization, the internet, and the focus on interdisciplinary
+research are potentially driving forces behind our results, but,
+hopefully, the results also point to a decline in scientific gatekeeping
+[@lu2007; @siler2015].
 
-The variability in the types of researchers involved in publications
-also decreased across time in most areas of science with a decrease in
-variability for career length. As mentioned, an increase in early career
-researchers and numbers of publications could explain this effect
-mathematically, potentially with other social influences mentioned
-above. The variability in the number of publications is decreasing in
-the Physical Sciences, mirroring the career length results, but the
-opposite effect was found in the Health and Social Sciences. We see no
-clear reason why career variability would decrease while the variability
-in the number of publications would increase. The effect sizes for
-career length were much larger than the effects for number of
-publications. One speculation is the increasing requirements for a
-competitive faculty role application. Given the limited number of
-positions, one potential way to distinguish their application would be a
-larger number of publications in their early career [@caplow2017;
-@kyvik2003].
+Our results confirm and extend prior observations that both Team Science
+and BTS are disproportionately concentrated in high-resource, highly
+networked regions, namely, North America and Western Europe [@singh2023;
+@adams2012; @sugimoto2017]. However, this study offers a more nuanced
+picture. We observed modest increases in the geographic diversity of
+authorship. Yet, lead authorship remained concentrated in a relatively
+narrow set of regions. These findings parallel previous critiques of
+global equity in scientific collaboration, where authors from the Global
+South are often included in co-authorship lists but remain
+underrepresented in leadership roles [@chan2011; @sumathipala2004].
+Though Cramer’s *V* values reflecting geographic imbalance decreased
+over time, especially for small and mid-sized teams, some asymmetries
+persist in large teams, reinforcing concerns about exclusion even within
+globally scoped research efforts [@abimbola2019].
 
-The number of geopolitical entities for researcher affiliation is
-increasing over time, showing the results of globalization and the
-ability to connect across time zones and cultures [@xie2014]. While our
-definition of BTS required at least ten different institutional
-affiliations, we did not filter papers by geopolitical region, and thus,
-a manuscript could rely solely on institutions within a single country.
-The Physical Sciences did not show an increase in diversity of regions
-represented, however, it could be argued that the development of large
-research centers like CERN forced earlier diversity than other sciences
-(i.e., because CERN specifically recruited scientists from sponsoring
-nations). The Life, Health, and Social Sciences saw an increase in the
-number of regions represented with the highest increase in the Social
-Sciences. This result likely corresponds with an increased interest in
-big team science publications in psychology [@coles2022;
-@forscher2022a], and the desire to diversify the populations represented
-in psychological research [@henrich2010; @newson2021].
-
-While publications overall are diversifying, we found differences in the
-representation for first/corresponding authors versus all other authors.
-In general, first authors appear to be less diverse, representing
-European and North American authors, while other authors include more
-Asian and African authors. These effect sizes were often small, but the
-inequality persists across years. Diverse teams are more likely to have
-papers with stronger “impact” [@freeman2015; @hinnant2012; @jones2008;
-@yang2022] with higher citation metrics for more diverse author lists.
-The introduction of contributorship models [e.g., CRediT, @allen2019]
-will hopefully continue to push these effects down, as they highlight
-each individual's contribution to a manuscript.
+Diverse teams are more likely to produce research with stronger impact,
+as reflected in higher citation metrics and broader dissemination,
+particularly when author lists include individuals from varied
+backgrounds and institutions [@freeman2014; @jones2008; @yang2022].
+These patterns underscore a broader shift in how scholarly contributions
+are valued and attributed. As scientific teams become larger and more
+interdisciplinary, traditional authorship conventions, especially the
+emphasis on first and last author positions, become less informative
+indicators of individual contribution [@allen2019; @brand2015]. In
+response, initiatives like the CRediT taxonomy have emerged to increase
+transparency around contributor roles [@allen2014]. Our findings
+reinforce the importance of such systems: as early-career and
+less-published researchers increasingly participate in both BTS and
+regular teams, formal recognition of diverse contributions becomes
+essential for equitable credit and career advancement.
 
 The limitations for this research are tied to the curation of the Scopus
 dataset: the correct author affiliations, the correct author publication
-information, and the correctly marked geopolitical entity. We had
-planned to analyze educational levels change over time; however, this
-data was mostly blank within the Scopus archive. Scopus is a carefully
-curated and large dataset, but these limitations must be kept in mind
-when interpreting the results. Publication language diversity was not
-investigated, and a previous study indicates that most publications in
-big databases are in English [@albarillo2014]. Certainly, publications
-in non-English languages would improve the statistics on diversity in
-scientific publishing - but the English language barrier likely exists
-regardless of inclusion in databases [@meneghini2007;
-@ramírez-castañeda2020].
+information, and the correctly marked geopolitical entity. Scopus is a
+carefully curated and large dataset, but these limitations must be kept
+in mind when interpreting the results. Publication language diversity
+was not investigated, and a previous study indicates that most
+publications in big databases are in English [@albarillo2014].
+Certainly, publications in non-English languages would improve the
+statistics on diversity in scientific publishing - but the English
+language barrier likely exists regardless of inclusion in databases
+[@meneghini2007; @ramírez-castañeda2020].
 
-Big teams can provide high-impact, important research within scientific
-publishing, and this report suggests a promising trend of increasing
-publications that include earlier career and more diverse scholars.
-These partnerships introduce new challenges to collaboration from
-interpersonal conflict, infrastructure, incentives, to international
-political situations [@forscher2022a]. The implications for retention
-and promotion processes across a broad span of regions should be
-explored to improve diversity with the understanding of the differential
-impact of incentives for participating in big team studies.
+Taken together, our findings suggest that BTS is evolving to include a
+broader and more diverse range of contributors, but also that smaller
+teams may remain more flexible or inclusive in incorporating
+early-career and globally distributed researchers. This result carries
+important implications for funders and institutions encouraging
+large-scale collaboration. Without structural support for equitable
+leadership, credit, and inclusion, particularly for authors from
+underrepresented regions, BTS risks reinforcing the very hierarchies it
+seeks to eliminate [@forscher2022a].
 
 \newpage
 
 # References
 
-\begingroup
-\setlength{\parindent}{-0.5in}
-
 ::: {#refs custom-style="Bibliography"}
 :::
 
-\endgroup
-
 \newpage
 
-# (APPENDIX) Appendix {.unnumbered}
+# Supplement
 
-```{r child = "appendix.Rmd"}
+We have included several supplemental tables and figures for visualization of results discussed in the manuscript. 
+
+```{r rate-estimates-fig, include = TRUE, fig.cap = "Exponential growth rate estimates with 95% confidence intervals.", out.width='100%'}
+knitr::include_graphics("figure/figure_3_growth.png")
 ```
+
+```{r fig-map-both, include = TRUE, fig.cap="Geopolitical regions represented in big-team science publications versus all publications. The mosaic plot is grouped by UN subregion with the largest number of publications starting on the bottom left and smallest on the top right. Therefore, North America represents the largest number of authors within BTS (i.e., bottom right, then separated into the geopolitical areas within that subregion), followed by Eastern Europe (top left), and so on.", out.width='100%'}
+knitr::include_graphics("figure/figure_6_map.png")
+```
+
+```{r fig-effect-gpe, include = TRUE, fig.cap = "Effect size of the differences in representation for UN Regions for author affiliations in big-team science papers by year. Larger dots indicate more papers and authors represented in the calculation of effect size.", out.width='100%'}
+knitr::include_graphics("figure/figure_8_author_effect_gpe.png")
+```
+
+```{r big-teams-table, results = 'asis'}
+big_teams_papers <- 968765
+big_teams_authors <- 4541369
+
+apa_table(DF$paper_stats %>% 
+        arrange(Statistic), 
+        caption = "Number of Authors and Papers by Subject Area",
+        note = "Papers can be classified into multiple categories.", 
+        align = c("l", rep("c", 5)), 
+        digits = 0)
+```
+
