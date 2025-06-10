@@ -45,7 +45,7 @@ abstract: |
   
   Conflicts of interest: Both authors declare no conflicts of interest. 
   
-  Funding: No funding was obtained for this project. 
+  Funding: No funding was obtained for this project. #we staying with this even though it helped with coding errors?
   
   Artificial intelligence: No AI resources were used for this manuscript. 
   
@@ -53,11 +53,11 @@ abstract: |
   
   Computational reproducibility: All materials and code can be found on our OSF page: https://osf.io/cgx6u/ or corresponding GitHub archive: https://github.com/doomlab/big_team_who. Elsevier has agreed to provide access to determine reproducibility of the code for accessing and summarizing articles, and the reproducible manuscript has been provided for review.
   
-  Pre-registration: This manuscript was preregistered with the same conceptual ideas using Google Scholar and ORC-ID databases (https://osf.io/f2dtr) but then was updated with access to the Scopus database for a broader picture of BTS projects (https://osf.io/fheun). After review, we updated the manuscript to reflect that the definition of big team science is unclear, and focused on a data-driven definition to explore our research questions. 
+  Pre-registration: This manuscript was preregistered with the same conceptual ideas using Google Scholar and ORC-ID databases (https://osf.io/f2dtr) but then was updated with access to the Scopus database for a broader picture of BTS projects (https://osf.io/fheun). After peer review, the preregisteration was updated to address the unclear definition of big team science to focus on a data-driven definition to explore the research questions. 
   
   Materials, Data, Analysis Scripts: All materials and code can be found on our OSF page: https://osf.io/cgx6u/ or corresponding GitHub archive: https://github.com/doomlab/big_team_who.
   
-keywords          : "big team, science, authorship, credit"
+keywords          : "big team science, team science, authorship, credit"
 floatsintext      : yes
 figurelist        : no
 tablelist         : no
@@ -153,15 +153,16 @@ names(DF) <- var_list
 ```
 
 Scientific discovery has increasingly become a collaborative process,
-and the scale and scope of team science have dramatically expanded in
+with the scale and scope of team science have dramatically expanded in
 recent years [@council2015]. Collaboration in scientific endeavors
-involves multiple researchers at (potentially) multiple institutions to
+involves multiple researchers (potentiality) at multiple institutions to
 communicate and work together to advance knowledge in their chosen
-field(s). Collaboration can manifest uniquely in each project dependent
-on the skill sets, hypotheses, and perspectives of collaborators. One
-key aspect of collaboration is the flexibility allotted as it is shaped
-by the needs of the project and the researchers involved. While
-collaboration is not new in science, interest in "team science" is
+field(s). This unique composition of a collaboration for each project is 
+dependent on the skill sets, hypotheses, and perspectives of collaborators 
+involved. A key strength of collaboration lies in its flexibility, allowing it 
+to adapt to the needs of the project and the researchers themselves. 
+
+While collaboration is not new in science, interest in "team science" is
 growing as individual researchers seek an interdisciplinary approach to
 research or bring on more students to their project. Team science is
 often defined as groups of researchers with various expertise working
@@ -172,15 +173,14 @@ difficult for individual researchers or one small team to solve
 independently.
 
 The movement toward team science reflects demands of modern research to
-answer complex questions, meet funder and university desires for
-interdisciplinary research, and the desire to increase diversity of
-scientific representation [@council2015]. Further, the evolution of team
-science reflects broader shifts in research practices, driven by two
-sources: 1) increasing globalization and technology that allows for
-real-time interdisciplinary research [@jones2008], and 2) expanding
-interest in reproducibility, replication, and generalizability [i.e.,
-the credibility movement, @maxwell2015; @nelson2018; @zwaan2018;
-@vazire2022]. Technological advances have provided easier ways to
+answer complex questions, meet funding agencies and universities desires for
+interdisciplinary research, and the desire to increase scientific representation
+[@council2015]. Further, the evolution of team science reflects broader shifts
+in research practices, driven by two sources: 1) increasing globalization 
+and technology that allows for real-time interdisciplinary research [
+@jones2008], and 2) expanding interest in reproducibility, replication, 
+and generalizability [i.e., the credibility movement, @maxwell2015; @nelson2018; 
+@zwaan2018; @vazire2022]. Technological advances have provided easier ways to
 collaborate with people who are from other universities and countries
 through document sharing platforms (e.g., Google, GitHub, and the Open
 Science Framework), video chatting platforms (e.g., Zoom, Microsoft
@@ -1714,7 +1714,7 @@ incentives for non-corresponding authors. Yet, large teams may allow for
 more distributed workloads and reduced individual time investment, which
 could make them appealing even for early-career researchers. Moreover,
 prior work has shown that publications from larger teams tend to receive
-more citations and have broader impact [[@larivière2015], which may
+more citations and have broader impact [@larivière2015], which may
 further incentivize early-career involvement despite the structural
 risks. Globalization, the internet, and the focus on interdisciplinary
 research are potentially driving forces behind our results, but,
