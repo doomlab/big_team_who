@@ -37,9 +37,7 @@ authornote: |
   
   Preprint: https://osf.io/hqta4/
 abstract: |
-  This paper examined the nature of publications in Big Team Science (BTS): large-scale collaborations between multiple researchers at multiple institutions. These projects can improve research by initiating collaborations that span across the globe, age groups, education levels, and subfields of research. As the number of BTS publications increase, it is useful to explore who is currently involved in BTS projects to determine diversity in both research subject and researcher representation. We examined the diversity of BTS publications and authors across more than half a million articles to investigate where and what is currently published, and author characteristics including differences in career length, publication metrics, affiliation, and affiliation geopolitical regions. Interestingly, BTS publications are increasingly dominated by early career researchers from WEIRD geopolitical regions with Health and Physical Science accounting for the majority of BTS articles. However, the increase in preprints, BTS articles, and non-WEIRD authors across time demonstrate the efforts of the science community to diversify its researchers. 
-  
-    Significance statement: This study is the first large-scale, data-driven analysis of authorship in Big Team Science (BTS), defined here as collaborations with 11 or more authors across six or more institutions. Drawing on millions of published works across four scientific domains, we show that BTS has grown rapidly in recent years and increasingly includes early-career researchers and contributors from a broader range of geopolitical regions. However, inclusion in BTS is not equally distributed. While author lists are becoming more globally diverse overall, leadership roles—particularly first and corresponding authorships, remain disproportionately concentrated in high-income countries, especially in Europe and North America. These findings highlight both the promise and limitations of BTS as a vehicle for global, inclusive science, underscoring the need for structural reforms to ensure equity in recognition and participation.
+  This study presents the first large-scale, data-driven analysis of authorship in Big Team Science (BTS) drawing on over half a million articles across four scientific domains. Using the top decile of the data, we defined BTS as collaborations with 11+ authors across six or more institutions. We compared BTS with traditional team science to investigate changes in publication rates, authorship characteristics, and global representation. Publication rates for traditional team science and BTS have both risen over time, but the growth trajectory varies depending on the subject area. We found that early-career researchers are increasingly represented in both BTS and smaller teams, suggesting greater accessibility over time. Leadership roles remain concentrated in high-income, WEIRD regions for smaller teams. This work contributes a replicable, empirical definition of BTS and highlights the need for more equitable recognition and inclusion in large-scale scientific collaboration.
   
   # General Disclosures
   
@@ -51,11 +49,16 @@ abstract: |
   
   Ethics: No ethics review was necessary for this project. 
   
-  Computational reproducibility: All materials and code can be found on our OSF page: https://osf.io/cgx6u/ or corresponding GitHub archive: https://github.com/doomlab/big_team_who. Elsevier has agreed to provide access to determine reproducibility of the code for accessing and summarizing articles, and the reproducible manuscript has been provided for review.
+  Computational reproducibility: All materials and code can be found on our OSF page: https://osf.io/cgx6u/ or corresponding GitHub archive: https://github.com/doomlab/big_team_who. Elsevier has agreed to provide access to determine reproducibility of the code for accessing and summarizing articles, and the reproducible manuscript has been provided for review. A reproducible version of this manuscript can be found at: https://doi.org/10.24433/CO.2018846.v1. 
   
-  Pre-registration: This manuscript was preregistered with the same conceptual ideas using Google Scholar and ORC-ID databases (https://osf.io/f2dtr) but then was updated with access to the Scopus database for a broader picture of BTS projects (https://osf.io/fheun). After peer review, the preregisteration was updated to address the unclear definition of big team science to focus on a data-driven definition to explore the research questions. 
+  Pre-registration: This manuscript was preregistered with the same conceptual ideas using Google Scholar and ORC-ID databases (https://doi.org/10.17605/OSF.IO/F2DTR) but then was updated with access to the Scopus database for a broader picture of BTS projects (https://doi.org/10.17605/OSF.IO/FHEUN). After peer review, the pre-registration was updated to address the unclear definition of big team science to focus on a data-driven definition to explore the research questions.
   
-  Materials, Data, Analysis Scripts: All materials and code can be found on our OSF page: https://osf.io/cgx6u/ or corresponding GitHub archive: https://github.com/doomlab/big_team_who.
+  Materials: All study materials are publicly available (https://doi.org/10.5281/zenodo.15936025).
+  
+  Data: Elsevier has agreed to provide access to determine reproducibility of the code for accessing and summarizing articles, and the reproducible manuscript has been provided for review (https://doi.org/10.5281/zenodo.15936025).
+  
+  Analysis scripts: All analysis scripts are publicly available (https://doi.org/10.5281/zenodo.15936025). 
+  
   
 keywords          : "big team science, team science, authorship, credit"
 floatsintext      : yes
@@ -495,7 +498,7 @@ p1 <- ggplot(temp %>%
   ylab("Number of Papers") + 
   ggtitle("Traditional Team Science Projects") +
   theme(legend.title = element_text(size = 15),
-    legend.text = element_text(size = 12))
+    legend.text = element_text(size = 15))
 
 p2 <- ggplot(temp %>% 
          filter(team_size == "big"), 
