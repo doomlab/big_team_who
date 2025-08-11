@@ -49,13 +49,13 @@ abstract: |
   
   Ethics: No ethics review was necessary for this project. 
   
-  Computational reproducibility: All materials and code can be found on our OSF page: https://osf.io/cgx6u/ or corresponding GitHub archive: https://github.com/doomlab/big_team_who. Elsevier has agreed to provide access to determine reproducibility of the code for accessing and summarizing articles, and the reproducible manuscript has been provided for review. A reproducible version of this manuscript can be found at: https://doi.org/10.24433/CO.2018846.v1. 
+  Computational reproducibility: A reproducible version of this manuscript can be found at: https://doi.org/10.24433/CO.2018846.v1, which is linked to GitHub (https://github.com/doomlab/big_team_who) and archived at Zenodo (https://doi.org/10.5281/zenodo.15936025). Elsevier has authorized use of the Scopus database to execute and validate the code for retrieving and summarizing article records. Although we cannot distribute Scopus data directly, we provide all code, processing steps, and derived outputs necessary to reproduce the analyses presented in this manuscript.
   
   Pre-registration: This manuscript was preregistered with the same conceptual ideas using Google Scholar and ORC-ID databases (https://doi.org/10.17605/OSF.IO/F2DTR) but then was updated with access to the Scopus database for a broader picture of BTS projects (https://doi.org/10.17605/OSF.IO/FHEUN). After peer review, the pre-registration was updated to address the unclear definition of big team science to focus on a data-driven definition to explore the research questions.
   
   Materials: All study materials are publicly available (https://doi.org/10.5281/zenodo.15936025).
   
-  Data: Elsevier has agreed to provide access to determine reproducibility of the code for accessing and summarizing articles, and the reproducible manuscript has been provided for review (https://doi.org/10.5281/zenodo.15936025).
+  Data: All data from Scopus outputs are publicly available (https://doi.org/10.5281/zenodo.15936025).
   
   Analysis scripts: All analysis scripts are publicly available (https://doi.org/10.5281/zenodo.15936025). 
   
@@ -106,12 +106,11 @@ library(rio)
 library(maps)
 library(dplyr)
 library(tidyr)
-library(MOTE)
-library(MBESS)
+library(MOTE) # use the dev version
+# devtools::install_github("doomlab/MOTE")
+# updated to lessen dependencies
 library(patchwork)
 library(ggplot2)
-library(ggwordcloud)
-library(figpatch)
 library(RColorBrewer)
 library(latex2exp)
 library(broom)
@@ -659,7 +658,7 @@ DF$lm_coefficients$r2_low <- DF$lm_coefficients$r2_high <- NA
 
 # add upper and lower Rsquared values
 for (i in 1:nrow(DF$lm_coefficients)){
-  temp <- ci.R2(R2 = DF$lm_coefficients$rsquared[i], 1, sample_size)
+  temp <- MOTE::ci.R2(R2 = DF$lm_coefficients$rsquared[i], 1, sample_size)
   DF$lm_coefficients$r2_low[i] <- temp$Lower.Conf.Limit.R2
   DF$lm_coefficients$r2_high[i] <- temp$Upper.Conf.Limit.R2
 }
